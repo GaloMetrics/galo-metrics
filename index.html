@@ -275,7 +275,7 @@ nav a.on{background:var(--ink);color:var(--paper)}
 .menu{position:relative}.menu summary{list-style:none;cursor:pointer;text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:1px;padding:7px 11px;border:1.5px solid transparent;font-family:'Oswald',sans-serif}.menu summary::-webkit-details-marker{display:none}
 .menu summary::after{content:" ▾";font-size:10px}.menu[open] summary,.menu.on summary{background:var(--ink);color:var(--paper)}.menu.jogar summary{border-color:var(--gold)}
 .menu-p{position:absolute;top:100%;left:0;z-index:20;background:var(--paper);border:2px solid var(--ink);display:flex;flex-direction:column;min-width:220px;box-shadow:6px 6px 0 var(--gold)}
-.menu-p a{padding:10px 14px;border-bottom:1px solid var(--line);text-decoration:none}.menu-p a:hover,.menu-p a.on{background:var(--soft)}
+.menu-p a{padding:10px 14px;border-bottom:1px solid var(--line);text-decoration:none}.menu-p a:hover,.menu-p a.on{background:var(--ink);color:var(--paper);-webkit-text-fill-color:var(--paper)}
 .menu.jogar .menu-p,.menu.area .menu-p{left:auto;right:0}
 @media(max-width:800px){.nav-sep{display:none}.menu-p{position:static;box-shadow:none}}
 .palpite{border:3px solid var(--gold);padding:16px 18px;margin:18px 0;background:var(--soft)}
@@ -471,6 +471,7 @@ body.pko-on{overflow:hidden}
 .imp-cat{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;border:3px solid var(--ink);padding:18px 12px;background:var(--ink);color:var(--paper)}
 .imp-cat b{font-family:'Abril Fatface',serif;font-size:24px;line-height:1.1;color:#C9962B;font-weight:400}.imp-cat em{font-style:normal;color:#e05a4f;font-weight:700;text-transform:uppercase}.imp-cat small{color:#cfc6b2}
 @media(max-width:700px){.imp-arena{grid-template-columns:1fr 1fr}.imp-cat{grid-column:1/-1;order:-1}}
+.cod-box{display:inline-flex;align-items:center;gap:16px;flex-wrap:wrap;border:3px solid var(--ink);padding:12px 18px;margin:8px 0 18px;background:var(--ink);color:var(--paper)}.cod-box b{font-family:'Courier Prime',monospace;font-size:30px;letter-spacing:.25em;color:#C9962B}.cod-box .ghost{background:transparent!important;color:var(--paper)!important;-webkit-text-fill-color:var(--paper);border-color:var(--paper)}
 .tipos-sug{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tipos-sug .chip{cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 12px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:13px}.tipos-sug .chip:has(input:checked){background:var(--ink);color:var(--paper)}.tipos-sug input{margin:0}
 .sug-it{border-bottom:1px dotted var(--ink);padding:12px 0}.sug-it p{margin:6px 0}.sug-it.vista{opacity:.55}.sug-img{display:block;max-width:220px;max-height:220px;margin:8px 0;border:2px solid var(--ink);background:#fff}
 .aceita input{width:70px;padding:6px}.aceita{display:inline-flex;gap:6px;align-items:center;margin-right:6px}
@@ -541,8 +542,8 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
     <a href="#inicio">Início</a><a href="#jogos">Jogos</a><a href="#jogadores">Jogadores</a><a href="#adversarios">Adversários</a><a href="#competicoes">Competições</a><a href="#mapa">Mapa</a><a href="#pergunte">Pergunte</a><a href="#embreve" class="nav-breve">Em breve</a>
     <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
     <span class="nav-sep" aria-hidden="true"></span>
-    <details class="menu jogar"><summary>★ Jogar</summary><div class="menu-p"><a href="#desafios">Desafios do dia</a><a href="#palpites">Palpites</a><a href="#album">Álbum de figurinhas</a><a href="#ranking">Ranking da semana</a><a href="#desafio-escalacao">Complete a escalação</a></div></details>
-    <details class="menu area"><summary>Meu perfil</summary><div class="menu-p"><a href="#perfil">Perfil e conquistas</a><a href="#torcedores">Torcedores (amigos)</a><a href="#diario">Meu diário</a><a href="#sugestoes">Sugestões e correções</a><a href="#colaboradores">Colaboradores</a><a href="#apoie">♥ Apoie</a><a href="#dono" id="navdono" hidden>Página do dono</a></div></details>
+    <details class="menu jogar"><summary>★ Jogar</summary><div class="menu-p"><a href="#desafios">Desafios do dia</a><a href="#palpites">Palpites</a><a href="#album">Álbum de figurinhas</a><a href="#ranking">Ranking da semana</a></div></details>
+    <details class="menu area"><summary>Meu perfil</summary><div class="menu-p"><a href="#perfil">Perfil e conquistas</a><a href="#torcedores">Amigos</a><a href="#diario">Meu diário</a><a href="#sugestoes">Sugestões e correções</a><a href="#colaboradores">Colaboradores</a><a href="#apoie">♥ Apoie</a><a href="#dono" id="navdono" hidden>Página do dono</a></div></details>
   </nav>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
@@ -3323,7 +3324,7 @@ function pagaPresentes(){
   if(ganhou||pacs){ gSave(); atualizaChip(); const o=[ganhou?`${N(ganhou)} Metricoins`:'', pacs?`${pacs} ${pacs===1?'pacotinho':'pacotinhos'}`:''].filter(Boolean).join(' e '); setTimeout(()=>toast(`Você ganhou ${o}!${motivo?' '+motivo:''}${pacs?' Abra no Álbum.':''}`),600); }
 }
 async function registraPerfil(){
-  if(!GDB||!GUID||DONO) return; const hoje=hojeStr(); if(G.perfilReg===hoje) return;
+  if(!GDB||!GUID) return; const hoje=hojeStr(); if(G.perfilReg===hoje) return;
   try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}};
     o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.nome=window.GM_USER_NAME||o.nome||''; o.visto=hoje;
     await ref.set(o); RKU[GUID]=o; G.perfilReg=hoje; gSave(); }catch(e){}
@@ -3506,23 +3507,35 @@ async function publicaResumo(){
     const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}};
     o.oculto=!!(DONO&&(G.perfil||{}).oculto); o.pub=r; o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.visto=hojeStr(); await ref.set(o); RKU[GUID]=o; G.resumoPub=k; gSave(); }catch(e){}
 }
-const linkTorcedor=(uid,nome)=>`<a href="#torcedor-${encodeURIComponent(uid)}">${esc(nome||'Torcedor')}</a>`;
+const linkTorcedor=(uid,nome)=>esc(nome||'Torcedor'); // perfis só abrem pelo código, não por links espalhados
+/* Código do torcedor: 6 caracteres derivados da conta; é o único jeito de achar um perfil */
+const COD_ALF='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sem O, 0, I e 1 para não confundir
+const codTorcedor=uid=>{ let h=hashDia('gm-torcedor|'+uid), h2=hashDia('gm-t2|'+uid), out=''; for(let i=0;i<6;i++){ const x=i<3?h:h2; out+=COD_ALF[(x>>>(i%3*10))%32]; } return out; };
+const uidPorCodigo=c=>{ c=String(c||'').trim().toUpperCase(); if(!/^[A-Z2-9]{6}$/.test(c)) return null; return Object.keys(RKU||{}).find(u=>codTorcedor(u)===c)||null; };
 function vTorcedores(){
-  const L=Object.entries(RKU||{}).map(([uid,o])=>({uid,o})).filter(x=>x.o&&x.o.ap&&(!x.o.oculto||x.uid===GUID)).sort((a,b)=>String(b.o.visto||'').localeCompare(String(a.o.visto||'')));
-  return `<div class="kicker">Galo Metrics · torcida</div><h1>Torcedores</h1><p class="lede">Veja o perfil dos amigos: figurinhas, conquistas, jogos no estádio e as notas que deram para jogos e jogadores.</p>
-  ${L.length?`<label style="max-width:340px">Buscar<input id="trq" placeholder="nome ou apelido" oninput="document.querySelectorAll('.trc-it').forEach(e=>e.hidden=!e.dataset.n.includes(this.value.toLowerCase()))"></label>
-  <div class="trc-grid">${L.map(({uid,o})=>{ const p=o.pub||{}; return `<a class="trc-it" data-n="${esc((o.ap+' '+(o.nome||'')).toLowerCase())}" href="#torcedor-${encodeURIComponent(uid)}">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av">${esc(o.ap.trim()[0]||'?').toUpperCase()}</span>`}<span><b>${esc(o.ap)}</b><small class="uf">${p.fig!=null?`${N(p.fig)} figurinhas · ${p.conq||0} conquistas`:'perfil em montagem'}</small></span></a>`; }).join('')}</div>`:'<p class="empty">Nenhum torcedor ainda. Quem entra com a conta Google aparece aqui.</p>'}`;
+  G.amigos ||= []; const meu=GUID?codTorcedor(GUID):null;
+  setTimeout(()=>{ const f=$('#trform'); if(f) f.onsubmit=ev=>{ ev.preventDefault(); const c=$('#trq').value.trim().toUpperCase(), u=uidPorCodigo(c), m=$('#trmsg');
+      if(!u){ m.textContent='Nenhum torcedor com esse código. Confira as 6 letras e números.'; return; }
+      if(!G.amigos.includes(c)&&u!==GUID){ G.amigos.unshift(c); gSave(); } location.hash='#torcedor-'+c; };
+    const cp=$('#trcopia'); if(cp) cp.onclick=()=>{ const t=`Meu código no Galo Metrics: ${meu}\\nhttps://galometrics.com.br/#torcedor-${meu}`; try{ navigator.clipboard.writeText(t).then(()=>toast('Código copiado.'),()=>toast(meu)); }catch(err){ toast(meu); } };
+    document.querySelectorAll('[data-tira]').forEach(b=>b.onclick=()=>{ G.amigos=G.amigos.filter(x=>x!==b.dataset.tira); gSave(); route.keep=true; route(); }); });
+  const amigos=G.amigos.map(c=>({c,u:uidPorCodigo(c)})).filter(x=>x.u);
+  return `<div class="kicker">Galo Metrics · amigos</div><h1>Amigos</h1>
+  <p class="lede">Os perfis não aparecem para qualquer um: só abre o perfil de quem tem o código. Mande o seu para os amigos e peça o deles.</p>
+  ${meu?`<div class="cod-box"><span class="osw">Seu código de torcedor</span><b>${meu}</b><button type="button" class="ghost" id="trcopia">Copiar código e link</button></div>`:(window.GM_LOGIN?'<p class="count"><a href="javascript:GM_LOGIN()">Entre com sua conta Google</a> para ter seu código de torcedor.</p>':'')}
+  <form id="trform" class="dono" style="max-width:520px"><label>Código do amigo<input id="trq" maxlength="6" placeholder="Ex.: 4K9Q2B" autocomplete="off" autocapitalize="characters" style="text-transform:uppercase;letter-spacing:.2em"></label><p id="trmsg" class="count" role="alert" style="color:var(--d)"></p><button type="submit" class="more">Abrir perfil</button></form>
+  <h2>Meus amigos</h2>${amigos.length?`<div class="trc-grid">${amigos.map(({c,u})=>{ const o=RKU[u], p=o.pub||{}; return `<div class="trc-it"><a href="#torcedor-${c}" style="display:flex;gap:12px;align-items:center;text-decoration:none;color:inherit;flex:1">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av">${esc((o.ap||'?').trim()[0]||'?').toUpperCase()}</span>`}<span><b>${esc(o.ap||'Torcedor')}</b><small class="uf">${p.fig!=null?`${N(p.fig)} figurinhas · ${p.conq||0} conquistas`:''}</small></span></a><button type="button" class="stx-limpa" data-tira="${c}" title="Tirar da lista">tirar</button></div>`; }).join('')}</div>`:'<p class="count">Quando você abrir o perfil de alguém pelo código, ele fica salvo aqui.</p>'}`;
 }
-function vTorcedor(uid){
-  uid=decodeURIComponent(uid); const o=(RKU||{})[uid];
-  if(!o) return `<a class="back" href="#torcedores">← Torcedores</a><p class="empty">Torcedor não encontrado.</p>`;
-  if(o.oculto&&uid!==GUID) return `<a class="back" href="#torcedores">← Torcedores</a><h1>${esc(o.ap)}</h1><p class="empty">Este perfil é privado.</p>`;
+function vTorcedor(cod){
+  const uid=uidPorCodigo(decodeURIComponent(cod)); const o=uid&&(RKU||{})[uid];
+  if(!o) return `<a class="back" href="#torcedores">← Amigos</a><p class="empty">Torcedor não encontrado. Confira o código.</p>`;
+  if(o.oculto&&uid!==GUID) return `<a class="back" href="#torcedores">← Amigos</a><h1>${esc(o.ap)}</h1><p class="empty">Este perfil é privado.</p>`;
   const p=o.pub||{}, fav=p.fav&&FIGN[p.fav];
   const av=Object.entries(o.aval||{}).filter(([id,a])=>byId[id]&&(a.n||a.t)).sort((a,b)=>String(b[1].d||'').localeCompare(String(a[1].d||'')));
   const avj=Object.entries(o.avj||{}).filter(([id,a])=>a.n||a.t).sort((a,b)=>(b[1].n||0)-(a[1].n||0));
   const pj=id=>D.jogadores.find(x=>slug(x.nome)===id);
   const sem=semanaDe(fmtD(hojeStr())); const rk=Object.values(o.res||{}).filter(x=>x&&x.d&&semanaDe(x.d)===sem).reduce((s,x)=>s+(+x.pts||0),0);
-  return `<a class="back" href="#torcedores">← Torcedores</a><div class="kicker">Perfil do torcedor${uid===GUID?' · você':''}</div>
+  return `<a class="back" href="#torcedores">← Amigos</a><div class="kicker">Perfil do torcedor${uid===GUID?' · você':''}</div>
   <div class="trc-head">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av" style="width:64px;height:64px;font-size:28px">${esc(o.ap.trim()[0]||'?').toUpperCase()}</span>`}<h1 style="margin:0">${esc(o.ap)}</h1></div>
   <div class="perfil-top">${fav?figHTML(fav):''}<div style="flex:1;min-width:260px"><div class="tiles">
    <div class="tile"><b>${N(p.fig||0)}</b><small class="basesm">de ${N(p.figTot||0)}</small><span>Figurinhas</span></div>
