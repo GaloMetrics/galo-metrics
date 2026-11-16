@@ -1405,7 +1405,7 @@ function figHTML(f, extra=''){
   return `<a class="fig ${f.r}${f.r!=='comum'?' foil':''} ${extra}" href="#jogador-${slug(f.nome)}" aria-label="Figurinha ${f.num}, ${esc(f.nomeV)}, ${ROT[f.r]}">
     <span class="fig-top"><span>Nº ${f.num}</span><span>${ROT[f.r]}</span></span>
     <span class="fig-ph"><svg viewBox="0 0 120 140" aria-hidden="true"><circle cx="60" cy="40" r="22"></circle><path d="M14 140 C14 92 34 72 60 72 C86 72 106 92 106 140 Z"></path></svg>${n>1?`<span class="fig-dup">+${n-1}</span>`:''}</span>
-    <span class="fig-nome">${esc(f.nomeV)}</span><span class="fig-stat">${esc(f.stat)}</span><span class="fig-per">${esc(f.periodo)}${posTxt(f.nome)?' · '+posTxt(f.nome):''}</span>${(G.vivo||{})[f.nome]?'<span class="fig-vivo">visto ao vivo</span>':''}</a>`;
+    <span class="fig-nome">${esc(f.nomeV)}</span><span class="fig-stat">${esc(f.stat)}</span><span class="fig-per">${esc(f.periodo)}${posTxt(f.nome)?' · '+posTxt(f.nome):''}</span>${(G.vivo||{})[f.nome]&&n?'<span class="fig-vivo">visto ao vivo</span>':''}</a>`;
 }
 function vazioHTML(f){ return `<div class="fig-vazio" aria-label="Espaço vazio da figurinha ${f.num}"><b>${f.num}</b><span>${esc(f.nomeV)}</span><small>${ROT[f.r]}</small></div>`; }
 
@@ -2165,7 +2165,7 @@ const TIPOS_CONQ=[
   ['figurinhas_todas','Tem todas estas figurinhas','x','Nomes separados por vírgula'],
   ['estadios_n','Esteve em N estádios diferentes','n','Conta os jogos marcados como "Eu estava no estádio"'],
   ['cidades_n','Viu o Galo em N cidades diferentes','n','Conta os jogos marcados como "Eu estava no estádio"'],
-  ['vivo_n','Ganhou N figurinhas vendo jogadores ao vivo','n',''],
+  ['vivo_n','Viu N jogadores diferentes ao vivo no estádio','n',''],
   ['jogo_aniversario','Visitou um jogo do dia do seu aniversário','','Usa o aniversário que a pessoa põe no Perfil'],
   ['jogo_ano_nasc','Visitou um jogo do ano em que nasceu','','Usa o ano de nascimento do Perfil'],
   ['jogador_chara','Visitou um jogador xará','','Compara com o primeiro nome que a pessoa põe no Perfil'],
@@ -2890,12 +2890,12 @@ function sincronizaVivo(){
   G.vivo ||= {}; let novas=0;
   Object.keys(G.vivo).forEach(n=>{ const j=byId[G.vivo[n]]; if(!j||!estValido(j)||!(diario()[j.id]||{}).est) delete G.vivo[n]; });
   vistoAoVivo().forEach(j=>{ const ns=new Set(elenco(j.escalacao_galo)); j.gols.forEach(g=>{ if(isGoal(g)) ns.add(g.jogador); });
-    ns.forEach(n=>{ if(FIGN[n] && !G.vivo[n]){ G.vivo[n]=j.id; if(!G.owned[n]){ G.owned[n]=1; novas++; } } }); });
-  if (novas){ gSave(); toast(`+${novas} figurinha${novas>1?'s':''}: jogadores que você viu ao vivo`); }
+    ns.forEach(n=>{ if(FIGN[n] && !G.vivo[n]) G.vivo[n]=j.id; }); });
+  gSave();
 }
 function secEstadio(){
   const L = vistoAoVivo();
-  if (!L.length) return `<h2>Fui ao estádio</h2><p class="empty">Nenhum jogo registrado ainda. Abra a página de um jogo e marque "Eu estava no estádio". Cada jogador do Galo que você viu em campo vira figurinha no seu álbum.</p>`;
+  if (!L.length) return `<h2>Fui ao estádio</h2><p class="empty">Nenhum jogo registrado ainda. Abra a página de um jogo e marque "Eu estava no estádio". Suas estatísticas de torcedor aparecem aqui.</p>`;
   const r = rec(L.filter(j=>j.resultado)), cnt=(o,k,v=1)=>{ o[k]=(o[k]||0)+v; };
   const galo={}, advJ={}, golsG={}, golsA={}, est={}, cid={}, adv={}, comp={}, anos={}, estPrim={}, cidPrim={};
   let pub=0, pubN=0, pen=0, falta=0, sofr=0;
@@ -2916,7 +2916,7 @@ function secEstadio(){
   const pior=[...L].filter(j=>j.resultado==='D').sort((a,b)=>(b.gc-b.gp)-(a.gc-a.gp))[0];
   const maiorPub=[...L].filter(j=>j.publico).sort((a,b)=>b.publico-a.publico)[0];
   let seq=0, best=0; L.forEach(j=>{ if(j.resultado&&j.resultado!=='D'){ seq++; best=Math.max(best,seq); } else if(j.resultado) seq=0; });
-  const vivo=Object.keys(G.vivo||{}).filter(n=>G.owned[n]);
+  const vivo=Object.keys(G.vivo||{});
   const ufs=new Set(Object.keys(cid).map(c=>(geoC(c)||{}).uf).filter(Boolean)), paises=new Set(Object.keys(cid).map(c=>(geoC(c)||{}).pais).filter(Boolean));
   const mx=Math.max(...Object.values(anos));
   const M=D.geo;
@@ -2928,7 +2928,7 @@ function secEstadio(){
   <div class="tiles"><div class="tile"><b>${r.gp}</b><span>Gols do Galo vistos</span></div><div class="tile"><b>${sofr}</b><span>Gols sofridos vistos</span></div><div class="tile"><b>${N(pub)}</b><span>Pessoas viram junto com você</span></div>
   <div class="tile"><b>${Object.keys(est).length}</b><span>Estádios</span></div><div class="tile"><b>${Object.keys(cid).length}</b><span>Cidades</span></div><div class="tile"><b>${Object.keys(adv).length}</b><span>Adversários</span></div></div>
   <p class="count">Público somado das fichas em ${pubN} dos seus ${L.length} jogos${pubN<L.length?' (os outros não têm público registrado)':''}.${best>1?` Maior sequência sem derrota que você viu: <b>${best} jogos</b>.`:''}${pen||falta?` Você viu ${pen} gol${pen===1?'':'s'} de pênalti e ${falta} de falta do Galo.`:''}</p>
-  <div class="grid2"><div><h3>Jogadores do Galo que você mais viu em campo</h3><table><tbody>${top(galo).map(([n,v])=>`<tr class="click" onclick="location.hash='jogador-${slug(n)}'"><td>${esc(nomeV(n))}${G.vivo&&G.vivo[n]?' <span class="tag light">figurinha</span>':''}</td><td class="n"><b>${v}</b></td></tr>`).join('')||'<tr><td>Os jogos que você marcou não têm escalação.</td></tr>'}</tbody></table>
+  <div class="grid2"><div><h3>Jogadores do Galo que você mais viu em campo</h3><table><tbody>${top(galo).map(([n,v])=>`<tr class="click" onclick="location.hash='jogador-${slug(n)}'"><td>${esc(nomeV(n))}${G.owned&&G.owned[n]?' <span class="tag light">figurinha</span>':''}</td><td class="n"><b>${v}</b></td></tr>`).join('')||'<tr><td>Os jogos que você marcou não têm escalação.</td></tr>'}</tbody></table>
   <h3>Quem você mais viu marcar</h3><table><tbody>${top(golsG,8).map(([n,v])=>`<tr class="click" onclick="location.hash='jogador-${slug(n)}'"><td>${esc(nomeV(n))}</td><td class="n"><b>${v}</b></td></tr>`).join('')||'<tr><td>Nenhum gol com autor.</td></tr>'}</tbody></table></div>
   <div><h3>Adversários que você mais viu em campo</h3><table><tbody>${top(advJ).map(([k,v])=>{ const [n,t]=k.split('|'); return `<tr><td>${esc(n)} <small class="uf">${esc(t)}</small></td><td class="n"><b>${v}</b></td></tr>`; }).join('')||'<tr><td>Sem escalação dos adversários.</td></tr>'}</tbody></table>
   <h3>Algozes que você viu marcar</h3><table><tbody>${top(golsA,6).map(([k,v])=>{ const [n,t]=k.split('|'); return `<tr><td>${esc(n)} <small class="uf">${esc(t)}</small></td><td class="n"><b>${v}</b></td></tr>`; }).join('')||'<tr><td>Ninguém marcou contra o Galo na sua frente.</td></tr>'}</tbody></table></div></div>
@@ -2939,7 +2939,7 @@ function secEstadio(){
   <div><h3>Competições</h3><table><tbody>${top(comp).map(([c,n])=>`<tr><td>${esc(c)}</td><td class="n">${n}</td></tr>`).join('')}</tbody></table>
   <h3>Por ano</h3><table class="seas"><tbody>${Object.keys(anos).sort().map(y=>`<tr><td class="mono">${y}</td><td class="n">${anos[y]}</td><td style="width:60%"><div class="hb"><i style="width:${100*anos[y]/mx}%"></i></div></td></tr>`).join('')}</tbody></table></div></div>
   <div class="note">Primeiro jogo: <a href="#jogo-${L[0].id}">${esc(resumoJogo(L[0]))}</a>${L.length>1?` · Último: <a href="#jogo-${L[L.length-1].id}">${esc(resumoJogo(L[L.length-1]))}</a>`:''}${big?`<br>Maior vitória que você viu: <a href="#jogo-${big.id}">Atlético ${placar(big)} ${esc(big.adversario)}</a>`:''}${pior?` · Pior derrota: <a href="#jogo-${pior.id}">Atlético ${placar(pior)} ${esc(pior.adversario)}</a>`:''}${maiorPub?`<br>Maior público com você: <a href="#jogo-${maiorPub.id}">${N(maiorPub.publico)} pessoas, ${esc(maiorPub.adversario)} (${fmtD(maiorPub.data)})</a>`:''}</div>
-  <h3>Figurinhas ganhas ao vivo</h3>${vivo.length?`<p class="count">${vivo.length} jogadores que você viu em campo já estão colados no seu <a href="#album">álbum</a>.</p><div class="pq-ex">${vivo.slice(0,80).map(n=>`<a class="chip" href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`).join('')}</div>`:'<p class="count">Quando você marca um jogo com escalação, os jogadores do Galo que entraram em campo viram figurinha no seu álbum.</p>'}
+  <h3>Jogadores que você viu ao vivo</h3>${vivo.length?`<p class="count">${vivo.length} jogadores do Galo que você viu em campo. No seu <a href="#album">álbum</a>, as figurinhas que você já tem desses jogadores ganham o selo "visto ao vivo".</p><div class="pq-ex">${vivo.slice(0,80).map(n=>`<a class="chip" href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`).join('')}</div>`:'<p class="count">Marque jogos com escalação para ver aqui os jogadores do Galo que você viu em campo.</p>'}
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${tw(`Já fui a ${L.length} ${L.length===1?'jogo':'jogos'} do Galo no estádio: ${r.V}V ${r.E}E ${r.D}D (${ap}). Vi ${r.gp} gols do Galo, em ${Object.keys(est).length} estádios e ${Object.keys(cid).length} cidades, com ${N(pub)} pessoas ao meu lado.`)}${artBtn({t:'estadio'})}</div>
   <h3>Jogos em que você esteve</h3>${matchTable([...L].reverse())}`;
 }
