@@ -2844,8 +2844,8 @@ function tabCid(l){ return `<table><thead><tr><th>Cidade</th><th class="n">Jogos
 
 /* ---------- Fui ao estádio: estatísticas completas ---------- */
 /* Antifraude do "fui ao estádio": precisa do ano de nascimento, ter pelo menos 4 anos no dia do jogo,
-   jogo já disputado, e no máximo 3 jogos novos marcados por dia. Jogos fora da regra não contam nem dão figurinha. */
-const ANO_MIN_NASC=1930, IDADE_MIN=4, EST_POR_DIA=3;
+   e jogo já disputado. Jogos fora da regra não contam nem dão figurinha. */
+const ANO_MIN_NASC=1930, IDADE_MIN=4;
 const anoTravado=()=>Object.values(diario()).some(x=>x&&x.est);
 function estValido(j){ const a=+((G.perfil||{}).ano)||0; return !!(a>=ANO_MIN_NASC && j && j.resultado && j.data<=hojeStr() && +j.data.slice(0,4)>=a+IDADE_MIN); }
 function motivoEstadio(j){
@@ -2853,8 +2853,6 @@ function motivoEstadio(j){
   if(!a) return 'Para registrar que esteve no estádio, informe seu <a href="#perfil">ano de nascimento no Perfil</a>.';
   if(!j.resultado||j.data>hojeStr()) return 'Só dá para registrar jogos que já aconteceram.';
   if(+j.data.slice(0,4)<a+IDADE_MIN) return `Pelo seu ano de nascimento (${a}), você ainda não tinha idade para estar neste jogo.`;
-  const hoje=hojeStr(), n=Object.values(diario()).filter(x=>x&&x.est&&x.estEm===hoje).length;
-  if(n>=EST_POR_DIA) return `Limite de ${EST_POR_DIA} jogos no estádio registrados por dia. Volte amanhã para registrar mais.`;
   return '';
 }
 function vistoAoVivo(){ return Object.entries(diario()).filter(([id,x])=>x.est&&byId[id]&&estValido(byId[id])).map(([id])=>byId[id]).sort((a,b)=>a.data<b.data?-1:1); }
