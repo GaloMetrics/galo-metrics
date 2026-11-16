@@ -452,6 +452,7 @@ body.pko-on{overflow:hidden}
 .trc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:16px}.trc-it{display:flex;gap:12px;align-items:center;border:2px solid var(--ink);padding:10px;text-decoration:none;color:inherit}.trc-it:hover{background:var(--soft)}.trc-it img,.trc-head img{width:44px;height:44px;border-radius:50%;object-fit:cover}.trc-it span{display:flex;flex-direction:column}
 .trc-head{display:flex;align-items:center;gap:16px;margin:8px 0 14px}.trc-head img{width:64px;height:64px}
 .aval-it em{font-size:14px;color:var(--mute);display:block}
+.arq-dias{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.arq-dia{display:flex;flex-direction:column;align-items:center;border:2px solid var(--ink);padding:8px 12px;text-decoration:none;color:inherit;min-width:86px}.arq-dia b{font-family:'Oswald',sans-serif;font-size:18px}.arq-dia small{font-size:11px;color:var(--mute)}.arq-dia.on,.arq-dia:hover{background:var(--ink);color:var(--paper)}.arq-dia.on small,.arq-dia:hover small{color:var(--paper)}
 .tipos-sug{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tipos-sug .chip{cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 12px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:13px}.tipos-sug .chip:has(input:checked){background:var(--ink);color:var(--paper)}.tipos-sug input{margin:0}
 .sug-it{border-bottom:1px dotted var(--ink);padding:12px 0}.sug-it p{margin:6px 0}.sug-it.vista{opacity:.55}.sug-img{display:block;max-width:220px;max-height:220px;margin:8px 0;border:2px solid var(--ink);background:#fff}
 .aceita input{width:70px;padding:6px}.aceita{display:inline-flex;gap:6px;align-items:center;margin-right:6px}
@@ -1883,22 +1884,30 @@ function vPerfil(){
 /* Escolha do dia estável: cada candidato ganha uma nota fixa (dia + desafio + nome); vence a menor.
    Se a base ganhar jogadores ou jogos novos no meio do dia, a resposta só muda se o novo for justamente o vencedor. */
 function hashDia(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } h^=h>>>13; h=Math.imul(h,0x5bd1e995); h^=h>>>15; return h>>>0; }
-function escolheDia(l, nome, key){ let best=null, bh=Infinity; const d=hojeStr()+'|'+nome+'|'; l.forEach(x=>{ const h=hashDia(d+key(x)); if(h<bh){ bh=h; best=x; } }); return best; }
+/* Dia dos desafios: hoje, ou um dia anterior quando a pessoa joga pelo arquivo (#desafios?dia=AAAA-MM-DD) */
+const LANC_DESAF='2026-11-16'; let DIA_JOGO=null;
+const diaDesafio=()=>DIA_JOGO||hojeStr();
+function diaArquivo(params){ const d=new URLSearchParams(params||'').get('dia'); return d&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&d>=LANC_DESAF&&d<hojeStr()?d:null; }
+function escolheDia(l, nome, key){ let best=null, bh=Infinity; const d=diaDesafio()+'|'+nome+'|'; l.forEach(x=>{ const h=hashDia(d+key(x)); if(h<bh){ bh=h; best=x; } }); return best; }
 /* Desafios só com jogadores que a torcida conhece: jogou de 1970 para cá e tem pelo menos 40 jogos ou 10 gols */
 let PJ_MAP=null; const pjDe=n=>{ if(!PJ_MAP){ PJ_MAP={}; D.jogadores.forEach(p=>PJ_MAP[p.nome]=p); } return PJ_MAP[n]; };
 function fConhecido(f){ const p=pjDe(f.nome); if(!p) return false; return +(String(p.ultimo||'').slice(0,4)||0)>=1970 && ((p.jogos||0)>=40 || golsBest(p)>=10); }
-function rngDia(nome){ let h=2166136261; const s=hojeStr()+nome; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } let a=h>>>0; return ()=>{ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function rngDia(nome){ let h=2166136261; const s=diaDesafio()+nome; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } let a=h>>>0; return ()=>{ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
 const semAc=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase();
-function jdHoje(){ gExtra(); return (G.jd[hojeStr()] ||= {}); }
+function jdHoje(){ gExtra(); return (G.jd[diaDesafio()] ||= {}); }
 function jdFim(jogo, ok, pts){ const d=jdHoje(); d[jogo]=Object.assign(d[jogo]||{}, {ok, fim:true});
-  const h=hojeStr(); if(G.jdSeq.ult!==h){ G.jdSeq.atual = G.jdSeq.ult&&diasEntre(G.jdSeq.ult,h)===1 ? G.jdSeq.atual+1 : 1; G.jdSeq.ult=h; G.jdSeq.max=Math.max(G.jdSeq.max,G.jdSeq.atual); }
+  const h=hojeStr(); if(!DIA_JOGO&&G.jdSeq.ult!==h){ G.jdSeq.atual = G.jdSeq.ult&&diasEntre(G.jdSeq.ult,h)===1 ? G.jdSeq.atual+1 : 1; G.jdSeq.ult=h; G.jdSeq.max=Math.max(G.jdSeq.max,G.jdSeq.atual); }
   if(pts>0){ G.pts+=pts; G.total+=pts; G.hist.unshift({d:Date.now(), n:pts, m:'desafio: '+jogo}); }
   gSave(); atualizaChip(); checaConquistas(); if(pts>0) toast(`+${pts} pontos no desafio`); }
 const DESAF=[['conexoes','Conexões alvinegras','Separe 16 jogadores em 4 grupos com algo em comum.'],['impostor','Impostor','Quatro jogadores têm algo em comum. Ache o que não tem.'],['carreira','Adivinhe pela carreira','Descubra o jogador pelos números da passagem dele pelo Galo.'],['galodle','Galodle','Adivinhe o jogador em 6 tentativas, letra por letra.'],['quem','Quem é?','Descubra o jogador do dia pelas pistas: época, gols, jogos e raridade.'],['placar','Placar do dia','Acerte o placar de um jogo histórico em 3 chutes.'],['maismenos','Mais ou menos','Quem fez mais gols pelo Galo? Faça a maior sequência.'],['escalacao','Complete a escalação','Um jogo marcante deste século com 5 titulares escondidos.']];
 function vDesafios(){ const d=jdHoje();
+  const dias=[]; for(let d=new Date(LANC_DESAF+'T12:00:00'); ; d.setDate(d.getDate()+1)){ const k=d.toISOString().slice(0,10); if(k>=hojeStr()) break; dias.push(k); }
+  const arq=dias.length?`<h2>Jogar dias anteriores</h2><p class="count">Os desafios de cada dia continuam disponíveis. Jogar o arquivo dá Metricoins, mas não entra no ranking da semana.</p><div class="arq-dias">${dias.reverse().map(k=>{ const x=G.jd[k]||{}, v=DESAF.filter(([c])=>x[c]&&x[c].ok).length, f=DESAF.filter(([c])=>x[c]&&x[c].fim).length; return `<a class="arq-dia${k===DIA_JOGO?' on':''}" href="#desafios?dia=${k}"><b>${fmtD(k).slice(0,5)}</b><small>${f?`${v}/${DESAF.length} vencidos`:'não jogado'}</small></a>`; }).join('')}</div>`:'';
+  if(DIA_JOGO) return `<a class="back" href="#desafios">← Desafios de hoje</a><div class="kicker">Arquivo</div><h1>Desafios de ${fmtD(DIA_JOGO)}</h1><p class="lede">Jogue os desafios desse dia. Vale Metricoins, mas não entra no ranking da semana.</p>
+  <div class="desaf-grid">${DESAF.map(([k,n,t])=>`<a class="desaf ${d[k]&&d[k].fim?(d[k].ok?'ok':'fim'):''}" href="#desafio-${k}"><span class="osw">${d[k]&&d[k].fim?(d[k].ok?'★ Vencido':'Jogado'):'Disponível'}</span><b>${n}</b><p>${t}</p></a>`).join('')}</div>${arq}`;
   return `<div class="kicker">Todo dia tem jogo</div><h1>Desafios do dia</h1><p class="lede">Oito joguinhos novos a cada dia, iguais para todo mundo. Vencer dá pontos para o álbum, e o resultado copiado vale para o <a href="#ranking">ranking da semana</a>.</p>
   <div class="desaf-grid">${DESAF.map(([k,n,t])=>`<a class="desaf ${d[k]&&d[k].fim?(d[k].ok?'ok':'fim'):''}" href="#desafio-${k}"><span class="osw">${d[k]&&d[k].fim?(d[k].ok?'★ Vencido hoje':'Jogado hoje'):'Disponível'}</span><b>${n}</b><p>${t}</p></a>`).join('')}</div>
-  <p class="count">Sequência de dias jogando: ${G.jdSeq.atual} (recorde ${G.jdSeq.max}). Os desafios trocam à meia-noite.</p>`; }
+  <p class="count">Sequência de dias jogando: ${G.jdSeq.atual} (recorde ${G.jdSeq.max}). Os desafios trocam à meia-noite.</p>${arq}`; }
 function compartilha(txt){ try{ navigator.clipboard.writeText(txt).then(()=>toast('Resultado copiado. Cole onde quiser.'),()=>toast('Não deu para copiar.')); }catch(e){ toast('Não deu para copiar.'); } }
 
 /* Galodle */
@@ -1944,7 +1953,7 @@ function vQuem(){
 }
 
 /* Placar do dia */
-function placarJogo(){ const r=rngDia('placar'); const l=J.filter(j=>j.resultado&&j.gp!=null&&j.gp+j.gc>=2&&j.grupo!=='Amistoso'&&!j.data_aprox&&j.data<hojeStr()&&j.data>='1970'&&!/torneio in[ií]cio/i.test(j.competicao||'')&&!(j.adversario_id==='cruzeiro mg'&&j.resultado==='D')); return escolheDia(l,'placar',j=>j.data+' '+j.adversario); }
+function placarJogo(){ const r=rngDia('placar'); const l=J.filter(j=>j.resultado&&j.gp!=null&&j.gp+j.gc>=2&&j.grupo!=='Amistoso'&&!j.data_aprox&&j.data<diaDesafio()&&j.data>='1970'&&!/torneio in[ií]cio/i.test(j.competicao||'')&&!(j.adversario_id==='cruzeiro mg'&&j.resultado==='D')); return escolheDia(l,'placar',j=>j.data+' '+j.adversario); }
 function vPlacar(){
   const j=placarJogo(), st=(jdHoje().placar ||= {t:[], fim:false, ok:false});
   setTimeout(()=>{ const b=$('#plenv'); if(!b) return; b.onclick=()=>{ const a=$('#plg').value, c=$('#pla').value; if(a===''||c===''){ $('#plerr').textContent='Preencha os dois lados.'; return; } const g=[+a,+c];
@@ -2128,7 +2137,7 @@ function vCarreira(){
 /* ---------- Ranking (com código de conferência) ---------- */
 function hashTxt(s){ let h=5381; for(let i=0;i<s.length;i++) h=(h*33+s.charCodeAt(i))>>>0; return h.toString(36).toUpperCase().slice(-5); }
 const RK_SAL='galo-1908';
-function textoRank(jogo, res, pts){ const ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||'Torcedor'; const d=fmtD(hojeStr()); const cod=hashTxt([RK_SAL,ap,d,jogo,pts].join('|'));
+function textoRank(jogo, res, pts){ const ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||'Torcedor'; const d=fmtD(diaDesafio()); const cod=hashTxt([RK_SAL,ap,d,jogo,pts].join('|'));
   return `${jogo} ${d}: ${res}\n${ap} · ${pts} pts no ranking · cód ${cod}\nGalo Metrics`; }
 function leTextoRank(t){ const out=[]; const re=/^(.+?) (\d\d\/\d\d\/\d{4}): [^\n]*\n(?:[^\n]*\n){0,8}?([^\n]+?) · (\d+) pts no ranking · cód ([0-9A-Z]+)/gm; let m;
   while((m=re.exec(t))){ const [_,jogo,d,ap,pts,cod]=m; out.push({jogo,d,ap,pts:+pts,ok:hashTxt([RK_SAL,ap,d,jogo,+pts].join('|'))===cod}); } return out; }
@@ -2138,7 +2147,7 @@ let RKU={};
 async function carregaRanking(){ if(!GDB) return; try{ const s=await GDB.collection('ranking').limit(60).get(); s.docs.forEach(d=>{ RANK[d.id]=d.data(); }); }catch(e){}
   try{ const s=await GDB.collection('rankuser').limit(1000).get(); RKU={}; s.docs.forEach(d=>{ RKU[d.id]=d.data(); }); }catch(e){} }
 /* Resultado entra sozinho no ranking quando a pessoa está logada */
-async function autoRank(txt){ if(!GDB||!GUID) return; const it=leTextoRank(txt).filter(x=>x.ok); if(!it.length) return; G.rkEnv ||= {};
+async function autoRank(txt){ if(!GDB||!GUID||DIA_JOGO) return; const it=leTextoRank(txt).filter(x=>x.ok); if(!it.length) return; G.rkEnv ||= {};
   const novos=it.filter(x=>G.rkEnv[x.jogo+' '+x.d]!==x.pts); if(!novos.length) return;
   try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.res ||= {};
     const lim=new Date(Date.now()-35*864e5);
@@ -2506,6 +2515,7 @@ function route(){
   document.body.classList.remove('navopen'); const nb=document.getElementById('navbtn'); if(nb) nb.setAttribute('aria-expanded','false');
   try{ sincronizaVivo(); }catch(e){}
   const raw=(location.hash||'#inicio').slice(1); const [h0,params]=raw.split('?'); const h=decodeURIComponent(h0); let html, sec=h.split('-')[0];
+  DIA_JOGO=(h==='desafios'||h.startsWith('desafio-'))?diaArquivo(params):null;
   if(h==='inicio') html=vInicio();
   else if(h==='jogos') html=vJogos(params);
   else if(h.startsWith('jogo-')) {html=vJogo(+h.slice(5)); sec='jogos';}
@@ -2551,6 +2561,7 @@ function route(){
   else {html=vInicio(); sec='inicio';}
   try{ marcaVisita(h); }catch(e){}
   if(/^(jogo|jogador|adversario|cidade)-/.test(h)) html+=`<p class="count sug-link"><a href="#sugestoes?${new URLSearchParams({sobre:h})}">Viu um erro nesta página, ou tem um escudo ou foto para mandar? Fale com a gente →</a></p>`;
+  if(DIA_JOGO&&(h==='desafios'||h.startsWith('desafio-'))) html=html.replace(/href="#desafio(s|-[a-z]+)"/g,(m,x)=>`href="#desafio${x}?dia=${DIA_JOGO}"`);
   $('#app').innerHTML=notaPagina(h)+html;
   ligaNota();
   const alvo = ['palpites','diario','ranking','album','perfil','dono','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve','torcedores'].includes(h)?h:sec;
@@ -3368,7 +3379,7 @@ function blocoAvalJogador(p){
 const ESC_OCULTOS=11, ESC_ERROS=6;
 function escJogo(){
   const ok=n=>n&&FIGN[n];
-  const L=J.filter(j=>j.data>='2000-01-01'&&j.data<hojeStr()&&j.resultado&&j.escalacao_galo&&(j.escalacao_galo.titulares||[]).length===11&&j.escalacao_galo.titulares.every(ok)
+  const L=J.filter(j=>j.data>='2000-01-01'&&j.data<diaDesafio()&&j.resultado&&j.escalacao_galo&&(j.escalacao_galo.titulares||[]).length===11&&j.escalacao_galo.titulares.every(ok)
     &&(ehFinal(j)||ehMata(j)||j.adversario_id==='cruzeiro mg')&&!(j.adversario_id==='cruzeiro mg'&&j.resultado==='D'));
   return escolheDia(L,'escalacao',j=>j.data+' '+j.adversario);
 }
