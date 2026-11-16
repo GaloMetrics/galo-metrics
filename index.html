@@ -1663,8 +1663,10 @@ function contaBotao(){
   mn.onclick=e=>{ if(e.target.id==='gmsair') window.GM_LOGOUT(); mn.hidden=true; };
   document.addEventListener('click',e=>{ if(!box.contains(e.target)) mn.hidden=true; });
 }
+const DESAF_VER='2026-11-16b'; // trocar este valor zera os desafios do dia para todo mundo (usado quando um desafio muda no meio do dia)
 async function gmInit(){
   gLoad(); aplicaAnim(); atualizaChip();
+  try{ gExtra(); if(G.jdVer!==DESAF_VER){ delete G.jd[hojeStr()]; G.jdVer=DESAF_VER; gSave(); } }catch(e){}
   setTimeout(()=>{ if(!GM_PRONTO){ GM_PRONTO=true; route(); } }, 8000);
   if(window.GM_BACKEND_READY){ try{ await window.GM_BACKEND_READY; }catch(e){} }
   if(!window.claude||!window.claude.use){ GM_PRONTO=true; route(); return; }
@@ -2065,7 +2067,7 @@ function vConexoes(){
       route.keep=true; route(); };
     const mx=$('#cxmix'); if(mx) mx.onclick=()=>{ st.mix=(st.mix||0)+1; gSave(); route.keep=true; route(); };
     const lp=$('#cxlimpa'); if(lp) lp.onclick=()=>{ st.sel=[]; route.keep=true; route(); };
-    const s=$('#cxshare'); if(s) { const _t=()=>textoRank('Conexões alvinegras', `${st.ok?`${(st.h||[]).length} tentativas`:'X'}\n${(st.h||[]).map(i=>i<0?'❌':['🟨','🟩','🟦','🟪'][i]||'⬛').join('')}`, st.ok?Math.max(1,5-st.erros):0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); };
+    const s=$('#cxshare'); if(s) { const _t=()=>textoRank('Conexões alvinegras', `${st.ok?`${(st.h||[]).length} tentativas`:'X'}\n${(st.h||[]).map(i=>i<0?'❌':['🟨','⬜','🟫','⬛'][i]||'⬛').join('')}`, st.ok?Math.max(1,5-st.erros):0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); };
   });
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Conexões alvinegras</h1>
   <p class="count">Separe os 16 jogadores em 4 grupos de 4 que têm algo em comum. Você pode errar 3 vezes.</p>
