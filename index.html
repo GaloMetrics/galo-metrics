@@ -548,8 +548,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script src="firebase-config.js"></script>
-<script src="backend-firebase.js"></script>
+<script>window.GM_BUILD='20261116203156';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261116203156"></script>
+<script src="backend-firebase.js?v=20261116203156"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1677,7 +1678,7 @@ function contaBotao(){
   if(!GUID){ lg.className=''; lg.innerHTML=AV_VAZIO+'<span>Entrar</span>'; lg.title='Entre com sua conta Google para salvar pontos, enviar sugestões e aparecer nos rankings'; lg.onclick=()=>window.GM_LOGIN(); mn.hidden=true; return; }
   const nome=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||'Você', foto=window.GM_USER_PHOTO;
   lg.className='on'; lg.innerHTML=(foto?`<span class="av"><img src="${esc(foto)}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.outerHTML=AV_VAZIO"></span>`:AV_VAZIO)+`<span>${esc(nome.split(' ')[0])}</span>`; lg.title='Sua conta';
-  mn.innerHTML=`<span class="quem">Conectado como <b>${esc(window.GM_USER_NAME||nome)}</b></span><a href="#perfil">Meu perfil e conquistas</a><a href="#diario">Meu diário</a><a href="#album">Meu álbum</a>${DONO?'<a href="#dono">Dar Metricoins</a>':''}<button type="button" id="gmsair">Sair</button>`;
+  mn.innerHTML=`<span class="quem">Conectado como <b>${esc(window.GM_USER_NAME||nome)}</b></span><a href="#perfil">Meu perfil e conquistas</a><a href="#diario">Meu diário</a><a href="#album">Meu álbum</a>${DONO?'<a href="#dono">Metricoins e ajustes</a>':''}<button type="button" id="gmsair">Sair</button>`;
   lg.onclick=e=>{ e.stopPropagation(); mn.hidden=!mn.hidden; };
   mn.onclick=e=>{ if(e.target.id==='gmsair') window.GM_LOGOUT(); mn.hidden=true; };
   document.addEventListener('click',e=>{ if(!box.contains(e.target)) mn.hidden=true; });
@@ -2600,7 +2601,7 @@ function route(){
   else if(h==='ranking') {html=vRanking(); sec='desafios';}
   else if(h==='novo-jogo') {html=vNovoJogo(); sec='jogos';}
   else if(h==='album') html=vAlbum();
-  else if(h==='dono') html=vDono()+blocoMoedas();
+  else if(h==='dono') html=vDono()+blocoMoedas()+blocoAjuste();
   else if(h==='embreve') html=vEmBreve();
   else if(h==='comparar') {html=vComparar(params); sec='jogadores';}
   else if(h==='competicoes') html=vCompeticoes();
@@ -2628,7 +2629,7 @@ function route(){
 }
 
 const inline=document.getElementById('db');
-(inline&&inline.textContent.trim().length>2 ? Promise.resolve(JSON.parse(inline.textContent)) : fetch('data/galo.json').then(r=>r.json())).then(d=>{
+(inline&&inline.textContent.trim().length>2 ? Promise.resolve(JSON.parse(inline.textContent)) : fetch('data/galo.json'+(window.GM_BUILD?'?v='+window.GM_BUILD:'')).then(r=>r.json())).then(d=>{
   D=d; J=d.jogos; ESC=d.escudos||{}; J.forEach(j=>byId[j.id]=j); buildAcc();
   const FONTES=[['O Canto do Galo','https://galopedia.blogspot.com'],['RSSSF Brasil','https://www.rsssfbrasil.com'],['Futebol80','https://www.futebol80.com.br'],['Galo Digital','https://www.galodigital.com.br'],['ogol','https://www.ogol.com.br'],['Transfermarkt','https://www.transfermarkt.com.br'],['Atletico.com.br','https://atletico.com.br'],['pesquisas pessoais',null]];
   $('#foot').innerHTML=`Galo Metrics · versão beta · ${N(J.length)} jogos · Atualizado em ${fmtD(d.meta.gerado_em)}<br>Fontes: ${FONTES.map(([n,u])=>u?`<a href="${u}" target="_blank" rel="noopener">${esc(n)}</a>`:esc(n)).join(' · ')}<br><a href="#sugestoes">Sugestões, correções, escudos e fotos</a> · <a href="#colaboradores">Colaboradores</a> · <a href="#apoie">♥ Apoie o Galo Metrics</a>`;
@@ -3320,7 +3321,8 @@ function pagaPresentes(){
   let pacs=0;
   (PRESENTES.itens||[]).filter(x=>x.uid===GUID&&!G.colabPago[x.k]).forEach(x=>{ G.colabPago[x.k]=1; const p=+x.pts||0, pc=+x.pac||0; motivo=x.motivo||motivo;
     if(p){ G.pts+=p; G.total+=p; G.hist.unshift({d:Date.now(), n:p, m:'presente: '+(x.motivo||'Metricoins do Galo Metrics')}); ganhou+=p; }
-    if(pc){ G.pacPres=(G.pacPres||0)+pc; pacs+=pc; } });
+    if(pc){ G.pacPres=(G.pacPres||0)+pc; pacs+=pc; }
+    if(x.acao) aplicaAjuste(x); });
   if(ganhou||pacs){ gSave(); atualizaChip(); const o=[ganhou?`${N(ganhou)} Metricoins`:'', pacs?`${pacs} ${pacs===1?'pacotinho':'pacotinhos'}`:''].filter(Boolean).join(' e '); setTimeout(()=>toast(`Você ganhou ${o}!${motivo?' '+motivo:''}${pacs?' Abra no Álbum.':''}`),600); }
 }
 async function registraPerfil(){
@@ -3329,13 +3331,65 @@ async function registraPerfil(){
     o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.nome=window.GM_USER_NAME||o.nome||''; o.visto=hoje;
     await ref.set(o); RKU[GUID]=o; G.perfilReg=hoje; gSave(); }catch(e){}
 }
-function blocoMoedas(){
-  if(!DONO) return '';
+/* ---------- Ajustes do dono na conta de um torcedor ---------- */
+const AJ_NOMES={zera:'Desafios do dia reiniciados', zeratudo:'Todos os desafios reiniciados', perfil:'Perfil atualizado', est:'Marcações de estádio apagadas'};
+function aplicaAjuste(x){ gExtra(); let msg='';
+  const dBr=k=>k.split('-').reverse().join('/');
+  const limpaRk=f=>{ G.rkEnv ||= {}; Object.keys(G.rkEnv).forEach(k=>{ if(f(k)) delete G.rkEnv[k]; }); };
+  if(x.acao==='zera'&&x.dia){ delete G.jd[x.dia]; limpaRk(k=>k.endsWith(' '+dBr(x.dia))); if(x.dia===hojeStr()) G.jdVer=DESAF_VER; msg=`Os desafios de ${fmtD(x.dia)} foram reiniciados. Pode jogar de novo!`; }
+  else if(x.acao==='zeratudo'){ G.jd={}; G.jdSeq={ult:'',atual:0,max:0}; G.jdVer=DESAF_VER; limpaRk(()=>true); msg='Seus desafios foram reiniciados. Pode jogar de novo!'; }
+  else if(x.acao==='perfil'&&x.campos){ const c=x.campos; ['apelido','nome','aniv','fav'].forEach(k=>{ if(c[k]!==undefined) G.perfil[k]=c[k]; }); delete G.perfilReg; delete G.resumoPub; msg='Seu perfil foi atualizado pelo Galo Metrics.'; setTimeout(()=>{ try{ registraPerfil(); publicaResumo(); atualizaChip(); }catch(e){} },300); }
+  else if(x.acao==='est'){ Object.values(G.diario||{}).forEach(d=>{ if(d&&d.est) delete d.est; }); delete G.resumoPub; msg='Suas marcações de jogos no estádio foram apagadas.'; }
+  if(msg){ gSave(); setTimeout(()=>{ toast(msg); if(GM_PRONTO) route(); },900); }
+}
+function pessoasDono(){
   const pessoas={}; Object.entries(RKU||{}).forEach(([uid,o])=>{ pessoas[uid]={uid, nome:o.ap||o.nome||'Torcedor', det:o.nome&&o.nome!==o.ap?o.nome:''}; });
   (SUG_TODAS||[]).forEach(x=>{ if(!pessoas[x.uid]) pessoas[x.uid]={uid:x.uid, nome:x.quem||x.apelido||'Torcedor', det:'enviou sugestão'}; });
   (COLAB.itens||[]).forEach(x=>{ if(!pessoas[x.uid]) pessoas[x.uid]={uid:x.uid, nome:x.nome||'Torcedor', det:'colaborador'}; });
+  return pessoas;
+}
+function blocoAjuste(){
+  if(!DONO) return '';
+  try{ if(typeof figuras==='function') figuras(); }catch(e){}
+  const pessoas=pessoasDono(); const L=Object.values(pessoas).sort((a,b)=>a.nome.localeCompare(b.nome));
+  const rec=(PRESENTES.itens||[]).filter(x=>x.acao).slice().reverse().slice(0,10);
+  setTimeout(()=>{ const b=$('#ajok'); if(!b) return;
+    const sel=$('#ajacao'), mostra=()=>{ const a=sel.value; $('#ajdiabox').hidden=a!=='zera'; $('#ajpfbox').hidden=a!=='perfil'; $('#ajrkbox').hidden=!(a==='zera'||a==='zeratudo'); };
+    sel.onchange=mostra; mostra();
+    $('#ajquem').onchange=()=>{ const o=RKU[$('#ajquem').value]; if(o&&o.ap) $('#ajap').placeholder='atual: '+o.ap; };
+    b.onclick=async()=>{ const msg=$('#ajmsg'); let uid=$('#ajquem').value||($('#ajuid').value||'').trim(); const a=sel.value;
+      if(!uid){ msg.textContent='Escolha o torcedor na lista ou cole o UID dele.'; return; }
+      if(!/^[A-Za-z0-9_-]{6,128}$/.test(uid)){ msg.textContent='UID inválido.'; return; }
+      const p=pessoas[uid]||{uid,nome:'Torcedor'}; const item={k:'aj_'+Date.now().toString(36), uid, nome:p.nome, pts:0, acao:a, quando:new Date().toISOString()};
+      if(a==='zera'){ item.dia=$('#ajdia').value||hojeStr(); }
+      if(a==='perfil'){ const c={}; const ap=$('#ajap').value.trim(), nm=$('#ajnome').value.trim().split(/\s+/)[0]||'', an=$('#ajaniv').value, fv=$('#ajfav').value.trim();
+        if(fv&&!FIGN[fv]){ msg.textContent='Ídolo: escolha um jogador da lista.'; return; }
+        if(ap) c.apelido=ap.slice(0,30); if(nm) c.nome=nm.slice(0,30); if(an) c.aniv=an.slice(5); if($('#ajanivx').checked) c.aniv=''; if(fv) c.fav=fv;
+        if(!Object.keys(c).length){ msg.textContent='Preencha pelo menos um campo do perfil.'; return; } item.campos=c; }
+      msg.textContent='Enviando…';
+      try{ const ref=GDB.doc('colab/presentes'); const s=await ref.get(); const it=s.exists?(s.data().itens||[]):[];
+        await ref.set({itens:[...it,item].slice(-500)}); PRESENTES={itens:[...it,item]};
+        if((a==='zera'||a==='zeratudo')&&$('#ajrank').checked){ try{ const r=GDB.doc('rankuser/'+uid); const rs=await r.get(); if(rs.exists){ const o=rs.data(); o.res ||= {}; const dBr=(item.dia||'').split('-').reverse().join('/'); Object.keys(o.res).forEach(k=>{ if(a==='zeratudo'||o.res[k].d===dBr) delete o.res[k]; }); await r.set(o); RKU[uid]=o; } }catch(e){ console.warn(e); } }
+        if(a==='perfil'&&item.campos.apelido){ try{ const r=GDB.doc('rankuser/'+uid); const rs=await r.get(); if(rs.exists){ const o=rs.data(); o.ap=item.campos.apelido; await r.set(o); RKU[uid]=o; } }catch(e){} }
+        msg.textContent=`Pronto: ${AJ_NOMES[a].toLowerCase()} para ${p.nome}. Vale na próxima vez que a pessoa abrir ou recarregar o site.`; toast('Ajuste enviado.');
+        if(uid===GUID){ aplicaAjuste(item); G.colabPago ||= {}; G.colabPago[item.k]=1; gSave(); } }
+      catch(e){ console.error(e); msg.textContent='Não foi possível enviar agora.'; } }; });
+  return `<h2>Ajustar a conta de um torcedor</h2>
+  <p class="count">Para quando algo deu errado com um amigo: reiniciar os desafios para ele jogar de novo, corrigir apelido, nome ou aniversário, ou apagar marcações de estádio. A mudança cai na próxima visita da pessoa, com um aviso.</p>
+  <div class="dono"><div class="dgrid">${L.length?`<label>Torcedor<select id="ajquem"><option value="">Escolha…</option>${L.map(p=>`<option value="${esc(p.uid)}">${esc(p.nome)}${p.det?' ('+esc(p.det)+')':''}${p.uid===GUID?' (você)':''}</option>`).join('')}</select></label>`:'<input type="hidden" id="ajquem" value="">'}<label>ou UID<input id="ajuid" placeholder="cole o UID do usuário" autocomplete="off"></label></div>
+  <label>O que fazer<select id="ajacao"><option value="zera">Reiniciar os desafios de um dia</option><option value="zeratudo">Reiniciar todos os desafios (todos os dias)</option><option value="perfil">Corrigir o perfil (apelido, nome, aniversário, ídolo)</option><option value="est">Apagar as marcações de jogos no estádio</option></select></label>
+  <div id="ajdiabox"><label>Dia<input id="ajdia" type="date" value="${hojeStr()}" max="${hojeStr()}"></label></div>
+  <label class="chk" id="ajrkbox" style="margin:8px 0"><input type="checkbox" id="ajrank" checked> Ao reiniciar, tirar também o resultado desse dia do ranking da semana</label>
+  <div id="ajpfbox" hidden><p class="count" style="margin:6px 0">Deixe em branco o que não for mudar.</p><div class="dgrid"><label>Apelido<input id="ajap" maxlength="30"></label><label>Primeiro nome<input id="ajnome" maxlength="30"></label><label>Aniversário<input id="ajaniv" type="date"></label><label>Ídolo<input id="ajfav" list="ajfl" placeholder="nome do jogador"></label></div><datalist id="ajfl">${Object.keys(FIGN||{}).slice(0,3000).map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
+  <label class="chk" style="margin-top:8px"><input type="checkbox" id="ajanivx"> Apagar o aniversário</label></div>
+  <p id="ajmsg" class="count" role="status"></p><button type="button" class="more" id="ajok">Aplicar ajuste</button></div>
+  ${rec.length?`<h3>Últimos ajustes</h3><table><tbody>${rec.map(x=>`<tr><td class="mono">${fmtD(String(x.quando).slice(0,10))}</td><td>${esc(x.nome)}</td><td>${esc(AJ_NOMES[x.acao]||x.acao)}${x.dia?' ('+fmtD(x.dia)+')':''}</td></tr>`).join('')}</tbody></table>`:''}`;
+}
+function blocoMoedas(){
+  if(!DONO) return '';
+  const pessoas=pessoasDono();
   const L=Object.values(pessoas).filter(p=>p.uid!==GUID).sort((a,b)=>a.nome.localeCompare(b.nome));
-  const rec=(PRESENTES.itens||[]).slice().reverse().slice(0,12);
+  const rec=(PRESENTES.itens||[]).filter(x=>!x.acao).slice().reverse().slice(0,12);
   setTimeout(()=>{ const b=$('#mcdar'); if(!b) return; b.onclick=async()=>{ const tipo=$('#mctipo').value; let uid=($('#mcquem')&&$('#mcquem').value)||($('#mcuid').value||'').trim(); const nomeMan=($('#mcnome').value||'').trim(); const qtd=Math.max(1,Math.min(tipo==='pac'?50:100000,+$('#mcqtd').value||0)), pts=tipo==='pac'?0:qtd, motivo=$('#mcmot').value.trim().slice(0,120), msg=$('#mcmsg');
       if(!uid){ msg.textContent='Escolha um amigo na lista ou cole o UID dele.'; return; } if(!/^[A-Za-z0-9_-]{6,128}$/.test(uid)){ msg.textContent='UID inválido. Copie a coluna "UID do usuário" no Firebase.'; return; } const p=pessoas[uid]||{uid, nome:nomeMan||'Torcedor'}; if(nomeMan) p.nome=nomeMan;
       try{ const ref=GDB.doc('colab/presentes'); const s=await ref.get(); const it=s.exists?(s.data().itens||[]):[]; const item={k:'mc_'+Date.now().toString(36), uid, nome:p.nome, pts, ...(tipo==='pac'?{pac:qtd}:{}), motivo, quando:new Date().toISOString()};
