@@ -2032,7 +2032,7 @@ function categorias(){
   const C=[];
   // q = "quase": quem chega perto do tema sem cumprir (usado para escolher impostores difíceis)
   const conh=new Set(figuras().filter(f=>{ if(!fConhecido(f)||/\(/.test(f.nome)) return false; const p=pjDe(f.nome)||{}; const x=+(String(p.primeiro||'').slice(0,4))||0, y=+(String(p.ultimo||'').slice(0,4))||0; return !(x&&y&&y-x>18); }).map(f=>f.nome));
-  const add=(id,nome,lista,quase)=>{ const s=[...new Set(lista)].filter(n=>byN[n]); if(s.length<4) return; const m=new Set(s); const q=new Set((quase||[]).filter(n=>conh.has(n)&&!m.has(n))); C.push({id,nome,m,q}); };
+  const add=(id,nome,lista,quase)=>{ const all=new Set(lista); const s=[...all].filter(n=>byN[n]); if(s.length<4) return; const m=new Set(s); const q=new Set((quase||[]).filter(n=>conh.has(n)&&!all.has(n))); C.push({id,nome,m,q,all}); };
   const temp=(a,b)=>freq(j=>j.temporada>=a&&j.temporada<=b,5);
   const golsP=n=>golsBest(pj(n)||{})||0;
   const elencoIds=ids=>{ const s=new Set(); ids.forEach(id=>{ const e=(byId[id]||{}).escalacao_galo; if(!e) return; e.titulares.forEach(n=>s.add(n)); e.substituicoes.forEach(x=>x.entrou&&s.add(x.entrou)); }); return [...s]; };
@@ -2131,12 +2131,12 @@ function impostorRodadas(){
     const ini=Math.min(...mem.map(n=>ano(n)[0])), fim=Math.max(...mem.map(n=>ano(n)[1]));
     const dist=n=>{ const [a,b]=ano(n); return b<ini?ini-b:a>fim?a-fim:0; };
     const precisa=10-mem.length, q=embaralha([...(c.q||[])],r);
-    const fora=q.length>=precisa?q.slice(0,precisa):[...q, ...embaralha(L.filter(n=>!c.m.has(n)&&!q.includes(n)),r).sort((x,y)=>dist(x)-dist(y))].slice(0,precisa);
+    const fora=q.length>=precisa?q.slice(0,precisa):[...q, ...embaralha(L.filter(n=>!(c.all||c.m).has(n)&&!q.includes(n)),r).sort((x,y)=>dist(x)-dist(y))].slice(0,precisa);
     if(fora.length<10-mem.length) continue; out.push({cat:c.nome, m:mem, nomes:embaralha([...mem,...fora],r)}); }
   return out;
 }
 function vImpostor(){
-  const R=impostorRodadas(); let st=jdHoje().impostor; if(!st||st.v!==4) st=jdHoje().impostor={v:4, r:0, ach:[], err:[], fim:false, ok:false};
+  const R=impostorRodadas(); let st=jdHoje().impostor; if(!st||st.v!==5) st=jdHoje().impostor={v:5, r:0, ach:[], err:[], fim:false, ok:false};
   if(!R.length) return '<p class="empty">Sem desafio hoje.</p>';
   const rod=R[Math.min(st.r,R.length-1)], vidas=IMP_VIDAS-st.err.length, total=R.reduce((s,x)=>s+x.m.length,0), achTot=st.ach.length;
   setTimeout(()=>{ document.querySelectorAll('[data-imp]').forEach(b=>b.onclick=()=>{ if(st.fim) return; const n=b.dataset.imp; const key=st.r+'|'+n; if(st.ach.includes(key)||st.err.includes(key)) return;
