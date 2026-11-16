@@ -1856,13 +1856,14 @@ function checaConquistas(){
 }
 function vPerfil(){
   gExtra(); const L=figuras(); const fav=G.perfil.fav&&FIGN[G.perfil.fav];
-  setTimeout(()=>{ const b=$('#pfsalva'); if(b) b.onclick=()=>{ const ap=$('#pfap').value.trim().slice(0,30), fv=$('#pffav').value.trim(); if(fv&&!FIGN[fv]){ $('#pferr').textContent='Escolha um jogador da lista.'; return; } const an=$('#pfaniv').value, nm=$('#pfnome').value.trim().split(/\s+/)[0]||''; G.perfil={apelido:ap, fav:fv, nome:nm.slice(0,30), aniv:an?an.slice(5):''}; gSave(); toast('Perfil salvo.'); route.keep=true; route(); };
+  setTimeout(()=>{ const b=$('#pfsalva'); if(b) b.onclick=()=>{ const ap=$('#pfap').value.trim().slice(0,30), fv=$('#pffav').value.trim(); if(fv&&!FIGN[fv]){ $('#pferr').textContent='Escolha um jogador da lista.'; return; } const an=$('#pfaniv').value, nm=$('#pfnome').value.trim().split(/\s+/)[0]||''; G.perfil={apelido:ap, fav:fv, nome:nm.slice(0,30), aniv:an?an.slice(5):'', ...(DONO&&$('#pfoculto')&&$('#pfoculto').checked?{oculto:1}:{})}; try{ publicaResumo(); }catch(e){} gSave(); toast('Perfil salvo.'); route.keep=true; route(); };
     const t=$('#anitog2'); if(t) t.onclick=()=>{ lsSet(GMA, lsGet(GMA)==='0'?'1':'0'); aplicaAnim(); route.keep=true; route(); }; });
   const TC=todasConq(); const feitas=TC.filter(c=>G.conq[c.id]).length;
   return `<div class="kicker">Ficha do torcedor</div><h1>${esc(G.perfil.apelido||'Meu perfil')}</h1>
   <div class="perfil-top">${fav?figHTML(fav):`<div class="fig-vazio"><b>?</b><span>Escolha seu ídolo</span></div>`}
   <div style="flex:1;min-width:260px"><div class="tiles"><div class="tile"><b>${DONO?'∞':N(G.pts)}</b><span>Metricoins para gastar</span></div><div class="tile"><b>${N(G.total)}</b><span>Metricoins no total</span></div><div class="tile"><b>${G.seq.atual}</b><small class="basesm">recorde: ${G.seq.max}</small><span>Dias seguidos</span></div><div class="tile"><b>${N(cnt(G.owned))}</b><small class="basesm">de ${N(L.length)}</small><span>Figurinhas</span></div><div class="tile"><b>${feitas}</b><small class="basesm">de ${TC.length}</small><span>Conquistas</span></div></div>
   <div class="dono" style="margin-top:14px"><div class="dgrid"><label>Apelido<input id="pfap" value="${esc(G.perfil.apelido||'')}" maxlength="30" placeholder="Como você quer ser chamado"></label><label>Ídolo (figurinha de capa)<input id="pffav" list="pfl" value="${esc(G.perfil.fav||'')}" placeholder="nome do jogador"></label></div>
+  ${DONO?`<label class="chk" style="margin-top:12px"><input type="checkbox" id="pfoculto" ${G.perfil.oculto?'checked':''}> Esconder meu perfil dos outros torcedores</label>`:''}
   <div class="pf-extra" style="margin-top:14px"><div class="kicker" style="margin:0 0 6px">Sobre você</div><div class="dgrid"><label>Primeiro nome<input id="pfnome" value="${esc(G.perfil.nome||'')}" maxlength="30" placeholder="Ex.: Rodrigo"></label><label>Aniversário<input id="pfaniv" type="date" value="${G.perfil.aniv?'2000-'+G.perfil.aniv:''}"></label></div></div>
   <datalist id="pfl">${L.map(f=>`<option value="${esc(f.nome)}">`).join('')}</datalist><p id="pferr" class="count" role="alert" style="color:var(--d)"></p>
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="more" id="pfsalva">Salvar perfil</button><button type="button" class="ghost" id="anitog2">Animações: ${lsGet(GMA)==='0'?'desligadas':'ligadas'}</button><a class="ghost" href="#album" style="text-decoration:none">Abrir o álbum</a></div></div></div></div>
@@ -1876,6 +1877,9 @@ function vPerfil(){
    Se a base ganhar jogadores ou jogos novos no meio do dia, a resposta só muda se o novo for justamente o vencedor. */
 function hashDia(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } h^=h>>>13; h=Math.imul(h,0x5bd1e995); h^=h>>>15; return h>>>0; }
 function escolheDia(l, nome, key){ let best=null, bh=Infinity; const d=hojeStr()+'|'+nome+'|'; l.forEach(x=>{ const h=hashDia(d+key(x)); if(h<bh){ bh=h; best=x; } }); return best; }
+/* Desafios só com jogadores que a torcida conhece: jogou de 1970 para cá e tem pelo menos 40 jogos ou 10 gols */
+let PJ_MAP=null; const pjDe=n=>{ if(!PJ_MAP){ PJ_MAP={}; D.jogadores.forEach(p=>PJ_MAP[p.nome]=p); } return PJ_MAP[n]; };
+function fConhecido(f){ const p=pjDe(f.nome); if(!p) return false; return +(String(p.ultimo||'').slice(0,4)||0)>=1970 && ((p.jogos||0)>=40 || golsBest(p)>=10); }
 function rngDia(nome){ let h=2166136261; const s=hojeStr()+nome; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } let a=h>>>0; return ()=>{ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
 const semAc=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase();
 function jdHoje(){ gExtra(); return (G.jd[hojeStr()] ||= {}); }
@@ -1891,7 +1895,7 @@ function vDesafios(){ const d=jdHoje();
 function compartilha(txt){ try{ navigator.clipboard.writeText(txt).then(()=>toast('Resultado copiado. Cole onde quiser.'),()=>toast('Não deu para copiar.')); }catch(e){ toast('Não deu para copiar.'); } }
 
 /* Galodle */
-function galodleResp(){ const r=rngDia('galodle'); const l=figuras().filter(f=>{ const s=semAc(f.nomeV).replace(/[^A-Z]/g,''); return s.length===5&&f.nomeV.split(' ').length===1&&(f.r!=='comum'||/gols|jogos/.test(f.stat)); }); return escolheDia(l,'galodle',f=>f.nome); }
+function galodleResp(){ const r=rngDia('galodle'); const l=figuras().filter(f=>{ const s=semAc(f.nomeV).replace(/[^A-Z]/g,''); return s.length===5&&f.nomeV.split(' ').length===1&&fConhecido(f); }); return escolheDia(l,'galodle',f=>f.nome); }
 function vGalodle(){
   const f=galodleResp(), alvo=semAc(f.nomeV).replace(/[^A-Z]/g,''), st=(jdHoje().galodle ||= {t:[], fim:false, ok:false});
   const marca=g=>{ const res=Array(5).fill('x'), sobra={}; [...alvo].forEach((c,i)=>{ if(g[i]===c) res[i]='v'; else sobra[c]=(sobra[c]||0)+1; }); [...g].forEach((c,i)=>{ if(res[i]!=='v'&&sobra[c]){ res[i]='a'; sobra[c]--; } }); return res; };
@@ -1914,7 +1918,7 @@ function vGalodle(){
 }
 
 /* Quem é? */
-function quemResp(){ const r=rngDia('quem'); const l=figuras().filter(f=>f.r!=='comum'); return escolheDia(l,'quem',f=>f.nome); }
+function quemResp(){ const r=rngDia('quem'); const l=figuras().filter(f=>f.r!=='comum'&&fConhecido(f)); return escolheDia(l,'quem',f=>f.nome); }
 function infoJ(nome){ const p=D.jogadores.find(x=>x.nome===nome), f=FIGN[nome]; const jg=(()=>{ const x=ACC.p[nome]?.jogos; return x?x.v+(x.dataAte?jogosApos(nome,x.dataAte):0):(p.jogos||0); })(); return {nome, dec:f.dec, gols:golsBest(p), jogos:jg, r:f.r, pos:posTxt(nome), ini:semAc(f.nomeV)[0]}; }
 function vQuem(){
   const alvo=quemResp(), A=infoJ(alvo.nome), st=(jdHoje().quem ||= {t:[], fim:false, ok:false});
@@ -1933,7 +1937,7 @@ function vQuem(){
 }
 
 /* Placar do dia */
-function placarJogo(){ const r=rngDia('placar'); const l=J.filter(j=>j.resultado&&j.gp!=null&&j.gp+j.gc>=2&&j.grupo!=='Amistoso'&&!j.data_aprox&&j.data<hojeStr()&&!/torneio in[ií]cio/i.test(j.competicao||'')&&!(j.adversario_id==='cruzeiro mg'&&j.resultado==='D')); return escolheDia(l,'placar',j=>j.data+' '+j.adversario); }
+function placarJogo(){ const r=rngDia('placar'); const l=J.filter(j=>j.resultado&&j.gp!=null&&j.gp+j.gc>=2&&j.grupo!=='Amistoso'&&!j.data_aprox&&j.data<hojeStr()&&j.data>='1970'&&!/torneio in[ií]cio/i.test(j.competicao||'')&&!(j.adversario_id==='cruzeiro mg'&&j.resultado==='D')); return escolheDia(l,'placar',j=>j.data+' '+j.adversario); }
 function vPlacar(){
   const j=placarJogo(), st=(jdHoje().placar ||= {t:[], fim:false, ok:false});
   setTimeout(()=>{ const b=$('#plenv'); if(!b) return; b.onclick=()=>{ const a=$('#plg').value, c=$('#pla').value; if(a===''||c===''){ $('#plerr').textContent='Preencha os dois lados.'; return; } const g=[+a,+c];
@@ -1948,7 +1952,7 @@ function vPlacar(){
 }
 
 /* Mais ou menos */
-function mmLista(){ const r=rngDia('maismenos'); const l=figuras().filter(f=>{ const p=D.jogadores.find(x=>x.nome===f.nome); return p&&golsBest(p)>=5; }).map(f=>({f, g:golsBest(D.jogadores.find(x=>x.nome===f.nome))}));
+function mmLista(){ const r=rngDia('maismenos'); const l=figuras().filter(f=>{ const p=D.jogadores.find(x=>x.nome===f.nome); return p&&golsBest(p)>=5&&fConhecido(f); }).map(f=>({f, g:golsBest(D.jogadores.find(x=>x.nome===f.nome))}));
   for(let i=l.length-1;i>0;i--){ const k=Math.floor(r()*(i+1)); [l[i],l[k]]=[l[k],l[i]]; } return l; }
 function vMaisMenos(){
   const L=mmLista(), st=(jdHoje().maismenos ||= {i:0, fim:false, ok:false, seq:0});
@@ -1981,7 +1985,7 @@ const posTxt=n=>{ const x=posicaoDe(n); return x?x.pos:''; };
 let CATS=null;
 function categorias(){
   if(CATS) return CATS;
-  const L=figuras(), byN={}; L.forEach(f=>byN[f.nome]=f);
+  const L=figuras().filter(fConhecido), byN={}; L.forEach(f=>byN[f.nome]=f);
   const pj=n=>D.jogadores.find(p=>p.nome===n);
   const conhecido=f=>f.r!=='comum'||/gols|jogos/.test(f.stat)&&(parseInt(f.stat.replace(/\D/g,''))||0)>=15;
   const C=[];
@@ -2071,7 +2075,7 @@ function vImpostor(){
 }
 
 /* ---------- Adivinhe pela carreira ---------- */
-function carreiraResp(){ const r=rngDia('carreira'); const l=figuras().filter(f=>{ const p=D.jogadores.find(x=>x.nome===f.nome); const ys=J.filter(j=>jogouOuMarcou(j,f.nome)).map(j=>j.temporada); return new Set(ys).size>=3&&(golsBest(p)>=15||(p.jogos||0)>=80); }); return escolheDia(l,'carreira',f=>f.nome); }
+function carreiraResp(){ const r=rngDia('carreira'); const l=figuras().filter(f=>{ if(!fConhecido(f)) return false; const p=D.jogadores.find(x=>x.nome===f.nome); const ys=J.filter(j=>jogouOuMarcou(j,f.nome)).map(j=>j.temporada); return new Set(ys).size>=3&&(golsBest(p)>=15||(p.jogos||0)>=80); }); return escolheDia(l,'carreira',f=>f.nome); }
 function vCarreira(){
   const alvo=carreiraResp(), nome=alvo.nome, p=D.jogadores.find(x=>x.nome===nome), st=(jdHoje().carreira ||= {t:[], fim:false, ok:false});
   const list=J.filter(j=>jogouOuMarcou(j,nome)); const gpj=j=>j.gols.filter(g=>isGoal(g)&&g.jogador===nome).length;
@@ -3341,7 +3345,7 @@ function blocoAvalJogador(p){
 }
 
 /* ---------- Desafio: Complete a escalação (escalações do século) ---------- */
-const ESC_OCULTOS=5, ESC_ERROS=5;
+const ESC_OCULTOS=11, ESC_ERROS=6;
 function escJogo(){
   const ok=n=>n&&FIGN[n];
   const L=J.filter(j=>j.data>='2000-01-01'&&j.data<hojeStr()&&j.resultado&&j.escalacao_galo&&(j.escalacao_galo.titulares||[]).length===11&&j.escalacao_galo.titulares.every(ok)
@@ -3370,16 +3374,16 @@ function vEscalacao(){
       if(st.t.includes(alvo)){ er.textContent='Você já tentou esse.'; return; }
       st.t.push(alvo); inp.value=''; er.textContent='';
       const acertos=oc.filter(n=>st.t.includes(n)).length, nErr=st.t.filter(g=>!oc.includes(g)).length;
-      if(acertos===oc.length){ st.fim=true; st.ok=true; jdFim('escalacao', true, Math.max(3,6-nErr)*2); }
+      if(acertos===oc.length){ st.fim=true; st.ok=true; jdFim('escalacao', true, Math.max(4,10-nErr)*2); }
       else if(nErr>=ESC_ERROS){ st.fim=true; st.ok=false; jdFim('escalacao', false, acertos); }
       else gSave();
       route.keep=true; route(); };
     b.onclick=env; inp.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); env(); } }; inp.focus({preventScroll:true}); }
     const s=$('#escshare'); if(s){ const ac=oc.filter(n=>st.t.includes(n)).length, ne=st.t.filter(g=>!oc.includes(g)).length;
-      const _t=()=>textoRank('Complete a escalação', `${ac}/${oc.length} · ${ne} ${ne===1?'erro':'erros'}`, st.ok?Math.max(3,6-ne)*2:ac); s.onclick=()=>compartilha(_t()); autoRank(_t()); } });
+      const _t=()=>textoRank('Complete a escalação', `${ac}/${oc.length} · ${ne} ${ne===1?'erro':'erros'}`, st.ok?Math.max(4,10-ne)*2:ac); s.onclick=()=>compartilha(_t()); autoRank(_t()); } });
   const ac=oc.filter(n=>st.t.includes(n)).length;
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia · escalações do século</div><h1>Complete a escalação</h1>
-  <p class="count">Um jogo marcante do Galo deste século, com ${ESC_OCULTOS} titulares escondidos. Descubra quem são: cada nome errado gasta uma chance, e com ${ESC_ERROS} erros o jogo acaba.</p>
+  <p class="count">Um jogo marcante do Galo deste século, com o time titular inteiro escondido. Descubra os 11: cada nome errado gasta uma chance, e com ${ESC_ERROS} erros o jogo acaba.</p>
   <div class="esc-jogo"><span class="osw">${esc(j.competicao||'')}${j.fase?' · '+esc(j.fase):''} · ${fmtD(j.data)}</span><div class="esc-plac">${cr('galo')}<b>Atlético ${placar(j)} ${esc(j.adversario)}</b>${cr(j.adversario_id)}</div>${j.estadio?`<small class="uf">${esc(j.estadio)}${j.cidade?', '+esc(j.cidade):''}</small>`:''}</div>
   <p class="classico-num"><b>${ac}</b> de ${oc.length} encontrados · <b>${erros.length}</b> de ${ESC_ERROS} erros</p>
   ${campo}
@@ -3392,13 +3396,13 @@ function vEscalacao(){
 async function publicaResumo(){
   if(!GDB||!GUID) return;
   try{ const L=typeof figuras==='function'?figuras():[]; const r={fig:Object.keys(G.owned||{}).filter(k=>G.owned[k]).length, figTot:L.length, conq:Object.keys(G.conq||{}).length, est:vistoAoVivo().length, fav:(G.perfil||{}).fav||'', total:G.total||0, seq:(G.seq||{}).max||0, foto:window.GM_USER_PHOTO||''};
-    const k=JSON.stringify(r); if(G.resumoPub===k) return;
+    const k=JSON.stringify(r)+((G.perfil||{}).oculto?'o':''); if(G.resumoPub===k) return;
     const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}};
-    o.pub=r; o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.visto=hojeStr(); await ref.set(o); RKU[GUID]=o; G.resumoPub=k; gSave(); }catch(e){}
+    o.oculto=!!(DONO&&(G.perfil||{}).oculto); o.pub=r; o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.visto=hojeStr(); await ref.set(o); RKU[GUID]=o; G.resumoPub=k; gSave(); }catch(e){}
 }
 const linkTorcedor=(uid,nome)=>`<a href="#torcedor-${encodeURIComponent(uid)}">${esc(nome||'Torcedor')}</a>`;
 function vTorcedores(){
-  const L=Object.entries(RKU||{}).map(([uid,o])=>({uid,o})).filter(x=>x.o&&x.o.ap).sort((a,b)=>String(b.o.visto||'').localeCompare(String(a.o.visto||'')));
+  const L=Object.entries(RKU||{}).map(([uid,o])=>({uid,o})).filter(x=>x.o&&x.o.ap&&(!x.o.oculto||x.uid===GUID)).sort((a,b)=>String(b.o.visto||'').localeCompare(String(a.o.visto||'')));
   return `<div class="kicker">Galo Metrics · torcida</div><h1>Torcedores</h1><p class="lede">Veja o perfil dos amigos: figurinhas, conquistas, jogos no estádio e as notas que deram para jogos e jogadores.</p>
   ${L.length?`<label style="max-width:340px">Buscar<input id="trq" placeholder="nome ou apelido" oninput="document.querySelectorAll('.trc-it').forEach(e=>e.hidden=!e.dataset.n.includes(this.value.toLowerCase()))"></label>
   <div class="trc-grid">${L.map(({uid,o})=>{ const p=o.pub||{}; return `<a class="trc-it" data-n="${esc((o.ap+' '+(o.nome||'')).toLowerCase())}" href="#torcedor-${encodeURIComponent(uid)}">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av">${esc(o.ap.trim()[0]||'?').toUpperCase()}</span>`}<span><b>${esc(o.ap)}</b><small class="uf">${p.fig!=null?`${N(p.fig)} figurinhas · ${p.conq||0} conquistas`:'perfil em montagem'}</small></span></a>`; }).join('')}</div>`:'<p class="empty">Nenhum torcedor ainda. Quem entra com a conta Google aparece aqui.</p>'}`;
@@ -3406,6 +3410,7 @@ function vTorcedores(){
 function vTorcedor(uid){
   uid=decodeURIComponent(uid); const o=(RKU||{})[uid];
   if(!o) return `<a class="back" href="#torcedores">← Torcedores</a><p class="empty">Torcedor não encontrado.</p>`;
+  if(o.oculto&&uid!==GUID) return `<a class="back" href="#torcedores">← Torcedores</a><h1>${esc(o.ap)}</h1><p class="empty">Este perfil é privado.</p>`;
   const p=o.pub||{}, fav=p.fav&&FIGN[p.fav];
   const av=Object.entries(o.aval||{}).filter(([id,a])=>byId[id]&&(a.n||a.t)).sort((a,b)=>String(b[1].d||'').localeCompare(String(a[1].d||'')));
   const avj=Object.entries(o.avj||{}).filter(([id,a])=>a.n||a.t).sort((a,b)=>(b[1].n||0)-(a[1].n||0));
