@@ -453,6 +453,24 @@ body.pko-on{overflow:hidden}
 .trc-head{display:flex;align-items:center;gap:16px;margin:8px 0 14px}.trc-head img{width:64px;height:64px}
 .aval-it em{font-size:14px;color:var(--mute);display:block}
 .arq-dias{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.arq-dia{display:flex;flex-direction:column;align-items:center;border:2px solid var(--ink);padding:8px 12px;text-decoration:none;color:inherit;min-width:86px}.arq-dia b{font-family:'Oswald',sans-serif;font-size:18px}.arq-dia small{font-size:11px;color:var(--mute)}.arq-dia.on,.arq-dia:hover{background:var(--ink);color:var(--paper)}.arq-dia.on small,.arq-dia:hover small{color:var(--paper)}
+.gd-board.lt{display:flex;flex-direction:column;align-items:center;gap:6px;margin:14px 0}
+.gd-row.lt{display:flex;gap:4px;flex-wrap:nowrap;min-height:46px;align-items:center;max-width:100%}
+.gd-row.lt .gd-c{width:min(40px,calc((100vw - 60px)/14));height:44px;display:inline-flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(14px,4vw,22px);border:2px solid var(--ink)}
+.gd-row.lt .gd-c.fimp{border-radius:0 22px 22px 0;box-shadow:0 0 0 3px #C9962B}
+.gd-fim{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#C9962B;margin-left:6px}
+.gd-cursor{display:inline-block;width:3px;height:30px;background:var(--ink);animation:gdPisca 1s steps(1) infinite}@keyframes gdPisca{50%{opacity:0}}
+.imp-arena{display:grid;grid-template-columns:1fr minmax(180px,260px) 1fr;gap:14px;align-items:center;margin:18px 0}
+.imp-col{display:flex;flex-direction:column;gap:10px}
+.imp-p{display:flex;align-items:center;gap:10px;border:2px solid var(--ink);background:var(--paper);color:var(--ink);-webkit-text-fill-color:var(--ink);padding:8px 10px;cursor:pointer;text-align:left;font:inherit}
+.imp-p b{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:15px;flex:1}.imp-p small{font-family:'Courier Prime',monospace;font-size:11px;color:var(--mute)}
+.imp-av{width:34px;height:34px;border-radius:50%;background:var(--ink);color:#C9962B;-webkit-text-fill-color:#C9962B;display:inline-flex;align-items:center;justify-content:center;font-family:'Abril Fatface',serif;flex:none}
+.imp-p:hover:not(:disabled){background:var(--soft)}
+.imp-p.ok{background:#2e7d4f;border-color:#2e7d4f;color:#fff;-webkit-text-fill-color:#fff}.imp-p.ok small{color:#e5f2ea}
+.imp-p.er{background:#B3261E;border-color:#B3261E;color:#fff;-webkit-text-fill-color:#fff;text-decoration:line-through}.imp-p.er small{color:#f5dcda}
+.imp-p.rev{outline:3px dashed #2e7d4f}
+.imp-cat{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;border:3px solid var(--ink);padding:18px 12px;background:var(--ink);color:var(--paper)}
+.imp-cat b{font-family:'Abril Fatface',serif;font-size:24px;line-height:1.1;color:#C9962B;font-weight:400}.imp-cat em{font-style:normal;color:#e05a4f;font-weight:700;text-transform:uppercase}.imp-cat small{color:#cfc6b2}
+@media(max-width:700px){.imp-arena{grid-template-columns:1fr 1fr}.imp-cat{grid-column:1/-1;order:-1}}
 .tipos-sug{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tipos-sug .chip{cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 12px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:13px}.tipos-sug .chip:has(input:checked){background:var(--ink);color:var(--paper)}.tipos-sug input{margin:0}
 .sug-it{border-bottom:1px dotted var(--ink);padding:12px 0}.sug-it p{margin:6px 0}.sug-it.vista{opacity:.55}.sug-img{display:block;max-width:220px;max-height:220px;margin:8px 0;border:2px solid var(--ink);background:#fff}
 .aceita input{width:70px;padding:6px}.aceita{display:inline-flex;gap:6px;align-items:center;margin-right:6px}
@@ -1837,7 +1855,7 @@ const CONQ=[
   {id:'jd1', nome:'Primeira vitória', desc:'Venceu um desafio diário.', pts:10, p:()=>[Object.values(G.jd).some(d=>Object.values(d).some(x=>x.ok))?1:0,1]},
   {id:'jd4', nome:'Dia perfeito', desc:'Venceu todos os desafios no mesmo dia.', pts:80, p:()=>[Math.max(0,...Object.values(G.jd).map(d=>DESAF.map(x=>x[0]).filter(k=>d[k]&&d[k].ok).length)),DESAF.length]},
   {id:'cx1', nome:'Conectado', desc:'Fechou as Conexões alvinegras.', pts:15, p:()=>[Object.values(G.jd).some(d=>d.conexoes&&d.conexoes.ok)?1:0,1]},
-  {id:'imp5', nome:'Faro de olheiro', desc:'Achou os 5 impostores no mesmo dia.', pts:25, p:()=>[Math.max(0,...Object.values(G.jd).map(d=>d.impostor?d.impostor.acertos:0)),5]},
+  {id:'imp5', nome:'Faro de olheiro', desc:'Passou pelas 3 rodadas do Impostor.', pts:25, p:()=>[Object.values(G.jd).some(d=>d.impostor&&d.impostor.v===2&&d.impostor.ok)?1:0,1]},
   {id:'jdseq7', nome:'Treino diário', desc:'Jogou os desafios 7 dias seguidos.', pts:50, p:()=>[G.jdSeq.max,7]},
   {id:'aval10', nome:'Crítico de arquibancada', desc:'Avaliou 10 jogos no diário.', pts:25, p:()=>[Object.values(G.diario||{}).filter(y=>y.n||y.t).length,10]},
   {id:'est1', nome:'Eu fui!', desc:'Registrou o primeiro jogo no estádio.', pts:10, p:()=>[vistoAoVivo().length,1]},
@@ -1901,7 +1919,7 @@ function jdFim(jogo, ok, pts){ const d=jdHoje(); d[jogo]=Object.assign(d[jogo]||
   const h=hojeStr(); if(!DIA_JOGO&&G.jdSeq.ult!==h){ G.jdSeq.atual = G.jdSeq.ult&&diasEntre(G.jdSeq.ult,h)===1 ? G.jdSeq.atual+1 : 1; G.jdSeq.ult=h; G.jdSeq.max=Math.max(G.jdSeq.max,G.jdSeq.atual); }
   if(pts>0){ G.pts+=pts; G.total+=pts; G.hist.unshift({d:Date.now(), n:pts, m:'desafio: '+jogo}); }
   gSave(); atualizaChip(); checaConquistas(); if(pts>0) toast(`+${pts} pontos no desafio`); }
-const DESAF=[['conexoes','Conexões alvinegras','Separe 16 jogadores em 4 grupos com algo em comum.'],['impostor','Impostor','Quatro jogadores têm algo em comum. Ache o que não tem.'],['carreira','Adivinhe pela carreira','Descubra o jogador pelos números da passagem dele pelo Galo.'],['galodle','Galodle','Adivinhe o jogador em 6 tentativas, letra por letra.'],['quem','Quem é?','Descubra o jogador do dia pelas pistas: época, gols, jogos e raridade.'],['placar','Placar do dia','Acerte o placar de um jogo histórico em 3 chutes.'],['maismenos','Mais ou menos','Quem fez mais gols pelo Galo? Faça a maior sequência.'],['escalacao','Complete a escalação','Um jogo marcante deste século com 5 titulares escondidos.']];
+const DESAF=[['conexoes','Conexões alvinegras','Separe 16 jogadores em 4 grupos com algo em comum.'],['impostor','Impostor','Uma categoria e 10 jogadores: marque quem se encaixa e fuja dos impostores.'],['carreira','Adivinhe pela carreira','Descubra o jogador pelos números da passagem dele pelo Galo.'],['galodle','Galodle','Adivinhe o jogador em 6 chutes. O nome pode ter qualquer tamanho.'],['quem','Quem é?','Descubra o jogador do dia pelas pistas: época, gols, jogos e raridade.'],['placar','Placar do dia','Acerte o placar de um jogo histórico em 3 chutes.'],['maismenos','Mais ou menos','Quem fez mais gols pelo Galo? Faça a maior sequência.'],['escalacao','Complete a escalação','Um jogo marcante deste século com 5 titulares escondidos.']];
 function vDesafios(){ const d=jdHoje();
   const dias=[]; for(let d=new Date(LANC_DESAF+'T12:00:00'); ; d.setDate(d.getDate()+1)){ const k=d.toISOString().slice(0,10); if(k>=hojeStr()) break; dias.push(k); }
   const arq=dias.length?`<h2>Jogar dias anteriores</h2><p class="count">Os desafios de cada dia continuam disponíveis. Jogar o arquivo dá Metricoins, mas não entra no ranking da semana.</p><div class="arq-dias">${dias.reverse().map(k=>{ const x=G.jd[k]||{}, v=DESAF.filter(([c])=>x[c]&&x[c].ok).length, f=DESAF.filter(([c])=>x[c]&&x[c].fim).length; return `<a class="arq-dia${k===DIA_JOGO?' on':''}" href="#desafios?dia=${k}"><b>${fmtD(k).slice(0,5)}</b><small>${f?`${v}/${DESAF.length} vencidos`:'não jogado'}</small></a>`; }).join('')}</div>`:'';
@@ -1912,26 +1930,29 @@ function vDesafios(){ const d=jdHoje();
   <p class="count">Sequência de dias jogando: ${G.jdSeq.atual} (recorde ${G.jdSeq.max}). Os desafios trocam à meia-noite.</p>${arq}`; }
 function compartilha(txt){ try{ navigator.clipboard.writeText(txt).then(()=>toast('Resultado copiado. Cole onde quiser.'),()=>toast('Não deu para copiar.')); }catch(e){ toast('Não deu para copiar.'); } }
 
-/* Galodle */
-function galodleResp(){ const r=rngDia('galodle'); const l=figuras().filter(f=>{ const s=semAc(f.nomeV).replace(/[^A-Z]/g,''); return s.length===5&&f.nomeV.split(' ').length===1&&fConhecido(f); }); return escolheDia(l,'galodle',f=>f.nome); }
+/* Galodle (formato Letroso): o nome tem qualquer tamanho; se o chute tiver o tamanho certo, o fim da palavra aparece */
+const GD_TENT=6;
+function galodleResp(){ const l=figuras().filter(f=>{ const n=normNome(f.nomeV).replace(/ /g,''); return n.length>=4&&n.length<=14&&fConhecido(f); }); return escolheDia(l,'galodle',f=>f.nome); }
+let GD_NOMES=null; const gdNomes=()=>GD_NOMES||(GD_NOMES=new Set(figuras().map(f=>normNome(f.nomeV).replace(/ /g,''))));
+function gdMarca(g,alvo){ const res=Array(g.length).fill('x'), sobra={}; [...alvo].forEach((c,i)=>{ if(g[i]===c) res[i]='v'; else sobra[c]=(sobra[c]||0)+1; }); [...g].forEach((c,i)=>{ if(res[i]!=='v'&&sobra[c]){ res[i]='a'; sobra[c]--; } }); return res; }
 function vGalodle(){
-  const f=galodleResp(), alvo=semAc(f.nomeV).replace(/[^A-Z]/g,''), st=(jdHoje().galodle ||= {t:[], fim:false, ok:false});
-  const marca=g=>{ const res=Array(5).fill('x'), sobra={}; [...alvo].forEach((c,i)=>{ if(g[i]===c) res[i]='v'; else sobra[c]=(sobra[c]||0)+1; }); [...g].forEach((c,i)=>{ if(res[i]!=='v'&&sobra[c]){ res[i]='a'; sobra[c]--; } }); return res; };
-  const linhas=[...st.t.map(g=>({g, m:marca(g)})), ...Array(Math.max(0,6-st.t.length)).fill(null)];
+  const f=galodleResp(), alvo=normNome(f.nomeV).replace(/ /g,''); let st=jdHoje().galodle; if(!st||st.v!==2) st=jdHoje().galodle={v:2, t:[], fim:false, ok:false};
+  const linha=g=>{ const m=gdMarca(g,alvo), fim=g.length===alvo.length; return `<div class="gd-row lt" role="row">${[...g].map((c,k)=>`<span class="gd-c ${m[k]}${fim&&k===g.length-1?' fimp':''}" role="gridcell" style="animation-delay:${k*0.07}s">${c}</span>`).join('')}${fim?'<small class="gd-fim">tamanho certo</small>':''}</div>`; };
   setTimeout(()=>{ if(st.fim) return; let cur='';
-    const draw=()=>{ const row=document.querySelector('.gd-row.cur'); if(row) [...row.children].forEach((c,i)=>{ c.textContent=cur[i]||''; }); };
-    const envia=()=>{ if(cur.length<5){ toast('Faltam letras.'); return; } st.t.push(cur); const ok=cur===alvo; if(ok||st.t.length>=6){ st.fim=true; st.ok=ok; jdFim('galodle', ok, ok?Math.max(8,22-3*st.t.length):0); } else gSave(); route.keep=true; route(); };
-    const tecla=k=>{ if(st.fim) return; if(k==='ENTER') return envia(); if(k==='DEL'){ cur=cur.slice(0,-1); return draw(); } if(/^[A-Z]$/.test(k)&&cur.length<5){ cur+=k; draw(); } };
+    const draw=()=>{ const row=document.querySelector('.gd-row.cur'); if(row) row.innerHTML=[...cur].map(c=>`<span class="gd-c">${c}</span>`).join('')+'<span class="gd-cursor"></span>'; };
+    const envia=()=>{ if(cur.length<3){ toast('Digite o nome do jogador.'); return; } if(!gdNomes().has(cur)){ toast('Não é um jogador do Galo. Escreva o nome sem espaço.'); return; } if(st.t.includes(cur)){ toast('Você já tentou esse.'); return; }
+      st.t.push(cur); const ok=cur===alvo; if(ok||st.t.length>=GD_TENT){ st.fim=true; st.ok=ok; jdFim('galodle', ok, ok?Math.max(8,22-3*st.t.length):0); } else gSave(); route.keep=true; route(); };
+    const tecla=k=>{ if(st.fim) return; if(k==='ENTER') return envia(); if(k==='DEL'){ cur=cur.slice(0,-1); return draw(); } if(/^[A-Z]$/.test(k)&&cur.length<18){ cur+=k; draw(); } };
     document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>tecla(b.dataset.k));
     const kd=e=>{ if(!location.hash.startsWith('#desafio-galodle')){ document.removeEventListener('keydown',kd); return; } if(e.target.closest&&e.target.closest('input,textarea')) return; const k=e.key==='Enter'?'ENTER':e.key==='Backspace'?'DEL':semAc(e.key); if(k==='ENTER'||k==='DEL'||/^[A-Z]$/.test(k)){ e.preventDefault(); tecla(k); } };
-    if(window._gdkd) document.removeEventListener('keydown',window._gdkd); window._gdkd=kd; document.addEventListener('keydown',kd); });
-  const usadas={}; st.t.forEach(g=>marca(g).forEach((m,i)=>{ const c=g[i]; if(m==='v'||usadas[c]==='v') usadas[c]='v'; else if(m==='a'||usadas[c]==='a') usadas[c]='a'; else usadas[c]='x'; }));
+    if(window._gdkd) document.removeEventListener('keydown',window._gdkd); window._gdkd=kd; document.addEventListener('keydown',kd); draw(); });
+  const usadas={}; st.t.forEach(g=>gdMarca(g,alvo).forEach((m,i)=>{ const c=g[i]; if(m==='v'||usadas[c]==='v') usadas[c]='v'; else if(m==='a'||usadas[c]==='a') usadas[c]='a'; else usadas[c]='x'; }));
   const kb=['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
-  const share=()=>`Galodle ${fmtD(hojeStr())} ${st.ok?st.t.length:'X'}/6\n`+st.t.map(g=>marca(g).map(m=>m==='v'?'🟩':m==='a'?'🟨':'⬛').join('')).join('\n')+'\nGalo Metrics';
-  setTimeout(()=>{ const s=$('#gdshare'); if(s) { const _t=()=>textoRank('Galodle', (st.ok?st.t.length:'X')+'/6\n'+st.t.map(g=>marca(g).map(m=>m==='v'?'🟩':m==='a'?'🟨':'⬛').join('')).join('\n'), st.ok?7-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); }; });
-  return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Galodle</h1><p class="count">Um jogador do Galo com nome de 5 letras (sem acento). Verde: letra no lugar certo. Amarelo: a letra existe em outra posição.</p>
-  <div class="gd-board" role="grid" aria-label="Tentativas">${linhas.map((l,i)=>`<div class="gd-row ${!l&&i===st.t.length&&!st.fim?'cur':''}" role="row">${[0,1,2,3,4].map(k=>`<span class="gd-c ${l?l.m[k]:''}" role="gridcell" style="${l?`animation-delay:${k*0.12}s`:''}">${l?l.g[k]:''}</span>`).join('')}</div>`).join('')}</div>
-  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} O jogador era:</p>${figHTML(f,'a-flip')}<button type="button" class="more" id="gdshare">Copiar resultado</button><a class="ghost tw" id="gdtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a>${artBtn({t:'desafio',nome:'Galodle',res:(st.ok?st.t.length:'X')+'/6',ok:st.ok,grade:st.t.map(g=>marca(g).join('')).join('\n')})}</div>`
+  const grade=()=>st.t.map(g=>gdMarca(g,alvo).map(m=>m==='v'?'🟩':m==='a'?'🟨':'⬛').join('')+(g.length===alvo.length?'🏁':'')).join('\n');
+  setTimeout(()=>{ const s=$('#gdshare'); if(s) { const _t=()=>textoRank('Galodle', (st.ok?st.t.length:'X')+'/'+GD_TENT+'\n'+grade(), st.ok?7-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); } });
+  return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Galodle</h1><p class="count">Descubra o jogador do Galo em ${GD_TENT} chutes. O nome pode ter qualquer tamanho: escreva o nome sem espaço (ex.: DIEGOTARDELLI). Verde: letra no lugar certo. Amarelo: a letra existe em outra posição. Quando o chute tem o tamanho certo, a última letra ganha a bandeirinha de fim.</p>
+  <div class="gd-board lt" role="grid" aria-label="Tentativas">${st.t.map(linha).join('')}${st.fim?'':`<div class="gd-row lt cur" role="row"></div>`}<p class="count" style="text-align:center">${st.fim?'':`${GD_TENT-st.t.length} ${GD_TENT-st.t.length===1?'chute restante':'chutes restantes'}`}</p></div>
+  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} O jogador era:</p>${figHTML(f,'a-flip')}<button type="button" class="more" id="gdshare">Copiar resultado</button><a class="ghost tw" id="gdtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a></div>`
    :`<div class="gd-kb">${kb.map((r,i)=>`<div>${i===2?'<button type="button" class="gd-k wide" data-k="ENTER">Enviar</button>':''}${[...r].map(c=>`<button type="button" class="gd-k ${usadas[c]||''}" data-k="${c}">${c}</button>`).join('')}${i===2?'<button type="button" class="gd-k wide" data-k="DEL" aria-label="Apagar">⌫</button>':''}</div>`).join('')}</div>`}`;
 }
 
@@ -2092,18 +2113,36 @@ function impostorDia(){
   }
   return rodadas;
 }
+/* Impostor (formato Futbol11): uma categoria e 10 jogadores; marque quem se encaixa e fuja dos impostores */
+const IMP_ROD=3, IMP_VIDAS=3;
+function impostorRodadas(){
+  const r=rngDia('impostor2'), C=categorias().filter(c=>!c.id.startsWith('pos-')&&c.m.size>=5), L=figuras().filter(fFamoso).map(f=>f.nome);
+  const out=[], usadas=new Set();
+  for(let k=0;k<40&&out.length<IMP_ROD;k++){ const c=C[Math.floor(r()*C.length)]; if(!c||usadas.has(c.id)) continue; usadas.add(c.id);
+    const mem=embaralha([...c.m],r).slice(0,Math.min(6,c.m.size)); const fora=embaralha(L.filter(n=>!c.m.has(n)),r).slice(0,10-mem.length);
+    if(fora.length<10-mem.length) continue; out.push({cat:c.nome, m:mem, nomes:embaralha([...mem,...fora],r)}); }
+  return out;
+}
 function vImpostor(){
-  const R=impostorDia(), st=(jdHoje().impostor ||= {i:0, acertos:0, fim:false, ok:false, resp:[]});
-  const rod=R[st.i];
-  setTimeout(()=>{ document.querySelectorAll('[data-imp]').forEach(b=>b.onclick=()=>{ const ok=b.dataset.imp===rod.imp; st.resp.push({ok, esc:b.dataset.imp}); if(ok) st.acertos++; st.i++;
-      if(st.i>=R.length){ st.fim=true; st.ok=st.acertos>=3; jdFim('impostor', st.ok, st.acertos*4); } else gSave(); route.keep=true; route(); });
-    const s=$('#imshare'); if(s) { const _t=()=>textoRank('Impostor', `${st.acertos}/${R.length}`, st.acertos); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); }; });
-  const hist=st.resp.map((x,i)=>`<li>${x.ok?'★':'✗'} <b>${esc(R[i].cat)}</b>: o impostor era ${esc(nomeV(R[i].imp))}${x.ok?'':`, você escolheu ${esc(nomeV(x.esc))}`}.</li>`).join('');
+  const R=impostorRodadas(); let st=jdHoje().impostor; if(!st||st.v!==2) st=jdHoje().impostor={v:2, r:0, ach:[], err:[], fim:false, ok:false};
+  if(!R.length) return '<p class="empty">Sem desafio hoje.</p>';
+  const rod=R[Math.min(st.r,R.length-1)], vidas=IMP_VIDAS-st.err.length, total=R.reduce((s,x)=>s+x.m.length,0), achTot=st.ach.length;
+  setTimeout(()=>{ document.querySelectorAll('[data-imp]').forEach(b=>b.onclick=()=>{ if(st.fim) return; const n=b.dataset.imp; const key=st.r+'|'+n; if(st.ach.includes(key)||st.err.includes(key)) return;
+      if(rod.m.includes(n)){ st.ach.push(key); if(rod.m.every(x=>st.ach.includes(st.r+'|'+x))){ toast('Rodada completa!'); st.r++; } }
+      else { st.err.push(key); toast(`${nomeV(n)} é impostor!`); }
+      if(st.r>=R.length||st.err.length>=IMP_VIDAS){ st.fim=true; st.ok=st.r>=R.length; jdFim('impostor', st.ok, st.ach.length); } else gSave();
+      route.keep=true; route(); });
+    const s=$('#imshare'); if(s) { const g=R.map((x,i)=>x.m.map(n=>st.ach.includes(i+'|'+n)?'🟩':'⬛').join('')).join('\n')+(st.err.length?'\n'+'❌'.repeat(st.err.length):''); const _t=()=>textoRank('Impostor', `${st.ach.length}/${total}\n${g}`, st.ach.length); s.onclick=()=>compartilha(_t()); autoRank(_t()); } });
+  const bt=n=>{ const key=st.r+'|'+n, ok=st.ach.includes(key), er=st.err.includes(key), rev=st.fim&&rod.m.includes(n)&&!ok;
+    return `<button type="button" class="imp-p${ok?' ok':''}${er?' er':''}${rev?' rev':''}" data-imp="${esc(n)}"${ok||er||st.fim?' disabled':''}><span class="imp-av" aria-hidden="true">${esc(nomeV(n).trim()[0]||'?').toUpperCase()}</span><b>${esc(nomeV(n))}</b><small>${esc(FIGN[n]?FIGN[n].periodo:'')}</small></button>`; };
+  const meio=Math.ceil(rod.nomes.length/2);
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Impostor</h1>
-  <p class="count">Em cada rodada, quatro jogadores têm algo em comum e um não tem. Ache o impostor. São ${R.length} rodadas.</p>
-  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?'★ ':''}Você achou ${st.acertos} de ${R.length} impostores.</p><button type="button" class="more" id="imshare">Copiar resultado</button><a class="ghost tw" id="imtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a>${artBtn({t:'desafio',nome:'Impostor',res:st.acertos+'/5',ok:st.ok})}</div>`
-  :`<p class="classico-num"><b>${st.i+1}</b> de ${R.length} · ${st.acertos} ${st.acertos===1?'acerto':'acertos'}</p><div class="imp-g a-up">${rod.nomes.map(n=>`<button type="button" class="cx-t" data-imp="${esc(n)}">${esc(nomeV(n))}<small>${esc(posTxt(n)||'')}${posTxt(n)?' · ':''}${esc(FIGN[n].periodo)}</small></button>`).join('')}</div>`}
-  ${hist?`<h2>Rodadas</h2><ul class="imp-h">${hist}</ul>`:''}`;
+  <p class="count">Em cada rodada aparece uma categoria e 10 jogadores. Toque em todos que se encaixam e fuja dos impostores: você tem ${IMP_VIDAS} vidas para as ${R.length} rodadas.</p>
+  <p class="classico-num">Rodada <b>${Math.min(st.r+1,R.length)}</b> de ${R.length} · vidas ${'♥'.repeat(Math.max(0,vidas))}${'♡'.repeat(IMP_VIDAS-Math.max(0,vidas))} · ${achTot}/${total} acertos</p>
+  <div class="imp-arena"><div class="imp-col">${rod.nomes.slice(0,meio).map(bt).join('')}</div>
+   <div class="imp-cat"><span>A categoria é:</span><b>${esc(rod.cat)}</b><span>Fuja dos <em>impostores</em></span><small>${rod.m.filter(n=>st.ach.includes(st.r+'|'+n)).length} de ${rod.m.length} encontrados</small></div>
+   <div class="imp-col">${rod.nomes.slice(meio).map(bt).join('')}</div></div>
+  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?'★ Você passou pelas 3 rodadas!':'Acabaram as vidas.'} ${st.ach.length} de ${total} acertos.</p><button type="button" class="more" id="imshare">Copiar resultado</button></div>`:''}`;
 }
 
 /* ---------- Adivinhe pela carreira ---------- */
@@ -3246,6 +3285,9 @@ const BREVE=[
  ['Duplas e trios','Quem jogou mais junto pelo Galo','As parcerias da história em números: as duplas que mais entraram em campo juntas, as duplas de ataque com mais gols no mesmo jogo, os trios que mais venceram e o aproveitamento de cada parceria.',['Quem mais jogou ao lado do seu ídolo','Duplas de ataque com mais gols juntos','Trios com melhor aproveitamento']],
  ['Monte seu Galo da história','Seu time dos sonhos, de 1908 até hoje','Escolha o esquema, coloque os craques de todas as épocas em campo e compartilhe a arte do seu Galo ideal. Dá para comparar com o time dos sonhos dos amigos e da torcida.',['Escalação em campo com qualquer esquema','Arte pronta para Instagram e X','Ranking do time mais votado pela torcida']],
  ['Monte seu Galo com figurinhas','Seu álbum vira time','Só entra em campo quem você já colou. Lendárias e brilhantes valem mais, e quem você viu ao vivo no estádio ganha bônus.',['Força do time pela raridade das figurinhas','Bônus para quem você viu no estádio','Troca de figurinhas repetidas com os amigos']],
+ ['Linha do tempo','Coloque a história em ordem','Jogos, títulos e estreias aparecem um por vez: arraste cada um para o lugar certo na linha do tempo, do mais antigo ao mais recente.',['Quem chegou primeiro ao Galo?','Qual final veio antes?','Uma carta nova a cada acerto']],
+ ['Galo Grid','O jogo da velha alvinegro','Uma grade 3 por 3 com temas nas linhas e colunas, como "campeão da Libertadores" e "fez 100 gols". Complete cada casa com um jogador que se encaixe nos dois.',['Temas de títulos, finais e parceiros','Cada jogador só pode ser usado uma vez','Quanto mais raro o jogador, mais pontos']],
+ ['Encaixe o jogador','Cada um na sua casa','Um jogador aparece por vez e você escolhe em qual dos 12 temas da grade ele se encaixa, antes que o tempo acabe.',['12 temas por rodada','Pulos limitados','Ranking de quem completa mais rápido']],
  ['Campeonato com os amigos','Liga entre torcedores','Crie uma liga, convide os amigos e dispute rodadas com os times montados com figurinhas. Quem ganha leva Metricoins.',['Liga privada com link de convite','Rodadas semanais e tabela de classificação','Prêmios em Metricoins para o campeão']],
 ];
 function vEmBreve(){
