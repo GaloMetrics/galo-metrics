@@ -1,0 +1,163 @@
+{
+ "jogos": [
+  {
+   "data_original": "2025-08-25",
+   "adversario": "Cruzeiro",
+   "set": {
+    "data": "2026-08-25"
+   },
+   "motivo": "Data publicada como 25/08/2025, mas a ficha é da Copa do Brasil/2026 e está entre os jogos de agosto de 2026."
+  },
+  {
+   "data_original": "2026-07-21",
+   "adversario": "Torque",
+   "set": {
+    "data": "2026-10-21"
+   },
+   "motivo": "Data publicada como 21/07/2026, mas é o jogo de volta contra o Torque (ida em 14/10/2026) e aparece entre 17/10 e 26/10 no blog."
+  },
+  {
+   "data_original": "2024-04-27",
+   "adversario": "Cuiabá",
+   "set": {
+    "temporada_comp": "2024",
+    "competicao_raw": "Campeonato Brasileiro/2024"
+   },
+   "motivo": "A ficha diz Campeonato Brasileiro/2023, mas o jogo é de abril de 2024 (Brasileiro 2024)."
+  },
+  {
+   "data_original": "2015-11-22",
+   "adversario": "Goiás",
+   "trocar_nome": {
+    "Vitor": "Victor"
+   },
+   "motivo": "Goleiro grafado como Vitor na ficha; é o Victor."
+  }
+ ],
+ "jogadores": {
+  "Alisson Santava": "Alisson Santana",
+  "Renzo Saraiva": "Renzo Saravia",
+  "Natanel": "Natanael",
+  "Mateo Cassiera": "Mateo Cassierra",
+  "Igor Homes": "Igor Gomes",
+  "Roni": "Rony",
+  "Anibal Machado \"Pingo\"": "Aníbal Machado \"Pingo\"",
+  "Nacho Fernándes": "Nacho Fernández",
+  "Alan": "Allan",
+  "Igor Rabelo": "Igor Rabello",
+  "Serginho Boges": "Serginho Borges",
+  "Diogo Tardelli": "Diego Tardelli",
+  "Jairo Campos": "Jayro Campos",
+  "Edcalos": "Edcarlos",
+  "Hyri": "Hyuri",
+  "Ronado Conceição": "Ronaldo Conceição",
+  "José Wellison": "José Welison",
+  "Guiherme Arana": "Guilherme Arana",
+  "Guilherme Aranha": "Guilherme Arana",
+  "Guilherme Alonso": "Guilherme Arana",
+  "Mathías Zaracho": "Matías Zaracho",
+  "Huck": "Hulk",
+  "Franco di Franco": "Franco di Santo",
+  "Giovanni - G": "Giovanni",
+  "Victor - G": "Victor",
+  "Matheus Mendes - G": "Matheus Mendes",
+  "Vadir": "Valdir",
+  "Guiherme": "Guilherme",
+  "Gutiérez": "Gutiérrez",
+  "Tiago Cavancanti": "Tiago Cavalcante",
+  "Ferruguem": "Ferrugem",
+  "Aiton": "Ailton",
+  "Boideiro": "Boiadeiro",
+  "Galvani": "Galvan",
+  "Maquinhos": "Marquinhos",
+  "Paulo Robrto": "Paulo Roberto",
+  "Ruizinho": "Ruyzinho",
+  "Willliam": "William",
+  "Edmilson": "Edmílson",
+  "Lusinho": "Luisinho",
+  "Marcus Vincius": "Marcus Vinicius",
+  "Nellinho": "Nelinho",
+  "Cincungui": "Cincunegui",
+  "Décio Teixiera": "Décio Teixeira",
+  "E Oldair": "Oldair",
+  "Edga Maia": "Edgar Maia",
+  "Fernanndo": "Fernando",
+  "Normades": "Normandes",
+  "Bazoni": "Bazzoni",
+  "Dalmuy": "Dalmy",
+  "Djardes": "Dejardes",
+  "Hametério": "Hemetério",
+  "Ivo Mello": "Ivo Melo",
+  "Lelo": "Lello",
+  "Mattos": "Matos",
+  "Meirelles": "Meireles",
+  "Morgani": "Morgan",
+  "Murilino": "Murilinho",
+  "Mário Castro": "Mário de Castro",
+  "Rezende": "Resende",
+  "Vicente Peres": "Vicente Perez",
+  "Vilalba": "Villalba",
+  "Júlio Cézar": "Júlio César",
+  "Mário Goulart": "Mauro Goulart",
+  "Zé do Monte": "Monte",
+  "Haroldo Lopes": "Haroldo",
+  "Lucas Miranda": "Lucas"
+ },
+ "tecnicos": {
+  "Eduardo Borbas": "Eduardo Domínguez",
+  "Eduardo Rodríguez": "Eduardo Domínguez",
+  "Luis Felipe Scolari": "Luiz Felipe Scolari",
+  "Dorival Junior": "Dorival Júnior",
+  "RodrigoSantana": "Rodrigo Santana",
+  "Vagner Mancini": "Vágner Mancini",
+  "Émerson Leao": "Emerson Leão",
+  "Émerson Leão": "Emerson Leão",
+  "Mrcelo Oliveira": "Marcelo Oliveira",
+  "Bonamigo": "Paulo Bonamigo",
+  "Parreira": "Carlos Alberto Parreira"
+ },
+ "competicoes": {
+  "Copa do Brasi": "Copa do Brasil"
+ },
+ "mesmo_jogador": [
+  "Gilberto Silva",
+  "Mancini",
+  "Toninho Cerezo",
+  "Bernard"
+ ],
+ "estadios": {
+  "Arena MRV (Presidente Elias Kalil)": "Arena MRV",
+  "Arena MRV:": "Arena MRV",
+  "Mineirão (Governador Magalhães Pinto)": "Mineirão",
+  "Arena Independência": "Independência",
+  "Allianz Parque (Nubank Parque)": "Allianz Parque",
+  "Arena Condá (Índio Condá)": "Arena Condá",
+  "Arena Pernambuco (Carlos Wilson Campos)": "Arena Pernambuco",
+  "Arena da Baixada (Joaquim Américo Guimarães)": "Arena da Baixada",
+  "Arena da Baixada (Joaquim Américo)": "Arena da Baixada",
+  "Arena da Baixada (Kyocera Arena)": "Arena da Baixada",
+  "Arena da Baixada (Ligga Arena)": "Arena da Baixada",
+  "Joaquim Américo (Arena da Baixada)": "Arena da Baixada",
+  "Beira Rio": "Beira-Rio",
+  "Beira-Rio (José Pinheiro Borba)": "Beira-Rio",
+  "José Pinheiro Borda (Beira-Rio)": "Beira-Rio",
+  "Beira-Rio. Renda: R$ 90.269,00": "Beira-Rio",
+  "Couto Pereira (Alto da Glória)": "Couto Pereira",
+  "Couto Pereira (Major Antônio do Couto Pereira)": "Couto Pereira",
+  "Engenhão (Nilton Santos)": "Nilton Santos (Engenhão)",
+  "Engenhão (Olímpico João Havelange)": "Nilton Santos (Engenhão)",
+  "Nilton Santos": "Nilton Santos (Engenhão)",
+  "Ilha do Retiro (Adelmar da Costa Carvalho)": "Ilha do Retiro",
+  "Ilha do Retiro (Ademar da Costa Carvalho)": "Ilha do Retiro",
+  "Manoel Barradas": "Barradão",
+  "Manoel Barradas (Barradão)": "Barradão",
+  "Maracanã (Mário Filho)": "Maracanã",
+  "Morumbi (Cícero Pompeu de Toledo)": "Morumbi",
+  "Neo Química Arena (Itaquerão)": "Neo Química Arena",
+  "Néo Química Arena (Itaquerão)": "Neo Química Arena",
+  "Arena Corinthians (Itaquerão)": "Neo Química Arena",
+  "Vila Belmiro (Urbano Caldeira)": "Vila Belmiro",
+  "Joaquim Portugal (Arena Sicredi)": "Joaquim Portugal",
+  "Joaquim Portugal (Arena Unimed)": "Joaquim Portugal"
+ }
+}

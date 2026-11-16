@@ -1,0 +1,197 @@
+[
+  {
+    "id": "classico-atletico",
+    "tema": "Clássico contra o Cruzeiro",
+    "titulo": "Retrospecto do clássico, na contagem do Atlético",
+    "aceito": {
+      "jogos": 531,
+      "V": 213,
+      "E": 143,
+      "D": 175
+    },
+    "ate": "2025-12-31",
+    "calculo": {
+      "tipo": "h2h",
+      "adversario_id": "cruzeiro mg"
+    },
+    "fonte": {
+      "nome": "GOAL Brasil, citando os números apresentados pelo Atlético",
+      "url": "https://www.goal.com/br/not%C3%ADcias/atletico-mg-cruzeiro-onde-assistir-ao-vivo-transmissao-escalacoes-horas-mineiro-2026/bltcd2e641d8bb91b30",
+      "quando": "antes do primeiro clássico de 2026"
+    },
+    "explicacao": "Cada clube tem a sua contagem e nenhuma das duas lista jogo por jogo publicamente. As divergências costumam estar em jogos dos anos 1920 a 1940 (amistosos, jogos interrompidos, partidas contra o Palestra Itália) e em torneios de menor porte."
+  },
+  {
+    "id": "artilheiros",
+    "tema": "Artilharia",
+    "titulo": "Maiores artilheiros da história",
+    "ranking": [
+      {
+        "nome": "Reinaldo",
+        "aceito": 255,
+        "de": 1973,
+        "ate": 1985
+      },
+      {
+        "nome": "Dario",
+        "aceito": 211,
+        "de": 1968,
+        "ate": 1979
+      },
+      {
+        "nome": "Mário de Castro",
+        "aceito": 195,
+        "de": 1925,
+        "ate": 1941
+      },
+      {
+        "nome": "Guará",
+        "aceito": 168,
+        "de": 1933,
+        "ate": 1941
+      },
+      {
+        "nome": "Lucas",
+        "aceito": 152,
+        "de": 1944,
+        "ate": 1954
+      },
+      {
+        "nome": "Said",
+        "aceito": 142,
+        "de": 1923,
+        "ate": 1933
+      },
+      {
+        "nome": "Guilherme",
+        "aceito": 139,
+        "de": 1999,
+        "ate": 2004
+      },
+      {
+        "nome": "Ubaldo",
+        "aceito": 135,
+        "de": 1950,
+        "ate": 1960
+      }
+    ],
+    "calculo": {
+      "tipo": "gols_ranking"
+    },
+    "fonte": {
+      "nome": "Ranking publicado por Trivela e Lance!, o mesmo usado pelo clube e pela Itatiaia",
+      "url": "https://trivela.com.br/brasil/hulk-maior-artilheiro-atletico-seculo-ranking/",
+      "quando": "2024 a 2026"
+    },
+    "explicacao": "Na base, cada nome é contado só dentro do período em que o jogador atuou, para não somar homônimos de outras épocas (há outros Reinaldos, Guilhermes e Darios na história). Com esse recorte, Reinaldo bate exatamente e os demais ficam a poucos gols da lista aceita. As diferenças maiores (Guará, Said, Ubaldo) estão nos anos 1920 a 1950, quando autoria de gols em amistosos e torneios varia entre as fontes."
+  },
+  {
+    "id": "hulk",
+    "tema": "Artilharia",
+    "titulo": "Hulk ao fim de 2025",
+    "aceito": {
+      "gols": 135,
+      "jogos": 289
+    },
+    "ate": "2025-12-31",
+    "calculo": {
+      "tipo": "gols_jogador",
+      "nome": "Hulk",
+      "de": 2021
+    },
+    "fonte": {
+      "nome": "Jornal da Paraíba, balanço da temporada 2025",
+      "url": "https://jornaldaparaiba.com.br/_/215257",
+      "quando": "dezembro de 2025"
+    },
+    "explicacao": "Período recente e bem documentado: a base bate exatamente com o número aceito."
+  },
+  {
+    "id": "artilheiros-classico",
+    "tema": "Clássico contra o Cruzeiro",
+    "titulo": "Artilheiros do Galo no clássico",
+    "ranking": [
+      {
+        "nome": "Guará",
+        "aceito": 26,
+        "de": 1933,
+        "ate": 1941
+      },
+      {
+        "nome": "Reinaldo",
+        "aceito": 16,
+        "de": 1973,
+        "ate": 1985
+      },
+      {
+        "nome": "Ubaldo",
+        "aceito": 16,
+        "de": 1950,
+        "ate": 1960
+      },
+      {
+        "nome": "Lucas",
+        "aceito": 15,
+        "de": 1944,
+        "ate": 1954
+      },
+      {
+        "nome": "Tomazinho",
+        "aceito": 10,
+        "de": 1945,
+        "ate": 1960
+      },
+      {
+        "nome": "Hulk",
+        "aceito": 10,
+        "de": 2021,
+        "ate": 2026
+      }
+    ],
+    "ate": "2026-01-25",
+    "calculo": {
+      "tipo": "gols_ranking",
+      "adversario_id": "cruzeiro mg"
+    },
+    "fonte": {
+      "nome": "Itatiaia, após o clássico de 25/01/2026",
+      "url": "https://www.itatiaia.com.br/esportes/futebol/futebol-nacional/futebol-mineiro/atletico/hulk-deixa-lenda-para-tras-e-se-isola-como-oitavo-maior-artilheiro-do-atletico/",
+      "quando": "janeiro de 2026"
+    },
+    "explicacao": "A base inclui os jogos contra o Palestra Itália (nome do Cruzeiro até 1942). Diferenças de poucos gols vêm de jogos dos anos 1930 e 1940 que uma contagem tem e a outra não."
+  },
+  {
+    "id": "mais-jogos",
+    "tema": "Jogos",
+    "titulo": "Jogadores com mais partidas",
+    "ranking": [
+      {
+        "nome": "João Leite",
+        "aceito": 684,
+        "de": 1976,
+        "ate": 1992
+      },
+      {
+        "nome": "Kafunga",
+        "aceito": 504,
+        "de": 1935,
+        "ate": 1955
+      },
+      {
+        "nome": "Victor",
+        "aceito": 424,
+        "de": 2012,
+        "ate": 2021
+      }
+    ],
+    "calculo": {
+      "tipo": "sem_base"
+    },
+    "fonte": {
+      "nome": "Itatiaia e Lance!",
+      "url": "https://www.itatiaia.com.br/esportes/futebol/futebol-nacional/futebol-mineiro/atletico/everson-vive-expectativa-por-alcancar-marca-expressiva-pelo-atletico-contra-o-america/",
+      "quando": "2025"
+    },
+    "explicacao": "A base só tem escalações a partir de julho de 2021, então ainda não dá para conferir esses números. Há divergência entre as próprias fontes: Kafunga aparece com 504 jogos em uma matéria e 335 em outra da mesma emissora."
+  }
+]

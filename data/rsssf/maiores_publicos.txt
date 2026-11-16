@@ -1,0 +1,114 @@
+100 MAIORES PUBLICOS DA HISTORIA DO CLUBE ATLETICO MINEIRO -
+-------------------------------------------------------------------------------------------------------
+CLA     DATA           PUBLICO        PARTIDA                        MOTIVO                 ESTADIO
+-------------------------------------------------------------------------------------------------------
+001     01/06/1980     154.355        ATL-MG 2x3 FLAMENGO/RJ         BRASILEIRO             MARACANA
+002     06/04/1979     139.953        ATL-MG 1x5 FLAMENGO/RJ         AMISTOSO               MARACANA
+003     04/05/1969     123.351        ATL-MG 0x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+004     09/10/1977     122.534        ATL-MG 1x3 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+005     29/11/1987     118.162        ATL-MG 0x1 FLAMENGO/RJ         BRASILEIRO             MARACANA            
+006     26/10/1980     115.983        ATL-MG 1x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+007     13/02/1980     115.142        ATL-MG 2x1 FLAMENGO/RJ         AMISTOSO               MINEIRAO            
+008     15/05/1983     113.749        ATL-MG 0x0 SANTOS/SP           BRASILEIRO             MINEIRAO            
+009     08/11/1981     112.919        ATL-MG 1x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+010     20/12/1970     112.403        ATL-MG 1x1 FLUMINENSE/RJ       ROBERTAO               MARACANA            
+011     02/06/1968     110.432        ATL-MG 1x2 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+012     15/12/1974     109.363        ATL-MG 1x2 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+013     05/12/1982     108.935        ATL-MG 2x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+014     12/02/1978     107.730        ATL-MG 0x0 BOTAFOGO/RJ         BRASILEIRO             MARACANA            
+015     04/02/1987     107.497        ATL-MG 1x0 FLAMENGO/RJ         BRASILEIRO             MINEIRAO            
+016     02/08/1970     106.155        ATL-MG 2x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+017     03/04/1977     103.725        ATL-MG 2x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+018     05/03/1978     102.974        ATL-MG 0x0 SAO PAULO/SP        BRASILEIRO             MINEIRAO            
+019     21/11/1976     102.531        ATL-MG 0x0 FLUMINENSE/RJ       BRASILEIRO             MINEIRAO            
+020     25/04/1976     101.404        ATL-MG 2x1 CRUZEIRO/MG         TACA MG                MINEIRAO            
+021     09/12/1984      99.174        ATL-MG 1x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+022     27/03/1977      99.044        ATL-MG 2x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+023     29/01/1978      98.778        ATL-MG 2x1 CRUZEIRO/MG         BRASILEIRO             MINEIRAO            
+024     18/09/1966      97.965        ATL-MG 0x2 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+025     28/09/1969      97.928        ATL-MG 1x2 CRUZEIRO/MG         ROBERTAO               MINEIRAO            
+026     26/02/1978      96.404        ATL-MG 4x2 LONDRINA/PR         BRASILEIRO             MINEIRAO            
+027     18/05/1980      95.811        ATL-MG 0x0 VASCO/RJ            BRASILEIRO             MINEIRAO            
+028     08/02/1987      94.381        ATL-MG 0x0 CRUZEIRO/MG         BRASILEIRO             MINEIRAO            
+029     10/09/1967      93.577        ATL-MG 0x0 CRUZEIRO/MG         BRASILEIRO             MINEIRAO            
+030     07/08/1977      91.696        ATL-MG 0x0 CRUZEIRO/MG         BRASILEIRO             MINEIRAO            
+031     05/03/1967      91.042        ATL-MG 0x4 CRUZEIRO/MG         ROBERTAO               MINEIRAO            
+032     18/02/1979      90.894        ATL-MG 2x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+033     26/11/1967      90.838        ATL-MG 3x3 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+034     11/02/1987      90.190        ATL-MG 1x1 CRUZEIRO/MG         BRASILEIRO             MINEIRAO            
+035     03/06/1990      90.145        ATL-MG 0x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+036     28/05/1980      90.028        ATL-MG 1x0 FLAMENGO/RJ         BRASILEIRO             MINEIRAO            
+037     18/04/1993      90.005        ATL-MG 1x2 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+038     03/03/1985      87.898        ATL-MG 2x0 CRUZEIRO/MG         BRASILEIRO             MINEIRAO            
+039     29/05/1977      87.763        ATL-MG 3x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+040     03/11/1996      87.649        ATL-MG 1x2 CRUZEIRO/MG         BRASILEIRO             MINEIRAO            
+041     27/10/1968      87.360        ATL-MG 1x0 CRUZEIRO/MG         ROBERTAO               MINEIRAO            
+042     08/02/1976      87.192        ATL-MG 0x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+043     14/01/1968      86.977        ATL-MG 1x3 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+044     22/02/1976      86.365        ATL-MG 0x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+045     08/09/1968      86.095        ATL-MG 1x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+046     13/12/1970      85.253        ATL-MG 3x1 ESPORTE-JF/MG       AMISTOSO               MINEIRAO            
+047     13/12/1970      85.253        ATL-MG 1x1 CRUZEIRO/MG         ROBERTAO               MINEIRAO            
+048     02/12/1987      84.929        ATL-MG 2x3 FLAMENGO/RJ         BRASILEIRO             MINEIRAO            
+049     02/05/1971      84.473        ATL-MG 1x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+050     06/10/2001      84.259        ATL-MG 2x2 CRUZEIRO/MG         BRASILEIRO             MINEIRAO            
+051     15/12/1985      83.187        ATL-MG 1x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+052     16/03/1969      82.960        ATL-MG 2x0 AMERICA/MG          MINEIRO                MINEIRAO            
+053     07/12/1994      82.938        ATL-MG 3x2 CORINTHIANS/SP      BRASILEIRO             MINEIRAO            
+054     25/03/1981      81.867        ATL-MG 0x0 FLAMENGO/RJ         BRASILEIRO             MINEIRAO            
+055     08/06/1969      81.586        ATL-MG 0x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+056     08/12/1996      81.533        ATL-MG 2x2 PORTUGUESA/SP       BRASILEIRO             MINEIRAO            
+057     24/11/1991      81.039        ATL-MG 2x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+058     21/01/1968      79.981        ATL-MG 0x3 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+059     30/11/1980      78.990        ATL-MG 2x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+060     17/12/1978      78.782        ATL-MG 0x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+061     12/12/1999      78.382        ATL-MG 3x2 CORINTHIANS/SP      BRASILEIRO             MINEIRAO            
+062     24/11/2002      78.291        ATL-MG 2x6 CORINTHIANS/SP      BRASILEIRO             MINEIRAO            
+063     06/08/1972      77.526        ATL-MG 0x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+064     02/08/1987      77.449        ATL-MG 0x2 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+065     30/09/1990      77.419        ATL-MG 2x0 CRUZEIRO/MG         BRASILEIRO             MINEIRAO
+066     11/10/2008      77.387        ATL-MG 3x0 FLAMENGO/RJ         BRASILEIRO             MARACANÃ
+066     09/04/1978      76.994        ATL-MG 2x1 SAO PAULO/SP        LIBERTADORES           MORUMBI             
+067     25/10/1970      76.505        ATL-MG 1x1 CRUZEIRO/MG         ROBERTAO               MINEIRAO            
+068     28/11/1999      76.413        ATL-MG 3x0 VITORIA/BA          BRASILEIRO             MINEIRAO            
+069     22/10/1978      76.399        ATL-MG 1x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+070     02/10/1983      76.256        ATL-MG 2x2 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+071     25/01/1976      75.782        ATL-MG 2x1 CRUZEIRO/MG         TACA MG                MINEIRAO            
+072     25/11/2006      74.694        ATL-MG 2x2 AMERICA/RN          BRASILEIRO SÉRIE B     MINEIRAO            
+073     02/10/1977      74.176        ATL-MG 2x3 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+074     10/10/1971      74.173        ATL-MG 1x1 CRUZEIRO/MG         BRASILEIRO             MINEIRAO            
+075     28/02/1980      74.071        ATL-MG 2x0 PALMEIRAS/SP        BRASILEIRO             MINEIRAO            
+076     14/10/2001      73.478        ATL-MG 0x1 SANTOS/SP           BRASILEIRO             MINEIRAO            
+077     02/12/1979      72.856        ATL-MG 0x0 CRUZEIRO/MG         BRASILIERO             MINEIRAO            
+078     04/07/1999      72.680        ATL-MG 1x0 AMERICA/MG          MINEIRO                MINEIRAO            
+079     24/10/1976      72.484        ATL-MG 1x1 SANTOS/SP           BRASILEIRO             MINEIRAO            
+080     27/05/1990      72.290        ATL-MG 2x1 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+081     23/02/2002      72.240        ATL-MG 1x1 CRUZEIRO/MG         COPA SUL MINAS         MINEIRAO            
+082     15/11/1967      71.997        ATL-MG 1x1 BOTAFOGO/RJ         TACA BRASIL            MINEIRAO            
+083     13/03/1966      71.728        ATL-MG 2x0 FLUMINENSE/RJ       AMISTOSO               MINEIRAO            
+084     03/09/1969      71.533        ATL-MG 2x1 SELECAO BRASILEIRA  AMISTOSO               MINEIRAO            
+085     07/03/1982      71.450        ATL-MG 1x2 FLAMENGO/RJ         BRASILEIRO             MARACANA            
+086     01/11/1967      71.174        ATL-MG 1x0 BOTAFOGO/RJ         TACA BRASIL            MINEIRAO            
+087     21/08/1981      71.157        ATL-MG 0x0 FLAMENGO/RJ         LIBERTADORES 1981      SERRA DOURADA       
+088     28/11/1976      70.766        ATL-MG 0x0 GREMIO/RS           BRASILEIRO             MINEIRAO            
+089     17/10/1999      70.665        ATL-MG 1x2 PONTE PRETA/SP      BRASILEIRO             MINEIRAO            
+090     27/05/1979      70.226        ATL-MG 0x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+091     20/08/1972      70.199        ATL-MG 0x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+092     29/09/1999      70.078        ATL-MG 3x0 FLAMENGO/RJ         BRASILEIRO             MINEIRAO            
+093     09/09/1979      69.672        ATL-MG 0x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+094     23/04/1978      69.258        ATL-MG 0x2 CRUZEIRO/MG         BRASILEIRO             MINEIRAO            
+095     02/12/1970      69.156        ATL-MG 0x1 FLAMENGO/RJ         ROBERTAO               MARACANA            
+096     02/04/1995      69.124        ATL-MG 1x2 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+097     06/03/1994      68.801        ATL-MG 1x3 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+098     08/05/1983      67.990        ATL-MG 4x1 SPORT RECIFE/PE     BRASILEIRO             MINEIRAO            
+099     19/11/1995      67.799        ATL-MG 2x1 FLAMENGO/RJ         BRASILEIRO             MINEIRAO            
+100     27/06/1971      67.738        ATL-MG 1x0 CRUZEIRO/MG         MINEIRO                MINEIRAO            
+-------------------------------------------------------------------------------------------------
+About this document
+Prepared and maintained by Jackass Molibidenio for the Rec.Sport.Soccer Statistics Foundation and RSSSF Brazil
+
+Authors: Jackass Molibidenio (jmolibidenio@yahoo.com.br)
+Last updated: 12 Jan 2012
+
+(C) Copyright Jackass Molibidenio, RSSSF and RSSSF Brazil 2007/2012
+You are free to copy this document in whole or part provided that proper acknowledgement is given to the author. All rights reserved.
