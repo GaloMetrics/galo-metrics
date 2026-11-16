@@ -137,7 +137,8 @@ html.dark .cr,html.dark .crb,html.dark .crh,html.dark .crg{filter:drop-shadow(0 
 html.dark .res.E{color:#1a1a1a}
 .cr.cra{margin:0 0 0 7px}
 #tema{margin-left:auto;font:inherit;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700;background:none;color:var(--ink);border:1.5px solid var(--ink);padding:6px 10px;cursor:pointer}
-#tema:hover{background:var(--ink);color:var(--paper)}
+#tema:hover,#gmlogin:hover{background:var(--ink);color:var(--paper)}
+#gmlogin{font:inherit;font-family:'Oswald','Archivo',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700;background:none;color:var(--ink);border:1.5px solid var(--ink);padding:6px 10px;cursor:pointer;margin:0;border-radius:0;box-shadow:none;line-height:normal}
 .an,.ln{white-space:nowrap}
 .advhead .crh.crh2{width:clamp(40px,6.3vw,68px);height:clamp(40px,6.3vw,68px)}
 .cardwrap{display:grid;grid-template-columns:320px 1fr;gap:32px;margin-top:22px;align-items:start}
@@ -1363,7 +1364,7 @@ function achou(f,nova){
   box.innerHTML=`<div class="gm-achou-in"><p class="osw">${nova?'Você encontrou uma figurinha!':'Figurinha repetida!'}</p>${figHTML(f,'a-flip')}<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><a class="more" href="#album">Ver álbum</a><button type="button" class="more" id="gmfecha">Fechar</button></div></div>`;
   document.body.appendChild(box); const fecha=()=>box.remove(); box.querySelector('#gmfecha').onclick=fecha; box.onclick=e=>{ if(e.target===box) fecha(); }; box.querySelector('#gmfecha').focus();
 }
-function atualizaChip(){ const c=document.getElementById('gmchip'); if(c&&G) c.innerHTML=`★ ${G.perfil&&G.perfil.apelido?esc(G.perfil.apelido)+' · ':''}${N(G.pts)} pts${typeof COLAB_MEU!=='undefined'&&COLAB_MEU?' '+seloColab(COLAB_MEU.n):''}${typeof ehApoiador==='function'&&G.perfil&&ehApoiador(G.perfil.apelido)?' '+apoiadorSelo():''}`; }
+function atualizaChip(){ const c=document.getElementById('gmchip'); if(c&&G) c.innerHTML=`★ ${G.perfil&&G.perfil.apelido?esc(G.perfil.apelido)+' · ':''}${DONO?'∞':N(G.pts)} pts${typeof COLAB_MEU!=='undefined'&&COLAB_MEU?' '+seloColab(COLAB_MEU.n):''}${typeof ehApoiador==='function'&&G.perfil&&ehApoiador(G.perfil.apelido)?' '+apoiadorSelo():''}`; }
 
 /* página do álbum */
 let ALB={dec:null, filtro:'todas', q:'', pacote:[]};
@@ -1376,7 +1377,7 @@ function vAlbum(){
   return `<div class="kicker">Encarte especial</div><h1>Álbum dos imortais</h1>
   <p class="lede">Todos os ${N(L.length)} jogadores da base viram figurinhas. Ganhe pontos navegando, abra pacotinhos e cole a história do Galo inteira.</p>
   <div class="alb-top">
-    <div class="tiles"><div class="tile"><b id="albpts">${N(G.pts)}</b><span>Pontos</span></div><div class="tile"><b>${N(col)}</b><small class="basesm">de ${N(L.length)}</small><span>Coladas</span></div><div class="tile"><b>${N(rep)}</b><span>Repetidas</span></div><div class="tile"><b>${porR('lendaria')}</b><span>Lendárias</span></div><div class="tile"><b>${porR('brilhante')}</b><span>Brilhantes</span></div></div>
+    <div class="tiles"><div class="tile"><b id="albpts">${DONO?'∞':N(G.pts)}</b><span>Pontos</span></div><div class="tile"><b>${N(col)}</b><small class="basesm">de ${N(L.length)}</small><span>Coladas</span></div><div class="tile"><b>${N(rep)}</b><span>Repetidas</span></div><div class="tile"><b>${porR('lendaria')}</b><span>Lendárias</span></div><div class="tile"><b>${porR('brilhante')}</b><span>Brilhantes</span></div></div>
     <div class="alb-prog" aria-label="${Math.round(100*col/L.length)}% do álbum"><i style="width:${(100*col/L.length).toFixed(1)}%"></i></div>
     <div class="alb-acoes">
       <button type="button" class="pack" id="pkfree" ${G.gratis?'':'disabled'}>${G.gratis?'Abrir pacotinho grátis do dia':'Pacotinho grátis já aberto hoje'}</button>
@@ -1422,7 +1423,7 @@ function albumUI(){
   $('#albfil').onchange=e=>{ ALB.filtro=e.target.value; re(); };
   $('#albq').oninput=e=>{ ALB.q=e.target.value; re(); };
   const abre=(gratis)=>{
-    if(gratis){ if(!G.gratis) return; G.gratis=false; } else { if(G.pts<CFG.pontos.pacote){ toast(`Faltam ${CFG.pontos.pacote-G.pts} pontos para um pacotinho.`); return; } G.pts-=CFG.pontos.pacote; G.hist.unshift({d:Date.now(), n:-CFG.pontos.pacote, m:'pacotinho aberto'}); }
+    if(gratis){ if(!G.gratis) return; G.gratis=false; } else if(!DONO) { if(G.pts<CFG.pontos.pacote){ toast(`Faltam ${CFG.pontos.pacote-G.pts} pontos para um pacotinho.`); return; } G.pts-=CFG.pontos.pacote; G.hist.unshift({d:Date.now(), n:-CFG.pontos.pacote, m:'pacotinho aberto'}); }
     const pac=[]; for(let i=0;i<5;i++){ const f=sorteiaFig(); pac.push({f, nova:cola(f)}); }
     gSave(); atualizaChip(); ALB.pacote=pac; route.keep=true; route(); const pk=$('#pkarea'); if(pk) pk.scrollIntoView({behavior:animOn()?'smooth':'auto',block:'start'});
   };
@@ -1709,7 +1710,7 @@ function vPerfil(){
   const TC=todasConq(); const feitas=TC.filter(c=>G.conq[c.id]).length;
   return `<div class="kicker">Ficha do torcedor</div><h1>${esc(G.perfil.apelido||'Meu perfil')}</h1>
   <div class="perfil-top">${fav?figHTML(fav):`<div class="fig-vazio"><b>?</b><span>Escolha seu ídolo</span></div>`}
-  <div style="flex:1;min-width:260px"><div class="tiles"><div class="tile"><b>${N(G.pts)}</b><span>Pontos para gastar</span></div><div class="tile"><b>${N(G.total)}</b><span>Pontos no total</span></div><div class="tile"><b>${G.seq.atual}</b><small class="basesm">recorde: ${G.seq.max}</small><span>Dias seguidos</span></div><div class="tile"><b>${N(cnt(G.owned))}</b><small class="basesm">de ${N(L.length)}</small><span>Figurinhas</span></div><div class="tile"><b>${feitas}</b><small class="basesm">de ${TC.length}</small><span>Conquistas</span></div></div>
+  <div style="flex:1;min-width:260px"><div class="tiles"><div class="tile"><b>${DONO?'∞':N(G.pts)}</b><span>Pontos para gastar</span></div><div class="tile"><b>${N(G.total)}</b><span>Pontos no total</span></div><div class="tile"><b>${G.seq.atual}</b><small class="basesm">recorde: ${G.seq.max}</small><span>Dias seguidos</span></div><div class="tile"><b>${N(cnt(G.owned))}</b><small class="basesm">de ${N(L.length)}</small><span>Figurinhas</span></div><div class="tile"><b>${feitas}</b><small class="basesm">de ${TC.length}</small><span>Conquistas</span></div></div>
   <div class="dono" style="margin-top:14px"><div class="dgrid"><label>Apelido<input id="pfap" value="${esc(G.perfil.apelido||'')}" maxlength="30" placeholder="Como você quer ser chamado"></label><label>Ídolo (figurinha de capa)<input id="pffav" list="pfl" value="${esc(G.perfil.fav||'')}" placeholder="nome do jogador"></label></div>
   <details class="pf-extra"><summary>Para conquistas surpresa (opcional)</summary><div class="dgrid"><label>Primeiro nome<input id="pfnome" value="${esc(G.perfil.nome||'')}" maxlength="30" placeholder="Ex.: Rodrigo"></label><label>Aniversário<input id="pfaniv" type="date" value="${G.perfil.aniv?'2000-'+G.perfil.aniv:''}"></label><label>Ano de nascimento<input id="pfano" type="number" min="1900" max="2026" value="${esc(G.perfil.ano||'')}"></label></div><p class="count">Fica só neste aparelho. Serve para conquistas como visitar um jogo do dia do seu aniversário ou um jogador xará.</p></details>
   <datalist id="pfl">${L.map(f=>`<option value="${esc(f.nome)}">`).join('')}</datalist><p id="pferr" class="count" role="alert" style="color:var(--d)"></p>
