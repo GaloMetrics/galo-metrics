@@ -477,6 +477,10 @@ body.pko-on{overflow:hidden}
 .aceita input{width:70px;padding:6px}.aceita{display:inline-flex;gap:6px;align-items:center;margin-right:6px}
 .selo-colab{display:inline-block;font-size:.85em;line-height:1;padding:3px 6px;border:2px solid var(--ink);font-family:'Oswald',sans-serif;letter-spacing:.04em;vertical-align:middle;text-transform:uppercase}
 .colab-ouro{background:#c9a227;color:#111;border-color:#8a6d0f}.colab-prata{background:#c7c9cc;color:#111;border-color:#7d8085}.colab-bronze{background:#b8743d;color:#fff;border-color:#7a4a22}
+.selo-criador{display:inline-block;font-size:.78em;line-height:1;padding:3px 7px;background:var(--gold);color:#111;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle;margin-left:6px;white-space:nowrap}.gmchip .selo-criador{font-size:10px;padding:2px 4px}
+.conq.rara{border-color:var(--gold);border-style:double;border-width:4px}.conq.rara .conq-ic{color:var(--gold)}.tag-rara{display:inline-block;font-size:10px;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 5px;background:var(--gold);color:#111;vertical-align:middle}
+.pf-foto{display:flex;gap:14px;align-items:center;margin-top:14px}.pf-av{width:64px;height:64px;border:2px solid var(--ink);border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex:none;background:var(--soft)}.pf-av img{width:100%;height:100%;object-fit:cover}.pf-av .av,.pf-av svg{width:100%;height:100%}
+img.torc-av{object-fit:cover}
 .selo-apoio{color:#c0392b;font-weight:700}.gmchip .selo-colab{font-size:10px;padding:2px 4px;border-width:1px}
 tr.eu td{background:rgba(201,162,39,.15)}.lista-colab{list-style:none;padding:0}.lista-colab li{padding:8px 0;border-bottom:1px dotted var(--ink)}
 .apoie-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin:24px 0}.apoie-c{border:3px solid var(--ink);padding:18px;background:var(--paper)}.pixk{font-size:15px;word-break:break-all;padding:8px;border:1px dashed var(--ink)}.apoiadores{line-height:2}
@@ -548,9 +552,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261116203156';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261116203156"></script>
-<script src="backend-firebase.js?v=20261116203156"></script>
+<script>window.GM_BUILD='20261116203747';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261116203747"></script>
+<script src="backend-firebase.js?v=20261116203747"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1514,7 +1518,7 @@ function achou(f,nova){
   box.innerHTML=`<div class="gm-achou-in"><p class="osw">${nova?'Você encontrou uma figurinha!':'Figurinha repetida!'}</p>${figHTML(f,'a-flip')}<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><a class="more" href="#album">Ver álbum</a><button type="button" class="more" id="gmfecha">Fechar</button></div></div>`;
   document.body.appendChild(box); const fecha=()=>box.remove(); box.querySelector('#gmfecha').onclick=fecha; box.onclick=e=>{ if(e.target===box) fecha(); }; box.querySelector('#gmfecha').focus();
 }
-function atualizaChip(){ const c=document.getElementById('gmchip'); if(c&&G) c.innerHTML=`★ ${G.perfil&&G.perfil.apelido?'<span class="ap">'+esc(G.perfil.apelido)+' · </span>':''}${DONO?'∞':N(G.pts)} <span class="mc" title="Metricoins">MC</span>${typeof COLAB_MEU!=='undefined'&&COLAB_MEU?' '+seloColab(COLAB_MEU.n):''}${typeof ehApoiador==='function'&&G.perfil&&ehApoiador(G.perfil.apelido)?' '+apoiadorSelo():''}`; }
+function atualizaChip(){ const c=document.getElementById('gmchip'); if(c&&G) c.innerHTML=`★ ${G.perfil&&G.perfil.apelido?'<span class="ap">'+esc(G.perfil.apelido)+' · </span>':''}${DONO?'∞':N(G.pts)} <span class="mc" title="Metricoins">MC</span>${DONO?' '+seloCriador():''}${typeof COLAB_MEU!=='undefined'&&COLAB_MEU?' '+seloColab(COLAB_MEU.n):''}${typeof ehApoiador==='function'&&G.perfil&&ehApoiador(G.perfil.apelido)?' '+apoiadorSelo():''}`; }
 
 /* página do álbum */
 let ALB={dec:null, filtro:'todas', q:'', pacote:[]};
@@ -1676,7 +1680,7 @@ function contaBotao(){
   const box=document.getElementById('gmconta'), lg=document.getElementById('gmlogin'), mn=document.getElementById('gmmenu'); if(!box||window.GM_BACKEND!=='firebase') return;
   box.hidden=false; document.body.classList.toggle('semconta',!GUID);
   if(!GUID){ lg.className=''; lg.innerHTML=AV_VAZIO+'<span>Entrar</span>'; lg.title='Entre com sua conta Google para salvar pontos, enviar sugestões e aparecer nos rankings'; lg.onclick=()=>window.GM_LOGIN(); mn.hidden=true; return; }
-  const nome=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||'Você', foto=window.GM_USER_PHOTO;
+  const nome=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||'Você', foto=fotoPerfil();
   lg.className='on'; lg.innerHTML=(foto?`<span class="av"><img src="${esc(foto)}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.outerHTML=AV_VAZIO"></span>`:AV_VAZIO)+`<span>${esc(nome.split(' ')[0])}</span>`; lg.title='Sua conta';
   mn.innerHTML=`<span class="quem">Conectado como <b>${esc(window.GM_USER_NAME||nome)}</b></span><a href="#perfil">Meu perfil e conquistas</a><a href="#diario">Meu diário</a><a href="#album">Meu álbum</a>${DONO?'<a href="#dono">Metricoins e ajustes</a>':''}<button type="button" id="gmsair">Sair</button>`;
   lg.onclick=e=>{ e.stopPropagation(); mn.hidden=!mn.hidden; };
@@ -1697,6 +1701,7 @@ async function gmInit(){
   const nd=document.getElementById('navdono'); if(nd) nd.hidden=!DONO;
   contaBotao();
   if(GDB){ try{ const s=await GDB.doc('site/config').get(); if(s.exists){ aplicaCfg(JSON.parse(s.data().json||'{}')); } }catch(e){} }
+  if(DONO&&GDB&&GUID&&CFG.criador!==GUID){ try{ const s=await GDB.doc('site/config').get(); const c=s.exists?JSON.parse(s.data().json||'{}'):{}; c.criador=GUID; await GDB.doc('site/config').set({json:JSON.stringify(c), em:Date.now()}); CFG.criador=GUID; }catch(e){} }
   await carregaEdicoes(); await carregaRanking(); await carregaAval(); try{ await carregaColab(); }catch(e){} try{ await carregaPresentes(); }catch(e){} try{ registraPerfil(); }catch(e){} try{ publicaResumo(); }catch(e){}
   NUVEM = lsGet('gm-nuvem')==='1' && !!GDB && !!GUID; if(NUVEM){ await nuvemCarrega(); lsSet(GMK, JSON.stringify(G)); }
   GM_PRONTO=true; atualizaChip(); route();
@@ -1877,6 +1882,7 @@ const CONQ=[
   {id:'s_origem', nome:'Desde o começo', desc:'Abriu a ficha do primeiro jogo da história da base.', pts:20, secreta:true, p:()=>[J.length&&G.vis.jogo[String([...J].sort((a,b)=>a.data<b.data?-1:1)[0].id)]?1:0,1]},
   {id:'s_seculo', nome:'Cem anos atrás', desc:'Abriu um jogo disputado exatamente 100 anos antes do dia da visita.', pts:30, secreta:true, p:()=>{ const h=hojeStr(), alvo=(+h.slice(0,4)-100)+h.slice(4); return [Object.keys(G.vis.jogo||{}).some(id=>byId[id]&&byId[id].data===alvo)?1:0,1]; }},
   {id:'s_rei', nome:'Eu vi o Rei', desc:'Registrou no estádio um jogo com o Reinaldo em campo.', pts:50, secreta:true, p:()=>[(G.vivo||{})['Reinaldo']?1:0,1]},
+  {id:'amigo_criador', nome:'Amigo do criador', desc:'Adicionou o criador do Galo Metrics aos amigos. Só quem tem o código dele consegue.', pts:100, rara:true, p:()=>[CFG.criador&&GUID!==CFG.criador&&(G.amigos||[]).some(c=>uidPorCodigo(c)===CFG.criador)?1:0,1]},
   {id:'s_mapa', nome:'Turista alvinegro', desc:'Esteve no estádio em 5 cidades diferentes.', pts:40, secreta:true, p:()=>[new Set(vistoAoVivo().map(j=>j.cidade).filter(Boolean)).size,5]},
 ];
 function checaConquistas(){
@@ -1886,19 +1892,22 @@ function checaConquistas(){
 }
 function vPerfil(){
   gExtra(); const L=figuras(); const fav=G.perfil.fav&&FIGN[G.perfil.fav];
-  setTimeout(()=>{ const b=$('#pfsalva'); if(b) b.onclick=()=>{ const ap=$('#pfap').value.trim().slice(0,30), fv=$('#pffav').value.trim(); if(fv&&!FIGN[fv]){ $('#pferr').textContent='Escolha um jogador da lista.'; return; } const an=$('#pfaniv').value, nm=$('#pfnome').value.trim().split(/\s+/)[0]||''; G.perfil={apelido:ap, fav:fv, nome:nm.slice(0,30), aniv:an?an.slice(5):'', ...(DONO&&$('#pfoculto')&&$('#pfoculto').checked?{oculto:1}:{})}; try{ publicaResumo(); }catch(e){} gSave(); toast('Perfil salvo.'); route.keep=true; route(); };
+  setTimeout(()=>{ const b=$('#pfsalva'); if(b) b.onclick=()=>{ const ap=$('#pfap').value.trim().slice(0,30), fv=$('#pffav').value.trim(); if(fv&&!FIGN[fv]){ $('#pferr').textContent='Escolha um jogador da lista.'; return; } if(!DONO&&/galo\s*metrics|criador/i.test(ap)){ $('#pferr').textContent='Esse apelido é reservado. Escolha outro.'; return; } const an=$('#pfaniv').value, nm=$('#pfnome').value.trim().split(/\s+/)[0]||''; G.perfil={apelido:ap, fav:fv, nome:nm.slice(0,30), aniv:an?an.slice(5):'', ...(G.perfil.foto?{foto:G.perfil.foto}:{}), ...(DONO&&$('#pfoculto')&&$('#pfoculto').checked?{oculto:1}:{})}; try{ publicaResumo(); }catch(e){} gSave(); toast('Perfil salvo.'); route.keep=true; route(); };
+    const ff=$('#pffoto'); if(ff) ff.onchange=async()=>{ const f=ff.files[0]; if(!f) return; try{ G.perfil.foto=await iconeDe(f); delete G.resumoPub; gSave(); try{ publicaResumo(); }catch(e){} contaBotao(); toast('Ícone atualizado.'); route.keep=true; route(); }catch(e){ $('#pferr').textContent='Não consegui ler essa imagem. Tente outra.'; } };
+    const fx=$('#pffotox'); if(fx) fx.onclick=()=>{ delete G.perfil.foto; delete G.resumoPub; gSave(); try{ publicaResumo(); }catch(e){} contaBotao(); route.keep=true; route(); };
     const t=$('#anitog2'); if(t) t.onclick=()=>{ lsSet(GMA, lsGet(GMA)==='0'?'1':'0'); aplicaAnim(); route.keep=true; route(); }; });
   const TC=todasConq(); const feitas=TC.filter(c=>G.conq[c.id]).length;
   return `<div class="kicker">Ficha do torcedor</div><h1>${esc(G.perfil.apelido||'Meu perfil')}</h1>
   <div class="perfil-top">${fav?figHTML(fav):`<div class="fig-vazio"><b>?</b><span>Escolha seu ídolo</span></div>`}
   <div style="flex:1;min-width:260px"><div class="tiles"><div class="tile"><b>${DONO?'∞':N(G.pts)}</b><span>Metricoins para gastar</span></div><div class="tile"><b>${N(G.total)}</b><span>Metricoins no total</span></div><div class="tile"><b>${G.seq.atual}</b><small class="basesm">recorde: ${G.seq.max}</small><span>Dias seguidos</span></div><div class="tile"><b>${N(cnt(G.owned))}</b><small class="basesm">de ${N(L.length)}</small><span>Figurinhas</span></div><div class="tile"><b>${feitas}</b><small class="basesm">de ${TC.length}</small><span>Conquistas</span></div></div>
   <div class="dono" style="margin-top:14px"><div class="dgrid"><label>Apelido<input id="pfap" value="${esc(G.perfil.apelido||'')}" maxlength="30" placeholder="Como você quer ser chamado"></label><label>Ídolo (figurinha de capa)<input id="pffav" list="pfl" value="${esc(G.perfil.fav||'')}" placeholder="nome do jogador"></label></div>
+  <div class="pf-foto"><span class="pf-av">${fotoPerfil()?`<img src="${esc(fotoPerfil())}" alt="" referrerpolicy="no-referrer">`:AV_VAZIO}</span><div><b class="osw">Ícone do perfil</b><p class="count" style="margin:2px 0 6px">Aparece no botão da conta, nas avaliações e no seu perfil para os amigos.</p><label class="ghost" style="cursor:pointer;display:inline-block">Escolher imagem<input type="file" id="pffoto" accept="image/*" hidden></label>${G.perfil.foto?' <button type="button" class="ghost" id="pffotox">Voltar para a foto do Google</button>':''}</div></div>
   ${DONO?`<label class="chk" style="margin-top:12px"><input type="checkbox" id="pfoculto" ${G.perfil.oculto?'checked':''}> Esconder meu perfil dos outros torcedores</label>`:''}
   <div class="pf-extra" style="margin-top:14px"><div class="kicker" style="margin:0 0 6px">Sobre você</div><div class="dgrid"><label>Primeiro nome<input id="pfnome" value="${esc(G.perfil.nome||'')}" maxlength="30" placeholder="Ex.: Rodrigo"></label><label>Aniversário<input id="pfaniv" type="date" value="${G.perfil.aniv?'2000-'+G.perfil.aniv:''}"></label></div></div>
   <datalist id="pfl">${L.map(f=>`<option value="${esc(f.nome)}">`).join('')}</datalist><p id="pferr" class="count" role="alert" style="color:var(--d)"></p>
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="more" id="pfsalva">Salvar perfil</button><button type="button" class="ghost" id="anitog2">Animações: ${lsGet(GMA)==='0'?'desligadas':'ligadas'}</button><a class="ghost" href="#album" style="text-decoration:none">Abrir o álbum</a></div></div></div></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${tw(`Meu perfil no Galo Metrics: ${feitas} conquistas, ${N(cnt(G.owned))} figurinhas e ${G.seq.max} dias seguidos de visita.`)}<a class="ghost" href="#diario" style="text-decoration:none">Meu diário de jogos</a></div>
-  <h2>Conquistas</h2><div class="conq-grid">${TC.map(c=>{ const [a,b]=c.p(), ok=!!G.conq[c.id]; if(c.secreta&&!ok) return `<div class="conq secreta"><span class="conq-ic" aria-hidden="true">?</span><div><b>Conquista secreta</b><p>Continue explorando o site para descobrir.</p><small>+${c.pts} pts</small></div></div>`; return `<div class="conq ${ok?'ok':''}"><span class="conq-ic" aria-hidden="true">${ok?'★':'☆'}</span><div><b>${esc(c.nome)}</b><p>${esc(c.desc||'')}</p><small>${ok?`Conquistada em ${fmtD(G.conq[c.id])} · +${c.pts} pts`:`${N(Math.min(a,b))} de ${N(b)} · +${c.pts} pts`}</small>${ok?`<div>${tw(`Conquista desbloqueada no Galo Metrics: ${c.nome}${c.desc?' ('+c.desc+')':''}`,'Tweetar')}</div>`:`<i class="conq-bar"><i style="width:${Math.min(100,100*a/b).toFixed(0)}%"></i></i>`}</div></div>`; }).join('')}</div>
+  <h2>Conquistas</h2><div class="conq-grid">${TC.map(c=>{ const [a,b]=c.p(), ok=!!G.conq[c.id]; if(c.secreta&&!ok) return `<div class="conq secreta"><span class="conq-ic" aria-hidden="true">?</span><div><b>Conquista secreta</b><p>Continue explorando o site para descobrir.</p><small>+${c.pts} pts</small></div></div>`; return `<div class="conq ${ok?'ok':''}${c.rara?' rara':''}"><span class="conq-ic" aria-hidden="true">${c.rara?'✦':ok?'★':'☆'}</span><div><b>${esc(c.nome)}</b>${c.rara?' <span class="tag-rara">rara</span>':''}<p>${esc(c.desc||'')}</p><small>${ok?`Conquistada em ${fmtD(G.conq[c.id])} · +${c.pts} pts`:`${N(Math.min(a,b))} de ${N(b)} · +${c.pts} pts`}</small>${ok?`<div>${tw(`Conquista desbloqueada no Galo Metrics: ${c.nome}${c.desc?' ('+c.desc+')':''}`,'Tweetar')}</div>`:`<i class="conq-bar"><i style="width:${Math.min(100,100*a/b).toFixed(0)}%"></i></i>`}</div></div>`; }).join('')}</div>
   <p class="count">Seu perfil, pontos e conquistas ficam salvos neste aparelho. Use o código de backup no <a href="#album">álbum</a> para levar tudo para outro aparelho.</p>`;
 }
 
@@ -2217,7 +2226,7 @@ function rankSemana(sem){ const doc=JSON.parse(JSON.stringify(RANK[sem]||{pessoa
 function vRanking(){
   const sem=semanaDe(fmtD(hojeStr())); const semSet=new Set(Object.keys(RANK)); Object.values(RKU).forEach(u=>Object.values(u.res||{}).forEach(x=>{ if(x&&x.d) semSet.add(semanaDe(x.d)); })); const semanas=[...semSet].sort().reverse(); const atual=rankSemana(sem);
   const tab=o=>{ const l=Object.entries(o.pessoas||{}).map(([ap,x])=>({ap, pts:Object.values(x).reduce((s,v)=>s+v,0), n:Object.keys(x).length})).sort((a,b)=>b.pts-a.pts);
-    return l.length?`<table><thead><tr><th>#</th><th>Torcedor</th><th class="n">Desafios</th><th class="n">Pontos</th></tr></thead><tbody>${l.map((x,i)=>`<tr><td class="mono">${i+1}</td><td>${i===0?'★ ':''}${esc(x.ap)}</td><td class="n">${x.n}</td><td class="n"><b>${x.pts}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Ninguém no ranking desta semana ainda.</p>'; };
+    return l.length?`<table><thead><tr><th>#</th><th>Torcedor</th><th class="n">Desafios</th><th class="n">Pontos</th></tr></thead><tbody>${l.map((x,i)=>`<tr><td class="mono">${i+1}</td><td>${i===0?'★ ':''}${esc(x.ap)}${ehCriadorAp(x.ap)?' '+seloCriador():''}</td><td class="n">${x.n}</td><td class="n"><b>${x.pts}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Ninguém no ranking desta semana ainda.</p>'; };
   setTimeout(()=>{ const b=$('#rkadd'); if(!b) return; b.onclick=async()=>{ const it=leTextoRank($('#rktxt').value); const msg=$('#rkmsg');
     if(!it.length){ msg.textContent='Nenhum resultado reconhecido. Cole o texto copiado pelo botão "Copiar resultado".'; return; }
     const val=it.filter(x=>x.ok), inv=it.length-val.length; const por={};
@@ -3246,6 +3255,11 @@ function colabRows(){
 }
 function nivelColab(n){ const x=NIVEIS_COLAB.find(([min])=>n>=min); return x?{nome:x[1], ic:x[2], cls:'colab-'+x[1].toLowerCase()}:null; }
 function seloColab(n, txt){ const v=nivelColab(n); return v?`<span class="selo-colab ${v.cls}" title="Colaborador ${v.nome}">${v.ic}${txt?' Colaborador '+v.nome:''}</span>`:''; }
+function seloCriador(){ return '<span class="selo-criador" title="Criador do Galo Metrics">✦ Criador</span>'; }
+const ehCriador=uid=>!!(uid&&CFG&&CFG.criador&&uid===CFG.criador);
+const ehCriadorAp=ap=>{ const o=CFG&&CFG.criador&&(RKU||{})[CFG.criador]; return !!(o&&ap&&o.ap===ap); };
+const fotoPerfil=()=>(G&&G.perfil&&G.perfil.foto)||window.GM_USER_PHOTO||'';
+function iconeDe(file){ return new Promise((ok,err)=>{ const img=new Image(), u=URL.createObjectURL(file); img.onload=()=>{ const n=160, c=document.createElement('canvas'); c.width=c.height=n; const x=c.getContext('2d'); const m=Math.min(img.width,img.height); x.fillStyle='#fff'; x.fillRect(0,0,n,n); x.drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,n,n); URL.revokeObjectURL(u); let d=c.toDataURL('image/webp',0.85); if(!d.startsWith('data:image/webp')) d=c.toDataURL('image/jpeg',0.85); ok(d); }; img.onerror=err; img.src=u; }); }
 function apoiadorSelo(){ return '<span class="selo-apoio" title="Apoiador">♥</span>'; }
 function ehApoiador(nome){ return !!nome && (APOIE.apoiadores||'').split('\n').map(s=>nrm(s.trim())).filter(Boolean).includes(nrm(nome)); }
 function pagaColab(){
@@ -3264,7 +3278,7 @@ function vColaboradores(){
   <div class="tiles"><div class="tile"><b>${N(L.length)}</b><span>Colaboradores</span></div><div class="tile"><b>${N((COLAB.itens||[]).length)}</b><span>Contribuições aceitas</span></div>${Object.keys(PTS_COLAB).map(k=>`<div class="tile"><b>${N((COLAB.itens||[]).filter(x=>x.tipo===k).length)}</b><span>${({sugestao:'Sugestões',correcao:'Correções',escudo:'Escudos',foto:'Fotos'})[k]}</span></div>`).join('')}</div>
   ${COLAB_MEU?`<p class="carta">Você já tem <b>${COLAB_MEU.n}</b> contribuição(ões) aceita(s) e ${N(COLAB_MEU.pts)} pontos por colaborar. ${seloColab(COLAB_MEU.n,true)}</p>`:''}
   <h2>Ranking de colaboradores</h2>
-  ${L.length?`<table><thead><tr><th>#</th><th>Colaborador</th><th class="n">Aceitas</th><th>Tipos</th><th class="n">Pontos</th></tr></thead><tbody>${L.map((r,i)=>`<tr${r.uid===GUID?' class="eu"':''}><td class="mono">${i+1}</td><td>${seloColab(r.n)} ${linkTorcedor(r.uid,r.nome)}${ehApoiador(r.nome)?' '+apoiadorSelo():''}</td><td class="n">${r.n}</td><td><small>${Object.entries(r.tipos).map(([k,v])=>`${esc(T(k).replace('Enviar ','').replace(' de dado',''))} ${v}`).join(' · ')}</small></td><td class="n"><b>${N(r.pts)}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">O ranking começa com a primeira contribuição aceita. Pode ser a sua.</p>'}
+  ${L.length?`<table><thead><tr><th>#</th><th>Colaborador</th><th class="n">Aceitas</th><th>Tipos</th><th class="n">Pontos</th></tr></thead><tbody>${L.map((r,i)=>`<tr${r.uid===GUID?' class="eu"':''}><td class="mono">${i+1}</td><td>${seloColab(r.n)} ${linkTorcedor(r.uid,r.nome)}${ehCriador(r.uid)?' '+seloCriador():''}${ehApoiador(r.nome)?' '+apoiadorSelo():''}</td><td class="n">${r.n}</td><td><small>${Object.entries(r.tipos).map(([k,v])=>`${esc(T(k).replace('Enviar ','').replace(' de dado',''))} ${v}`).join(' · ')}</small></td><td class="n"><b>${N(r.pts)}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">O ranking começa com a primeira contribuição aceita. Pode ser a sua.</p>'}
   <h2>Como ganhar pontos e selo</h2>
   <div class="tiles">${Object.entries(PTS_COLAB).map(([k,p])=>`<div class="tile"><b>+${p}</b><span>${esc(T(k))}</span></div>`).join('')}</div>
   <p class="count">Os pontos entram quando a contribuição é conferida e aceita, e caem direto no seu saldo do álbum na próxima visita. Selos por contribuições aceitas: ${NIVEIS_COLAB.slice().reverse().map(([n,nome])=>`${seloColab(n)} ${nome} a partir de ${n}`).join(' · ')}.</p>
@@ -3438,7 +3452,7 @@ function blocoTorcida(j, campo='aval', id=j&&j.id, titulo='Avaliações da torci
   return head+`<div class="torc">
     ${notas.length?`<div class="torc-res"><div class="torc-med"><b>${fmtNota(med.toFixed(1))}</b>${starsHTML(Math.round(med*2)/2,'stx-m')}<span class="uf">${notas.length} ${notas.length===1?'nota':'notas'}</span></div>
     <div class="torc-hist" aria-label="Distribuição das notas">${starsHTML(0.5,'stx-xs')}<div class="bars">${hist.map((n,i)=>`<span title="${n} ${n===1?'nota':'notas'} de ${fmtNota((i+1)/2)}" style="height:${Math.max(3,n/mx*100)}%"></span>`).join('')}</div>${starsHTML(5,'stx-xs')}</div></div>`:''}
-    <div class="torc-list">${L.slice(0,40).map(x=>`<div class="torc-it"><span class="torc-av" aria-hidden="true">${esc((x.ap||'?').trim()[0]||'?').toUpperCase()}</span><div><div class="torc-top"><b>${linkTorcedor(x.uid,x.ap)}</b>${x.n?starsHTML(x.n,'stx-s'):''}${x.est?'<span class="tag light">no estádio</span>':''}${x.uid===GUID?'<span class="tag">você</span>':''}</div>${x.t?`<p>${esc(x.t)}</p>`:''}${x.cr?`<small class="uf">Craque: ${esc(nomeV(x.cr))}</small>`:''}</div></div>`).join('')}</div></div>`;
+    <div class="torc-list">${L.slice(0,40).map(x=>`<div class="torc-it">${((RKU[x.uid]||{}).pub||{}).foto?`<img class="torc-av" src="${esc(RKU[x.uid].pub.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av" aria-hidden="true">${esc((x.ap||'?').trim()[0]||'?').toUpperCase()}</span>`}<div><div class="torc-top"><b>${linkTorcedor(x.uid,x.ap)}</b>${ehCriador(x.uid)?seloCriador():''}${x.n?starsHTML(x.n,'stx-s'):''}${x.est?'<span class="tag light">no estádio</span>':''}${x.uid===GUID?'<span class="tag">você</span>':''}</div>${x.t?`<p>${esc(x.t)}</p>`:''}${x.cr?`<small class="uf">Craque: ${esc(nomeV(x.cr))}</small>`:''}</div></div>`).join('')}</div></div>`;
 }
 
 /* ---------- Abertura de pacotinho, uma figurinha por vez ---------- */
@@ -3556,7 +3570,7 @@ function vEscalacao(){
 /* ---------- Perfil público dos torcedores ---------- */
 async function publicaResumo(){
   if(!GDB||!GUID) return;
-  try{ const L=typeof figuras==='function'?figuras():[]; const r={fig:Object.keys(G.owned||{}).filter(k=>G.owned[k]).length, figTot:L.length, conq:Object.keys(G.conq||{}).length, est:vistoAoVivo().length, fav:(G.perfil||{}).fav||'', total:G.total||0, seq:(G.seq||{}).max||0, foto:window.GM_USER_PHOTO||''};
+  try{ const L=typeof figuras==='function'?figuras():[]; const r={fig:Object.keys(G.owned||{}).filter(k=>G.owned[k]).length, figTot:L.length, conq:Object.keys(G.conq||{}).length, est:vistoAoVivo().length, fav:(G.perfil||{}).fav||'', total:G.total||0, seq:(G.seq||{}).max||0, foto:fotoPerfil()};
     const k=JSON.stringify(r)+((G.perfil||{}).oculto?'o':''); if(G.resumoPub===k) return;
     const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}};
     o.oculto=!!(DONO&&(G.perfil||{}).oculto); o.pub=r; o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.visto=hojeStr(); await ref.set(o); RKU[GUID]=o; G.resumoPub=k; gSave(); }catch(e){}
@@ -3590,7 +3604,7 @@ function vTorcedor(cod){
   const pj=id=>D.jogadores.find(x=>slug(x.nome)===id);
   const sem=semanaDe(fmtD(hojeStr())); const rk=Object.values(o.res||{}).filter(x=>x&&x.d&&semanaDe(x.d)===sem).reduce((s,x)=>s+(+x.pts||0),0);
   return `<a class="back" href="#torcedores">← Amigos</a><div class="kicker">Perfil do torcedor${uid===GUID?' · você':''}</div>
-  <div class="trc-head">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av" style="width:64px;height:64px;font-size:28px">${esc(o.ap.trim()[0]||'?').toUpperCase()}</span>`}<h1 style="margin:0">${esc(o.ap)}</h1></div>
+  <div class="trc-head">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av" style="width:64px;height:64px;font-size:28px">${esc(o.ap.trim()[0]||'?').toUpperCase()}</span>`}<h1 style="margin:0">${esc(o.ap)}</h1>${ehCriador(uid)?seloCriador():''}</div>
   <div class="perfil-top">${fav?figHTML(fav):''}<div style="flex:1;min-width:260px"><div class="tiles">
    <div class="tile"><b>${N(p.fig||0)}</b><small class="basesm">de ${N(p.figTot||0)}</small><span>Figurinhas</span></div>
    <div class="tile"><b>${p.conq||0}</b><span>Conquistas</span></div>
