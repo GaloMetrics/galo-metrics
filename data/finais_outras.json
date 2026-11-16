@@ -175,5 +175,34 @@
    6122,
    6124
   ]
+ },
+ {
+  "comp": "Campeonato Brasileiro",
+  "ano": 1977,
+  "res": "vice",
+  "ids": [
+   2959
+  ],
+  "nota": "Final em jogo único, disputada em março de 1978; vice nos pênaltis (3x2)"
+ },
+ {
+  "comp": "Campeonato Brasileiro",
+  "ano": 1980,
+  "res": "vice",
+  "ids": [
+   3121,
+   3122
+  ]
+ },
+ {
+  "comp": "Campeonato Brasileiro",
+  "ano": 1999,
+  "res": "vice",
+  "ids": [
+   4447,
+   4448,
+   4449
+  ],
+  "nota": "Final em três jogos"
  }
 ]
