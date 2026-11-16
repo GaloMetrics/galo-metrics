@@ -17,6 +17,11 @@ service cloud.firestore {
     match /sugestoes/{uid} {
       allow read, write: if eu(uid) || dono();
     }
+    // Resultados dos desafios: cada um grava os seus, todo mundo lê o ranking
+    match /rankuser/{uid} {
+      allow read: if true;
+      allow write: if eu(uid) || dono();
+    }
     // Álbum salvo na nuvem de cada torcedor
     match /data/users/{uid}/{doc} {
       allow read, write: if eu(uid) || dono();
