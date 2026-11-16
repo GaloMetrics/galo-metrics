@@ -552,9 +552,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261116203958';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261116203958"></script>
-<script src="backend-firebase.js?v=20261116203958"></script>
+<script>window.GM_BUILD='20261116205152';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261116205152"></script>
+<script src="backend-firebase.js?v=20261116205152"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1930,7 +1930,7 @@ function jdFim(jogo, ok, pts){ const d=jdHoje(); d[jogo]=Object.assign(d[jogo]||
   const h=hojeStr(); if(!DIA_JOGO&&G.jdSeq.ult!==h){ G.jdSeq.atual = G.jdSeq.ult&&diasEntre(G.jdSeq.ult,h)===1 ? G.jdSeq.atual+1 : 1; G.jdSeq.ult=h; G.jdSeq.max=Math.max(G.jdSeq.max,G.jdSeq.atual); }
   if(pts>0){ G.pts+=pts; G.total+=pts; G.hist.unshift({d:Date.now(), n:pts, m:'desafio: '+jogo}); }
   gSave(); atualizaChip(); checaConquistas(); if(pts>0) toast(`+${pts} pontos no desafio`); }
-const DESAF=[['conexoes','Conexões alvinegras','Separe 16 jogadores em 4 grupos com algo em comum.'],['impostor','Impostor','Uma categoria e 10 jogadores: marque quem se encaixa e fuja dos impostores.'],['carreira','Adivinhe pela carreira','Descubra o jogador pelos números da passagem dele pelo Galo.'],['galodle','Galodle','Adivinhe o jogador em 6 chutes. O nome pode ter qualquer tamanho.'],['quem','Quem é?','Descubra o jogador do dia pelas pistas: época, gols, jogos e raridade.'],['placar','Placar do dia','Acerte o placar de um jogo histórico em 3 chutes.'],['maismenos','Mais ou menos','Quem fez mais gols pelo Galo? Faça a maior sequência.'],['escalacao','Complete a escalação','Um jogo marcante deste século com 5 titulares escondidos.']];
+const DESAF=[['conexoes','Conexões alvinegras','Separe 16 jogadores em 4 grupos com algo em comum.'],['impostor','Impostor','Uma categoria e 10 jogadores: marque quem se encaixa e fuja dos impostores.'],['carreira','Adivinhe pela carreira','Descubra o jogador pelos números da passagem dele pelo Galo.'],['galodle','Galodle','Adivinhe o jogador em 6 chutes. O nome pode ter qualquer tamanho.'],['quem','Quem é?','Descubra o jogador do dia pelas pistas: época, gols, jogos e raridade.'],['placar','Placar do dia','Acerte o placar de um jogo histórico em 3 chutes.'],['maismenos','Mais ou menos','Quem fez mais gols pelo Galo? Faça a maior sequência.'],['escalacao','Complete a escalação','Um jogo marcante deste século com o time titular inteiro escondido.']];
 function vDesafios(){ const d=jdHoje();
   const dias=[]; for(let d=new Date(LANC_DESAF+'T12:00:00'); ; d.setDate(d.getDate()+1)){ const k=d.toISOString().slice(0,10); if(k>=hojeStr()) break; dias.push(k); }
   const arq=dias.length?`<h2>Jogar dias anteriores</h2><p class="count">Os desafios de cada dia continuam disponíveis. Jogar o arquivo dá Metricoins, mas não entra no ranking da semana.</p><div class="arq-dias">${dias.reverse().map(k=>{ const x=G.jd[k]||{}, v=DESAF.filter(([c])=>x[c]&&x[c].ok).length, f=DESAF.filter(([c])=>x[c]&&x[c].fim).length; return `<a class="arq-dia${k===DIA_JOGO?' on':''}" href="#desafios?dia=${k}"><b>${fmtD(k).slice(0,5)}</b><small>${f?`${v}/${DESAF.length} vencidos`:'não jogado'}</small></a>`; }).join('')}</div>`:'';
