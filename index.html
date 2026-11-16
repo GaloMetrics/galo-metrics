@@ -1990,27 +1990,40 @@ const posTxt=n=>{ const x=posicaoDe(n); return x?x.pos:''; };
 
 /* ---------- categorias para Conexões e Impostor ---------- */
 let CATS=null;
+/* Jogador "famoso" para Conexões e Impostor: conhecido, sem homônimos misturados (carreira de até 18 anos) e com peso no clube */
+function fFamoso(f){ if(!fConhecido(f)) return false; const p=pjDe(f.nome); const a=+(String(p.primeiro||'').slice(0,4))||0, b=+(String(p.ultimo||'').slice(0,4))||0;
+  if(/\(/.test(f.nome)||(a&&b&&b-a>18)) return false; if(f.r==='lendaria') return true; return b>=1990&&((p.jogos||0)>=150||golsBest(p)>=30); }
 function categorias(){
   if(CATS) return CATS;
-  const L=figuras().filter(fConhecido), byN={}; L.forEach(f=>byN[f.nome]=f);
-  const pj=n=>D.jogadores.find(p=>p.nome===n);
-  const conhecido=f=>f.r!=='comum'||/gols|jogos/.test(f.stat)&&(parseInt(f.stat.replace(/\D/g,''))||0)>=15;
+  const L=figuras().filter(fFamoso), byN={}; L.forEach(f=>byN[f.nome]=f);
+  const pj=n=>pjDe(n);
   const C=[];
   const add=(id,nome,lista)=>{ const s=[...new Set(lista)].filter(n=>byN[n]); if(s.length>=4) C.push({id,nome,m:new Set(s)}); };
-  const elenco=(f)=>{ const s=new Set(); J.filter(f).forEach(j=>{ const e=j.escalacao_galo; if(!e) return; e.titulares.forEach(n=>s.add(n)); e.substituicoes.forEach(x=>x.entrou&&s.add(x.entrou)); }); return [...s]; };
+  const elencoIds=ids=>{ const s=new Set(); ids.forEach(id=>{ const e=(byId[id]||{}).escalacao_galo; if(!e) return; e.titulares.forEach(n=>s.add(n)); e.substituicoes.forEach(x=>x.entrou&&s.add(x.entrou)); }); return [...s]; };
   const freq=(f,min)=>{ const c={}; J.filter(f).forEach(j=>{ const e=j.escalacao_galo; if(!e) return; new Set([...e.titulares,...e.substituicoes.map(x=>x.entrou)]).forEach(n=>{ c[n]=(c[n]||0)+1; }); }); return Object.keys(c).filter(n=>c[n]>=min); };
-  add('lib2013','Campeões da Libertadores 2013', elenco(j=>j.id===5239||j.id===5238));
+  const marcou=f=>{ const s=new Set(); J.filter(f).forEach(j=>j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)) s.add(g.jogador); })); return [...s]; };
+  // finais nacionais e internacionais
+  (D.finais_outras||[]).filter(x=>!x.sem_final&&x.ids.length&&x.res!=='pendente').forEach(x=>add('fin-'+x.comp+x.ano, `Jogaram a final da ${x.comp} ${x.ano}${x.res==='titulo'?' (campeões)':' (vice)'}`, elencoIds(x.ids)));
+  // Mineiro: finais recentes
+  (D.finais_mineiro||[]).filter(x=>x.ano>=2000&&x.titulo).forEach(x=>add('min'+x.ano,`Campeões mineiros de ${x.ano} (jogaram a final)`, elencoIds(x.ids)));
   add('bra2021','Campeões brasileiros de 2021', freq(j=>j.temporada===2021&&j.grupo==='Campeonato Brasileiro',12));
   add('serieb2006','Campanha da Série B de 2006', freq(j=>j.temporada===2006&&j.competicao==='Brasileiro-Série B',12));
-  POSS.forEach(p=>add('pos-'+p,{Goleiro:'Goleiros',Defensor:'Defensores',Meia:'Meias',Atacante:'Atacantes'}[p], L.filter(f=>posTxt(f.nome)===p&&conhecido(f)).map(f=>f.nome)));
-  add('g100','Fizeram 100 gols ou mais', L.filter(f=>golsBest(pj(f.nome))>=100).map(f=>f.nome));
-  [1930,1950,1970,1980,1990,2000,2010].forEach(d=>add('dec'+d,`Estrearam nos anos ${String(d).slice(2)}`, L.filter(f=>f.dec===d&&conhecido(f)).map(f=>f.nome)));
+  // gols em momentos grandes
+  add('golfinal','Marcaram gol em final', marcou(j=>ehFinal(j)));
+  add('golliberta','Marcaram gol na Libertadores', marcou(j=>/libertadores/i.test(j.competicao||'')));
+  add('golcdb','Marcaram gol em final de Copa do Brasil', marcou(j=>ehFinal(j)&&/copa do brasil/i.test(j.competicao||'')));
   const czg={}; J.filter(j=>j.adversario_id==='cruzeiro mg').forEach(j=>j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)) czg[g.jogador]=(czg[g.jogador]||0)+1; }));
   add('cz5','Marcaram 5 gols ou mais no clássico', Object.keys(czg).filter(n=>czg[n]>=5));
-  const hat={}; J.forEach(j=>{ const c={}; j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)) c[g.jogador]=(c[g.jogador]||0)+1; }); Object.entries(c).forEach(([n,v])=>{ if(v>=3&&j.data>=D.meta.escalacoes_desde) hat[n]=1; }); });
-  add('hat','Fizeram hat-trick pelo Galo desde '+D.meta.escalacoes_desde.slice(0,4), Object.keys(hat));
-  add('j300','Passaram de 300 jogos (desde '+D.meta.escalacoes_desde.slice(0,4)+')', L.filter(f=>(pj(f.nome).jogos||0)>=300).map(f=>f.nome));
-  posicaoDe(''); add('pen','Defenderam pênaltis pelo Galo', Object.keys(PENC));
+  // parceiros de ídolos
+  const junto=(idolo,min)=>{ const c={}; J.forEach(j=>{ const e=j.escalacao_galo; if(!e) return; const ps=new Set([...e.titulares,...e.substituicoes.map(x=>x.entrou)].filter(Boolean)); if(!ps.has(idolo)) return; ps.forEach(n=>{ if(n!==idolo) c[n]=(c[n]||0)+1; }); }); return Object.keys(c).filter(n=>c[n]>=min); };
+  [['Ronaldinho Gaúcho','Jogaram ao lado de Ronaldinho Gaúcho'],['Reinaldo','Jogaram ao lado de Reinaldo'],['Hulk','Jogaram ao lado de Hulk'],['Marques','Jogaram ao lado de Marques'],['Guilherme Alves','Jogaram ao lado de Guilherme']].forEach(([n,t])=>{ if(pj(n)) add('jt-'+n,t,junto(n,15)); });
+  // números
+  add('g100','Fizeram 100 gols ou mais pelo Galo', L.filter(f=>golsBest(pj(f.nome))>=100).map(f=>f.nome));
+  add('j300','Passaram de 300 jogos pelo Galo', L.filter(f=>(pj(f.nome).jogos||0)>=300).map(f=>f.nome));
+  const hat={}; J.forEach(j=>{ const c={}; j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)) c[g.jogador]=(c[g.jogador]||0)+1; }); Object.entries(c).forEach(([n,v])=>{ if(v>=3) hat[n]=1; }); });
+  add('hat','Fizeram hat-trick pelo Galo', Object.keys(hat));
+  POSS.forEach(p=>add('pos-'+p,{Goleiro:'Goleiros',Defensor:'Defensores',Meia:'Meias',Atacante:'Atacantes'}[p], L.filter(f=>posTxt(f.nome)===p).map(f=>f.nome)));
+  [1970,1980,1990,2000,2010,2020].forEach(d=>add('dec'+d,`Estrearam nos anos ${String(d).slice(2)}`, L.filter(f=>f.dec===d).map(f=>f.nome)));
   CATS=C; return C;
 }
 function embaralha(a,r){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const k=Math.floor(r()*(i+1)); [a[i],a[k]]=[a[k],a[i]]; } return a; }
@@ -2054,7 +2067,7 @@ function vConexoes(){
 
 /* ---------- Impostor ---------- */
 function impostorDia(){
-  const r=rngDia('impostor'), C=categorias().filter(c=>!c.id.startsWith('pos-')), L=figuras();
+  const r=rngDia('impostor'), C=categorias().filter(c=>!c.id.startsWith('pos-')), L=figuras().filter(fFamoso);
   const rodadas=[];
   for(const c of embaralha(C,r)){
     if(rodadas.length>=5) break;
