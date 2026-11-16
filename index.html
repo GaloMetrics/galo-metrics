@@ -3155,17 +3155,17 @@ function blocoMoedas(){
   (COLAB.itens||[]).forEach(x=>{ if(!pessoas[x.uid]) pessoas[x.uid]={uid:x.uid, nome:x.nome||'Torcedor', det:'colaborador'}; });
   const L=Object.values(pessoas).filter(p=>p.uid!==GUID).sort((a,b)=>a.nome.localeCompare(b.nome));
   const rec=(PRESENTES.itens||[]).slice().reverse().slice(0,12);
-  setTimeout(()=>{ const b=$('#mcdar'); if(!b) return; b.onclick=async()=>{ const uid=$('#mcquem').value, pts=Math.max(1,Math.min(100000,+$('#mcqtd').value||0)), motivo=$('#mcmot').value.trim().slice(0,120), msg=$('#mcmsg');
-      if(!uid){ msg.textContent='Escolha um amigo.'; return; } const p=pessoas[uid];
+  setTimeout(()=>{ const b=$('#mcdar'); if(!b) return; b.onclick=async()=>{ let uid=($('#mcquem')&&$('#mcquem').value)||($('#mcuid').value||'').trim(); const nomeMan=($('#mcnome').value||'').trim(); const pts=Math.max(1,Math.min(100000,+$('#mcqtd').value||0)), motivo=$('#mcmot').value.trim().slice(0,120), msg=$('#mcmsg');
+      if(!uid){ msg.textContent='Escolha um amigo na lista ou cole o UID dele.'; return; } if(!/^[A-Za-z0-9_-]{6,128}$/.test(uid)){ msg.textContent='UID inválido. Copie a coluna "UID do usuário" no Firebase.'; return; } const p=pessoas[uid]||{uid, nome:nomeMan||'Torcedor'}; if(nomeMan) p.nome=nomeMan;
       try{ const ref=GDB.doc('colab/presentes'); const s=await ref.get(); const it=s.exists?(s.data().itens||[]):[]; const item={k:'mc_'+Date.now().toString(36), uid, nome:p.nome, pts, motivo, quando:new Date().toISOString()};
         await ref.set({itens:[...it,item].slice(-500)}); PRESENTES={itens:[...it,item]}; msg.textContent=`${N(pts)} Metricoins enviados para ${p.nome}. Chegam na próxima vez que a pessoa abrir o site.`; toast('Metricoins enviados!'); $('#mcmot').value=''; }
       catch(e){ console.error(e); msg.textContent='Não foi possível enviar agora.'; } }; });
   return `<h2>Dar Metricoins para amigos</h2>
   <p class="count">Aparecem aqui os torcedores que já entraram no site com a conta Google, mandaram sugestão ou colaboraram. As moedas caem no saldo da pessoa na próxima visita, com um aviso.</p>
-  ${L.length?`<div class="dono"><div class="dgrid"><label>Amigo<select id="mcquem"><option value="">Escolha…</option>${L.map(p=>`<option value="${esc(p.uid)}">${esc(p.nome)}${p.det?' ('+esc(p.det)+')':''}</option>`).join('')}</select></label>
+  <div class="dono">${L.length?`<label>Amigo da lista<select id="mcquem"><option value="">Escolha…</option>${L.map(p=>`<option value="${esc(p.uid)}">${esc(p.nome)}${p.det?' ('+esc(p.det)+')':''}</option>`).join('')}</select></label><p class="count" style="margin:6px 0">ou</p>`:''}<div class="dgrid"><label>UID do amigo<input id="mcuid" placeholder="cole o UID do usuário" autocomplete="off"></label><label>Nome que vai aparecer<input id="mcnome" maxlength="60" placeholder="Ex.: Thiago"></label></div><p class="count" style="margin:4px 0 10px">O UID fica no Firebase, em Authentication &gt; Usuários, na coluna "UID do usuário".</p><div class="dgrid">
   <label>Quantidade<input id="mcqtd" type="number" min="1" max="100000" value="100"></label></div>
   <label>Motivo (aparece para a pessoa)<input id="mcmot" maxlength="120" placeholder="Ex.: valeu pela ajuda no teste!"></label>
-  <p id="mcmsg" class="count" role="status"></p><button type="button" class="more" id="mcdar">Enviar Metricoins</button></div>`:'<p class="empty">Ninguém para presentear ainda. Peça para os amigos entrarem no site com a conta Google.</p>'}
+  <p id="mcmsg" class="count" role="status"></p><button type="button" class="more" id="mcdar">Enviar Metricoins</button></div>
   ${rec.length?`<h3>Últimos envios</h3><table><tbody>${rec.map(x=>`<tr><td class="mono">${fmtD(String(x.quando).slice(0,10))}</td><td>${esc(x.nome)}</td><td>${esc(x.motivo||'')}</td><td class="n"><b>${N(x.pts)}</b> MC</td></tr>`).join('')}</tbody></table>`:''}`;
 }
 
