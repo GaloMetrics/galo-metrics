@@ -440,6 +440,12 @@ body.pko-on{overflow:hidden}
 .pko-bts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}.pko-bts .ghost{background:transparent!important;color:#F4F1E8!important;-webkit-text-fill-color:#F4F1E8;border-color:#F4F1E8}
 @media(max-width:480px){.pko-deck{width:196px;height:285px}.pko-front .fig{transform:scale(1.4)}.pko-pack{width:200px;height:290px}}
 .esc-oc{display:inline-flex;flex-direction:column;align-items:center;font-family:'Abril Fatface',serif;font-size:22px;line-height:1;background:var(--ink);color:#C9962B;padding:4px 10px;border:2px dashed #C9962B}.esc-oc small{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.06em;color:var(--paper);margin-top:2px}
+.esc-oc{cursor:pointer;-webkit-text-fill-color:#C9962B}.esc-oc.sel{outline:3px solid #C9962B;outline-offset:2px}.esc-oc .esc-tt{color:#C9962B}
+.esc-painel{border:3px solid var(--ink);background:var(--paper);padding:14px;margin:14px auto;max-width:760px;box-shadow:6px 6px 0 #C9962B}
+.esc-row{display:flex;gap:5px;margin:6px 0;flex-wrap:wrap}.esc-row .gd-c{width:38px;height:42px;font-size:20px;display:inline-flex;align-items:center;justify-content:center;border:2px solid var(--ink);font-family:'Oswald',sans-serif;font-weight:700}
+.esc-row .gd-c.v{background:#2e7d4f;color:#fff;border-color:#2e7d4f}.esc-row .gd-c.a{background:#d4a017;color:#111;border-color:#d4a017}.esc-row .gd-c.x{background:#666;color:#fff;border-color:#666}
+.esc-erro{text-decoration:line-through;color:var(--mute);font-family:'Oswald',sans-serif;letter-spacing:.06em}
+@media(max-width:480px){.esc-row .gd-c{width:30px;height:36px;font-size:17px}}
 .esc-perdido{color:#B3261E!important;text-decoration:line-through}
 .esc-jogo{border:3px solid var(--ink);padding:12px 16px;margin:14px 0;display:flex;flex-direction:column;gap:6px}.esc-plac{display:flex;align-items:center;gap:10px;font-size:22px}.esc-plac b{font-family:'Oswald',sans-serif}
 .trc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:16px}.trc-it{display:flex;gap:12px;align-items:center;border:2px solid var(--ink);padding:10px;text-decoration:none;color:inherit}.trc-it:hover{background:var(--soft)}.trc-it img,.trc-head img{width:44px;height:44px;border-radius:50%;object-fit:cover}.trc-it span{display:flex;flex-direction:column}
@@ -3356,42 +3362,53 @@ function escOcultos(j){ // esconde os 5 titulares mais marcantes pelo Galo (mais
   const jg=n=>{ const p=D.jogadores.find(x=>x.nome===n); return p?(p.jogos||0)+3*golsBest(p):0; };
   return j.escalacao_galo.titulares.slice().sort((a,b)=>jg(b)-jg(a)).slice(0,ESC_OCULTOS); }
 const normNome=s=>semAc(String(s||'')).replace(/\s*\(.*\)\s*/g,'').replace(/[^A-Z ]/g,'').trim();
+/* Cada posição escondida vira um mini Galodle: toque no "?" e chute o nome.
+   O alvo é o nome pelo qual o jogador é chamado (primeira palavra; "Adilson Warken" -> ADILSON). Sobrenome também vale. */
+const ESC_TENT=5;
+function escAlvo(n){ const w=normNome(nomeV(n)).split(' ').filter(Boolean); return (w[0]&&w[0].length>=3)?w[0]:w.join(''); }
+function escAceita(n,g){ const full=normNome(nomeV(n)), w=full.split(' ').filter(Boolean); return g===escAlvo(n)||g===full.replace(/ /g,'')||g===full||w.some(x=>x.length>=4&&x===g); }
+function escCores(g,a){ const r=Array(g.length).fill('x'), sobra={}; for(let i=0;i<a.length;i++){ if(g[i]===a[i]) r[i]='v'; else sobra[a[i]]=(sobra[a[i]]||0)+1; }
+  for(let i=0;i<g.length;i++){ if(r[i]!=='v'&&sobra[g[i]]){ r[i]='a'; sobra[g[i]]--; } } return r; }
+let ESC_SEL=null;
 function vEscalacao(){
   if(typeof figuras==='function') figuras();
   const j=escJogo(); if(!j) return '<p class="empty">Sem jogo para hoje.</p>';
-  const oc=escOcultos(j), st=(jdHoje().escalacao ||= {t:[], fim:false, ok:false});
-  const achou=n=>st.fim||st.t.some(g=>g===n);
-  const erros=st.t.filter(g=>!oc.includes(g));
-  const faltam=oc.filter(n=>!achou(n));
-  let campo=campoHTML(j.escalacao_galo.titulares,{form:null, gols:Object.fromEntries(j.gols.filter(g=>g.lado==='galo'&&isGoal(g)).map(g=>[g.jogador,0]))});
-  oc.forEach(n=>{ if(achou(n)&&!faltam.includes(n)&&!st.fim) return; if(st.fim) return;
-    const a=`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`; const letras=normNome(nomeV(n)).replace(/ /g,'').length;
-    campo=campo.replace(a,`<span class="esc-oc" title="Jogador escondido">?<small>${letras} letras</small></span>`); });
-  if(st.fim) oc.forEach(n=>{ const a=`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`; if(!st.t.includes(n)) campo=campo.replace(a,`<a href="#jogador-${slug(n)}" class="esc-perdido">${esc(nomeV(n))}</a>`); });
-  const pool=[...new Set(J.filter(x=>x.data>='1998-01-01'&&x.escalacao_galo).flatMap(x=>[...(x.escalacao_galo.titulares||[]),...(x.escalacao_galo.substituicoes||[]).map(s=>s.entrou)]).filter(n=>n&&FIGN[n]))].sort((a,b)=>nomeV(a).localeCompare(nomeV(b)));
-  setTimeout(()=>{ const inp=$('#escin'), b=$('#escenv'); if(inp&&b){ const env=()=>{ const v=normNome(inp.value); if(!v) return; const er=$('#escerr');
-      const alvo=pool.find(n=>normNome(nomeV(n))===v||normNome(n)===v); if(!alvo){ er.textContent='Escolha um jogador da lista.'; return; }
-      if(st.t.includes(alvo)){ er.textContent='Você já tentou esse.'; return; }
-      st.t.push(alvo); inp.value=''; er.textContent='';
-      const acertos=oc.filter(n=>st.t.includes(n)).length, nErr=st.t.filter(g=>!oc.includes(g)).length;
-      if(acertos===oc.length){ st.fim=true; st.ok=true; jdFim('escalacao', true, Math.max(4,10-nErr)*2); }
-      else if(nErr>=ESC_ERROS){ st.fim=true; st.ok=false; jdFim('escalacao', false, acertos); }
-      else gSave();
-      route.keep=true; route(); };
-    b.onclick=env; inp.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); env(); } }; inp.focus({preventScroll:true}); }
-    const s=$('#escshare'); if(s){ const ac=oc.filter(n=>st.t.includes(n)).length, ne=st.t.filter(g=>!oc.includes(g)).length;
-      const _t=()=>textoRank('Complete a escalação', `${ac}/${oc.length} · ${ne} ${ne===1?'erro':'erros'}`, st.ok?Math.max(4,10-ne)*2:ac); s.onclick=()=>compartilha(_t()); autoRank(_t()); } });
-  const ac=oc.filter(n=>st.t.includes(n)).length;
+  const oc=escOcultos(j); let st=jdHoje().escalacao; if(!st||!st.s) st=jdHoje().escalacao={s:{}, fim:false, ok:false};
+  const S=n=>(st.s[n] ||= {t:[], ok:false, fim:false});
+  const feitos=oc.filter(n=>S(n).ok).length, encerrados=oc.filter(n=>S(n).fim).length;
+  if(ESC_SEL&&(!oc.includes(ESC_SEL)||S(ESC_SEL).fim)) ESC_SEL=null;
+  let campo=campoHTML(j.escalacao_galo.titulares,{form:null});
+  oc.forEach((n,i)=>{ const a=`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`, s=S(n);
+    if(s.ok) return;
+    if(s.fim||st.fim){ campo=campo.replace(a,`<a href="#jogador-${slug(n)}" class="esc-perdido">${esc(nomeV(n))}</a>`); return; }
+    const al=escAlvo(n), mais=normNome(nomeV(n)).split(' ').length>1&&al!==normNome(nomeV(n)).replace(/ /g,'');
+    campo=campo.replace(a,`<button type="button" class="esc-oc${ESC_SEL===n?' sel':''}" data-esc="${i}" aria-label="Posição escondida, ${al.length} letras">?<small>${al.length} letras</small>${s.t.length?`<small class="esc-tt">${s.t.length}/${ESC_TENT}</small>`:''}</button>`); });
+  const painel=()=>{ if(!ESC_SEL||st.fim) return ''; const n=ESC_SEL, s=S(n), al=escAlvo(n), pos=posTxt(n);
+    const linhas=s.t.map(g=>{ const c=g.length===al.length?escCores(g,al):null; return `<div class="esc-row">${c?[...g].map((ch,k)=>`<span class="gd-c ${c[k]==='v'?'v':c[k]==='a'?'a':'x'}">${ch}</span>`).join(''):`<span class="esc-erro">${esc(g)}</span>`}</div>`; }).join('');
+    return `<div class="esc-painel" id="escpainel"><div class="osw">${pos?esc(pos)+' · ':''}${al.length} letras · ${ESC_TENT-s.t.length} ${ESC_TENT-s.t.length===1?'chance':'chances'}</div>${linhas}<div class="esc-row">${[...Array(al.length)].map(()=>'<span class="gd-c"></span>').join('')}</div>
+      <div class="filters"><label>Quem é?<input id="escin" placeholder="nome do jogador" autocomplete="off" autocapitalize="characters"></label><button type="button" class="more" id="escenv" style="align-self:flex-end">Chutar</button><button type="button" class="ghost" id="escfecha" style="align-self:flex-end">Fechar</button></div><p id="escerr" class="count" role="alert" style="color:var(--d)"></p>
+      <p class="count">Vale o nome pelo qual ele é chamado. Verde: letra no lugar certo. Amarelo: a letra existe em outra posição.</p></div>`; };
+  setTimeout(()=>{
+    document.querySelectorAll('[data-esc]').forEach(b=>b.onclick=()=>{ ESC_SEL=oc[+b.dataset.esc]; route.keep=true; route(); setTimeout(()=>{ const p=$('#escpainel'); if(p) p.scrollIntoView({block:'nearest',behavior:'smooth'}); const i=$('#escin'); if(i) i.focus({preventScroll:true}); },30); });
+    const inp=$('#escin'), b=$('#escenv'); if(inp&&b){ const env=()=>{ const n=ESC_SEL, s=S(n), g=normNome(inp.value).replace(/ /g,''), er=$('#escerr'); if(!g) return;
+        if(s.t.includes(g)){ er.textContent='Você já tentou esse.'; return; }
+        s.t.push(g); if(escAceita(n,normNome(inp.value))||escAceita(n,g)){ s.ok=true; s.fim=true; ESC_SEL=null; toast(`✔ ${nomeV(n)}`); }
+        else if(s.t.length>=ESC_TENT){ s.fim=true; ESC_SEL=null; toast(`Era ${nomeV(n)}`); }
+        const ok=oc.filter(x=>S(x).ok).length, fe=oc.filter(x=>S(x).fim).length;
+        if(fe===oc.length){ st.fim=true; st.ok=ok>=8; jdFim('escalacao', st.ok, ok*2); } else gSave();
+        route.keep=true; route(); setTimeout(()=>{ const i=$('#escin'); if(i) i.focus({preventScroll:true}); },30); };
+      b.onclick=env; inp.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); env(); } }; $('#escfecha').onclick=()=>{ ESC_SEL=null; route.keep=true; route(); }; }
+    const s=$('#escshare'); if(s){ const ok=oc.filter(x=>S(x).ok).length; const _t=()=>textoRank('Complete a escalação', `${ok}/${oc.length}`, ok*2); s.onclick=()=>compartilha(_t()); autoRank(_t()); }
+    const d=$('#escdesiste'); if(d) d.onclick=()=>{ oc.forEach(x=>{ S(x).fim=true; }); st.fim=true; st.ok=feitos>=8; jdFim('escalacao', st.ok, feitos*2); route.keep=true; route(); };
+  });
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia · escalações do século</div><h1>Complete a escalação</h1>
-  <p class="count">Um jogo marcante do Galo deste século, com o time titular inteiro escondido. Descubra os 11: cada nome errado gasta uma chance, e com ${ESC_ERROS} erros o jogo acaba.</p>
+  <p class="count">Um jogo marcante do Galo deste século, com o time titular inteiro escondido. Toque em cada "?" e descubra o jogador, como no Galodle: ${ESC_TENT} chances por posição. Acertando 8 ou mais, o desafio conta como vencido.</p>
   <div class="esc-jogo"><span class="osw">${esc(j.competicao||'')}${j.fase?' · '+esc(j.fase):''} · ${fmtD(j.data)}</span><div class="esc-plac">${cr('galo')}<b>Atlético ${placar(j)} ${esc(j.adversario)}</b>${cr(j.adversario_id)}</div>${j.estadio?`<small class="uf">${esc(j.estadio)}${j.cidade?', '+esc(j.cidade):''}</small>`:''}</div>
-  <p class="classico-num"><b>${ac}</b> de ${oc.length} encontrados · <b>${erros.length}</b> de ${ESC_ERROS} erros</p>
-  ${campo}
-  ${erros.length?`<p class="count">Não estava em campo: ${erros.map(n=>`<s>${esc(nomeV(n))}</s>`).join(', ')}</p>`:''}
-  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Escalação completa${erros.length?` com ${erros.length} ${erros.length===1?'erro':'erros'}`:' sem errar'}!`:`Não foi hoje. Você achou ${ac} de ${oc.length}.`}</p><a class="ghost" href="#jogo-${j.id}">Ver a ficha do jogo</a> <button type="button" class="more" id="escshare">Copiar resultado</button></div>`
-  :`<div class="filters"><label>Quem estava em campo?<input id="escin" list="escl" placeholder="nome do jogador" autocomplete="off"></label><button type="button" class="more" id="escenv" style="align-self:flex-end">Chutar</button></div><datalist id="escl">${pool.map(n=>`<option value="${esc(nomeV(n))}">`).join('')}</datalist><p id="escerr" class="count" role="alert" style="color:var(--d)"></p>`}`;
+  <p class="classico-num"><b>${feitos}</b> de ${oc.length} descobertos${encerrados>feitos?` · ${encerrados-feitos} perdidos`:''}</p>
+  ${campo}${painel()}
+  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Você descobriu ${feitos} de ${oc.length}!`:`Você descobriu ${feitos} de ${oc.length}.`}</p><a class="ghost" href="#jogo-${j.id}">Ver a ficha do jogo</a> <button type="button" class="more" id="escshare">Copiar resultado</button></div>`
+   :`<p class="count" style="margin-top:12px">${ESC_SEL?'':'Toque em um "?" no campo para começar.'} <button type="button" class="ghost" id="escdesiste" style="margin-left:8px">Desistir e ver a escalação</button></p>`}`;
 }
-
 /* ---------- Perfil público dos torcedores ---------- */
 async function publicaResumo(){
   if(!GDB||!GUID) return;
