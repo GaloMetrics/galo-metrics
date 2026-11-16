@@ -399,6 +399,46 @@ html.dark .stx{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www
 .torc-hist{display:flex;align-items:flex-end;gap:8px;flex:1;min-width:220px;max-width:360px}.torc-hist .bars{flex:1;display:flex;align-items:flex-end;gap:2px;height:56px;border-bottom:1px solid var(--ink)}.torc-hist .bars span{flex:1;background:#C9962B;opacity:.85}
 .torc-it{display:flex;gap:12px;padding:12px 0;border-bottom:1px dotted var(--ink)}.torc-av{flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:700}
 .torc-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.torc-it p{margin:6px 0 2px}
+.pack.pres{background:#C9962B;color:#111;-webkit-text-fill-color:#111;border-color:#111}
+body.pko-on{overflow:hidden}
+.pko{position:fixed;inset:0;z-index:300;background:radial-gradient(ellipse at 50% 40%,#2a241a 0%,#0c0b09 75%);display:flex;align-items:center;justify-content:center;color:#F4F1E8;animation:pkoIn .25s ease both}
+@keyframes pkoIn{from{opacity:0}to{opacity:1}}
+.pko-in{position:relative;width:min(560px,94vw);min-height:min(620px,90vh);display:flex;align-items:center;justify-content:center}
+.pko-x{position:absolute;top:0;right:0;background:none;border:0;color:#F4F1E8;-webkit-text-fill-color:#F4F1E8;font-size:34px;line-height:1;cursor:pointer;z-index:5}
+.pko-st{display:flex;flex-direction:column;align-items:center;gap:18px;width:100%}.pko-st[hidden]{display:none}
+.pko-dica{font-family:'Oswald',sans-serif;letter-spacing:.12em;text-transform:uppercase;font-size:13px;color:#cfc6b2;margin:0}
+.pko-pack{position:relative;width:230px;height:330px;border:0;cursor:pointer;padding:0;overflow:hidden;color:#111;-webkit-text-fill-color:#111;
+  background:repeating-linear-gradient(90deg,#111 0 18px,#F4F1E8 18px 36px);box-shadow:0 20px 50px rgba(0,0,0,.6),inset 0 0 0 6px #C9962B;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;animation:pkoBalan 2.4s ease-in-out infinite}
+.pko-pack:before{content:"";position:absolute;inset:60px 18px;background:linear-gradient(135deg,#e8c15a,#C9962B 45%,#8a6a1b);border:3px solid #111}
+.pko-pack:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.45) 45%,transparent 60%);background-size:250% 100%;animation:pkoBrilho 2.8s linear infinite}
+.pko-pack>*{position:relative;z-index:1}.pko-pack img{width:70px;filter:invert(1)}.pko-pack b{font-family:'Abril Fatface',serif;font-size:30px;font-weight:400}.pko-pack small{font-family:'Oswald',sans-serif;letter-spacing:.14em;text-transform:uppercase;font-size:12px}.pko-pack em{font-family:'Oswald',sans-serif;font-style:normal;font-weight:700;font-size:14px;background:#111;color:#F4F1E8;-webkit-text-fill-color:#F4F1E8;padding:3px 10px;margin-top:6px}
+.pko-tear{position:absolute!important;top:0;left:0;right:0;height:46px;background:repeating-linear-gradient(90deg,#111 0 18px,#F4F1E8 18px 36px);border-bottom:3px dashed #C9962B;z-index:2!important}
+.pko-pack.rasga{animation:pkoCai .7s ease-in forwards}.pko-pack.rasga .pko-tear{animation:pkoRasga .45s ease-out forwards}
+@keyframes pkoBalan{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(2deg) translateY(-8px)}}
+@keyframes pkoBrilho{from{background-position:150% 0}to{background-position:-100% 0}}
+@keyframes pkoRasga{to{transform:translate(60px,-120px) rotate(28deg);opacity:0}}
+@keyframes pkoCai{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:translateY(60px) scale(.85);opacity:0}}
+.pko-deck{position:relative;width:224px;height:326px;perspective:1400px;cursor:pointer;outline:none;margin:10px 0 44px}
+.pko-card{position:absolute;inset:0;transform-style:preserve-3d;transform:translate(var(--dx),var(--dy));transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .4s;animation:pkoEntra .45s ease backwards}
+.pko-card.vira{transform:translate(0,0) rotateY(180deg) scale(1.04)}
+.pko-card.sai{transform:translate(-130%,-30px) rotate(-16deg) rotateY(180deg);opacity:0}
+@keyframes pkoEntra{from{opacity:0;translate:0 40px}}
+.pko-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.pko-back{background:#111;border:6px solid #C9962B;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;box-shadow:0 18px 40px rgba(0,0,0,.6);
+  background-image:repeating-linear-gradient(45deg,rgba(201,150,43,.12) 0 10px,transparent 10px 20px)}
+.pko-back img{width:84px}.pko-back span{font-family:'Abril Fatface',serif;font-size:24px;color:#C9962B}
+.pko-front{transform:rotateY(180deg)}
+.pko-front .fig{transform:scale(1.6);transform-origin:top left;pointer-events:none}
+.pko-card.r-lendaria.vira .pko-front{filter:drop-shadow(0 0 22px rgba(232,193,90,.95))}
+.pko-card.r-brilhante.vira .pko-front{filter:drop-shadow(0 0 14px rgba(220,220,230,.8))}
+.pko-tag{position:absolute;left:50%;bottom:-40px;transform:translateX(-50%);font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:14px;padding:4px 12px;background:#555;color:#fff;white-space:nowrap}
+.pko-tag.nova{background:#1f8a4c}
+.pko-pular{background:none;border:0;color:#cfc6b2;-webkit-text-fill-color:#cfc6b2;text-decoration:underline;font:inherit;cursor:pointer;margin-top:30px}
+.pko-s3 h2{color:#F4F1E8;margin:0}.pko-res{display:flex;flex-wrap:wrap;gap:14px 10px;justify-content:center;max-height:62vh;overflow:auto;padding:6px 4px 30px}
+.pko-mini{position:relative;width:92px;height:134px}.pko-mini .fig{transform:scale(.657);transform-origin:top left;pointer-events:none}.pko-mini .pko-tag{bottom:-22px;font-size:10px;padding:2px 6px}
+.pko-mini.r-lendaria{filter:drop-shadow(0 0 10px rgba(232,193,90,.9))}
+.pko-bts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}.pko-bts .ghost{background:transparent!important;color:#F4F1E8!important;-webkit-text-fill-color:#F4F1E8;border-color:#F4F1E8}
+@media(max-width:480px){.pko-deck{width:196px;height:285px}.pko-front .fig{transform:scale(1.4)}.pko-pack{width:200px;height:290px}}
 .tipos-sug{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tipos-sug .chip{cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 12px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:13px}.tipos-sug .chip:has(input:checked){background:var(--ink);color:var(--paper)}.tipos-sug input{margin:0}
 .sug-it{border-bottom:1px dotted var(--ink);padding:12px 0}.sug-it p{margin:6px 0}.sug-it.vista{opacity:.55}.sug-img{display:block;max-width:220px;max-height:220px;margin:8px 0;border:2px solid var(--ink);background:#fff}
 .aceita input{width:70px;padding:6px}.aceita{display:inline-flex;gap:6px;align-items:center;margin-right:6px}
@@ -1456,6 +1496,7 @@ function vAlbum(){
     <div class="alb-prog" aria-label="${Math.round(100*col/L.length)}% do álbum"><i style="width:${(100*col/L.length).toFixed(1)}%"></i></div>
     <div class="alb-acoes">
       <button type="button" class="pack" id="pkfree" ${G.gratis?'':'disabled'}>${G.gratis?'Abrir pacotinho grátis do dia':'Pacotinho grátis já aberto hoje'}</button>
+      ${G.pacPres>0?`<button type="button" class="pack pres" id="pkpres">Abrir pacotinho de presente (${G.pacPres})</button>`:''}
       <button type="button" class="pack alt" id="pkpts">Abrir pacotinho · ${CFG.pontos.pacote} Metricoins</button>
       <button type="button" class="ghost" id="anitog">Animações: ${lsGet(GMA)==='0'?'desligadas':'ligadas'}</button>
     </div>
@@ -1498,11 +1539,14 @@ function albumUI(){
   $('#albfil').onchange=e=>{ ALB.filtro=e.target.value; re(); };
   $('#albq').oninput=e=>{ ALB.q=e.target.value; re(); };
   const abre=(gratis)=>{
-    if(gratis){ if(!G.gratis) return; G.gratis=false; } else if(!DONO) { if(G.pts<CFG.pontos.pacote){ toast(`Faltam ${CFG.pontos.pacote-G.pts} Metricoins para um pacotinho.`); return; } G.pts-=CFG.pontos.pacote; G.hist.unshift({d:Date.now(), n:-CFG.pontos.pacote, m:'pacotinho aberto'}); }
+    if(gratis==='presente'){ if(!(G.pacPres>0)) return; G.pacPres--; } else if(gratis){ if(!G.gratis) return; G.gratis=false; } else if(!DONO) { if(G.pts<CFG.pontos.pacote){ toast(`Faltam ${CFG.pontos.pacote-G.pts} Metricoins para um pacotinho.`); return; } G.pts-=CFG.pontos.pacote; G.hist.unshift({d:Date.now(), n:-CFG.pontos.pacote, m:'pacotinho aberto'}); }
     const pac=[]; for(let i=0;i<5;i++){ const f=sorteiaFig(); pac.push({f, nova:cola(f)}); }
-    gSave(); atualizaChip(); ALB.pacote=pac; route.keep=true; route(); const pk=$('#pkarea'); if(pk) pk.scrollIntoView({behavior:animOn()?'smooth':'auto',block:'start'});
+    gSave(); atualizaChip();
+    if(animOn()&&typeof mostraPacote==='function'){ mostraPacote(pac, ()=>{ ALB.pacote=pac; route.keep=true; route(); const pk=$('#pkarea'); if(pk) pk.scrollIntoView({block:'start'}); }, abreDeNovo); return; }
+    ALB.pacote=pac; route.keep=true; route(); const pk=$('#pkarea'); if(pk) pk.scrollIntoView({block:'start'});
   };
-  $('#pkfree').onclick=()=>abre(true); $('#pkpts').onclick=()=>abre(false);
+  const abreDeNovo=()=>{ if(G.pacPres>0) return ()=>abre('presente'); if(G.gratis) return ()=>abre(true); if(DONO||G.pts>=CFG.pontos.pacote) return ()=>abre(false); return null; };
+  $('#pkfree').onclick=()=>abre(true); $('#pkpts').onclick=()=>abre(false); if($('#pkpres')) $('#pkpres').onclick=()=>abre('presente');
   $('#anitog').onclick=()=>{ lsSet(GMA, lsGet(GMA)==='0'?'1':'0'); aplicaAnim(); route(); };
   if(ALB.pacote.length){ $('#pkarea').innerHTML=`<section class="pk"><h2 style="margin-top:0">★ Seu pacotinho</h2><div class="pk-row">${ALB.pacote.map((p,i)=>`<div class="pk-it" style="animation-delay:${(0.15*i).toFixed(2)}s">${figHTML(p.f,'a-flip')}<span class="pk-tag ${p.nova?'nova':''}">${p.nova?'Nova!':'Repetida'}</span></div>`).join('')}</div></section>`; ALB.pacote=[]; }
   const bt=$('#bktxt');
@@ -1805,14 +1849,14 @@ function checaConquistas(){
 }
 function vPerfil(){
   gExtra(); const L=figuras(); const fav=G.perfil.fav&&FIGN[G.perfil.fav];
-  setTimeout(()=>{ const b=$('#pfsalva'); if(b) b.onclick=()=>{ const ap=$('#pfap').value.trim().slice(0,30), fv=$('#pffav').value.trim(); if(fv&&!FIGN[fv]){ $('#pferr').textContent='Escolha um jogador da lista.'; return; } const an=$('#pfaniv').value, ano=$('#pfano').value.trim(), nm=$('#pfnome').value.trim().split(/\s+/)[0]||''; if(ano&&!(+ano>=ANO_MIN_NASC&&+ano<=new Date().getFullYear()-3)){ $('#pferr').textContent=`Ano de nascimento inválido (de ${ANO_MIN_NASC} em diante).`; return; } if(anoTravado()&&String(ano)!==String(G.perfil.ano||'')){ $('#pferr').textContent='O ano de nascimento não pode ser trocado depois que você registra jogos no estádio.'; return; } G.perfil={apelido:ap, fav:fv, nome:nm.slice(0,30), aniv:an?an.slice(5):'', ano:ano}; gSave(); toast('Perfil salvo.'); route.keep=true; route(); };
+  setTimeout(()=>{ const b=$('#pfsalva'); if(b) b.onclick=()=>{ const ap=$('#pfap').value.trim().slice(0,30), fv=$('#pffav').value.trim(); if(fv&&!FIGN[fv]){ $('#pferr').textContent='Escolha um jogador da lista.'; return; } const an=$('#pfaniv').value, nm=$('#pfnome').value.trim().split(/\s+/)[0]||''; G.perfil={apelido:ap, fav:fv, nome:nm.slice(0,30), aniv:an?an.slice(5):''}; gSave(); toast('Perfil salvo.'); route.keep=true; route(); };
     const t=$('#anitog2'); if(t) t.onclick=()=>{ lsSet(GMA, lsGet(GMA)==='0'?'1':'0'); aplicaAnim(); route.keep=true; route(); }; });
   const TC=todasConq(); const feitas=TC.filter(c=>G.conq[c.id]).length;
   return `<div class="kicker">Ficha do torcedor</div><h1>${esc(G.perfil.apelido||'Meu perfil')}</h1>
   <div class="perfil-top">${fav?figHTML(fav):`<div class="fig-vazio"><b>?</b><span>Escolha seu ídolo</span></div>`}
   <div style="flex:1;min-width:260px"><div class="tiles"><div class="tile"><b>${DONO?'∞':N(G.pts)}</b><span>Metricoins para gastar</span></div><div class="tile"><b>${N(G.total)}</b><span>Metricoins no total</span></div><div class="tile"><b>${G.seq.atual}</b><small class="basesm">recorde: ${G.seq.max}</small><span>Dias seguidos</span></div><div class="tile"><b>${N(cnt(G.owned))}</b><small class="basesm">de ${N(L.length)}</small><span>Figurinhas</span></div><div class="tile"><b>${feitas}</b><small class="basesm">de ${TC.length}</small><span>Conquistas</span></div></div>
   <div class="dono" style="margin-top:14px"><div class="dgrid"><label>Apelido<input id="pfap" value="${esc(G.perfil.apelido||'')}" maxlength="30" placeholder="Como você quer ser chamado"></label><label>Ídolo (figurinha de capa)<input id="pffav" list="pfl" value="${esc(G.perfil.fav||'')}" placeholder="nome do jogador"></label></div>
-  <div class="pf-extra" style="margin-top:14px"><div class="kicker" style="margin:0 0 6px">Sobre você</div><div class="dgrid"><label>Primeiro nome<input id="pfnome" value="${esc(G.perfil.nome||'')}" maxlength="30" placeholder="Ex.: Rodrigo"></label><label>Aniversário<input id="pfaniv" type="date" value="${G.perfil.aniv?'2000-'+G.perfil.aniv:''}"></label><label>Ano de nascimento<input id="pfano" type="number" min="${ANO_MIN_NASC}" max="${new Date().getFullYear()-3}" value="${esc(G.perfil.ano||'')}"${anoTravado()?' readonly title="Travado: você já registrou jogos no estádio"':''}></label></div></div>
+  <div class="pf-extra" style="margin-top:14px"><div class="kicker" style="margin:0 0 6px">Sobre você</div><div class="dgrid"><label>Primeiro nome<input id="pfnome" value="${esc(G.perfil.nome||'')}" maxlength="30" placeholder="Ex.: Rodrigo"></label><label>Aniversário<input id="pfaniv" type="date" value="${G.perfil.aniv?'2000-'+G.perfil.aniv:''}"></label></div></div>
   <datalist id="pfl">${L.map(f=>`<option value="${esc(f.nome)}">`).join('')}</datalist><p id="pferr" class="count" role="alert" style="color:var(--d)"></p>
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="more" id="pfsalva">Salvar perfil</button><button type="button" class="ghost" id="anitog2">Animações: ${lsGet(GMA)==='0'?'desligadas':'ligadas'}</button><a class="ghost" href="#album" style="text-decoration:none">Abrir o álbum</a></div></div></div></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${tw(`Meu perfil no Galo Metrics: ${feitas} conquistas, ${N(cnt(G.owned))} figurinhas e ${G.seq.max} dias seguidos de visita.`)}<a class="ghost" href="#diario" style="text-decoration:none">Meu diário de jogos</a></div>
@@ -1882,7 +1926,7 @@ function vQuem(){
 }
 
 /* Placar do dia */
-function placarJogo(){ const r=rngDia('placar'); const l=J.filter(j=>j.resultado&&j.gp!=null&&j.gp+j.gc>=2&&j.grupo!=='Amistoso'&&!j.data_aprox&&j.data<hojeStr()); return escolheDia(l,'placar',j=>j.data+' '+j.adversario); }
+function placarJogo(){ const r=rngDia('placar'); const l=J.filter(j=>j.resultado&&j.gp!=null&&j.gp+j.gc>=2&&j.grupo!=='Amistoso'&&!j.data_aprox&&j.data<hojeStr()&&!/torneio in[ií]cio/i.test(j.competicao||'')&&!(j.adversario_id==='cruzeiro mg'&&j.resultado==='D')); return escolheDia(l,'placar',j=>j.data+' '+j.adversario); }
 function vPlacar(){
   const j=placarJogo(), st=(jdHoje().placar ||= {t:[], fim:false, ok:false});
   setTimeout(()=>{ const b=$('#plenv'); if(!b) return; b.onclick=()=>{ const a=$('#plg').value, c=$('#pla').value; if(a===''||c===''){ $('#plerr').textContent='Preencha os dois lados.'; return; } const g=[+a,+c];
@@ -1906,7 +1950,7 @@ function vMaisMenos(){
     if(ok){ st.seq++; st.i++; st.ult=`${nomeV(a.f.nome)} ${a.g} × ${b.g} ${nomeV(b.f.nome)}`; if(st.i>=L.length-1){ st.fim=true; st.ok=true; jdFim('maismenos', true, Math.min(25,st.seq*2)); } else gSave(); }
     else { st.fim=true; st.ok=st.seq>=5; st.ult=`${nomeV(a.f.nome)} ${a.g} × ${b.g} ${nomeV(b.f.nome)}`; jdFim('maismenos', st.ok, Math.min(25,st.seq*2)); }
     route.keep=true; route(); }); const s=$('#mmshare'); if(s) { const _t=()=>textoRank('Mais ou menos', 'sequência de '+st.seq, st.seq); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); }; });
-  const lado=(x,k)=>`<button type="button" class="mm-op" data-mm="${k}">${figHTML(x.f).replace(/^<a /,'<span ').replace(/<\/a>$/,'</span>').replace(/ href="[^"]*"/,'')}<span class="osw">${k==='a'?'Este fez mais':'Este fez mais'}</span></button>`;
+  const lado=(x,k)=>`<button type="button" class="mm-op" data-mm="${k}">${figHTML({...x.f, r:'comum', stat:'? gols'}).replace(/^<a /,'<span ').replace(/<\/a>$/,'</span>').replace(/ href="[^"]*"/,'')}<span class="osw">${k==='a'?'Este fez mais':'Este fez mais'}</span></button>`;
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Mais ou menos</h1><p class="count">Quem fez mais gols pelo Galo? Cada acerto aumenta a sequência; o primeiro erro encerra o jogo do dia. Com 5 acertos ou mais, conta como vitória. Gols pelo número aceito, quando existe.</p>
   <p class="classico-num"><b>${st.seq}</b> acertos seguidos${st.ult?` · último: ${esc(st.ult)}`:''}</p>
   ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?'★ Boa sequência!':'Fim de jogo.'} Você fez ${st.seq} ${st.seq===1?'acerto':'acertos'}.</p><button type="button" class="more" id="mmshare">Copiar resultado</button><a class="ghost tw" id="mmtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a>${artBtn({t:'desafio',nome:'Mais ou menos',res:st.seq+' acertos',ok:st.ok})}</div>`
@@ -2871,18 +2915,9 @@ function vMapa(params){
 function tabCid(l){ return `<table><thead><tr><th>Cidade</th><th class="n">Jogos</th><th class="n hide-s">V</th><th class="n hide-s">E</th><th class="n hide-s">D</th><th class="n">Aprov.</th></tr></thead><tbody>${l.map(r=>`<tr class="click" onclick="location.hash='cidade-${slug(r.c)}'"><td><b>${esc(r.nome)}</b></td><td class="n">${N(r.l.length)}</td><td class="n hide-s">${r.V}</td><td class="n hide-s">${r.E}</td><td class="n hide-s">${r.D}</td><td class="n">${r.ap}</td></tr>`).join('')}</tbody></table>`; }
 
 /* ---------- Fui ao estádio: estatísticas completas ---------- */
-/* Antifraude do "fui ao estádio": precisa do ano de nascimento, ter pelo menos 4 anos no dia do jogo,
-   e jogo já disputado. Jogos fora da regra não contam nem dão figurinha. */
-const ANO_MIN_NASC=1930, IDADE_MIN=4;
-const anoTravado=()=>Object.values(diario()).some(x=>x&&x.est);
-function estValido(j){ const a=+((G.perfil||{}).ano)||0; return !!(a>=ANO_MIN_NASC && j && j.resultado && j.data<=hojeStr() && +j.data.slice(0,4)>=a+IDADE_MIN); }
-function motivoEstadio(j){
-  const a=+((G.perfil||{}).ano)||0;
-  if(!a) return 'Para registrar que esteve no estádio, complete o "Sobre você" no seu <a href="#perfil">Perfil</a>.';
-  if(!j.resultado||j.data>hojeStr()) return 'Só dá para registrar jogos que já aconteceram.';
-  if(+j.data.slice(0,4)<a+IDADE_MIN) return 'Este jogo não pode ser registrado no seu diário.';
-  return '';
-}
+/* "Fui ao estádio": só jogos que já aconteceram */
+function estValido(j){ return !!(j && j.resultado && j.data<=hojeStr()); }
+function motivoEstadio(j){ return (!j.resultado||j.data>hojeStr()) ? 'Só dá para registrar jogos que já aconteceram.' : ''; }
 function vistoAoVivo(){ return Object.entries(diario()).filter(([id,x])=>x.est&&byId[id]&&estValido(byId[id])).map(([id])=>byId[id]).sort((a,b)=>a.data<b.data?-1:1); }
 const elenco = e => e ? [...(e.titulares||[]), ...(e.substituicoes||[]).map(s=>s.entrou)].filter(Boolean) : [];
 function sincronizaVivo(){
@@ -3179,8 +3214,11 @@ let PRESENTES={itens:[]};
 async function carregaPresentes(){ if(!GDB) return; try{ const s=await GDB.doc('colab/presentes').get(); if(s.exists) PRESENTES={itens:[],...s.data()}; }catch(e){} pagaPresentes(); }
 function pagaPresentes(){
   if(!GUID||!G) return; G.colabPago ||= {}; let ganhou=0, motivo='';
-  (PRESENTES.itens||[]).filter(x=>x.uid===GUID&&!G.colabPago[x.k]).forEach(x=>{ G.colabPago[x.k]=1; const p=+x.pts||0; if(p){ G.pts+=p; G.total+=p; G.hist.unshift({d:Date.now(), n:p, m:'presente: '+(x.motivo||'Metricoins do Galo Metrics')}); ganhou+=p; motivo=x.motivo||''; } });
-  if(ganhou){ gSave(); atualizaChip(); setTimeout(()=>toast(`Você ganhou ${N(ganhou)} Metricoins!${motivo?' '+motivo:''}`),600); }
+  let pacs=0;
+  (PRESENTES.itens||[]).filter(x=>x.uid===GUID&&!G.colabPago[x.k]).forEach(x=>{ G.colabPago[x.k]=1; const p=+x.pts||0, pc=+x.pac||0; motivo=x.motivo||motivo;
+    if(p){ G.pts+=p; G.total+=p; G.hist.unshift({d:Date.now(), n:p, m:'presente: '+(x.motivo||'Metricoins do Galo Metrics')}); ganhou+=p; }
+    if(pc){ G.pacPres=(G.pacPres||0)+pc; pacs+=pc; } });
+  if(ganhou||pacs){ gSave(); atualizaChip(); const o=[ganhou?`${N(ganhou)} Metricoins`:'', pacs?`${pacs} ${pacs===1?'pacotinho':'pacotinhos'}`:''].filter(Boolean).join(' e '); setTimeout(()=>toast(`Você ganhou ${o}!${motivo?' '+motivo:''}${pacs?' Abra no Álbum.':''}`),600); }
 }
 async function registraPerfil(){
   if(!GDB||!GUID||DONO) return; const hoje=hojeStr(); if(G.perfilReg===hoje) return;
@@ -3195,18 +3233,18 @@ function blocoMoedas(){
   (COLAB.itens||[]).forEach(x=>{ if(!pessoas[x.uid]) pessoas[x.uid]={uid:x.uid, nome:x.nome||'Torcedor', det:'colaborador'}; });
   const L=Object.values(pessoas).filter(p=>p.uid!==GUID).sort((a,b)=>a.nome.localeCompare(b.nome));
   const rec=(PRESENTES.itens||[]).slice().reverse().slice(0,12);
-  setTimeout(()=>{ const b=$('#mcdar'); if(!b) return; b.onclick=async()=>{ let uid=($('#mcquem')&&$('#mcquem').value)||($('#mcuid').value||'').trim(); const nomeMan=($('#mcnome').value||'').trim(); const pts=Math.max(1,Math.min(100000,+$('#mcqtd').value||0)), motivo=$('#mcmot').value.trim().slice(0,120), msg=$('#mcmsg');
+  setTimeout(()=>{ const b=$('#mcdar'); if(!b) return; b.onclick=async()=>{ const tipo=$('#mctipo').value; let uid=($('#mcquem')&&$('#mcquem').value)||($('#mcuid').value||'').trim(); const nomeMan=($('#mcnome').value||'').trim(); const qtd=Math.max(1,Math.min(tipo==='pac'?50:100000,+$('#mcqtd').value||0)), pts=tipo==='pac'?0:qtd, motivo=$('#mcmot').value.trim().slice(0,120), msg=$('#mcmsg');
       if(!uid){ msg.textContent='Escolha um amigo na lista ou cole o UID dele.'; return; } if(!/^[A-Za-z0-9_-]{6,128}$/.test(uid)){ msg.textContent='UID inválido. Copie a coluna "UID do usuário" no Firebase.'; return; } const p=pessoas[uid]||{uid, nome:nomeMan||'Torcedor'}; if(nomeMan) p.nome=nomeMan;
-      try{ const ref=GDB.doc('colab/presentes'); const s=await ref.get(); const it=s.exists?(s.data().itens||[]):[]; const item={k:'mc_'+Date.now().toString(36), uid, nome:p.nome, pts, motivo, quando:new Date().toISOString()};
-        await ref.set({itens:[...it,item].slice(-500)}); PRESENTES={itens:[...it,item]}; msg.textContent=`${N(pts)} Metricoins enviados para ${p.nome}. Chegam na próxima vez que a pessoa abrir o site.`; toast('Metricoins enviados!'); $('#mcmot').value=''; }
+      try{ const ref=GDB.doc('colab/presentes'); const s=await ref.get(); const it=s.exists?(s.data().itens||[]):[]; const item={k:'mc_'+Date.now().toString(36), uid, nome:p.nome, pts, ...(tipo==='pac'?{pac:qtd}:{}), motivo, quando:new Date().toISOString()};
+        await ref.set({itens:[...it,item].slice(-500)}); PRESENTES={itens:[...it,item]}; msg.textContent=`${tipo==='pac'?`${qtd} ${qtd===1?'pacotinho enviado':'pacotinhos enviados'}`:`${N(pts)} Metricoins enviados`} para ${p.nome}. Chegam na próxima vez que a pessoa abrir o site.`; toast(tipo==='pac'?'Pacotinhos enviados!':'Metricoins enviados!'); $('#mcmot').value=''; }
       catch(e){ console.error(e); msg.textContent='Não foi possível enviar agora.'; } }; });
-  return `<h2>Dar Metricoins para amigos</h2>
+  return `<h2>Dar Metricoins e pacotinhos para amigos</h2>
   <p class="count">Aparecem aqui os torcedores que já entraram no site com a conta Google, mandaram sugestão ou colaboraram. As moedas caem no saldo da pessoa na próxima visita, com um aviso.</p>
   <div class="dono">${L.length?`<label>Amigo da lista<select id="mcquem"><option value="">Escolha…</option>${L.map(p=>`<option value="${esc(p.uid)}">${esc(p.nome)}${p.det?' ('+esc(p.det)+')':''}</option>`).join('')}</select></label><p class="count" style="margin:6px 0">ou</p>`:''}<div class="dgrid"><label>UID do amigo<input id="mcuid" placeholder="cole o UID do usuário" autocomplete="off"></label><label>Nome que vai aparecer<input id="mcnome" maxlength="60" placeholder="Ex.: Thiago"></label></div><p class="count" style="margin:4px 0 10px">O UID fica no Firebase, em Authentication &gt; Usuários, na coluna "UID do usuário".</p><div class="dgrid">
-  <label>Quantidade<input id="mcqtd" type="number" min="1" max="100000" value="100"></label></div>
+  <label>O que enviar<select id="mctipo"><option value="mc">Metricoins</option><option value="pac">Pacotinhos de figurinhas</option></select></label><label>Quantidade<input id="mcqtd" type="number" min="1" max="100000" value="100"></label></div>
   <label>Motivo (aparece para a pessoa)<input id="mcmot" maxlength="120" placeholder="Ex.: valeu pela ajuda no teste!"></label>
   <p id="mcmsg" class="count" role="status"></p><button type="button" class="more" id="mcdar">Enviar Metricoins</button></div>
-  ${rec.length?`<h3>Últimos envios</h3><table><tbody>${rec.map(x=>`<tr><td class="mono">${fmtD(String(x.quando).slice(0,10))}</td><td>${esc(x.nome)}</td><td>${esc(x.motivo||'')}</td><td class="n"><b>${N(x.pts)}</b> MC</td></tr>`).join('')}</tbody></table>`:''}`;
+  ${rec.length?`<h3>Últimos envios</h3><table><tbody>${rec.map(x=>`<tr><td class="mono">${fmtD(String(x.quando).slice(0,10))}</td><td>${esc(x.nome)}</td><td>${esc(x.motivo||'')}</td><td class="n"><b>${x.pac?`${x.pac} ${x.pac===1?'pacotinho':'pacotinhos'}`:N(x.pts)+' MC'}</b></td></tr>`).join('')}</tbody></table>`:''}`;
 }
 
 /* ---------- Estrelas no estilo Letterboxd ---------- */
@@ -3244,6 +3282,34 @@ function blocoTorcida(j){
     ${notas.length?`<div class="torc-res"><div class="torc-med"><b>${fmtNota(med.toFixed(1))}</b>${starsHTML(Math.round(med*2)/2,'stx-m')}<span class="uf">${notas.length} ${notas.length===1?'nota':'notas'}</span></div>
     <div class="torc-hist" aria-label="Distribuição das notas">${starsHTML(0.5,'stx-xs')}<div class="bars">${hist.map((n,i)=>`<span title="${n} ${n===1?'nota':'notas'} de ${fmtNota((i+1)/2)}" style="height:${Math.max(3,n/mx*100)}%"></span>`).join('')}</div>${starsHTML(5,'stx-xs')}</div></div>`:''}
     <div class="torc-list">${L.slice(0,40).map(x=>`<div class="torc-it"><span class="torc-av" aria-hidden="true">${esc((x.ap||'?').trim()[0]||'?').toUpperCase()}</span><div><div class="torc-top"><b>${esc(x.ap)}</b>${x.n?starsHTML(x.n,'stx-s'):''}${x.est?'<span class="tag light">no estádio</span>':''}${x.uid===GUID?'<span class="tag">você</span>':''}</div>${x.t?`<p>${esc(x.t)}</p>`:''}${x.cr?`<small class="uf">Craque: ${esc(nomeV(x.cr))}</small>`:''}</div></div>`).join('')}</div></div>`;
+}
+
+/* ---------- Abertura de pacotinho, uma figurinha por vez ---------- */
+function mostraPacote(pac, aoFechar, deNovo){
+  document.querySelectorAll('.pko').forEach(x=>x.remove());
+  const o=document.createElement('div'); o.className='pko'; o.setAttribute('role','dialog'); o.setAttribute('aria-modal','true'); o.setAttribute('aria-label','Abrindo pacotinho');
+  const LOGO=(document.querySelector('.logoimg.lescuro')||{}).src||'';
+  const cartas=pac.map((p,i)=>`<div class="pko-card r-${p.f.r}" data-i="${i}" style="z-index:${10-i};--dx:${i*4}px;--dy:${i*-4}px"><div class="pko-face pko-back"><img src="${LOGO}" alt=""><span>Galo Metrics</span></div><div class="pko-face pko-front">${figHTML(p.f)}<span class="pko-tag ${p.nova?'nova':''}">${p.nova?'Nova!':'Repetida'}</span></div></div>`).join('');
+  o.innerHTML=`<div class="pko-in"><button type="button" class="pko-x" aria-label="Fechar">×</button>
+    <div class="pko-st pko-s1"><button type="button" class="pko-pack" aria-label="Abrir pacotinho"><span class="pko-tear"></span><img src="${LOGO}" alt=""><b>Galo Metrics</b><small>Álbum dos Imortais</small><em>5 figurinhas</em></button><p class="pko-dica">Toque no pacotinho para abrir</p></div>
+    <div class="pko-st pko-s2" hidden><div class="pko-deck" tabindex="0" aria-live="polite">${cartas}</div><p class="pko-dica"><span class="pko-cont">1 de ${pac.length}</span> · toque para virar</p><button type="button" class="pko-pular">Ver todas</button></div>
+    <div class="pko-st pko-s3" hidden><h2>Seu pacotinho</h2><div class="pko-res">${pac.map(p=>`<div class="pko-mini r-${p.f.r}">${figHTML(p.f)}<span class="pko-tag ${p.nova?'nova':''}">${p.nova?'Nova!':'Repetida'}</span></div>`).join('')}</div>
+      <div class="pko-bts"><button type="button" class="more pko-fim">Colar no álbum</button><button type="button" class="ghost pko-mais" hidden>Abrir outro</button></div></div></div>`;
+  document.body.appendChild(o); document.body.classList.add('pko-on');
+  const s1=o.querySelector('.pko-s1'), s2=o.querySelector('.pko-s2'), s3=o.querySelector('.pko-s3'), deck=o.querySelector('.pko-deck'), cont=o.querySelector('.pko-cont');
+  const cards=[...o.querySelectorAll('.pko-card')]; let k=0, virada=false, fase=1;
+  const sai=()=>{ o.remove(); document.body.classList.remove('pko-on'); document.removeEventListener('keydown',tecla); };
+  const fecha=()=>{ sai(); aoFechar&&aoFechar(); };
+  const resumo=()=>{ fase=3; s1.hidden=true; s2.hidden=true; s3.hidden=false; const d=deNovo&&deNovo(); const b=o.querySelector('.pko-mais'); if(d){ b.hidden=false; b.onclick=()=>{ sai(); d(); }; } o.querySelector('.pko-fim').focus(); };
+  const abre=()=>{ if(fase!==1) return; fase=1.5; o.querySelector('.pko-pack').classList.add('rasga'); setTimeout(()=>{ fase=2; s1.hidden=true; s2.hidden=false; deck.focus(); },700); };
+  const passo=()=>{ if(fase!==2) return; const c=cards[k]; if(!c) return resumo();
+    if(!virada){ c.classList.add('vira'); virada=true; return; }
+    c.classList.add('sai'); virada=false; k++; cont.textContent=k<cards.length?`${k+1} de ${cards.length}`:'';
+    if(k>=cards.length) setTimeout(resumo,420); };
+  const tecla=e=>{ if(e.key==='Escape'){ fase===3?fecha():resumo(); } else if(e.key===' '||e.key==='Enter'){ if(fase===3) return; e.preventDefault(); fase===1?abre():passo(); } };
+  o.querySelector('.pko-pack').onclick=abre; deck.onclick=passo; o.querySelector('.pko-pular').onclick=resumo;
+  o.querySelector('.pko-fim').onclick=fecha; o.querySelector('.pko-x').onclick=()=>fase===3?fecha():resumo();
+  document.addEventListener('keydown',tecla); o.querySelector('.pko-pack').focus();
 }
 
 </script>
