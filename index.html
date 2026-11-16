@@ -386,6 +386,19 @@ html.dark .mapa path.t1{fill:#4a3d1c}html.dark .mapa path.t2{fill:#6b5420}html.d
 .capa-breve .kk{font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:#9a6f14}
 .mc{margin-left:4px;font-family:'Oswald',sans-serif;font-weight:700}
 .aviso-pf{border:2px solid #C9962B;background:rgba(201,150,43,.1);padding:12px 14px;margin:12px 0 0;font-size:15px;line-height:1.45}.aviso-pf b{font-family:'Oswald',sans-serif;letter-spacing:.04em;margin-right:4px}
+.stx{--s:22px;display:inline-block;position:relative;vertical-align:middle;width:calc(var(--s)*5);height:var(--s);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 26 26'%3E%3Cpath fill='%23d6cdb8' d='M12 1.6l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.7l-6.4 3.5L7 14.1 1.7 9.1l7.2-.9z'/%3E%3C/svg%3E") repeat-x left center/var(--s) var(--s)}
+html.dark .stx{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 26 26'%3E%3Cpath fill='%23403c35' d='M12 1.6l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.7l-6.4 3.5L7 14.1 1.7 9.1l7.2-.9z'/%3E%3C/svg%3E")}
+.stx-f{position:absolute;left:0;top:0;bottom:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 26 26'%3E%3Cpath fill='%23C9962B' d='M12 1.6l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.7l-6.4 3.5L7 14.1 1.7 9.1l7.2-.9z'/%3E%3C/svg%3E") repeat-x left center/var(--s) var(--s);transition:width .08s}
+.stx-in{--s:40px;cursor:pointer;outline-offset:4px;touch-action:manipulation}.stx-s{--s:16px}.stx-xs{--s:11px}.stx-m{--s:20px}
+.stx-xs{width:var(--s)}.torc-hist .stx-xs:last-child{width:calc(var(--s)*5)}
+.stx-wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:6px 0 4px}.stx-rot{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.stx-limpa{background:none;border:0;color:var(--mute);-webkit-text-fill-color:var(--mute);text-decoration:underline;cursor:pointer;font:inherit;font-size:13px}
+.lblx{display:block;font-family:'Oswald',sans-serif;font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.torc{border-top:1px solid var(--ink);padding-top:14px}.torc-res{display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap;margin-bottom:18px}
+.torc-med{display:flex;flex-direction:column;gap:4px}.torc-med b{font-family:'Abril Fatface',serif;font-size:56px;line-height:.9;font-weight:400}
+.torc-hist{display:flex;align-items:flex-end;gap:8px;flex:1;min-width:220px;max-width:360px}.torc-hist .bars{flex:1;display:flex;align-items:flex-end;gap:2px;height:56px;border-bottom:1px solid var(--ink)}.torc-hist .bars span{flex:1;background:#C9962B;opacity:.85}
+.torc-it{display:flex;gap:12px;padding:12px 0;border-bottom:1px dotted var(--ink)}.torc-av{flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:700}
+.torc-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.torc-it p{margin:6px 0 2px}
 .tipos-sug{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tipos-sug .chip{cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 12px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:13px}.tipos-sug .chip:has(input:checked){background:var(--ink);color:var(--paper)}.tipos-sug input{margin:0}
 .sug-it{border-bottom:1px dotted var(--ink);padding:12px 0}.sug-it p{margin:6px 0}.sug-it.vista{opacity:.55}.sug-img{display:block;max-width:220px;max-height:220px;margin:8px 0;border:2px solid var(--ink);background:#fff}
 .aceita input{width:70px;padding:6px}.aceita{display:inline-flex;gap:6px;align-items:center;margin-right:6px}
@@ -742,7 +755,7 @@ function vJogo(id){
   ${j.nota?`<div class="note">${esc(j.nota)}</div>`:''}
   ${blocoDonoJogo(j)}
   ${ficha}
-  ${j.resultado?blocoDiario(j):''}${blocoPalpite(j)}
+  ${j.resultado?blocoDiario(j):''}${j.resultado?blocoTorcida(j):''}${blocoPalpite(j)}
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">${tw(resumoJogo(j))}${j.resultado?artBtn({t:'jogo',id:j.id}):''}</div>
   ${j.correcoes?`<div class="note"><b>Correção Galo Metrics.</b> ${j.correcoes.map(esc).join(' ')}</div>`:''}
   <p class="count" style="margin-top:20px"><a href="#adversario-${slug(j.adversario_id)}">Retrospecto contra ${esc(j.adversario)} →</a></p>${pager}`;
@@ -2092,27 +2105,29 @@ function diario(){ G.diario ||= {}; return G.diario; }
 function blocoDiario(j){
   const d=diario()[j.id]||{}, e=j.escalacao_galo, pub=AVAL[j.id];
   const lineup=e?[...e.titulares, ...e.substituicoes.map(s=>s.entrou).filter(Boolean)]:[];
-  setTimeout(()=>{ const f=$('#dform2'); if(!f) return;
+  setTimeout(()=>{ const f=$('#dform2'); if(!f) return; ligaStars(f);
     f.onsubmit=async(ev)=>{ ev.preventDefault(); const nota=+f.elements.nota.value||0, txt=f.elements.texto.value.trim().slice(0,1000), est=f.elements.est.checked&&(!!d.est||!motivoEstadio(j)), cr=f.elements.craque?f.elements.craque.value:'';
       const nj={}; lineup.forEach((n,i)=>{ const el=f.elements['nj'+i]; if(el&&el.value!=='') nj[n]=Math.max(0,Math.min(10,+el.value)); });
-      if(!nota&&!txt&&!est&&!cr&&!Object.keys(nj).length){ delete diario()[j.id]; } else diario()[j.id]={n:nota, t:txt, est, cr, nj, d:hojeStr(), ...(est?{estEm:d.estEm||hojeStr()}:{})};
+      if(!nota&&!txt&&!est&&!cr&&!Object.keys(nj).length){ delete diario()[j.id]; } else diario()[j.id]={n:nota, t:txt, est, cr, nj, d:hojeStr(), ...(est?{estEm:d.estEm||hojeStr()}:{}), ...(f.elements.torc&&!f.elements.torc.checked?{priv:1}:{})};
+      if(GUID) await publicaAval(j.id, {n:nota,t:txt,cr,est}, !!(f.elements.torc&&f.elements.torc.checked));
       if(DONO&&f.elements.pub&&f.elements.pub.checked&&GDB){ try{ await GDB.doc('avaliacoes/'+j.id).set({n:nota, t:txt, cr, nj, em:Date.now()}); AVAL[j.id]={n:nota,t:txt,cr,nj}; }catch(err){ toast('A avaliação pública não foi salva agora.'); } }
       else if(DONO&&f.elements.pub&&!f.elements.pub.checked&&AVAL[j.id]&&GDB){ try{ await GDB.doc('avaliacoes/'+j.id).delete(); delete AVAL[j.id]; }catch(err){} }
       gSave(); checaConquistas(); toast('Salvo no seu diário.'); route.keep=true; route(); };
   });
   const media=pub&&pub.nj&&Object.keys(pub.nj).length?Object.entries(pub.nj).sort((a,b)=>b[1]-a[1]):null;
-  const pubHTML=pub?`<div class="aval-pub"><span class="osw">Avaliação do Galo Metrics</span><b class="stars">${estrelas(pub.n)}</b>${pub.cr?`<span>Craque do jogo: <b>${esc(nomeV(pub.cr))}</b></span>`:''}${pub.t?`<p>${esc(pub.t)}</p>`:''}${media?`<p class="count">Notas: ${media.map(([n,v])=>`${esc(nomeV(n))} ${String(v).replace('.',',')}`).join(' · ')}</p>`:''}</div>`:'';
+  const pubHTML=pub?`<div class="aval-pub"><span class="osw">Avaliação do Galo Metrics</span>${starsHTML(pub.n,'stx-s')}${pub.cr?`<span>Craque do jogo: <b>${esc(nomeV(pub.cr))}</b></span>`:''}${pub.t?`<p>${esc(pub.t)}</p>`:''}${media?`<p class="count">Notas: ${media.map(([n,v])=>`${esc(nomeV(n))} ${String(v).replace('.',',')}`).join(' · ')}</p>`:''}</div>`:'';
   const opt=[...Array(11)].map((_,i)=>i/2).map(v=>`<option value="${v||''}"${(d.n||0)===v?' selected':''}>${v?estrelas(v)+' ('+String(v).replace('.',',')+')':'Sem nota'}</option>`).join('');
-  const meu=d.n||d.t||d.est||d.cr?`<p class="count">No seu diário: ${d.est?'<b>esteve no estádio</b> · ':''}${d.n?`<b class="stars">${estrelas(d.n)}</b> · `:''}${d.cr?`craque: ${esc(nomeV(d.cr))} · `:''}${d.t?`“${esc(d.t)}”`:''}</p><div style="display:flex;gap:8px;flex-wrap:wrap">${tw(`${d.est?'Eu estava lá! ':''}${resumoJogo(j)}${d.n?' Minha nota: '+estrelas(d.n)+'.':''}${d.cr?' Craque: '+nomeV(d.cr)+'.':''}${d.t?' '+d.t:''}`)}</div>`:'';
+  const meu=d.n||d.t||d.est||d.cr?`<p class="count">No seu diário: ${d.est?'<b>esteve no estádio</b> · ':''}${d.n?`${starsHTML(d.n,'stx-s')} · `:''}${d.cr?`craque: ${esc(nomeV(d.cr))} · `:''}${d.t?`“${esc(d.t)}”`:''}</p><div style="display:flex;gap:8px;flex-wrap:wrap">${tw(`${d.est?'Eu estava lá! ':''}${resumoJogo(j)}${d.n?' Minha nota: '+estrelas(d.n)+'.':''}${d.cr?' Craque: '+nomeV(d.cr)+'.':''}${d.t?' '+d.t:''}`)}</div>`:'';
   return `${pubHTML}<details class="diario" ${d.n||d.est?'':''}><summary>★ Meu diário: avaliar este jogo${d.n||d.est?' (já avaliado)':''}</summary>
   <form id="dform2" class="dono">
-  <div class="dgrid"><label>Nota do jogo<select name="nota">${opt}</select></label>
+  <div class="dgrid"><div><span class="lblx">Sua nota</span>${starsInput('nota', d.n||0)}</div>
   ${(()=>{ const mot=d.est?'':motivoEstadio(j); return `<label class="chk"><input type="checkbox" name="est" ${d.est?'checked':''}${mot?' disabled':''}> Eu estava no estádio</label>${mot?`<p class="count" style="margin:4px 0 0">${mot}</p>`:''}`; })()}</div>
   ${lineup.length?`<label>Craque do jogo<select name="craque"><option value="">Escolha</option>${lineup.map(n=>`<option value="${esc(n)}"${d.cr===n?' selected':''}>${esc(nomeV(n))}</option>`).join('')}</select></label>
   <p class="count" style="margin-top:12px">Notas para os jogadores do Galo (0 a 10, deixe em branco para não avaliar):</p>
   <div class="nj-grid">${lineup.map((n,i)=>`<label>${esc(nomeV(n))}<input type="number" name="nj${i}" min="0" max="10" step="0.5" value="${d.nj&&d.nj[n]!=null?d.nj[n]:''}"></label>`).join('')}</div>`:''}
   <label>Sua resenha<textarea name="texto" rows="3" maxlength="1000" style="width:100%" placeholder="O que você achou do jogo?">${esc(d.t||'')}</textarea></label>
-  ${DONO?`<label class="chk"><input type="checkbox" name="pub" ${pub?'checked':''}> Publicar como avaliação do Galo Metrics (todos veem)</label>`:''}
+  ${GUID?`<label class="chk"><input type="checkbox" name="torc" ${d.priv?'':'checked'}> Mostrar minha nota e resenha para a torcida</label>`:''}
+  ${DONO?`<label class="chk"><input type="checkbox" name="pub" ${pub?'checked':''}> Publicar também como avaliação oficial do Galo Metrics</label>`:''}
   <button type="submit" class="more">Salvar no diário</button></form></details>${meu}`;
 }
 function statsEstadio(){
@@ -2134,8 +2149,8 @@ function vDiario(){
   <p class="lede">Avalie jogos, dê nota aos jogadores e registre as partidas em que você esteve no estádio. Abra qualquer jogo e use "Meu diário".</p>
   ${secEstadio()}
   <h2>Minhas avaliações</h2>
-  ${av.length?`<p class="count">${av.length} ${av.length===1?'jogo avaliado':'jogos avaliados'}${mediaJ?` · nota média ${estrelas(Math.round(mediaJ*2)/2)} (${mediaJ.toFixed(1).replace('.',',')})`:''}</p>
-  <div class="aval-list">${av.map(({j,x})=>`<a class="aval-it" href="#jogo-${j.id}"><span class="mono uf">${fmtD(j.data,j.data_aprox)}</span><span>${linha(j)}</span><b class="stars">${estrelas(x.n)}</b>${x.est?'<span class="tag light">no estádio</span>':''}${x.t?`<p>“${esc(x.t)}”</p>`:''}</a>`).join('')}</div>`
+  ${av.length?`<p class="count">${av.length} ${av.length===1?'jogo avaliado':'jogos avaliados'}${mediaJ?` · nota média ${starsHTML(Math.round(mediaJ*2)/2,'stx-s')} (${mediaJ.toFixed(1).replace('.',',')})`:''}</p>
+  <div class="aval-list">${av.map(({j,x})=>`<a class="aval-it" href="#jogo-${j.id}"><span class="mono uf">${fmtD(j.data,j.data_aprox)}</span><span>${linha(j)}</span>${x.n?starsHTML(x.n,'stx-s'):''}${x.est?'<span class="tag light">no estádio</span>':''}${x.t?`<p>“${esc(x.t)}”</p>`:''}</a>`).join('')}</div>`
   :`<p class="empty">Você ainda não avaliou jogos.</p>`}
   ${medias.length?`<div class="grid2"><div><h3>Suas maiores notas</h3><table><thead><tr><th>Jogador</th><th class="n">Média</th><th class="n">Jogos</th></tr></thead><tbody>${medias.slice(0,10).map(x=>`<tr><td><a href="#jogador-${slug(x.n)}">${esc(nomeV(x.n))}</a></td><td class="n"><b>${x.m.toFixed(1).replace('.',',')}</b></td><td class="n">${x.c}</td></tr>`).join('')}</tbody></table></div>
   <div><h3>Craques que você escolheu</h3><table><tbody>${top(crs).slice(0,10).map(([n,c])=>`<tr><td><a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a></td><td class="n">${c}×</td></tr>`).join('')||'<tr><td>Nenhum ainda.</td></tr>'}</tbody></table></div></div>`:''}
@@ -3192,6 +3207,43 @@ function blocoMoedas(){
   <label>Motivo (aparece para a pessoa)<input id="mcmot" maxlength="120" placeholder="Ex.: valeu pela ajuda no teste!"></label>
   <p id="mcmsg" class="count" role="status"></p><button type="button" class="more" id="mcdar">Enviar Metricoins</button></div>
   ${rec.length?`<h3>Últimos envios</h3><table><tbody>${rec.map(x=>`<tr><td class="mono">${fmtD(String(x.quando).slice(0,10))}</td><td>${esc(x.nome)}</td><td>${esc(x.motivo||'')}</td><td class="n"><b>${N(x.pts)}</b> MC</td></tr>`).join('')}</tbody></table>`:''}`;
+}
+
+/* ---------- Estrelas no estilo Letterboxd ---------- */
+const ROT_NOTA=v=>!v?'Sem nota':v<=1?'Horrível':v<=2?'Ruim':v<=3?'Mais ou menos':v<=4?'Bom':'Espetacular';
+const fmtNota=v=>String(v).replace('.',',');
+function starsHTML(n, cls=''){ return `<span class="stx ${cls}" role="img" aria-label="${fmtNota(n||0)} de 5 estrelas"><span class="stx-f" style="width:${(n||0)*20}%"></span></span>`; }
+function starsInput(name, v){ v=+v||0;
+  return `<div class="stx-wrap"><div class="stx stx-in" tabindex="0" role="slider" aria-label="Sua nota" aria-valuemin="0" aria-valuemax="5" aria-valuenow="${v}" aria-valuetext="${fmtNota(v)} estrelas, ${ROT_NOTA(v)}" data-v="${v}"><span class="stx-f" style="width:${v*20}%"></span></div><input type="hidden" name="${name}" value="${v||''}"><span class="stx-rot">${v?fmtNota(v)+' · '+ROT_NOTA(v):'Toque nas estrelas'}</span><button type="button" class="stx-limpa"${v?'':' hidden'}>limpar</button></div>`; }
+function ligaStars(root){
+  (root||document).querySelectorAll('.stx-wrap').forEach(w=>{ if(w.dataset.ok) return; w.dataset.ok=1;
+    const el=w.querySelector('.stx-in'), f=el.firstElementChild, inp=w.querySelector('input'), rot=w.querySelector('.stx-rot'), lim=w.querySelector('.stx-limpa');
+    const show=v=>{ f.style.width=(v*20)+'%'; rot.textContent=v?fmtNota(v)+' · '+ROT_NOTA(v):'Toque nas estrelas'; };
+    const set=v=>{ v=Math.max(0,Math.min(5,Math.round(v*2)/2)); el.dataset.v=v; inp.value=v||''; el.setAttribute('aria-valuenow',v); el.setAttribute('aria-valuetext',`${fmtNota(v)} estrelas, ${ROT_NOTA(v)}`); lim.hidden=!v; show(v); };
+    const at=e=>{ const r=el.getBoundingClientRect(), x=((e.touches?e.touches[0].clientX:e.clientX)-r.left)/r.width; return Math.max(0.5,Math.min(5,Math.ceil(x*10)/2)); };
+    el.addEventListener('mousemove',e=>show(at(e))); el.addEventListener('mouseleave',()=>show(+el.dataset.v||0));
+    el.addEventListener('click',e=>{ const v=at(e); set(+el.dataset.v===v?0:v); });
+    el.addEventListener('keydown',e=>{ const v=+el.dataset.v||0; if(e.key==='ArrowRight'||e.key==='ArrowUp'){ set(v+0.5); e.preventDefault(); } if(e.key==='ArrowLeft'||e.key==='ArrowDown'){ set(v-0.5); e.preventDefault(); } if(e.key==='0'||e.key==='Delete'||e.key==='Backspace'){ set(0); e.preventDefault(); } });
+    lim.onclick=()=>set(0); });
+}
+/* Avaliações da torcida: cada torcedor publica as suas em rankuser/{uid}.aval */
+function avalTorcida(id){ return Object.entries(RKU||{}).map(([uid,o])=>{ const a=o&&o.aval&&o.aval[id]; return a&&(a.n||a.t)?{uid, ap:o.ap||'Torcedor', ...a}:null; }).filter(Boolean).sort((a,b)=>String(b.d||'').localeCompare(String(a.d||''))); }
+async function publicaAval(id, a, publicar){
+  if(!GDB||!GUID) return;
+  try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.aval ||= {};
+    if(publicar&&(a.n||a.t)) o.aval[id]={n:a.n||0, t:(a.t||'').slice(0,600), cr:a.cr||'', est:a.est?1:0, d:hojeStr()}; else delete o.aval[id];
+    o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; await ref.set(o); RKU[GUID]=o; }catch(e){ console.warn('publicaAval',e); }
+}
+function blocoTorcida(j){
+  const L=avalTorcida(j.id), notas=L.filter(x=>x.n);
+  const head=`<h2>Avaliações da torcida</h2>`;
+  if(!L.length) return head+`<p class="count">Ninguém avaliou este jogo ainda. ${GUID?'Seja o primeiro: use "Meu diário" acima.':(window.GM_LOGIN?'<a href="javascript:GM_LOGIN()">Entre com sua conta Google</a> e seja o primeiro a avaliar.':'')}</p>`;
+  const med=notas.length?notas.reduce((s,x)=>s+x.n,0)/notas.length:0;
+  const hist=[...Array(10)].map((_,i)=>notas.filter(x=>x.n===(i+1)/2).length), mx=Math.max(1,...hist);
+  return head+`<div class="torc">
+    ${notas.length?`<div class="torc-res"><div class="torc-med"><b>${fmtNota(med.toFixed(1))}</b>${starsHTML(Math.round(med*2)/2,'stx-m')}<span class="uf">${notas.length} ${notas.length===1?'nota':'notas'}</span></div>
+    <div class="torc-hist" aria-label="Distribuição das notas">${starsHTML(0.5,'stx-xs')}<div class="bars">${hist.map((n,i)=>`<span title="${n} ${n===1?'nota':'notas'} de ${fmtNota((i+1)/2)}" style="height:${Math.max(3,n/mx*100)}%"></span>`).join('')}</div>${starsHTML(5,'stx-xs')}</div></div>`:''}
+    <div class="torc-list">${L.slice(0,40).map(x=>`<div class="torc-it"><span class="torc-av" aria-hidden="true">${esc((x.ap||'?').trim()[0]||'?').toUpperCase()}</span><div><div class="torc-top"><b>${esc(x.ap)}</b>${x.n?starsHTML(x.n,'stx-s'):''}${x.est?'<span class="tag light">no estádio</span>':''}${x.uid===GUID?'<span class="tag">você</span>':''}</div>${x.t?`<p>${esc(x.t)}</p>`:''}${x.cr?`<small class="uf">Craque: ${esc(nomeV(x.cr))}</small>`:''}</div></div>`).join('')}</div></div>`;
 }
 
 </script>
