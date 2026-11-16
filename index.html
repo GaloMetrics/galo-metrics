@@ -1779,14 +1779,14 @@ function checaConquistas(){
 }
 function vPerfil(){
   gExtra(); const L=figuras(); const fav=G.perfil.fav&&FIGN[G.perfil.fav];
-  setTimeout(()=>{ const b=$('#pfsalva'); if(b) b.onclick=()=>{ const ap=$('#pfap').value.trim().slice(0,30), fv=$('#pffav').value.trim(); if(fv&&!FIGN[fv]){ $('#pferr').textContent='Escolha um jogador da lista.'; return; } const an=$('#pfaniv').value, ano=$('#pfano').value.trim(), nm=$('#pfnome').value.trim().split(/\s+/)[0]||''; if(ano&&!(+ano>1900&&+ano<=new Date().getFullYear())){ $('#pferr').textContent='Ano de nascimento inválido.'; return; } G.perfil={apelido:ap, fav:fv, nome:nm.slice(0,30), aniv:an?an.slice(5):'', ano:ano}; gSave(); toast('Perfil salvo.'); route.keep=true; route(); };
+  setTimeout(()=>{ const b=$('#pfsalva'); if(b) b.onclick=()=>{ const ap=$('#pfap').value.trim().slice(0,30), fv=$('#pffav').value.trim(); if(fv&&!FIGN[fv]){ $('#pferr').textContent='Escolha um jogador da lista.'; return; } const an=$('#pfaniv').value, ano=$('#pfano').value.trim(), nm=$('#pfnome').value.trim().split(/\s+/)[0]||''; if(ano&&!(+ano>=ANO_MIN_NASC&&+ano<=new Date().getFullYear()-3)){ $('#pferr').textContent=`Ano de nascimento inválido (de ${ANO_MIN_NASC} em diante).`; return; } if(anoTravado()&&String(ano)!==String(G.perfil.ano||'')){ $('#pferr').textContent='O ano de nascimento não pode ser trocado depois que você registra jogos no estádio.'; return; } G.perfil={apelido:ap, fav:fv, nome:nm.slice(0,30), aniv:an?an.slice(5):'', ano:ano}; gSave(); toast('Perfil salvo.'); route.keep=true; route(); };
     const t=$('#anitog2'); if(t) t.onclick=()=>{ lsSet(GMA, lsGet(GMA)==='0'?'1':'0'); aplicaAnim(); route.keep=true; route(); }; });
   const TC=todasConq(); const feitas=TC.filter(c=>G.conq[c.id]).length;
   return `<div class="kicker">Ficha do torcedor</div><h1>${esc(G.perfil.apelido||'Meu perfil')}</h1>
   <div class="perfil-top">${fav?figHTML(fav):`<div class="fig-vazio"><b>?</b><span>Escolha seu ídolo</span></div>`}
   <div style="flex:1;min-width:260px"><div class="tiles"><div class="tile"><b>${DONO?'∞':N(G.pts)}</b><span>Metricoins para gastar</span></div><div class="tile"><b>${N(G.total)}</b><span>Metricoins no total</span></div><div class="tile"><b>${G.seq.atual}</b><small class="basesm">recorde: ${G.seq.max}</small><span>Dias seguidos</span></div><div class="tile"><b>${N(cnt(G.owned))}</b><small class="basesm">de ${N(L.length)}</small><span>Figurinhas</span></div><div class="tile"><b>${feitas}</b><small class="basesm">de ${TC.length}</small><span>Conquistas</span></div></div>
   <div class="dono" style="margin-top:14px"><div class="dgrid"><label>Apelido<input id="pfap" value="${esc(G.perfil.apelido||'')}" maxlength="30" placeholder="Como você quer ser chamado"></label><label>Ídolo (figurinha de capa)<input id="pffav" list="pfl" value="${esc(G.perfil.fav||'')}" placeholder="nome do jogador"></label></div>
-  <details class="pf-extra"><summary>Para conquistas surpresa (opcional)</summary><div class="dgrid"><label>Primeiro nome<input id="pfnome" value="${esc(G.perfil.nome||'')}" maxlength="30" placeholder="Ex.: Rodrigo"></label><label>Aniversário<input id="pfaniv" type="date" value="${G.perfil.aniv?'2000-'+G.perfil.aniv:''}"></label><label>Ano de nascimento<input id="pfano" type="number" min="1900" max="2026" value="${esc(G.perfil.ano||'')}"></label></div><p class="count">Fica só neste aparelho. Serve para conquistas como visitar um jogo do dia do seu aniversário ou um jogador xará.</p></details>
+  <details class="pf-extra"><summary>Para conquistas surpresa (opcional)</summary><div class="dgrid"><label>Primeiro nome<input id="pfnome" value="${esc(G.perfil.nome||'')}" maxlength="30" placeholder="Ex.: Rodrigo"></label><label>Aniversário<input id="pfaniv" type="date" value="${G.perfil.aniv?'2000-'+G.perfil.aniv:''}"></label><label>Ano de nascimento<input id="pfano" type="number" min="${ANO_MIN_NASC}" max="${new Date().getFullYear()-3}" value="${esc(G.perfil.ano||'')}"${anoTravado()?' readonly title="Travado: você já registrou jogos no estádio"':''}></label></div><p class="count">Fica só neste aparelho. Serve para conquistas como visitar um jogo do dia do seu aniversário ou um jogador xará.</p></details>
   <datalist id="pfl">${L.map(f=>`<option value="${esc(f.nome)}">`).join('')}</datalist><p id="pferr" class="count" role="alert" style="color:var(--d)"></p>
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="more" id="pfsalva">Salvar perfil</button><button type="button" class="ghost" id="anitog2">Animações: ${lsGet(GMA)==='0'?'desligadas':'ligadas'}</button><a class="ghost" href="#album" style="text-decoration:none">Abrir o álbum</a></div></div></div></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${tw(`Meu perfil no Galo Metrics: ${feitas} conquistas, ${N(cnt(G.owned))} figurinhas e ${G.seq.max} dias seguidos de visita.`)}<a class="ghost" href="#diario" style="text-decoration:none">Meu diário de jogos</a></div>
@@ -2080,9 +2080,9 @@ function blocoDiario(j){
   const d=diario()[j.id]||{}, e=j.escalacao_galo, pub=AVAL[j.id];
   const lineup=e?[...e.titulares, ...e.substituicoes.map(s=>s.entrou).filter(Boolean)]:[];
   setTimeout(()=>{ const f=$('#dform2'); if(!f) return;
-    f.onsubmit=async(ev)=>{ ev.preventDefault(); const nota=+f.elements.nota.value||0, txt=f.elements.texto.value.trim().slice(0,1000), est=f.elements.est.checked, cr=f.elements.craque?f.elements.craque.value:'';
+    f.onsubmit=async(ev)=>{ ev.preventDefault(); const nota=+f.elements.nota.value||0, txt=f.elements.texto.value.trim().slice(0,1000), est=f.elements.est.checked&&(!!d.est||!motivoEstadio(j)), cr=f.elements.craque?f.elements.craque.value:'';
       const nj={}; lineup.forEach((n,i)=>{ const el=f.elements['nj'+i]; if(el&&el.value!=='') nj[n]=Math.max(0,Math.min(10,+el.value)); });
-      if(!nota&&!txt&&!est&&!cr&&!Object.keys(nj).length){ delete diario()[j.id]; } else diario()[j.id]={n:nota, t:txt, est, cr, nj, d:hojeStr()};
+      if(!nota&&!txt&&!est&&!cr&&!Object.keys(nj).length){ delete diario()[j.id]; } else diario()[j.id]={n:nota, t:txt, est, cr, nj, d:hojeStr(), ...(est?{estEm:d.estEm||hojeStr()}:{})};
       if(DONO&&f.elements.pub&&f.elements.pub.checked&&GDB){ try{ await GDB.doc('avaliacoes/'+j.id).set({n:nota, t:txt, cr, nj, em:Date.now()}); AVAL[j.id]={n:nota,t:txt,cr,nj}; }catch(err){ toast('A avaliação pública não foi salva agora.'); } }
       else if(DONO&&f.elements.pub&&!f.elements.pub.checked&&AVAL[j.id]&&GDB){ try{ await GDB.doc('avaliacoes/'+j.id).delete(); delete AVAL[j.id]; }catch(err){} }
       gSave(); checaConquistas(); toast('Salvo no seu diário.'); route.keep=true; route(); };
@@ -2094,7 +2094,7 @@ function blocoDiario(j){
   return `${pubHTML}<details class="diario" ${d.n||d.est?'':''}><summary>★ Meu diário: avaliar este jogo${d.n||d.est?' (já avaliado)':''}</summary>
   <form id="dform2" class="dono">
   <div class="dgrid"><label>Nota do jogo<select name="nota">${opt}</select></label>
-  <label class="chk"><input type="checkbox" name="est" ${d.est?'checked':''}> Eu estava no estádio</label></div>
+  ${(()=>{ const mot=d.est?'':motivoEstadio(j); return `<label class="chk"><input type="checkbox" name="est" ${d.est?'checked':''}${mot?' disabled':''}> Eu estava no estádio</label>${mot?`<p class="count" style="margin:4px 0 0">${mot}</p>`:''}`; })()}</div>
   ${lineup.length?`<label>Craque do jogo<select name="craque"><option value="">Escolha</option>${lineup.map(n=>`<option value="${esc(n)}"${d.cr===n?' selected':''}>${esc(nomeV(n))}</option>`).join('')}</select></label>
   <p class="count" style="margin-top:12px">Notas para os jogadores do Galo (0 a 10, deixe em branco para não avaliar):</p>
   <div class="nj-grid">${lineup.map((n,i)=>`<label>${esc(nomeV(n))}<input type="number" name="nj${i}" min="0" max="10" step="0.5" value="${d.nj&&d.nj[n]!=null?d.nj[n]:''}"></label>`).join('')}</div>`:''}
@@ -2843,11 +2843,26 @@ function vMapa(params){
 function tabCid(l){ return `<table><thead><tr><th>Cidade</th><th class="n">Jogos</th><th class="n hide-s">V</th><th class="n hide-s">E</th><th class="n hide-s">D</th><th class="n">Aprov.</th></tr></thead><tbody>${l.map(r=>`<tr class="click" onclick="location.hash='cidade-${slug(r.c)}'"><td><b>${esc(r.nome)}</b></td><td class="n">${N(r.l.length)}</td><td class="n hide-s">${r.V}</td><td class="n hide-s">${r.E}</td><td class="n hide-s">${r.D}</td><td class="n">${r.ap}</td></tr>`).join('')}</tbody></table>`; }
 
 /* ---------- Fui ao estádio: estatísticas completas ---------- */
-function vistoAoVivo(){ return Object.entries(diario()).filter(([id,x])=>x.est&&byId[id]).map(([id])=>byId[id]).sort((a,b)=>a.data<b.data?-1:1); }
+/* Antifraude do "fui ao estádio": precisa do ano de nascimento, ter pelo menos 4 anos no dia do jogo,
+   jogo já disputado, e no máximo 3 jogos novos marcados por dia. Jogos fora da regra não contam nem dão figurinha. */
+const ANO_MIN_NASC=1930, IDADE_MIN=4, EST_POR_DIA=3;
+const anoTravado=()=>Object.values(diario()).some(x=>x&&x.est);
+function estValido(j){ const a=+((G.perfil||{}).ano)||0; return !!(a>=ANO_MIN_NASC && j && j.resultado && j.data<=hojeStr() && +j.data.slice(0,4)>=a+IDADE_MIN); }
+function motivoEstadio(j){
+  const a=+((G.perfil||{}).ano)||0;
+  if(!a) return 'Para registrar que esteve no estádio, informe seu <a href="#perfil">ano de nascimento no Perfil</a>.';
+  if(!j.resultado||j.data>hojeStr()) return 'Só dá para registrar jogos que já aconteceram.';
+  if(+j.data.slice(0,4)<a+IDADE_MIN) return `Pelo seu ano de nascimento (${a}), você ainda não tinha idade para estar neste jogo.`;
+  const hoje=hojeStr(), n=Object.values(diario()).filter(x=>x&&x.est&&x.estEm===hoje).length;
+  if(n>=EST_POR_DIA) return `Limite de ${EST_POR_DIA} jogos no estádio registrados por dia. Volte amanhã para registrar mais.`;
+  return '';
+}
+function vistoAoVivo(){ return Object.entries(diario()).filter(([id,x])=>x.est&&byId[id]&&estValido(byId[id])).map(([id])=>byId[id]).sort((a,b)=>a.data<b.data?-1:1); }
 const elenco = e => e ? [...(e.titulares||[]), ...(e.substituicoes||[]).map(s=>s.entrou)].filter(Boolean) : [];
 function sincronizaVivo(){
   try{ figuras(); }catch(e){ return; }
   G.vivo ||= {}; let novas=0;
+  Object.keys(G.vivo).forEach(n=>{ const j=byId[G.vivo[n]]; if(!j||!estValido(j)||!(diario()[j.id]||{}).est) delete G.vivo[n]; });
   vistoAoVivo().forEach(j=>{ const ns=new Set(elenco(j.escalacao_galo)); j.gols.forEach(g=>{ if(isGoal(g)) ns.add(g.jogador); });
     ns.forEach(n=>{ if(FIGN[n] && !G.vivo[n]){ G.vivo[n]=j.id; if(!G.owned[n]){ G.owned[n]=1; novas++; } } }); });
   if (novas){ gSave(); toast(`+${novas} figurinha${novas>1?'s':''}: jogadores que você viu ao vivo`); }
