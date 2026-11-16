@@ -1773,9 +1773,9 @@ const CONQ=[
   {id:'exato', nome:'Vidente', desc:'Acertou um placar exato.', pts:40, secreta:true, p:()=>[Object.values(G.palpites||{}).some(p=>p.res&&p.res.placar)?1:0,1]},
   {id:'pts1000', nome:'Mil Metricoins', desc:'Somou 1.000 Metricoins no total.', pts:50, p:()=>[G.total,1000]},
   // ----- secretas -----
-  {id:'s_classico', nome:'Clássico na veia', desc:'Esteve no estádio num clássico contra o Cruzeiro.', pts:30, secreta:true, p:()=>[vistoAoVivo().some(j=>j.adversario_id==='cruzeiro mg')?1:0,1]},
+  {id:'s_classico', nome:'Você treme', desc:'Esteve no estádio numa vitória do Galo contra o Cruzeiro.', pts:30, secreta:true, p:()=>[vistoAoVivo().some(j=>j.adversario_id==='cruzeiro mg'&&j.resultado==='V')?1:0,1]},
   {id:'s_titulo', nome:'Eu vi a taça', desc:'Esteve no estádio numa final em que o Galo foi campeão.', pts:80, secreta:true, p:()=>{ const T=new Set([...(D.finais_mineiro||[]).filter(x=>x.titulo).flatMap(x=>x.ids), ...(D.finais_outras||[]).filter(x=>x.res==='titulo'&&!x.sem_final).flatMap(x=>x.ids)]); return [vistoAoVivo().some(j=>T.has(j.id))?1:0,1]; }},
-  {id:'s_virada', nome:'Nunca duvidei', desc:'Esteve no estádio numa vitória de virada.', pts:40, secreta:true, p:()=>{ const V=new Set((typeof VIR!=='undefined'?VIR:[]).map(v=>v.j.id)); return [vistoAoVivo().some(j=>V.has(j.id))?1:0,1]; }},
+  {id:'s_virada', nome:'Eu acredito', desc:'Esteve no estádio numa vitória de virada.', pts:40, secreta:true, p:()=>{ const V=new Set((typeof VIR!=='undefined'?VIR:[]).map(v=>v.j.id)); return [vistoAoVivo().some(j=>V.has(j.id))?1:0,1]; }},
   {id:'s_goleada', nome:'Chocolate ao vivo', desc:'Viu do estádio uma vitória por 4 gols ou mais de diferença.', pts:30, secreta:true, p:()=>[vistoAoVivo().some(j=>j.gp!=null&&j.gp-j.gc>=4)?1:0,1]},
   {id:'s_niver', nome:'Presente de aniversário', desc:'Esteve no estádio num jogo no dia do seu aniversário.', pts:40, secreta:true, p:()=>{ const a=(G.perfil||{}).aniv; return [a&&vistoAoVivo().some(j=>j.data.slice(5)===a)?1:0,1]; }},
   {id:'s_xara', nome:'Xará', desc:'Visitou a página de um jogador com o seu primeiro nome.', pts:15, secreta:true, p:()=>{ const n=slug((G.perfil||{}).nome||''); return [n&&Object.keys(G.vis.jogador||{}).some(k=>k===n||k.startsWith(n+'-'))?1:0,1]; }},
