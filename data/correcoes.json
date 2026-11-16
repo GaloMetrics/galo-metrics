@@ -159,5 +159,14 @@
   "Vila Belmiro (Urbano Caldeira)": "Vila Belmiro",
   "Joaquim Portugal (Arena Sicredi)": "Joaquim Portugal",
   "Joaquim Portugal (Arena Unimed)": "Joaquim Portugal"
- }
+ },
+ "jogadores_por_data": [
+  {
+   "nome": "Paulinho",
+   "de": "2014-01-01",
+   "ate": "2014-12-31",
+   "novo": "Paulinho (2014)",
+   "motivo": "Jogador da base que atuou em 2 jogos de 2014; não é o Paulinho de 2023-24."
+  }
+ ]
 }

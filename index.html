@@ -834,6 +834,7 @@ function vJogador(s){
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">${tw(`${nomeV(p.nome)} pelo Galo: ${N(ag?ag.atual:p.gols)} gols${p.jogos?`, ${N(aj?ajAtual:p.jogos)} jogos`:''}, de ${(p.primeiro||'').slice(0,4)} a ${(p.ultimo||'').slice(0,4)}.`)}</div>
   ${cartaArquivo(p)}${notaAcc}${p.jogos?`<p class="count">*Na base, a partir de ${fmtD(D.meta.escalacoes_desde)}, período com escalações.</p>`:''}
   ${perfilJogador(p,list,gpj,comps,GK)}
+  ${typeof blocoAvalJogador==='function'?blocoAvalJogador(p):''}
   ${(()=>{ const pr=penResumo(p.nome); if(!pr.l.length) return '';
     return `<h2>Pênaltis defendidos</h2><div class="grid2"><div><p class="classico-num"><b>${pr.jogo}</b> durante os jogos</p></div><div><p class="classico-num"><b>${pr.disputa}</b> em disputas de pênaltis</p></div></div>
     <table><thead><tr><th>Data</th><th>Partida</th><th>Situação</th><th class="hide-s">Cobrador</th></tr></thead><tbody>${(()=>{ const g=[]; pr.l.forEach(o=>{ const k=o.j.id+o.x.tipo; const last=g[g.length-1]; if(last&&last.k===k){ last.n++; if(o.x.cobrador) last.c.push(o.x.cobrador); } else g.push({k,j:o.j,t:o.x.tipo,n:1,c:o.x.cobrador?[o.x.cobrador]:[]}); }); return g.reverse(); })().map(o=>`<tr class="click" onclick="location.hash='jogo-${o.j.id}'"><td class="mono">${fmtD(o.j.data)}</td><td>${linha(o.j)}</td><td>${o.t==='jogo'?'No jogo':'Disputa de pênaltis'}${o.n>1?` · <b>${o.n} defesas</b>`:''}</td><td class="hide-s">${esc(o.c.join(', ')||'–')}</td></tr>`).join('')}</tbody></table>
@@ -3265,17 +3266,17 @@ function ligaStars(root){
     lim.onclick=()=>set(0); });
 }
 /* Avaliações da torcida: cada torcedor publica as suas em rankuser/{uid}.aval */
-function avalTorcida(id){ return Object.entries(RKU||{}).map(([uid,o])=>{ const a=o&&o.aval&&o.aval[id]; return a&&(a.n||a.t)?{uid, ap:o.ap||'Torcedor', ...a}:null; }).filter(Boolean).sort((a,b)=>String(b.d||'').localeCompare(String(a.d||''))); }
+function avalTorcida(id, campo='aval'){ return Object.entries(RKU||{}).map(([uid,o])=>{ const a=o&&o[campo]&&o[campo][id]; return a&&(a.n||a.t)?{uid, ap:o.ap||'Torcedor', ...a}:null; }).filter(Boolean).sort((a,b)=>String(b.d||'').localeCompare(String(a.d||''))); }
 async function publicaAval(id, a, publicar){
   if(!GDB||!GUID) return;
   try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.aval ||= {};
     if(publicar&&(a.n||a.t)) o.aval[id]={n:a.n||0, t:(a.t||'').slice(0,600), cr:a.cr||'', est:a.est?1:0, d:hojeStr()}; else delete o.aval[id];
     o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; await ref.set(o); RKU[GUID]=o; }catch(e){ console.warn('publicaAval',e); }
 }
-function blocoTorcida(j){
-  const L=avalTorcida(j.id), notas=L.filter(x=>x.n);
-  const head=`<h2>Avaliações da torcida</h2>`;
-  if(!L.length) return head+`<p class="count">Ninguém avaliou este jogo ainda. ${GUID?'Seja o primeiro: use "Meu diário" acima.':(window.GM_LOGIN?'<a href="javascript:GM_LOGIN()">Entre com sua conta Google</a> e seja o primeiro a avaliar.':'')}</p>`;
+function blocoTorcida(j, campo='aval', id=j&&j.id, titulo='Avaliações da torcida', vazio='Ninguém avaliou este jogo ainda.', dica='Seja o primeiro: use "Meu diário" acima.'){
+  const L=avalTorcida(id, campo), notas=L.filter(x=>x.n);
+  const head=`<h2>${titulo}</h2>`;
+  if(!L.length) return head+`<p class="count">${vazio} ${GUID?dica:(window.GM_LOGIN?'<a href="javascript:GM_LOGIN()">Entre com sua conta Google</a> e seja o primeiro a avaliar.':'')}</p>`;
   const med=notas.length?notas.reduce((s,x)=>s+x.n,0)/notas.length:0;
   const hist=[...Array(10)].map((_,i)=>notas.filter(x=>x.n===(i+1)/2).length), mx=Math.max(1,...hist);
   return head+`<div class="torc">
@@ -3310,6 +3311,24 @@ function mostraPacote(pac, aoFechar, deNovo){
   o.querySelector('.pko-pack').onclick=abre; deck.onclick=passo; o.querySelector('.pko-pular').onclick=resumo;
   o.querySelector('.pko-fim').onclick=fecha; o.querySelector('.pko-x').onclick=()=>fase===3?fecha():resumo();
   document.addEventListener('keydown',tecla); o.querySelector('.pko-pack').focus();
+}
+
+/* ---------- Avaliar jogador ---------- */
+function blocoAvalJogador(p){
+  const id=slug(p.nome); G.avj ||= {}; const d=G.avj[id]||{};
+  setTimeout(()=>{ const f=$('#avjform'); if(!f) return; ligaStars(f);
+    f.onsubmit=async ev=>{ ev.preventDefault(); const n=+f.elements.notaj.value||0, t=f.elements.textoj.value.trim().slice(0,600), pub=!f.elements.torcj||f.elements.torcj.checked;
+      if(!n&&!t) delete G.avj[id]; else G.avj[id]={n,t,d:hojeStr(),...(pub?{}:{priv:1})}; gSave();
+      if(GUID&&GDB){ try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.avj ||= {};
+        if(pub&&(n||t)) o.avj[id]={n,t,d:hojeStr()}; else delete o.avj[id];
+        o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; await ref.set(o); RKU[GUID]=o; }catch(err){ console.warn(err); } }
+      toast('Avaliação salva.'); route.keep=true; route(); }; });
+  return `<details class="diario"${d.n||d.t?'':' open'}><summary>★ Avaliar ${esc(nomeV(p.nome))}${d.n?' (já avaliado)':''}</summary>
+   <form id="avjform" class="dono"><div><span class="lblx">Sua nota para o jogador</span>${starsInput('notaj', d.n||0)}</div>
+   <label>Comentário (opcional)<textarea name="textoj" rows="2" maxlength="600" style="width:100%" placeholder="O que ele representou para o Galo?">${esc(d.t||'')}</textarea></label>
+   ${GUID?`<label class="chk"><input type="checkbox" name="torcj" ${d.priv?'':'checked'}> Mostrar minha nota para a torcida</label>`:''}
+   <button type="submit" class="more">Salvar avaliação</button></form></details>
+  ${blocoTorcida(null,'avj',id,'Nota da torcida','Ninguém avaliou este jogador ainda.','Seja o primeiro: use "Avaliar" acima.')}`;
 }
 
 </script>

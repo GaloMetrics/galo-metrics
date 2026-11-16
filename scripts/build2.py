@@ -342,6 +342,19 @@ for j in jogos:
         for sb in e['substituicoes']:
             sb['entrou'] = ep(sb['entrou']); sb['saiu'] = ep(sb['saiu'])
 
+# ---------------- 5b2. homônimos sem gol, separados à mão por período (correcoes.json > jogadores_por_data) ----------------
+for r in C.get('jogadores_por_data', []):
+    for j in jogos:
+        if not (r['de'] <= j['data'] <= r['ate']): continue
+        for g in j['gols']:
+            if g['lado'] == 'galo' and g['jogador'] == r['nome']: g['jogador'] = r['novo']
+        e = j.get('escalacao_galo')
+        if e:
+            e['titulares'] = [r['novo'] if x == r['nome'] else x for x in e['titulares']]
+            for sb in e['substituicoes']:
+                if sb.get('entrou') == r['nome']: sb['entrou'] = r['novo']
+                if sb.get('saiu') == r['nome']: sb['saiu'] = r['novo']
+
 # ---------------- 5c. nomes de estádio padronizados ----------------
 EST = C.get('estadios', {})
 for j in jogos:
