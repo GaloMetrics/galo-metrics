@@ -1855,7 +1855,7 @@ const CONQ=[
   {id:'jd1', nome:'Primeira vitória', desc:'Venceu um desafio diário.', pts:10, p:()=>[Object.values(G.jd).some(d=>Object.values(d).some(x=>x.ok))?1:0,1]},
   {id:'jd4', nome:'Dia perfeito', desc:'Venceu todos os desafios no mesmo dia.', pts:80, p:()=>[Math.max(0,...Object.values(G.jd).map(d=>DESAF.map(x=>x[0]).filter(k=>d[k]&&d[k].ok).length)),DESAF.length]},
   {id:'cx1', nome:'Conectado', desc:'Fechou as Conexões alvinegras.', pts:15, p:()=>[Object.values(G.jd).some(d=>d.conexoes&&d.conexoes.ok)?1:0,1]},
-  {id:'imp5', nome:'Faro de olheiro', desc:'Passou pelas 3 rodadas do Impostor.', pts:25, p:()=>[Object.values(G.jd).some(d=>d.impostor&&d.impostor.v===2&&d.impostor.ok)?1:0,1]},
+  {id:'imp5', nome:'Faro de olheiro', desc:'Passou pelas 3 rodadas do Impostor.', pts:25, p:()=>[Object.values(G.jd).some(d=>d.impostor&&d.impostor.v>=2&&d.impostor.ok)?1:0,1]},
   {id:'jdseq7', nome:'Treino diário', desc:'Jogou os desafios 7 dias seguidos.', pts:50, p:()=>[G.jdSeq.max,7]},
   {id:'aval10', nome:'Crítico de arquibancada', desc:'Avaliou 10 jogos no diário.', pts:25, p:()=>[Object.values(G.diario||{}).filter(y=>y.n||y.t).length,10]},
   {id:'est1', nome:'Eu fui!', desc:'Registrou o primeiro jogo no estádio.', pts:10, p:()=>[vistoAoVivo().length,1]},
@@ -2037,7 +2037,7 @@ function categorias(){
   // finais nacionais e internacionais
   (D.finais_outras||[]).filter(x=>!x.sem_final&&x.ids.length&&x.res!=='pendente').forEach(x=>add('fin-'+x.comp+x.ano, `Jogaram a final da ${x.comp} ${x.ano}${x.res==='titulo'?' (campeões)':' (vice)'}`, elencoIds(x.ids)));
   // Mineiro: finais recentes
-  (D.finais_mineiro||[]).filter(x=>x.ano>=2000&&x.titulo).forEach(x=>add('min'+x.ano,`Campeões mineiros de ${x.ano} (jogaram a final)`, elencoIds(x.ids)));
+  (D.finais_mineiro||[]).filter(x=>x.ano>=2000&&x.titulo).forEach(x=>add('min'+x.ano,`Jogaram a final do Mineiro ${x.ano}`, elencoIds(x.ids)));
   add('bra2021','Campeões brasileiros de 2021', freq(j=>j.temporada===2021&&j.grupo==='Campeonato Brasileiro',12));
   add('serieb2006','Campanha da Série B de 2006', freq(j=>j.temporada===2006&&j.competicao==='Brasileiro-Série B',12));
   // gols em momentos grandes
@@ -2119,12 +2119,17 @@ function impostorRodadas(){
   const r=rngDia('impostor2'), C=categorias().filter(c=>!c.id.startsWith('pos-')&&c.m.size>=5), L=figuras().filter(fFamoso).map(f=>f.nome);
   const out=[], usadas=new Set();
   for(let k=0;k<40&&out.length<IMP_ROD;k++){ const c=C[Math.floor(r()*C.length)]; if(!c||usadas.has(c.id)) continue; usadas.add(c.id);
-    const mem=embaralha([...c.m],r).slice(0,Math.min(6,c.m.size)); const fora=embaralha(L.filter(n=>!c.m.has(n)),r).slice(0,10-mem.length);
+    const mem=embaralha([...c.m],r).slice(0,Math.min(5,c.m.size));
+    // impostores da mesma época dos jogadores certos, para não dar para acertar pelo período
+    const ano=n=>{ const p=pjDe(n)||{}; return [+(String(p.primeiro||'').slice(0,4))||0, +(String(p.ultimo||'').slice(0,4))||0]; };
+    const ini=Math.min(...mem.map(n=>ano(n)[0])), fim=Math.max(...mem.map(n=>ano(n)[1]));
+    const dist=n=>{ const [a,b]=ano(n); return b<ini?ini-b:a>fim?a-fim:0; };
+    const fora=embaralha(L.filter(n=>!c.m.has(n)),r).sort((x,y)=>dist(x)-dist(y)).slice(0,10-mem.length);
     if(fora.length<10-mem.length) continue; out.push({cat:c.nome, m:mem, nomes:embaralha([...mem,...fora],r)}); }
   return out;
 }
 function vImpostor(){
-  const R=impostorRodadas(); let st=jdHoje().impostor; if(!st||st.v!==2) st=jdHoje().impostor={v:2, r:0, ach:[], err:[], fim:false, ok:false};
+  const R=impostorRodadas(); let st=jdHoje().impostor; if(!st||st.v!==3) st=jdHoje().impostor={v:3, r:0, ach:[], err:[], fim:false, ok:false};
   if(!R.length) return '<p class="empty">Sem desafio hoje.</p>';
   const rod=R[Math.min(st.r,R.length-1)], vidas=IMP_VIDAS-st.err.length, total=R.reduce((s,x)=>s+x.m.length,0), achTot=st.ach.length;
   setTimeout(()=>{ document.querySelectorAll('[data-imp]').forEach(b=>b.onclick=()=>{ if(st.fim) return; const n=b.dataset.imp; const key=st.r+'|'+n; if(st.ach.includes(key)||st.err.includes(key)) return;
@@ -2134,7 +2139,7 @@ function vImpostor(){
       route.keep=true; route(); });
     const s=$('#imshare'); if(s) { const g=R.map((x,i)=>x.m.map(n=>st.ach.includes(i+'|'+n)?'🟩':'⬛').join('')).join('\n')+(st.err.length?'\n'+'❌'.repeat(st.err.length):''); const _t=()=>textoRank('Impostor', `${st.ach.length}/${total}\n${g}`, st.ach.length); s.onclick=()=>compartilha(_t()); autoRank(_t()); } });
   const bt=n=>{ const key=st.r+'|'+n, ok=st.ach.includes(key), er=st.err.includes(key), rev=st.fim&&rod.m.includes(n)&&!ok;
-    return `<button type="button" class="imp-p${ok?' ok':''}${er?' er':''}${rev?' rev':''}" data-imp="${esc(n)}"${ok||er||st.fim?' disabled':''}><span class="imp-av" aria-hidden="true">${esc(nomeV(n).trim()[0]||'?').toUpperCase()}</span><b>${esc(nomeV(n))}</b><small>${esc(FIGN[n]?FIGN[n].periodo:'')}</small></button>`; };
+    return `<button type="button" class="imp-p${ok?' ok':''}${er?' er':''}${rev?' rev':''}" data-imp="${esc(n)}"${ok||er||st.fim?' disabled':''}><span class="imp-av" aria-hidden="true">${esc(nomeV(n).trim()[0]||'?').toUpperCase()}</span><b>${esc(nomeV(n))}</b>${st.fim?`<small>${esc(FIGN[n]?FIGN[n].periodo:'')}</small>`:''}</button>`; };
   const meio=Math.ceil(rod.nomes.length/2);
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Impostor</h1>
   <p class="count">Em cada rodada aparece uma categoria e 10 jogadores. Toque em todos que se encaixam e fuja dos impostores: você tem ${IMP_VIDAS} vidas para as ${R.length} rodadas.</p>
