@@ -439,6 +439,12 @@ body.pko-on{overflow:hidden}
 .pko-mini.r-lendaria{filter:drop-shadow(0 0 10px rgba(232,193,90,.9))}
 .pko-bts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}.pko-bts .ghost{background:transparent!important;color:#F4F1E8!important;-webkit-text-fill-color:#F4F1E8;border-color:#F4F1E8}
 @media(max-width:480px){.pko-deck{width:196px;height:285px}.pko-front .fig{transform:scale(1.4)}.pko-pack{width:200px;height:290px}}
+.esc-oc{display:inline-flex;flex-direction:column;align-items:center;font-family:'Abril Fatface',serif;font-size:22px;line-height:1;background:var(--ink);color:#C9962B;padding:4px 10px;border:2px dashed #C9962B}.esc-oc small{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.06em;color:var(--paper);margin-top:2px}
+.esc-perdido{color:#B3261E!important;text-decoration:line-through}
+.esc-jogo{border:3px solid var(--ink);padding:12px 16px;margin:14px 0;display:flex;flex-direction:column;gap:6px}.esc-plac{display:flex;align-items:center;gap:10px;font-size:22px}.esc-plac b{font-family:'Oswald',sans-serif}
+.trc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:16px}.trc-it{display:flex;gap:12px;align-items:center;border:2px solid var(--ink);padding:10px;text-decoration:none;color:inherit}.trc-it:hover{background:var(--soft)}.trc-it img,.trc-head img{width:44px;height:44px;border-radius:50%;object-fit:cover}.trc-it span{display:flex;flex-direction:column}
+.trc-head{display:flex;align-items:center;gap:16px;margin:8px 0 14px}.trc-head img{width:64px;height:64px}
+.aval-it em{font-size:14px;color:var(--mute);display:block}
 .tipos-sug{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tipos-sug .chip{cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 12px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:13px}.tipos-sug .chip:has(input:checked){background:var(--ink);color:var(--paper)}.tipos-sug input{margin:0}
 .sug-it{border-bottom:1px dotted var(--ink);padding:12px 0}.sug-it p{margin:6px 0}.sug-it.vista{opacity:.55}.sug-img{display:block;max-width:220px;max-height:220px;margin:8px 0;border:2px solid var(--ink);background:#fff}
 .aceita input{width:70px;padding:6px}.aceita{display:inline-flex;gap:6px;align-items:center;margin-right:6px}
@@ -509,8 +515,8 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
     <a href="#inicio">Início</a><a href="#jogos">Jogos</a><a href="#jogadores">Jogadores</a><a href="#adversarios">Adversários</a><a href="#competicoes">Competições</a><a href="#mapa">Mapa</a><a href="#pergunte">Pergunte</a><a href="#embreve" class="nav-breve">Em breve</a>
     <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
     <span class="nav-sep" aria-hidden="true"></span>
-    <details class="menu jogar"><summary>★ Jogar</summary><div class="menu-p"><a href="#desafios">Desafios do dia</a><a href="#palpites">Palpites</a><a href="#album">Álbum de figurinhas</a><a href="#ranking">Ranking da semana</a></div></details>
-    <details class="menu area"><summary>Meu perfil</summary><div class="menu-p"><a href="#perfil">Perfil e conquistas</a><a href="#diario">Meu diário</a><a href="#sugestoes">Sugestões e correções</a><a href="#colaboradores">Colaboradores</a><a href="#apoie">♥ Apoie</a><a href="#dono" id="navdono" hidden>Página do dono</a></div></details>
+    <details class="menu jogar"><summary>★ Jogar</summary><div class="menu-p"><a href="#desafios">Desafios do dia</a><a href="#palpites">Palpites</a><a href="#album">Álbum de figurinhas</a><a href="#ranking">Ranking da semana</a><a href="#desafio-escalacao">Complete a escalação</a></div></details>
+    <details class="menu area"><summary>Meu perfil</summary><div class="menu-p"><a href="#perfil">Perfil e conquistas</a><a href="#torcedores">Torcedores (amigos)</a><a href="#diario">Meu diário</a><a href="#sugestoes">Sugestões e correções</a><a href="#colaboradores">Colaboradores</a><a href="#apoie">♥ Apoie</a><a href="#dono" id="navdono" hidden>Página do dono</a></div></details>
   </nav>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
@@ -1661,7 +1667,7 @@ async function gmInit(){
   const nd=document.getElementById('navdono'); if(nd) nd.hidden=!DONO;
   contaBotao();
   if(GDB){ try{ const s=await GDB.doc('site/config').get(); if(s.exists){ aplicaCfg(JSON.parse(s.data().json||'{}')); } }catch(e){} }
-  await carregaEdicoes(); await carregaRanking(); await carregaAval(); try{ await carregaColab(); }catch(e){} try{ await carregaPresentes(); }catch(e){} try{ registraPerfil(); }catch(e){}
+  await carregaEdicoes(); await carregaRanking(); await carregaAval(); try{ await carregaColab(); }catch(e){} try{ await carregaPresentes(); }catch(e){} try{ registraPerfil(); }catch(e){} try{ publicaResumo(); }catch(e){}
   NUVEM = lsGet('gm-nuvem')==='1' && !!GDB && !!GUID; if(NUVEM){ await nuvemCarrega(); lsSet(GMK, JSON.stringify(G)); }
   GM_PRONTO=true; atualizaChip(); route();
 }
@@ -1819,7 +1825,7 @@ const CONQ=[
   {id:'lend1', nome:'Tirou uma lendária', desc:'Colou a primeira figurinha lendária.', pts:20, p:()=>[figuras().filter(f=>f.r==='lendaria'&&G.owned[f.nome]).length,1]},
   {id:'decada', nome:'Década completa', desc:'Completou todas as figurinhas de uma década.', pts:100, p:()=>{ const L=figuras(); const by={}; L.forEach(f=>{ (by[f.dec] ||= [0,0]); by[f.dec][1]++; if(G.owned[f.nome]) by[f.dec][0]++; }); const best=Object.values(by).reduce((m,x)=>x[0]/x[1]>m[0]/m[1]?x:m,[0,1]); return [best[0],best[1]]; }},
   {id:'jd1', nome:'Primeira vitória', desc:'Venceu um desafio diário.', pts:10, p:()=>[Object.values(G.jd).some(d=>Object.values(d).some(x=>x.ok))?1:0,1]},
-  {id:'jd4', nome:'Dia perfeito', desc:'Venceu os 7 desafios no mesmo dia.', pts:80, p:()=>[Math.max(0,...Object.values(G.jd).map(d=>DESAF.map(x=>x[0]).filter(k=>d[k]&&d[k].ok).length)),7]},
+  {id:'jd4', nome:'Dia perfeito', desc:'Venceu todos os desafios no mesmo dia.', pts:80, p:()=>[Math.max(0,...Object.values(G.jd).map(d=>DESAF.map(x=>x[0]).filter(k=>d[k]&&d[k].ok).length)),DESAF.length]},
   {id:'cx1', nome:'Conectado', desc:'Fechou as Conexões alvinegras.', pts:15, p:()=>[Object.values(G.jd).some(d=>d.conexoes&&d.conexoes.ok)?1:0,1]},
   {id:'imp5', nome:'Faro de olheiro', desc:'Achou os 5 impostores no mesmo dia.', pts:25, p:()=>[Math.max(0,...Object.values(G.jd).map(d=>d.impostor?d.impostor.acertos:0)),5]},
   {id:'jdseq7', nome:'Treino diário', desc:'Jogou os desafios 7 dias seguidos.', pts:50, p:()=>[G.jdSeq.max,7]},
@@ -1877,9 +1883,9 @@ function jdFim(jogo, ok, pts){ const d=jdHoje(); d[jogo]=Object.assign(d[jogo]||
   const h=hojeStr(); if(G.jdSeq.ult!==h){ G.jdSeq.atual = G.jdSeq.ult&&diasEntre(G.jdSeq.ult,h)===1 ? G.jdSeq.atual+1 : 1; G.jdSeq.ult=h; G.jdSeq.max=Math.max(G.jdSeq.max,G.jdSeq.atual); }
   if(pts>0){ G.pts+=pts; G.total+=pts; G.hist.unshift({d:Date.now(), n:pts, m:'desafio: '+jogo}); }
   gSave(); atualizaChip(); checaConquistas(); if(pts>0) toast(`+${pts} pontos no desafio`); }
-const DESAF=[['conexoes','Conexões alvinegras','Separe 16 jogadores em 4 grupos com algo em comum.'],['impostor','Impostor','Quatro jogadores têm algo em comum. Ache o que não tem.'],['carreira','Adivinhe pela carreira','Descubra o jogador pelos números da passagem dele pelo Galo.'],['galodle','Galodle','Adivinhe o jogador em 6 tentativas, letra por letra.'],['quem','Quem é?','Descubra o jogador do dia pelas pistas: época, gols, jogos e raridade.'],['placar','Placar do dia','Acerte o placar de um jogo histórico em 3 chutes.'],['maismenos','Mais ou menos','Quem fez mais gols pelo Galo? Faça a maior sequência.']];
+const DESAF=[['conexoes','Conexões alvinegras','Separe 16 jogadores em 4 grupos com algo em comum.'],['impostor','Impostor','Quatro jogadores têm algo em comum. Ache o que não tem.'],['carreira','Adivinhe pela carreira','Descubra o jogador pelos números da passagem dele pelo Galo.'],['galodle','Galodle','Adivinhe o jogador em 6 tentativas, letra por letra.'],['quem','Quem é?','Descubra o jogador do dia pelas pistas: época, gols, jogos e raridade.'],['placar','Placar do dia','Acerte o placar de um jogo histórico em 3 chutes.'],['maismenos','Mais ou menos','Quem fez mais gols pelo Galo? Faça a maior sequência.'],['escalacao','Complete a escalação','Um jogo marcante deste século com 5 titulares escondidos.']];
 function vDesafios(){ const d=jdHoje();
-  return `<div class="kicker">Todo dia tem jogo</div><h1>Desafios do dia</h1><p class="lede">Sete joguinhos novos a cada dia, iguais para todo mundo. Vencer dá pontos para o álbum, e o resultado copiado vale para o <a href="#ranking">ranking da semana</a>.</p>
+  return `<div class="kicker">Todo dia tem jogo</div><h1>Desafios do dia</h1><p class="lede">Oito joguinhos novos a cada dia, iguais para todo mundo. Vencer dá pontos para o álbum, e o resultado copiado vale para o <a href="#ranking">ranking da semana</a>.</p>
   <div class="desaf-grid">${DESAF.map(([k,n,t])=>`<a class="desaf ${d[k]&&d[k].fim?(d[k].ok?'ok':'fim'):''}" href="#desafio-${k}"><span class="osw">${d[k]&&d[k].fim?(d[k].ok?'★ Vencido hoje':'Jogado hoje'):'Disponível'}</span><b>${n}</b><p>${t}</p></a>`).join('')}</div>
   <p class="count">Sequência de dias jogando: ${G.jdSeq.atual} (recorde ${G.jdSeq.max}). Os desafios trocam à meia-noite.</p>`; }
 function compartilha(txt){ try{ navigator.clipboard.writeText(txt).then(()=>toast('Resultado copiado. Cole onde quiser.'),()=>toast('Não deu para copiar.')); }catch(e){ toast('Não deu para copiar.'); } }
@@ -2493,6 +2499,9 @@ function route(){
   else if(h==='desafios') html=vDesafios();
   else if(/^desafio-/.test(h)&&!GM_PRONTO) {html='<div class="kicker">Desafio do dia</div><p class="count" style="margin:60px 0">Carregando o desafio de hoje…</p>'; sec='desafios';}
   else if(h==='desafio-galodle') {html=vGalodle(); sec='desafios';}
+  else if(h==='desafio-escalacao') {html=vEscalacao(); sec='desafios';}
+  else if(h==='torcedores') html=vTorcedores();
+  else if(h.startsWith('torcedor-')) html=vTorcedor(h.slice(9));
   else if(h==='desafio-quem') {html=vQuem(); sec='desafios';}
   else if(h==='desafio-placar') {html=vPlacar(); sec='desafios';}
   else if(h==='desafio-maismenos') {html=vMaisMenos(); sec='desafios';}
@@ -2520,7 +2529,7 @@ function route(){
   if(/^(jogo|jogador|adversario|cidade)-/.test(h)) html+=`<p class="count sug-link"><a href="#sugestoes?${new URLSearchParams({sobre:h})}">Viu um erro nesta página, ou tem um escudo ou foto para mandar? Fale com a gente →</a></p>`;
   $('#app').innerHTML=notaPagina(h)+html;
   ligaNota();
-  const alvo = ['palpites','diario','ranking','album','perfil','dono','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve'].includes(h)?h:sec;
+  const alvo = ['palpites','diario','ranking','album','perfil','dono','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve','torcedores'].includes(h)?h:sec;
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href').slice(1)===alvo));
   document.querySelectorAll('#nav details').forEach(d=>{ d.removeAttribute('open'); d.classList.toggle('on', !!d.querySelector('a.on')); });
   if(!route.keep) window.scrollTo(0,0); route.keep=false;
@@ -3164,7 +3173,7 @@ function vColaboradores(){
   <div class="tiles"><div class="tile"><b>${N(L.length)}</b><span>Colaboradores</span></div><div class="tile"><b>${N((COLAB.itens||[]).length)}</b><span>Contribuições aceitas</span></div>${Object.keys(PTS_COLAB).map(k=>`<div class="tile"><b>${N((COLAB.itens||[]).filter(x=>x.tipo===k).length)}</b><span>${({sugestao:'Sugestões',correcao:'Correções',escudo:'Escudos',foto:'Fotos'})[k]}</span></div>`).join('')}</div>
   ${COLAB_MEU?`<p class="carta">Você já tem <b>${COLAB_MEU.n}</b> contribuição(ões) aceita(s) e ${N(COLAB_MEU.pts)} pontos por colaborar. ${seloColab(COLAB_MEU.n,true)}</p>`:''}
   <h2>Ranking de colaboradores</h2>
-  ${L.length?`<table><thead><tr><th>#</th><th>Colaborador</th><th class="n">Aceitas</th><th>Tipos</th><th class="n">Pontos</th></tr></thead><tbody>${L.map((r,i)=>`<tr${r.uid===GUID?' class="eu"':''}><td class="mono">${i+1}</td><td>${seloColab(r.n)} ${esc(r.nome)}${ehApoiador(r.nome)?' '+apoiadorSelo():''}</td><td class="n">${r.n}</td><td><small>${Object.entries(r.tipos).map(([k,v])=>`${esc(T(k).replace('Enviar ','').replace(' de dado',''))} ${v}`).join(' · ')}</small></td><td class="n"><b>${N(r.pts)}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">O ranking começa com a primeira contribuição aceita. Pode ser a sua.</p>'}
+  ${L.length?`<table><thead><tr><th>#</th><th>Colaborador</th><th class="n">Aceitas</th><th>Tipos</th><th class="n">Pontos</th></tr></thead><tbody>${L.map((r,i)=>`<tr${r.uid===GUID?' class="eu"':''}><td class="mono">${i+1}</td><td>${seloColab(r.n)} ${linkTorcedor(r.uid,r.nome)}${ehApoiador(r.nome)?' '+apoiadorSelo():''}</td><td class="n">${r.n}</td><td><small>${Object.entries(r.tipos).map(([k,v])=>`${esc(T(k).replace('Enviar ','').replace(' de dado',''))} ${v}`).join(' · ')}</small></td><td class="n"><b>${N(r.pts)}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">O ranking começa com a primeira contribuição aceita. Pode ser a sua.</p>'}
   <h2>Como ganhar pontos e selo</h2>
   <div class="tiles">${Object.entries(PTS_COLAB).map(([k,p])=>`<div class="tile"><b>+${p}</b><span>${esc(T(k))}</span></div>`).join('')}</div>
   <p class="count">Os pontos entram quando a contribuição é conferida e aceita, e caem direto no seu saldo do álbum na próxima visita. Selos por contribuições aceitas: ${NIVEIS_COLAB.slice().reverse().map(([n,nome])=>`${seloColab(n)} ${nome} a partir de ${n}`).join(' · ')}.</p>
@@ -3282,7 +3291,7 @@ function blocoTorcida(j, campo='aval', id=j&&j.id, titulo='Avaliações da torci
   return head+`<div class="torc">
     ${notas.length?`<div class="torc-res"><div class="torc-med"><b>${fmtNota(med.toFixed(1))}</b>${starsHTML(Math.round(med*2)/2,'stx-m')}<span class="uf">${notas.length} ${notas.length===1?'nota':'notas'}</span></div>
     <div class="torc-hist" aria-label="Distribuição das notas">${starsHTML(0.5,'stx-xs')}<div class="bars">${hist.map((n,i)=>`<span title="${n} ${n===1?'nota':'notas'} de ${fmtNota((i+1)/2)}" style="height:${Math.max(3,n/mx*100)}%"></span>`).join('')}</div>${starsHTML(5,'stx-xs')}</div></div>`:''}
-    <div class="torc-list">${L.slice(0,40).map(x=>`<div class="torc-it"><span class="torc-av" aria-hidden="true">${esc((x.ap||'?').trim()[0]||'?').toUpperCase()}</span><div><div class="torc-top"><b>${esc(x.ap)}</b>${x.n?starsHTML(x.n,'stx-s'):''}${x.est?'<span class="tag light">no estádio</span>':''}${x.uid===GUID?'<span class="tag">você</span>':''}</div>${x.t?`<p>${esc(x.t)}</p>`:''}${x.cr?`<small class="uf">Craque: ${esc(nomeV(x.cr))}</small>`:''}</div></div>`).join('')}</div></div>`;
+    <div class="torc-list">${L.slice(0,40).map(x=>`<div class="torc-it"><span class="torc-av" aria-hidden="true">${esc((x.ap||'?').trim()[0]||'?').toUpperCase()}</span><div><div class="torc-top"><b>${linkTorcedor(x.uid,x.ap)}</b>${x.n?starsHTML(x.n,'stx-s'):''}${x.est?'<span class="tag light">no estádio</span>':''}${x.uid===GUID?'<span class="tag">você</span>':''}</div>${x.t?`<p>${esc(x.t)}</p>`:''}${x.cr?`<small class="uf">Craque: ${esc(nomeV(x.cr))}</small>`:''}</div></div>`).join('')}</div></div>`;
 }
 
 /* ---------- Abertura de pacotinho, uma figurinha por vez ---------- */
@@ -3329,6 +3338,90 @@ function blocoAvalJogador(p){
    ${GUID?`<label class="chk"><input type="checkbox" name="torcj" ${d.priv?'':'checked'}> Mostrar minha nota para a torcida</label>`:''}
    <button type="submit" class="more">Salvar avaliação</button></form></details>
   ${blocoTorcida(null,'avj',id,'Nota da torcida','Ninguém avaliou este jogador ainda.','Seja o primeiro: use "Avaliar" acima.')}`;
+}
+
+/* ---------- Desafio: Complete a escalação (escalações do século) ---------- */
+const ESC_OCULTOS=5, ESC_ERROS=5;
+function escJogo(){
+  const ok=n=>n&&FIGN[n];
+  const L=J.filter(j=>j.data>='2000-01-01'&&j.data<hojeStr()&&j.resultado&&j.escalacao_galo&&(j.escalacao_galo.titulares||[]).length===11&&j.escalacao_galo.titulares.every(ok)
+    &&(ehFinal(j)||ehMata(j)||j.adversario_id==='cruzeiro mg')&&!(j.adversario_id==='cruzeiro mg'&&j.resultado==='D'));
+  return escolheDia(L,'escalacao',j=>j.data+' '+j.adversario);
+}
+function escOcultos(j){ // esconde os 5 titulares mais marcantes pelo Galo (mais jogos), para o desafio ser justo
+  const jg=n=>{ const p=D.jogadores.find(x=>x.nome===n); return p?(p.jogos||0)+3*golsBest(p):0; };
+  return j.escalacao_galo.titulares.slice().sort((a,b)=>jg(b)-jg(a)).slice(0,ESC_OCULTOS); }
+const normNome=s=>semAc(String(s||'')).replace(/\s*\(.*\)\s*/g,'').replace(/[^A-Z ]/g,'').trim();
+function vEscalacao(){
+  if(typeof figuras==='function') figuras();
+  const j=escJogo(); if(!j) return '<p class="empty">Sem jogo para hoje.</p>';
+  const oc=escOcultos(j), st=(jdHoje().escalacao ||= {t:[], fim:false, ok:false});
+  const achou=n=>st.fim||st.t.some(g=>g===n);
+  const erros=st.t.filter(g=>!oc.includes(g));
+  const faltam=oc.filter(n=>!achou(n));
+  let campo=campoHTML(j.escalacao_galo.titulares,{form:null, gols:Object.fromEntries(j.gols.filter(g=>g.lado==='galo'&&isGoal(g)).map(g=>[g.jogador,0]))});
+  oc.forEach(n=>{ if(achou(n)&&!faltam.includes(n)&&!st.fim) return; if(st.fim) return;
+    const a=`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`; const letras=normNome(nomeV(n)).replace(/ /g,'').length;
+    campo=campo.replace(a,`<span class="esc-oc" title="Jogador escondido">?<small>${letras} letras</small></span>`); });
+  if(st.fim) oc.forEach(n=>{ const a=`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`; if(!st.t.includes(n)) campo=campo.replace(a,`<a href="#jogador-${slug(n)}" class="esc-perdido">${esc(nomeV(n))}</a>`); });
+  const pool=[...new Set(J.filter(x=>x.data>='1998-01-01'&&x.escalacao_galo).flatMap(x=>[...(x.escalacao_galo.titulares||[]),...(x.escalacao_galo.substituicoes||[]).map(s=>s.entrou)]).filter(n=>n&&FIGN[n]))].sort((a,b)=>nomeV(a).localeCompare(nomeV(b)));
+  setTimeout(()=>{ const inp=$('#escin'), b=$('#escenv'); if(inp&&b){ const env=()=>{ const v=normNome(inp.value); if(!v) return; const er=$('#escerr');
+      const alvo=pool.find(n=>normNome(nomeV(n))===v||normNome(n)===v); if(!alvo){ er.textContent='Escolha um jogador da lista.'; return; }
+      if(st.t.includes(alvo)){ er.textContent='Você já tentou esse.'; return; }
+      st.t.push(alvo); inp.value=''; er.textContent='';
+      const acertos=oc.filter(n=>st.t.includes(n)).length, nErr=st.t.filter(g=>!oc.includes(g)).length;
+      if(acertos===oc.length){ st.fim=true; st.ok=true; jdFim('escalacao', true, Math.max(3,6-nErr)*2); }
+      else if(nErr>=ESC_ERROS){ st.fim=true; st.ok=false; jdFim('escalacao', false, acertos); }
+      else gSave();
+      route.keep=true; route(); };
+    b.onclick=env; inp.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); env(); } }; inp.focus({preventScroll:true}); }
+    const s=$('#escshare'); if(s){ const ac=oc.filter(n=>st.t.includes(n)).length, ne=st.t.filter(g=>!oc.includes(g)).length;
+      const _t=()=>textoRank('Complete a escalação', `${ac}/${oc.length} · ${ne} ${ne===1?'erro':'erros'}`, st.ok?Math.max(3,6-ne)*2:ac); s.onclick=()=>compartilha(_t()); autoRank(_t()); } });
+  const ac=oc.filter(n=>st.t.includes(n)).length;
+  return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia · escalações do século</div><h1>Complete a escalação</h1>
+  <p class="count">Um jogo marcante do Galo deste século, com ${ESC_OCULTOS} titulares escondidos. Descubra quem são: cada nome errado gasta uma chance, e com ${ESC_ERROS} erros o jogo acaba.</p>
+  <div class="esc-jogo"><span class="osw">${esc(j.competicao||'')}${j.fase?' · '+esc(j.fase):''} · ${fmtD(j.data)}</span><div class="esc-plac">${cr('galo')}<b>Atlético ${placar(j)} ${esc(j.adversario)}</b>${cr(j.adversario_id)}</div>${j.estadio?`<small class="uf">${esc(j.estadio)}${j.cidade?', '+esc(j.cidade):''}</small>`:''}</div>
+  <p class="classico-num"><b>${ac}</b> de ${oc.length} encontrados · <b>${erros.length}</b> de ${ESC_ERROS} erros</p>
+  ${campo}
+  ${erros.length?`<p class="count">Não estava em campo: ${erros.map(n=>`<s>${esc(nomeV(n))}</s>`).join(', ')}</p>`:''}
+  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Escalação completa${erros.length?` com ${erros.length} ${erros.length===1?'erro':'erros'}`:' sem errar'}!`:`Não foi hoje. Você achou ${ac} de ${oc.length}.`}</p><a class="ghost" href="#jogo-${j.id}">Ver a ficha do jogo</a> <button type="button" class="more" id="escshare">Copiar resultado</button></div>`
+  :`<div class="filters"><label>Quem estava em campo?<input id="escin" list="escl" placeholder="nome do jogador" autocomplete="off"></label><button type="button" class="more" id="escenv" style="align-self:flex-end">Chutar</button></div><datalist id="escl">${pool.map(n=>`<option value="${esc(nomeV(n))}">`).join('')}</datalist><p id="escerr" class="count" role="alert" style="color:var(--d)"></p>`}`;
+}
+
+/* ---------- Perfil público dos torcedores ---------- */
+async function publicaResumo(){
+  if(!GDB||!GUID) return;
+  try{ const L=typeof figuras==='function'?figuras():[]; const r={fig:Object.keys(G.owned||{}).filter(k=>G.owned[k]).length, figTot:L.length, conq:Object.keys(G.conq||{}).length, est:vistoAoVivo().length, fav:(G.perfil||{}).fav||'', total:G.total||0, seq:(G.seq||{}).max||0, foto:window.GM_USER_PHOTO||''};
+    const k=JSON.stringify(r); if(G.resumoPub===k) return;
+    const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}};
+    o.pub=r; o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.visto=hojeStr(); await ref.set(o); RKU[GUID]=o; G.resumoPub=k; gSave(); }catch(e){}
+}
+const linkTorcedor=(uid,nome)=>`<a href="#torcedor-${encodeURIComponent(uid)}">${esc(nome||'Torcedor')}</a>`;
+function vTorcedores(){
+  const L=Object.entries(RKU||{}).map(([uid,o])=>({uid,o})).filter(x=>x.o&&x.o.ap).sort((a,b)=>String(b.o.visto||'').localeCompare(String(a.o.visto||'')));
+  return `<div class="kicker">Galo Metrics · torcida</div><h1>Torcedores</h1><p class="lede">Veja o perfil dos amigos: figurinhas, conquistas, jogos no estádio e as notas que deram para jogos e jogadores.</p>
+  ${L.length?`<label style="max-width:340px">Buscar<input id="trq" placeholder="nome ou apelido" oninput="document.querySelectorAll('.trc-it').forEach(e=>e.hidden=!e.dataset.n.includes(this.value.toLowerCase()))"></label>
+  <div class="trc-grid">${L.map(({uid,o})=>{ const p=o.pub||{}; return `<a class="trc-it" data-n="${esc((o.ap+' '+(o.nome||'')).toLowerCase())}" href="#torcedor-${encodeURIComponent(uid)}">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av">${esc(o.ap.trim()[0]||'?').toUpperCase()}</span>`}<span><b>${esc(o.ap)}</b><small class="uf">${p.fig!=null?`${N(p.fig)} figurinhas · ${p.conq||0} conquistas`:'perfil em montagem'}</small></span></a>`; }).join('')}</div>`:'<p class="empty">Nenhum torcedor ainda. Quem entra com a conta Google aparece aqui.</p>'}`;
+}
+function vTorcedor(uid){
+  uid=decodeURIComponent(uid); const o=(RKU||{})[uid];
+  if(!o) return `<a class="back" href="#torcedores">← Torcedores</a><p class="empty">Torcedor não encontrado.</p>`;
+  const p=o.pub||{}, fav=p.fav&&FIGN[p.fav];
+  const av=Object.entries(o.aval||{}).filter(([id,a])=>byId[id]&&(a.n||a.t)).sort((a,b)=>String(b[1].d||'').localeCompare(String(a[1].d||'')));
+  const avj=Object.entries(o.avj||{}).filter(([id,a])=>a.n||a.t).sort((a,b)=>(b[1].n||0)-(a[1].n||0));
+  const pj=id=>D.jogadores.find(x=>slug(x.nome)===id);
+  const sem=semanaDe(fmtD(hojeStr())); const rk=Object.values(o.res||{}).filter(x=>x&&x.d&&semanaDe(x.d)===sem).reduce((s,x)=>s+(+x.pts||0),0);
+  return `<a class="back" href="#torcedores">← Torcedores</a><div class="kicker">Perfil do torcedor${uid===GUID?' · você':''}</div>
+  <div class="trc-head">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av" style="width:64px;height:64px;font-size:28px">${esc(o.ap.trim()[0]||'?').toUpperCase()}</span>`}<h1 style="margin:0">${esc(o.ap)}</h1></div>
+  <div class="perfil-top">${fav?figHTML(fav):''}<div style="flex:1;min-width:260px"><div class="tiles">
+   <div class="tile"><b>${N(p.fig||0)}</b><small class="basesm">de ${N(p.figTot||0)}</small><span>Figurinhas</span></div>
+   <div class="tile"><b>${p.conq||0}</b><span>Conquistas</span></div>
+   <div class="tile"><b>${p.est||0}</b><span>Jogos no estádio</span></div>
+   <div class="tile"><b>${N(p.total||0)}</b><span>Metricoins no total</span></div>
+   <div class="tile"><b>${rk}</b><span>Pontos no ranking da semana</span></div>
+   <div class="tile"><b>${p.seq||0}</b><span>Recorde de dias seguidos</span></div></div></div></div>
+  <h2>Notas para jogos</h2>${av.length?`<div class="aval-list">${av.slice(0,60).map(([id,a])=>{ const j=byId[id]; return `<a class="aval-it" href="#jogo-${j.id}"><span class="mono uf">${fmtD(j.data)}</span><span>${linha(j)}</span>${a.n?starsHTML(a.n,'stx-s'):''}${a.est?'<span class="tag light">no estádio</span>':''}${a.t?`<em>“${esc(a.t)}”</em>`:''}</a>`; }).join('')}</div>`:'<p class="count">Ainda não avaliou jogos.</p>'}
+  <h2>Notas para jogadores</h2>${avj.length?`<table><tbody>${avj.slice(0,60).map(([id,a])=>{ const x=pj(id); return `<tr${x?` class="click" onclick="location.hash='jogador-${id}'"`:''}><td>${esc(x?nomeV(x.nome):id)}</td><td>${a.n?starsHTML(a.n,'stx-s'):''}</td><td>${a.t?esc(a.t):''}</td></tr>`; }).join('')}</tbody></table>`:'<p class="count">Ainda não avaliou jogadores.</p>'}`;
 }
 
 </script>
