@@ -401,6 +401,8 @@ button.more{-webkit-text-fill-color:currentColor}
   .logo{font-size:19px;gap:6px;flex:1;min-width:0;order:0;white-space:nowrap}.logoimg{height:30px}
   #gmchip{order:1;padding:0 7px;font-size:11px;letter-spacing:.5px;white-space:nowrap}
   body.semconta #gmchip{display:none}
+  .logotxt{display:none}.logoimg{height:38px!important}
+  #gmchip .ap{display:none}
   #gmconta{order:2}#gmlogin{padding:3px 8px 3px 3px;gap:6px}#gmlogin span:not(.av){font-size:11px}
   #gmlogin.on span:not(.av){display:none}#gmlogin.on{padding:3px}
   #tema{order:3;font-size:0!important;letter-spacing:0!important;padding:6px 8px;line-height:1;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center}#tema:before{content:"☾";font-size:17px}html.dark #tema:before{content:"☀"}
@@ -427,7 +429,7 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </head>
 <body>
 <header><div class="top">
-  <div class="toprow"><a class="logo" href="#inicio"><img src="escudos/logo-gm-preto.webp" alt="Galo Metrics" class="logoimg lclaro"><img src="escudos/logo-gm-branco.webp" alt="Galo Metrics" class="logoimg lescuro">Galo Metrics</a>
+  <div class="toprow"><a class="logo" href="#inicio"><img src="escudos/logo-gm-preto.webp" alt="Galo Metrics" class="logoimg lclaro"><img src="escudos/logo-gm-branco.webp" alt="Galo Metrics" class="logoimg lescuro"><span class="logotxt">Galo Metrics</span></a>
   <span class="topbtns"><form id="hq" class="hq" role="search"><input type="search" id="hqi" placeholder="Pergunte ao Galo…" aria-label="Pergunte ao Galo ou busque"></form><a id="gmchip" href="#perfil" class="gmchip">★ Perfil</a><span id="gmconta" class="gmconta" hidden><button id="gmlogin" type="button" aria-haspopup="true"></button><span id="gmmenu" class="gmmenu" hidden></span></span><button id="tema" type="button" onclick="trocaTema()">Modo escuro</button><button id="navbtn" type="button" aria-label="Abrir menu" aria-expanded="false" onclick="var o=document.body.classList.toggle('navopen');this.setAttribute('aria-expanded',o)"><span class="hb"></span>Menu</button></span></div>
   <nav id="nav" aria-label="Principal">
     <a href="#inicio">Início</a><a href="#jogos">Jogos</a><a href="#jogadores">Jogadores</a><a href="#adversarios">Adversários</a><a href="#competicoes">Competições</a><a href="#mapa">Mapa</a><a href="#pergunte">Pergunte</a>
@@ -1403,7 +1405,7 @@ function achou(f,nova){
   box.innerHTML=`<div class="gm-achou-in"><p class="osw">${nova?'Você encontrou uma figurinha!':'Figurinha repetida!'}</p>${figHTML(f,'a-flip')}<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><a class="more" href="#album">Ver álbum</a><button type="button" class="more" id="gmfecha">Fechar</button></div></div>`;
   document.body.appendChild(box); const fecha=()=>box.remove(); box.querySelector('#gmfecha').onclick=fecha; box.onclick=e=>{ if(e.target===box) fecha(); }; box.querySelector('#gmfecha').focus();
 }
-function atualizaChip(){ const c=document.getElementById('gmchip'); if(c&&G) c.innerHTML=`★ ${G.perfil&&G.perfil.apelido?esc(G.perfil.apelido)+' · ':''}${DONO?'∞':N(G.pts)} pts${typeof COLAB_MEU!=='undefined'&&COLAB_MEU?' '+seloColab(COLAB_MEU.n):''}${typeof ehApoiador==='function'&&G.perfil&&ehApoiador(G.perfil.apelido)?' '+apoiadorSelo():''}`; }
+function atualizaChip(){ const c=document.getElementById('gmchip'); if(c&&G) c.innerHTML=`★ ${G.perfil&&G.perfil.apelido?'<span class="ap">'+esc(G.perfil.apelido)+' · </span>':''}${DONO?'∞':N(G.pts)} pts${typeof COLAB_MEU!=='undefined'&&COLAB_MEU?' '+seloColab(COLAB_MEU.n):''}${typeof ehApoiador==='function'&&G.perfil&&ehApoiador(G.perfil.apelido)?' '+apoiadorSelo():''}`; }
 
 /* página do álbum */
 let ALB={dec:null, filtro:'todas', q:'', pacote:[]};
@@ -1562,7 +1564,7 @@ function contaBotao(){
   box.hidden=false; document.body.classList.toggle('semconta',!GUID);
   if(!GUID){ lg.className=''; lg.innerHTML=AV_VAZIO+'<span>Entrar</span>'; lg.title='Entre com sua conta Google para salvar pontos, enviar sugestões e aparecer nos rankings'; lg.onclick=()=>window.GM_LOGIN(); mn.hidden=true; return; }
   const nome=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||'Você', foto=window.GM_USER_PHOTO;
-  lg.className='on'; lg.innerHTML=(foto?`<span class="av"><img src="${esc(foto)}" alt="" referrerpolicy="no-referrer"></span>`:AV_VAZIO)+`<span>${esc(nome.split(' ')[0])}</span>`; lg.title='Sua conta';
+  lg.className='on'; lg.innerHTML=(foto?`<span class="av"><img src="${esc(foto)}" alt="" referrerpolicy="no-referrer" onerror="this.parentNode.outerHTML=AV_VAZIO"></span>`:AV_VAZIO)+`<span>${esc(nome.split(' ')[0])}</span>`; lg.title='Sua conta';
   mn.innerHTML=`<span class="quem">Conectado como <b>${esc(window.GM_USER_NAME||nome)}</b></span><a href="#perfil">Meu perfil e conquistas</a><a href="#diario">Meu diário</a><a href="#album">Meu álbum</a><button type="button" id="gmsair">Sair</button>`;
   lg.onclick=e=>{ e.stopPropagation(); mn.hidden=!mn.hidden; };
   mn.onclick=e=>{ if(e.target.id==='gmsair') window.GM_LOGOUT(); mn.hidden=true; };
