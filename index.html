@@ -304,7 +304,7 @@ html.gm-anim .gd-c.v,html.gm-anim .gd-c.a,html.gm-anim .gd-c.x{animation:gmflip 
 html.gm-anim .conq.ok .conq-ic{animation:gmpop 1.2s ease 1}
 
 /* ===== beta: revista, pergunte, mapa, passaporte ===== */
-.tiles{border:3px solid var(--ink);border-radius:18px;overflow:hidden;background:var(--card,#fff)}
+.tiles{border:3px solid var(--ink);border-radius:18px;overflow:hidden;background:var(--card,var(--paper))}
 .tiles .tile:last-child{border-right:0}
 .tile b{font-family:'Abril Fatface',Georgia,serif!important;font-weight:400!important;font-size:clamp(30px,3.4vw,44px)!important;line-height:1}
 .tile b small{font-size:.5em}
@@ -526,7 +526,7 @@ function vInicio(){
   const big = [...played].filter(j=>j.gp!=null).sort((a,b)=>(b.gp-b.gc)-(a.gp-a.gc)||b.gp-a.gp)[0];
   const cz = rec(J.filter(j=>j.adversario_id==='cruzeiro mg'));
   const vs=(CFG.vocesabia||[]); const vsx=vs.length?vs[Math.floor(Math.random()*vs.length)]:'';
-  return `${CFG.manchete?`<div class="manchete">★ ${CFG.mancheteLink?`<a href="${esc(CFG.mancheteLink)}">${esc(CFG.manchete)}</a>`:esc(CFG.manchete)}</div>`:''}${capa()}<p class="capa-sub">A história do Galo em números, jogo a jogo, desde 1909.</p>
+  return `${CFG.manchete?`<div class="manchete">★ ${CFG.mancheteLink?`<a href="${esc(CFG.mancheteLink)}">${esc(CFG.manchete)}</a>`:esc(CFG.manchete)}</div>`:''}${capa()}<p class="capa-sub">A história do Galo em números, jogo a jogo, desde 1908.</p>
   <p class="lede">${N(m.total)} partidas, de ${fmtD(m.primeiro)} a ${fmtD(m.ultimo)}. Placar e goleadores de toda a história; ficha completa (escalação, estádio, público, minuto dos gols) em ${N(m.fichas)} jogos.</p>
   ${tiles(r)}${resultBar(r)}
   ${next?proxJogo(next,hoje):''}
