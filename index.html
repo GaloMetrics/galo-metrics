@@ -1766,12 +1766,24 @@ const CONQ=[
   {id:'imp5', nome:'Faro de olheiro', desc:'Achou os 5 impostores no mesmo dia.', pts:25, p:()=>[Math.max(0,...Object.values(G.jd).map(d=>d.impostor?d.impostor.acertos:0)),5]},
   {id:'jdseq7', nome:'Treino diário', desc:'Jogou os desafios 7 dias seguidos.', pts:50, p:()=>[G.jdSeq.max,7]},
   {id:'aval10', nome:'Crítico de arquibancada', desc:'Avaliou 10 jogos no diário.', pts:25, p:()=>[Object.values(G.diario||{}).filter(y=>y.n||y.t).length,10]},
-  {id:'est1', nome:'Eu fui!', desc:'Registrou o primeiro jogo no estádio.', pts:10, p:()=>[Object.values(G.diario||{}).filter(y=>y.est).length,1]},
-  {id:'est10', nome:'Arquibancada é minha casa', desc:'Registrou 10 jogos no estádio.', pts:50, p:()=>[Object.values(G.diario||{}).filter(y=>y.est).length,10]},
+  {id:'est1', nome:'Eu fui!', desc:'Registrou o primeiro jogo no estádio.', pts:10, p:()=>[vistoAoVivo().length,1]},
+  {id:'est10', nome:'Arquibancada é minha casa', desc:'Registrou 10 jogos no estádio.', pts:50, p:()=>[vistoAoVivo().length,10]},
   {id:'pequente', nome:'Pé-quente', desc:'Tem 70% de aproveitamento em 10 jogos ou mais no estádio.', pts:60, secreta:true, p:()=>{ const S=statsEstadio(); return [S.ids.length>=10&&pct(S.r)>=0.7?1:0,1]; }},
   {id:'palp1', nome:'Palpiteiro', desc:'Deu o primeiro palpite.', pts:5, p:()=>[Object.values(G.palpites||{}).filter(p=>p.gp!=null).length,1]},
   {id:'exato', nome:'Vidente', desc:'Acertou um placar exato.', pts:40, secreta:true, p:()=>[Object.values(G.palpites||{}).some(p=>p.res&&p.res.placar)?1:0,1]},
-  {id:'pts1000', nome:'Mil pontos', desc:'Somou 1.000 pontos no total.', pts:50, p:()=>[G.total,1000]},
+  {id:'pts1000', nome:'Mil Metricoins', desc:'Somou 1.000 Metricoins no total.', pts:50, p:()=>[G.total,1000]},
+  // ----- secretas -----
+  {id:'s_classico', nome:'Clássico na veia', desc:'Esteve no estádio num clássico contra o Cruzeiro.', pts:30, secreta:true, p:()=>[vistoAoVivo().some(j=>j.adversario_id==='cruzeiro mg')?1:0,1]},
+  {id:'s_titulo', nome:'Eu vi a taça', desc:'Esteve no estádio numa final em que o Galo foi campeão.', pts:80, secreta:true, p:()=>{ const T=new Set([...(D.finais_mineiro||[]).filter(x=>x.titulo).flatMap(x=>x.ids), ...(D.finais_outras||[]).filter(x=>x.res==='titulo'&&!x.sem_final).flatMap(x=>x.ids)]); return [vistoAoVivo().some(j=>T.has(j.id))?1:0,1]; }},
+  {id:'s_virada', nome:'Nunca duvidei', desc:'Esteve no estádio numa vitória de virada.', pts:40, secreta:true, p:()=>{ const V=new Set((typeof VIR!=='undefined'?VIR:[]).map(v=>v.j.id)); return [vistoAoVivo().some(j=>V.has(j.id))?1:0,1]; }},
+  {id:'s_goleada', nome:'Chocolate ao vivo', desc:'Viu do estádio uma vitória por 4 gols ou mais de diferença.', pts:30, secreta:true, p:()=>[vistoAoVivo().some(j=>j.gp!=null&&j.gp-j.gc>=4)?1:0,1]},
+  {id:'s_niver', nome:'Presente de aniversário', desc:'Esteve no estádio num jogo no dia do seu aniversário.', pts:40, secreta:true, p:()=>{ const a=(G.perfil||{}).aniv; return [a&&vistoAoVivo().some(j=>j.data.slice(5)===a)?1:0,1]; }},
+  {id:'s_xara', nome:'Xará', desc:'Visitou a página de um jogador com o seu primeiro nome.', pts:15, secreta:true, p:()=>{ const n=slug((G.perfil||{}).nome||''); return [n&&Object.keys(G.vis.jogador||{}).some(k=>k===n||k.startsWith(n+'-'))?1:0,1]; }},
+  {id:'s_coruja', nome:'Coruja alvinegra', desc:'Abriu o Galo Metrics de madrugada, entre meia-noite e 5h.', pts:15, secreta:true, p:()=>[[0,1,2,3,4].some(h=>(G.flags&&G.flags.horas||{})[h])?1:0,1]},
+  {id:'s_origem', nome:'Desde o começo', desc:'Abriu a ficha do primeiro jogo da história da base.', pts:20, secreta:true, p:()=>[J.length&&G.vis.jogo[String([...J].sort((a,b)=>a.data<b.data?-1:1)[0].id)]?1:0,1]},
+  {id:'s_seculo', nome:'Cem anos atrás', desc:'Abriu um jogo disputado exatamente 100 anos antes do dia da visita.', pts:30, secreta:true, p:()=>{ const h=hojeStr(), alvo=(+h.slice(0,4)-100)+h.slice(4); return [Object.keys(G.vis.jogo||{}).some(id=>byId[id]&&byId[id].data===alvo)?1:0,1]; }},
+  {id:'s_rei', nome:'Eu vi o Rei', desc:'Registrou no estádio um jogo com o Reinaldo em campo.', pts:50, secreta:true, p:()=>[(G.vivo||{})['Reinaldo']?1:0,1]},
+  {id:'s_mapa', nome:'Turista alvinegro', desc:'Esteve no estádio em 5 cidades diferentes.', pts:40, secreta:true, p:()=>[new Set(vistoAoVivo().map(j=>j.cidade).filter(Boolean)).size,5]},
 ];
 function checaConquistas(){
   gExtra(); const novas=[];
@@ -1787,7 +1799,7 @@ function vPerfil(){
   <div class="perfil-top">${fav?figHTML(fav):`<div class="fig-vazio"><b>?</b><span>Escolha seu ídolo</span></div>`}
   <div style="flex:1;min-width:260px"><div class="tiles"><div class="tile"><b>${DONO?'∞':N(G.pts)}</b><span>Metricoins para gastar</span></div><div class="tile"><b>${N(G.total)}</b><span>Metricoins no total</span></div><div class="tile"><b>${G.seq.atual}</b><small class="basesm">recorde: ${G.seq.max}</small><span>Dias seguidos</span></div><div class="tile"><b>${N(cnt(G.owned))}</b><small class="basesm">de ${N(L.length)}</small><span>Figurinhas</span></div><div class="tile"><b>${feitas}</b><small class="basesm">de ${TC.length}</small><span>Conquistas</span></div></div>
   <div class="dono" style="margin-top:14px"><div class="dgrid"><label>Apelido<input id="pfap" value="${esc(G.perfil.apelido||'')}" maxlength="30" placeholder="Como você quer ser chamado"></label><label>Ídolo (figurinha de capa)<input id="pffav" list="pfl" value="${esc(G.perfil.fav||'')}" placeholder="nome do jogador"></label></div>
-  <div class="pf-extra" style="margin-top:14px"><div class="kicker" style="margin:0 0 6px">Sobre você</div><div class="dgrid"><label>Primeiro nome<input id="pfnome" value="${esc(G.perfil.nome||'')}" maxlength="30" placeholder="Ex.: Rodrigo"></label><label>Aniversário<input id="pfaniv" type="date" value="${G.perfil.aniv?'2000-'+G.perfil.aniv:''}"></label><label>Ano de nascimento<input id="pfano" type="number" min="${ANO_MIN_NASC}" max="${new Date().getFullYear()-3}" value="${esc(G.perfil.ano||'')}"${anoTravado()?' readonly title="Travado: você já registrou jogos no estádio"':''}></label></div><p class="aviso-pf"><b>Por que pedimos o ano de nascimento?</b> Para registrar os jogos em que você esteve no estádio: só valem jogos em que você já tinha pelo menos 4 anos. Depois do primeiro jogo registrado, o ano fica travado. Nome e aniversário são opcionais e liberam algumas conquistas secretas. Tudo fica só neste aparelho.</p></div>
+  <div class="pf-extra" style="margin-top:14px"><div class="kicker" style="margin:0 0 6px">Sobre você</div><div class="dgrid"><label>Primeiro nome<input id="pfnome" value="${esc(G.perfil.nome||'')}" maxlength="30" placeholder="Ex.: Rodrigo"></label><label>Aniversário<input id="pfaniv" type="date" value="${G.perfil.aniv?'2000-'+G.perfil.aniv:''}"></label><label>Ano de nascimento<input id="pfano" type="number" min="${ANO_MIN_NASC}" max="${new Date().getFullYear()-3}" value="${esc(G.perfil.ano||'')}"${anoTravado()?' readonly title="Travado: você já registrou jogos no estádio"':''}></label></div></div>
   <datalist id="pfl">${L.map(f=>`<option value="${esc(f.nome)}">`).join('')}</datalist><p id="pferr" class="count" role="alert" style="color:var(--d)"></p>
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="more" id="pfsalva">Salvar perfil</button><button type="button" class="ghost" id="anitog2">Animações: ${lsGet(GMA)==='0'?'desligadas':'ligadas'}</button><a class="ghost" href="#album" style="text-decoration:none">Abrir o álbum</a></div></div></div></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${tw(`Meu perfil no Galo Metrics: ${feitas} conquistas, ${N(cnt(G.owned))} figurinhas e ${G.seq.max} dias seguidos de visita.`)}<a class="ghost" href="#diario" style="text-decoration:none">Meu diário de jogos</a></div>
@@ -2104,7 +2116,7 @@ function blocoDiario(j){
   <button type="submit" class="more">Salvar no diário</button></form></details>${meu}`;
 }
 function statsEstadio(){
-  const ids=Object.entries(diario()).filter(([id,x])=>x.est&&byId[id]).map(([id])=>byId[id]).sort((a,b)=>a.data<b.data?-1:1);
+  const ids=vistoAoVivo();
   const r=rec(ids.filter(j=>j.resultado)); const gols={}, est={}, adv={};
   ids.forEach(j=>{ j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)) gols[g.jogador]=(gols[g.jogador]||0)+1; }); if(j.estadio) est[j.estadio]=(est[j.estadio]||0)+1; adv[j.adversario]=(adv[j.adversario]||0)+1; });
   const big=ids.filter(j=>j.resultado==='V').sort((a,b)=>(b.gp-b.gc)-(a.gp-a.gc))[0];
@@ -2851,9 +2863,9 @@ const anoTravado=()=>Object.values(diario()).some(x=>x&&x.est);
 function estValido(j){ const a=+((G.perfil||{}).ano)||0; return !!(a>=ANO_MIN_NASC && j && j.resultado && j.data<=hojeStr() && +j.data.slice(0,4)>=a+IDADE_MIN); }
 function motivoEstadio(j){
   const a=+((G.perfil||{}).ano)||0;
-  if(!a) return 'Para registrar que esteve no estádio, informe seu <a href="#perfil">ano de nascimento no Perfil</a>.';
+  if(!a) return 'Para registrar que esteve no estádio, complete o "Sobre você" no seu <a href="#perfil">Perfil</a>.';
   if(!j.resultado||j.data>hojeStr()) return 'Só dá para registrar jogos que já aconteceram.';
-  if(+j.data.slice(0,4)<a+IDADE_MIN) return `Pelo seu ano de nascimento (${a}), você ainda não tinha idade para estar neste jogo.`;
+  if(+j.data.slice(0,4)<a+IDADE_MIN) return 'Este jogo não pode ser registrado no seu diário.';
   return '';
 }
 function vistoAoVivo(){ return Object.entries(diario()).filter(([id,x])=>x.est&&byId[id]&&estValido(byId[id])).map(([id])=>byId[id]).sort((a,b)=>a.data<b.data?-1:1); }
