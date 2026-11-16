@@ -35,5 +35,20 @@ for y in sorted(L['titulos'] + L['vices']):
     for j in fin: j['final_mineiro'] = y
     out.append({'ano': y, 'titulo': tit, 'adversario': ult['adversario'], 'adversario_id': ult['adversario_id'], 'ids': [j['id'] for j in fin]})
 G['finais_mineiro'] = out
+# Finais de outras competições (lista fixa em data/finais_outras.json)
+import os
+FO = os.path.join(os.path.dirname(FM), 'finais_outras.json')
+B = {j['id']: j for j in J}
+for j in J: j.pop('final_outra', None)
+outras = []
+if os.path.exists(FO):
+    for x in json.load(open(FO, encoding='utf-8')):
+        js = [B[i] for i in x['ids'] if i in B]
+        if not x.get('sem_final'):
+            for j in js: j['final_outra'] = f"{x['comp']} {x['ano']}"
+        adv = js[-1] if js and not x.get('sem_final') else None
+        outras.append({**x, 'ids': [j['id'] for j in js], 'adversario': adv['adversario'] if adv else '', 'adversario_id': adv['adversario_id'] if adv else ''})
+G['finais_outras'] = outras
+print('outras finais:', len(outras))
 json.dump(G, open(GJ, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 print('finais do Mineiro marcadas:', len(out), 'edições,', sum(len(x['ids']) for x in out), 'jogos')

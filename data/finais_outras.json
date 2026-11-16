@@ -1,0 +1,179 @@
+[
+ {
+  "comp": "Copa Conmebol",
+  "ano": 1992,
+  "res": "titulo",
+  "ids": [
+   3964,
+   3966
+  ]
+ },
+ {
+  "comp": "Copa Ouro",
+  "ano": 1993,
+  "res": "vice",
+  "ids": [
+   4015,
+   4016
+  ]
+ },
+ {
+  "comp": "Copa Conmebol",
+  "ano": 1995,
+  "res": "vice",
+  "ids": [
+   4173,
+   4174
+  ],
+  "nota": "Vice nos pênaltis (4x3)"
+ },
+ {
+  "comp": "Copa Master da Conmebol",
+  "ano": 1996,
+  "res": "vice",
+  "ids": [
+   4176
+  ]
+ },
+ {
+  "comp": "Copa Conmebol",
+  "ano": 1997,
+  "res": "titulo",
+  "ids": [
+   4314,
+   4322
+  ]
+ },
+ {
+  "comp": "Copa Libertadores",
+  "ano": 2013,
+  "res": "titulo",
+  "ids": [
+   5328,
+   5329
+  ],
+  "nota": "Campeão nos pênaltis"
+ },
+ {
+  "comp": "Recopa Sul-Americana",
+  "ano": 2014,
+  "res": "titulo",
+  "ids": [
+   5400,
+   5402
+  ]
+ },
+ {
+  "comp": "Copa Libertadores",
+  "ano": 2024,
+  "res": "vice",
+  "ids": [
+   6130
+  ]
+ },
+ {
+  "comp": "Copa Sul-Americana",
+  "ano": 2025,
+  "res": "vice",
+  "ids": [
+   6203
+  ],
+  "nota": "Vice nos pênaltis (5x4)"
+ },
+ {
+  "comp": "Copa Sul-Americana",
+  "ano": 2026,
+  "res": "pendente",
+  "ids": [
+   6274
+  ],
+  "nota": "Final em jogo único"
+ },
+ {
+  "comp": "Campeonato Brasileiro",
+  "ano": 1937,
+  "res": "titulo",
+  "ids": [
+   617,
+   618,
+   619,
+   620,
+   621,
+   622
+  ],
+  "sem_final": true,
+  "nota": "Torneio dos Campeões, título reconhecido pela CBF; disputado em pontos, sem final"
+ },
+ {
+  "comp": "Campeonato Brasileiro",
+  "ano": 1971,
+  "res": "titulo",
+  "ids": [
+   2476,
+   2477
+  ],
+  "nota": "Triangular final contra São Paulo e Botafogo"
+ },
+ {
+  "comp": "Copa do Brasil",
+  "ano": 2014,
+  "res": "titulo",
+  "ids": [
+   5432,
+   5436
+  ]
+ },
+ {
+  "comp": "Copa do Brasil",
+  "ano": 2016,
+  "res": "vice",
+  "ids": [
+   5575,
+   5577
+  ]
+ },
+ {
+  "comp": "Primeira Liga",
+  "ano": 2017,
+  "res": "vice",
+  "ids": [
+   5639
+  ],
+  "nota": "Vice nos pênaltis (4x2); o Londrina ficou com o título"
+ },
+ {
+  "comp": "Campeonato Brasileiro",
+  "ano": 2021,
+  "res": "titulo",
+  "ids": [],
+  "sem_final": true,
+  "nota": "Pontos corridos, sem final"
+ },
+ {
+  "comp": "Copa do Brasil",
+  "ano": 2021,
+  "res": "titulo",
+  "ids": [
+   5925,
+   5926
+  ]
+ },
+ {
+  "comp": "Supercopa do Brasil",
+  "ano": 2022,
+  "res": "titulo",
+  "ids": [
+   5934
+  ],
+  "nota": "Campeão nos pênaltis (8x7)"
+ },
+ {
+  "comp": "Copa do Brasil",
+  "ano": 2024,
+  "res": "vice",
+  "ids": [
+   6122,
+   6124
+  ]
+ }
+]

@@ -2433,14 +2433,14 @@ const golsDeTipo = (nome, f) => eventos().filter(e=>e.nome===nome && f(e)).lengt
 
 /* ---------- Fases: finais e mata-mata ---------- */
 const faseTxt = j => nrm(j.fase || ((j.competicao_raw||'').match(/\(([^)]*)\)/)||[])[1] || '');
-const ehFinal = j => { if (j.final_mineiro) return true; const f=faseTxt(j); return (/fina(l|is)\b/.test(f) && !/semi|quarta|oitava/.test(f)) || (/^decis(ao|oes)$/.test(f)) || /supercopa|recopa/.test(nrm(j.competicao)); };
+const ehFinal = j => { if (j.final_mineiro || j.final_outra) return true; const f=faseTxt(j); return (/fina(l|is)\b/.test(f) && !/semi|quarta|oitava/.test(f)) || (/^decis(ao|oes)$/.test(f)) || /supercopa|recopa/.test(nrm(j.competicao)); };
 const ehSemi = j => /semi/.test(faseTxt(j));
 let _MM=null;
 function mataMata(){
   if (_MM) return _MM; const S=new Set();
   const grupo = L => { for (let i=0;i+6<=L.length;i++){ const w=L.slice(i,i+6), c={}; w.forEach(j=>{ c[j.adversario_id]=(c[j.adversario_id]||0)+1; }); const v=Object.values(c); if (v.length===3 && v.every(x=>x===2)) return new Set(w.map(j=>j.id)); } return null; };
   const por={}; J.forEach(j=>{ if(!j.resultado) return; const f=faseTxt(j), c=nrm(j.competicao);
-    if (/final|semi|quarta|oitava|decis|eliminat/.test(f) || j.final_mineiro) S.add(j.id);
+    if (/final|semi|quarta|oitava|decis|eliminat/.test(f) || j.final_mineiro || j.final_outra) S.add(j.id);
     if (j.grupo==='Copa do Brasil' || c==='conmebol' || /recopa|supercopa/.test(c) || (j.grupo==='Sul-Americana' && j.temporada<2021)) S.add(j.id);
     if ((j.grupo==='Libertadores' && j.temporada>=1988) || (j.grupo==='Sul-Americana' && j.temporada>=2021)) (por[j.grupo+j.temporada] ||= []).push(j); });
   Object.values(por).forEach(L=>{ L.sort((a,b)=>a.data.localeCompare(b.data)); const g=grupo(L); L.forEach(j=>{ if(!g||!g.has(j.id)) S.add(j.id); }); });
@@ -2847,6 +2847,13 @@ function blocoBolaParada(){
     return `<h2>Finais do Campeonato Mineiro</h2><p class="classico-num"><b>${F.length}</b> finais · <b>${t}</b> títulos · <b>${F.length-t}</b> vices</p>
     <table><thead><tr><th>Ano</th><th>Adversário</th><th>Jogos da final</th><th class="n"></th></tr></thead><tbody>${[...F].reverse().map(x=>`<tr><td class="mono">${x.ano}</td><td>${cr(x.adversario_id)}${esc((advRows().find(a=>a.id===x.adversario_id)||{}).nome||x.adversario)}</td><td>${x.ids.map(id=>byId[id]).filter(Boolean).map(j=>`<a href="#jogo-${j.id}" class="mono">${placar(j)}</a>`).join(' · ')}</td><td class="n">${x.titulo?'<span class="tag">★ Campeão</span>':'<span class="tag light">Vice</span>'}</td></tr>`).join('')}</tbody></table>
     <p class="count">Jogos da final: os marcados como final na ficha mais a sequência final contra o mesmo adversário no fim do campeonato. Placar pela visão do Galo.</p>`; })()}
+  ${(()=>{ const F=D.finais_outras||[]; if(!F.length) return ''; const T=F.filter(x=>x.res==='titulo').length, V=F.filter(x=>x.res==='vice').length, P=F.filter(x=>x.res==='pendente').length;
+    const nomeAdv=x=>x.adversario_id?`${cr(x.adversario_id)}${esc((advRows().find(a=>a.id===x.adversario_id)||{}).nome||x.adversario)}`:'<span class="uf">sem final</span>';
+    const jogos=x=>x.sem_final?(x.ids.length?`<small class="uf">${x.ids.length} jogos, em pontos</small>`:'<small class="uf">pontos corridos</small>'):x.ids.map(id=>byId[id]).filter(Boolean).map(j=>`<a href="#jogo-${j.id}" class="mono">${j.resultado?placar(j):fmtD(j.data)}</a>`).join(' · ');
+    const tag=x=>x.res==='titulo'?'<span class="tag">★ Campeão</span>':x.res==='vice'?'<span class="tag light">Vice</span>':'<span class="tag light">A disputar</span>';
+    return `<h2>Títulos e finais nacionais e internacionais</h2><p class="classico-num"><b>${T}</b> títulos · <b>${V}</b> vices${P?` · <b>${P}</b> final a disputar`:''}</p>
+    <table><thead><tr><th>Ano</th><th>Competição</th><th>Adversário na final</th><th>Jogos</th><th class="n"></th></tr></thead><tbody>${[...F].sort((a,b)=>b.ano-a.ano).map(x=>`<tr><td class="mono">${x.ano}</td><td>${esc(x.comp)}${x.nota?`<br><small class="uf">${esc(x.nota)}</small>`:''}</td><td>${nomeAdv(x)}</td><td>${jogos(x)}</td><td class="n">${tag(x)}</td></tr>`).join('')}</tbody></table>
+    <p class="count">Placar pela visão do Galo. Brasileiros de 1937 e 2021 foram decididos em pontos, sem jogo final.</p>`; })()}
   <div class="grid2"><div><h2>Gols da vitória</h2>${tab(c(e=>e.decisivo))}</div><div><h2>Gols em viradas</h2>${tab(c(e=>e.virada))}</div></div>
   ${(()=>{ const V=[...VIR].sort((a,b)=>b.def-a.def||b.j.data.localeCompare(a.j.data)); const anos={}; VIR.forEach(v=>{ const d=Math.floor(v.j.temporada/10)*10; anos[d]=(anos[d]||0)+1; });
     return `<h2>Viradas</h2><p class="classico-num"><b>${N(VIR.length)}</b> vitórias de virada registradas · <a href="#viradas">ver todas, com filtros →</a></p>
