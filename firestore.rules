@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Troque pelo e-mail da conta Google que vai ser a dona do site
+    function dono() {
+      return request.auth != null && request.auth.token.email == 'SEU_EMAIL_AQUI' && request.auth.token.email_verified;
+    }
+    function eu(uid) { return request.auth != null && request.auth.uid == uid; }
+    function publica(col) { return col in ['site', 'colab', 'ranking', 'avaliacoes', 'edicoes', 'jogadoresx', 'notas']; }
+
+    // Conteúdo público: todo mundo lê, só o dono escreve
+    match /{col}/{id} {
+      allow read: if publica(col);
+      allow write: if publica(col) && dono();
+    }
+    // Sugestões: cada pessoa lê e escreve só as suas; o dono vê todas
+    match /sugestoes/{uid} {
+      allow read, write: if eu(uid) || dono();
+    }
+    // Álbum salvo na nuvem de cada torcedor
+    match /data/users/{uid}/{doc} {
+      allow read, write: if eu(uid) || dono();
+    }
+    // Imagens enviadas (escudos e fotos), já reduzidas no navegador
+    match /uploads/{id} {
+      allow read: if true;
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid && request.resource.data.d.size() < 950000;
+      allow update, delete: if dono();
+    }
+    // Só o dono consegue ler aqui: é assim que o site sabe quem é o dono
+    match /admin/{doc} {
+      allow read, write: if dono();
+    }
+  }
+}

@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 <body>
 <header><div class="top">
   <div class="toprow"><a class="logo" href="#inicio"><img src="escudos/logo-gm-preto.webp" alt="Galo Metrics" class="logoimg lclaro"><img src="escudos/logo-gm-branco.webp" alt="Galo Metrics" class="logoimg lescuro">Galo Metrics</a>
-  <span class="topbtns"><form id="hq" class="hq" role="search"><input type="search" id="hqi" placeholder="Pergunte ao Galo…" aria-label="Pergunte ao Galo ou busque"></form><a id="gmchip" href="#perfil" class="gmchip">★ Perfil</a><button id="tema" type="button" onclick="trocaTema()">Modo escuro</button></span></div>
+  <span class="topbtns"><form id="hq" class="hq" role="search"><input type="search" id="hqi" placeholder="Pergunte ao Galo…" aria-label="Pergunte ao Galo ou busque"></form><a id="gmchip" href="#perfil" class="gmchip">★ Perfil</a><button id="gmlogin" type="button" hidden>Entrar</button><button id="tema" type="button" onclick="trocaTema()">Modo escuro</button></span></div>
   <nav id="nav" aria-label="Principal">
     <a href="#inicio">Início</a><a href="#jogos">Jogos</a><a href="#jogadores">Jogadores</a><a href="#adversarios">Adversários</a><a href="#competicoes">Competições</a><a href="#mapa">Mapa</a><a href="#pergunte">Pergunte</a>
     <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
@@ -397,6 +397,8 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
+<script src="firebase-config.js"></script>
+<script src="backend-firebase.js"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1516,12 +1518,14 @@ function aplicaCfg(c){
 }
 async function gmInit(){
   gLoad(); aplicaAnim(); atualizaChip();
+  if(window.GM_BACKEND_READY){ try{ await window.GM_BACKEND_READY; }catch(e){} }
   if(!window.claude||!window.claude.use) return;
   try{ GUSER=await window.claude.use('user'); }catch(e){ GUSER=null; }
   try{ GDB=await window.claude.use('db'); }catch(e){ GDB=null; }
   try{ DONO=GUSER?!!(await GUSER.isOwner()):false; }catch(e){ DONO=false; }
   try{ GUID=GUSER?await GUSER.id():null; }catch(e){ GUID=null; }
   const nd=document.getElementById('navdono'); if(nd) nd.hidden=!DONO;
+  const lg=document.getElementById('gmlogin'); if(lg&&window.GM_BACKEND==='firebase'){ lg.hidden=false; lg.textContent=GUID?'Sair':'Entrar'; lg.title=GUID?('Conectado como '+(window.GM_USER_NAME||'')):'Entrar com Google para salvar pontos, enviar sugestões e aparecer nos rankings'; lg.onclick=()=>GUID?window.GM_LOGOUT():window.GM_LOGIN(); }
   if(GDB){ try{ const s=await GDB.doc('site/config').get(); if(s.exists){ aplicaCfg(JSON.parse(s.data().json||'{}')); } }catch(e){} }
   await carregaEdicoes(); await carregaRanking(); await carregaAval(); try{ await carregaColab(); }catch(e){}
   NUVEM = lsGet('gm-nuvem')==='1' && !!GDB && !!GUID; if(NUVEM){ await nuvemCarrega(); lsSet(GMK, JSON.stringify(G)); }
@@ -2879,6 +2883,9 @@ function vViradas(params){
 }
 
 /* ---------- Sugestões e correções ---------- */
+const upId = x => (x && String(x.url||'').startsWith('fb:')) ? String(x.url).slice(3) : '';
+const upSrc = x => upId(x) ? 'data:image/gif;base64,R0lGODlhAQABAAAAACw=' : '/_blob/'+(x&&x.asset||'');
+async function resolveUps(root){ if(!window.GM_UP_GET) return; (root||document).querySelectorAll('img[data-up]:not([data-up=""])').forEach(async im=>{ try{ const u=await window.GM_UP_GET(im.dataset.up); if(u){ im.src=u; const a=im.closest('a'); if(a) a.href=u; } }catch(e){} }); }
 const TIPOS_SUG = [['sugestao','Sugestão'],['correcao','Correção de dado'],['escudo','Enviar escudo'],['foto','Enviar foto']];
 let SUG_TODAS = null;
 function vSugestoes(params){
@@ -2910,7 +2917,7 @@ async function ligaSugestoes(){
     if(!item.msg && !file){ msg.textContent='Escreva uma mensagem ou anexe uma imagem.'; return; }
     if(['escudo','foto'].includes(item.tipo) && !file){ msg.textContent='Anexe a imagem do '+(item.tipo==='escudo'?'escudo':'jogador')+'.'; return; }
     if(file && file.size>10*1024*1024){ msg.textContent='A imagem passa de 10 MB.'; return; }
-    if(!GDB||!GUID){ msg.textContent='Para enviar, abra o site entrando com sua conta do Claude. Sem isso não dá para guardar o envio.'; return; }
+    if(!GDB||!GUID){ msg.innerHTML=window.GM_LOGIN?'Para enviar, <a href="javascript:GM_LOGIN()">entre com sua conta Google</a>. É rápido e serve para darmos o crédito.':'Para enviar, abra o site entrando com sua conta do Claude. Sem isso não dá para guardar o envio.'; return; }
     btn.disabled=true; msg.textContent='Enviando…';
     try{
       if(file){ const A=await window.claude.use('assets'); if(!A) throw new Error('upload indisponível para você'); const up=await A.upload(file); item.asset=up.id; item.url=up.url; item.tipoArq=up.contentType; }
@@ -2923,7 +2930,7 @@ async function ligaSugestoes(){
 async function mostraMinhas(){
   const box=$('#minhassug'); if(!box||!GDB||!GUID) return;
   try{ const s=await GDB.doc('sugestoes/'+GUID).get(); const L=s.exists?(s.data().itens||[]):[]; if(!L.length) return;
-    box.innerHTML=`<h2>Seus envios</h2>${L.slice().reverse().map(x=>`<div class="sug-it"><span class="tag light">${esc((TIPOS_SUG.find(t=>t[0]===x.tipo)||[,''])[1])}</span> <b>${esc(x.sobre||'')}</b> <small class="uf">${fmtD(x.quando.slice(0,10))}</small>${x.msg?`<p>${esc(x.msg)}</p>`:''}${x.asset?`<img src="/_blob/${esc(x.asset)}" alt="Imagem enviada" class="sug-img">`:''}</div>`).join('')}`; }catch(e){}
+    box.innerHTML=`<h2>Seus envios</h2>${L.slice().reverse().map(x=>`<div class="sug-it"><span class="tag light">${esc((TIPOS_SUG.find(t=>t[0]===x.tipo)||[,''])[1])}</span> <b>${esc(x.sobre||'')}</b> <small class="uf">${fmtD(x.quando.slice(0,10))}</small>${x.msg?`<p>${esc(x.msg)}</p>`:''}${x.asset?`<img src="${upSrc(x)}" data-up="${esc(upId(x))}" alt="Imagem enviada" class="sug-img">`:''}</div>`).join('')}`; resolveUps(box); }catch(e){}
 }
 async function carregaSugestoes(){
   if(!GDB) return; SUG_TODAS=[];
@@ -2935,7 +2942,7 @@ function desenhaSugDono(){
   const box=$('#sugdono'); if(!box||!SUG_TODAS) return;
   let vistas={}; try{ vistas=JSON.parse(localStorage.getItem('gm-sug-vistas')||'{}'); }catch(e){}
   const T=k=>(TIPOS_SUG.find(t=>t[0]===k)||[,''])[1];
-  box.innerHTML=SUG_TODAS.length?`<p class="count">${SUG_TODAS.length} envios · ${SUG_TODAS.filter(x=>!vistas[x.k]).length} novos</p>${SUG_TODAS.map(x=>`<div class="sug-it${vistas[x.k]?' vista':''}"><span class="tag${x.tipo==='correcao'?'':' light'}">${esc(T(x.tipo))}</span> <b>${esc(x.sobre||'(sem assunto)')}</b> <small class="uf">${fmtD(String(x.quando).slice(0,10))}${x.quem?' · '+esc(x.quem):''}</small>${x.pagina?` · <a href="#${esc(x.pagina)}">abrir página</a>`:''}${x.msg?`<p>${esc(x.msg)}</p>`:''}${x.asset?`<a href="/_blob/${esc(x.asset)}" target="_blank" rel="noopener"><img src="/_blob/${esc(x.asset)}" alt="Imagem enviada" class="sug-img"></a>`:''}${(COLAB.itens||[]).some(c=>c.k===x.k)?`<span class="tag">✓ Aceita (+${(COLAB.itens.find(c=>c.k===x.k)||{}).pts} pts)</span> <button type="button" class="ghost" data-desfaz="${esc(x.k)}">Desfazer</button> `:`<span class="aceita"><input type="number" min="0" max="500" value="${PTS_COLAB[x.tipo]||20}" aria-label="Pontos" data-pts="${esc(x.k)}"> <button type="button" class="more" data-aceita="${esc(x.k)}">Aceitar e dar pontos</button></span> `}<button type="button" class="ghost" data-vista="${esc(x.k)}">${vistas[x.k]?'Marcar como nova':'Marcar como vista'}</button></div>`).join('')}`:'<p class="empty">Nenhum envio ainda.</p>';
+  box.innerHTML=SUG_TODAS.length?`<p class="count">${SUG_TODAS.length} envios · ${SUG_TODAS.filter(x=>!vistas[x.k]).length} novos</p>${SUG_TODAS.map(x=>`<div class="sug-it${vistas[x.k]?' vista':''}"><span class="tag${x.tipo==='correcao'?'':' light'}">${esc(T(x.tipo))}</span> <b>${esc(x.sobre||'(sem assunto)')}</b> <small class="uf">${fmtD(String(x.quando).slice(0,10))}${x.quem?' · '+esc(x.quem):''}</small>${x.pagina?` · <a href="#${esc(x.pagina)}">abrir página</a>`:''}${x.msg?`<p>${esc(x.msg)}</p>`:''}${x.asset?`<a href="${upSrc(x)}" target="_blank" rel="noopener"><img src="${upSrc(x)}" data-up="${esc(upId(x))}" alt="Imagem enviada" class="sug-img"></a>`:''}${(COLAB.itens||[]).some(c=>c.k===x.k)?`<span class="tag">✓ Aceita (+${(COLAB.itens.find(c=>c.k===x.k)||{}).pts} pts)</span> <button type="button" class="ghost" data-desfaz="${esc(x.k)}">Desfazer</button> `:`<span class="aceita"><input type="number" min="0" max="500" value="${PTS_COLAB[x.tipo]||20}" aria-label="Pontos" data-pts="${esc(x.k)}"> <button type="button" class="more" data-aceita="${esc(x.k)}">Aceitar e dar pontos</button></span> `}<button type="button" class="ghost" data-vista="${esc(x.k)}">${vistas[x.k]?'Marcar como nova':'Marcar como vista'}</button></div>`).join('')}`:'<p class="empty">Nenhum envio ainda.</p>'; resolveUps(box);
   const salvaColab=async(novo)=>{ try{ const r=GDB.doc('colab/aceitos'); const c=await r.get(); const at=c.exists?(c.data().itens||[]):[]; const it=novo(at); await r.set({itens:it, atualizado:new Date().toISOString()}); COLAB={itens:it}; desenhaSugDono(); }catch(e){ console.error(e); toast('Não foi possível salvar agora.'); } };
   box.querySelectorAll('[data-aceita]').forEach(b=>b.onclick=()=>{ const k=b.dataset.aceita, x=SUG_TODAS.find(y=>y.k===k); const pts=Math.max(0,Math.min(500,+box.querySelector(`[data-pts="${k}"]`).value||0)); vistas[k]=1; try{ localStorage.setItem('gm-sug-vistas',JSON.stringify(vistas)); }catch(e){}
     salvaColab(at=>at.some(c=>c.k===k)?at:[...at,{k, uid:x.uid, nome:(x.quem||x.apelido||'').slice(0,80), tipo:x.tipo, sobre:(x.sobre||'').slice(0,200), pts, quando:new Date().toISOString()}]).then(()=>toast(`Aceita, +${pts} pontos para ${x.quem||x.apelido||'o colaborador'}.`)); });
