@@ -444,8 +444,9 @@ body.pko-on{overflow:hidden}
 .esc-painel{border:3px solid var(--ink);background:var(--paper);padding:14px;margin:14px auto;max-width:760px;box-shadow:6px 6px 0 #C9962B}
 .esc-row{display:flex;gap:5px;margin:6px 0;flex-wrap:wrap}.esc-row .gd-c{width:38px;height:42px;font-size:20px;display:inline-flex;align-items:center;justify-content:center;border:2px solid var(--ink);font-family:'Oswald',sans-serif;font-weight:700}
 .esc-row .gd-c.v{background:#2e7d4f;color:#fff;border-color:#2e7d4f}.esc-row .gd-c.a{background:#d4a017;color:#111;border-color:#d4a017}.esc-row .gd-c.x{background:#666;color:#fff;border-color:#666}
+.esc-w{display:inline-flex;gap:4px;margin-right:12px;flex-wrap:nowrap}.esc-row{row-gap:6px}
 .esc-erro{text-decoration:line-through;color:var(--mute);font-family:'Oswald',sans-serif;letter-spacing:.06em}
-@media(max-width:480px){.esc-row .gd-c{width:30px;height:36px;font-size:17px}}
+@media(max-width:480px){.esc-row .gd-c{width:min(30px,calc((100vw - 110px)/9));height:34px;font-size:16px}.esc-w{gap:3px}}
 .esc-perdido{color:#B3261E!important;text-decoration:line-through}
 .esc-jogo{border:3px solid var(--ink);padding:12px 16px;margin:14px 0;display:flex;flex-direction:column;gap:6px}.esc-plac{display:flex;align-items:center;gap:10px;font-size:22px}.esc-plac b{font-family:'Oswald',sans-serif}
 .trc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:16px}.trc-it{display:flex;gap:12px;align-items:center;border:2px solid var(--ink);padding:10px;text-decoration:none;color:inherit}.trc-it:hover{background:var(--soft)}.trc-it img,.trc-head img{width:44px;height:44px;border-radius:50%;object-fit:cover}.trc-it span{display:flex;flex-direction:column}
@@ -3365,7 +3366,11 @@ const normNome=s=>semAc(String(s||'')).replace(/\s*\(.*\)\s*/g,'').replace(/[^A-
 /* Cada posição escondida vira um mini Galodle: toque no "?" e chute o nome.
    O alvo é o nome pelo qual o jogador é chamado (primeira palavra; "Adilson Warken" -> ADILSON). Sobrenome também vale. */
 const ESC_TENT=5;
-function escAlvo(n){ const w=normNome(nomeV(n)).split(' ').filter(Boolean); return (w[0]&&w[0].length>=3)?w[0]:w.join(''); }
+/* Nome pelo qual o jogador é chamado no desafio. Por padrão é o nome que aparece no site; aqui ficam as exceções. */
+const ESC_APELIDO={'Adilson Warken':'Adilson','Juan Cazares':'Cazares'};
+function escNomeAlvo(n){ return normNome(ESC_APELIDO[n]||ESC_APELIDO[nomeV(n)]||nomeV(n)); }
+function escAlvo(n){ return escNomeAlvo(n).replace(/ /g,''); }
+function escPalavras(n){ return escNomeAlvo(n).split(' ').filter(Boolean).map(w=>w.length); }
 function escAceita(n,g){ const full=normNome(nomeV(n)), w=full.split(' ').filter(Boolean); return g===escAlvo(n)||g===full.replace(/ /g,'')||g===full||w.some(x=>x.length>=4&&x===g); }
 function escCores(g,a){ const r=Array(g.length).fill('x'), sobra={}; for(let i=0;i<a.length;i++){ if(g[i]===a[i]) r[i]='v'; else sobra[a[i]]=(sobra[a[i]]||0)+1; }
   for(let i=0;i<g.length;i++){ if(r[i]!=='v'&&sobra[g[i]]){ r[i]='a'; sobra[g[i]]--; } } return r; }
@@ -3381,13 +3386,14 @@ function vEscalacao(){
   oc.forEach((n,i)=>{ const a=`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`, s=S(n);
     if(s.ok) return;
     if(s.fim||st.fim){ campo=campo.replace(a,`<a href="#jogador-${slug(n)}" class="esc-perdido">${esc(nomeV(n))}</a>`); return; }
-    const al=escAlvo(n), mais=normNome(nomeV(n)).split(' ').length>1&&al!==normNome(nomeV(n)).replace(/ /g,'');
-    campo=campo.replace(a,`<button type="button" class="esc-oc${ESC_SEL===n?' sel':''}" data-esc="${i}" aria-label="Posição escondida, ${al.length} letras">?<small>${al.length} letras</small>${s.t.length?`<small class="esc-tt">${s.t.length}/${ESC_TENT}</small>`:''}</button>`); });
-  const painel=()=>{ if(!ESC_SEL||st.fim) return ''; const n=ESC_SEL, s=S(n), al=escAlvo(n), pos=posTxt(n);
-    const linhas=s.t.map(g=>{ const c=g.length===al.length?escCores(g,al):null; return `<div class="esc-row">${c?[...g].map((ch,k)=>`<span class="gd-c ${c[k]==='v'?'v':c[k]==='a'?'a':'x'}">${ch}</span>`).join(''):`<span class="esc-erro">${esc(g)}</span>`}</div>`; }).join('');
-    return `<div class="esc-painel" id="escpainel"><div class="osw">${pos?esc(pos)+' · ':''}${al.length} letras · ${ESC_TENT-s.t.length} ${ESC_TENT-s.t.length===1?'chance':'chances'}</div>${linhas}<div class="esc-row">${[...Array(al.length)].map(()=>'<span class="gd-c"></span>').join('')}</div>
+    const al=escAlvo(n), pw=escPalavras(n);
+    campo=campo.replace(a,`<button type="button" class="esc-oc${ESC_SEL===n?' sel':''}" data-esc="${i}" aria-label="Posição escondida, ${pw.join(' + ')} letras">?<small>${pw.join(' + ')} letras</small>${s.t.length?`<small class="esc-tt">${s.t.length}/${ESC_TENT}</small>`:''}</button>`); });
+  const painel=()=>{ if(!ESC_SEL||st.fim) return ''; const n=ESC_SEL, s=S(n), al=escAlvo(n), pos=posTxt(n), pw=escPalavras(n);
+    const grupos=html=>{ const out=[]; let k=0; pw.forEach(w=>{ out.push(`<span class="esc-w">${html.slice(k,k+w).join('')}</span>`); k+=w; }); return out.join(''); };
+    const linhas=s.t.map(g=>{ const c=g.length===al.length?escCores(g,al):null; return `<div class="esc-row">${c?grupos([...g].map((ch,k)=>`<span class="gd-c ${c[k]==='v'?'v':c[k]==='a'?'a':'x'}">${ch}</span>`)):`<span class="esc-erro">${esc(g)}</span>`}</div>`; }).join('');
+    return `<div class="esc-painel" id="escpainel"><div class="osw">${pos?esc(pos)+' · ':''}${pw.length>1?pw.join(' + ')+' letras (nome e sobrenome)':al.length+' letras'} · ${ESC_TENT-s.t.length} ${ESC_TENT-s.t.length===1?'chance':'chances'}</div>${linhas}<div class="esc-row">${grupos([...Array(al.length)].map(()=>'<span class="gd-c"></span>'))}</div>
       <div class="filters"><label>Quem é?<input id="escin" placeholder="nome do jogador" autocomplete="off" autocapitalize="characters"></label><button type="button" class="more" id="escenv" style="align-self:flex-end">Chutar</button><button type="button" class="ghost" id="escfecha" style="align-self:flex-end">Fechar</button></div><p id="escerr" class="count" role="alert" style="color:var(--d)"></p>
-      <p class="count">Vale o nome pelo qual ele é chamado. Verde: letra no lugar certo. Amarelo: a letra existe em outra posição.</p></div>`; };
+      <p class="count">Escreva o nome pelo qual ele é chamado (com sobrenome quando tiver). Verde: letra no lugar certo. Amarelo: a letra existe em outra posição.</p></div>`; };
   setTimeout(()=>{
     document.querySelectorAll('[data-esc]').forEach(b=>b.onclick=()=>{ ESC_SEL=oc[+b.dataset.esc]; route.keep=true; route(); setTimeout(()=>{ const p=$('#escpainel'); if(p) p.scrollIntoView({block:'nearest',behavior:'smooth'}); const i=$('#escin'); if(i) i.focus({preventScroll:true}); },30); });
     const inp=$('#escin'), b=$('#escenv'); if(inp&&b){ const env=()=>{ const n=ESC_SEL, s=S(n), g=normNome(inp.value).replace(/ /g,''), er=$('#escerr'); if(!g) return;
