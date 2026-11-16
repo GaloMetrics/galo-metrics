@@ -28,6 +28,7 @@
     window.GM_LOGIN = async () => { const p = new auth.GoogleAuthProvider(); try { await auth.signInWithPopup(AU, p); location.reload(); } catch(e){ if (/popup/.test(e.code||'')) await auth.signInWithRedirect(AU, p); else { console.error(e); alert('Não foi possível entrar agora.'); } } };
     window.GM_LOGOUT = async () => { await auth.signOut(AU); location.reload(); };
     window.GM_USER_NAME = user ? (user.displayName || (user.email||'').split('@')[0]) : '';
+    window.GM_USER_PHOTO = user ? (user.photoURL || '') : '';
     window.claude = { use: async k => {
       if (k === 'user') return user ? { id: async () => user.uid, isOwner: async () => dono, name: window.GM_USER_NAME } : null;
       if (k === 'db') return { doc: docApi, collection: colApi };

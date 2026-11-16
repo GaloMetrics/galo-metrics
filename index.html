@@ -138,7 +138,15 @@ html.dark .res.E{color:#1a1a1a}
 .cr.cra{margin:0 0 0 7px}
 #tema{margin-left:auto;font:inherit;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700;background:none;color:var(--ink);border:1.5px solid var(--ink);padding:6px 10px;cursor:pointer}
 #tema:hover,#gmlogin:hover{background:var(--ink);color:var(--paper)}
-#gmlogin{font:inherit;font-family:'Oswald','Archivo',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700;background:none;color:var(--ink);border:1.5px solid var(--ink);padding:6px 10px;cursor:pointer;margin:0;border-radius:0;box-shadow:none;line-height:normal}
+#gmconta{position:relative;display:inline-flex}
+#gmlogin .av{width:26px;height:26px;border-radius:50%;flex:none;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;background:#d8d2c4;border:1.5px solid var(--ink)}
+#gmlogin .av svg{width:18px;height:18px;margin-top:5px;fill:#8a8478}
+#gmlogin .av img{width:100%;height:100%;object-fit:cover}
+#gmlogin.on{border-color:#C9962B}
+.gmmenu{position:absolute;right:0;top:calc(100% + 6px);background:var(--paper);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);min-width:200px;z-index:80;display:flex;flex-direction:column}
+.gmmenu[hidden]{display:none}.gmmenu a,.gmmenu button{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:10px 14px;color:var(--ink);text-decoration:none;background:none;border:0;border-top:1px solid var(--ink);text-align:left;cursor:pointer}
+.gmmenu .quem{font-family:inherit;text-transform:none;letter-spacing:0;font-size:13px;padding:10px 14px;color:var(--mute)}
+#gmlogin{display:inline-flex;align-items:center;gap:8px;font:inherit;font-family:'Oswald','Archivo',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:1px;font-weight:700;background:none;color:var(--ink);border:1.5px solid var(--ink);padding:6px 10px;cursor:pointer;margin:0;border-radius:0;box-shadow:none;line-height:normal}
 .an,.ln{white-space:nowrap}
 .advhead .crh.crh2{width:clamp(40px,6.3vw,68px);height:clamp(40px,6.3vw,68px)}
 .cardwrap{display:grid;grid-template-columns:320px 1fr;gap:32px;margin-top:22px;align-items:start}
@@ -379,6 +387,38 @@ tr.eu td{background:rgba(201,162,39,.15)}.lista-colab{list-style:none;padding:0}
 .sug-link{margin-top:40px;border-top:1px dotted var(--ink);padding-top:10px}
 footer a{color:inherit}
 .fig-vivo{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;background:#B3261E;color:#fff;padding:2px 6px;margin-top:4px;font-family:'Oswald',sans-serif}
+
+/* botões nunca azuis (iOS e alguns navegadores) */
+button,.ghost,.more,summary{-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent}
+button.ghost,.ghost{color:var(--ink)!important;-webkit-text-fill-color:var(--ink)}
+button.more{-webkit-text-fill-color:currentColor}
+#navbtn{display:none}
+/* ---------- Layout do celular ---------- */
+@media(max-width:700px){
+  .top{padding:10px 14px 8px;gap:8px}
+  .toprow{flex-wrap:wrap;gap:8px;align-items:center}
+  .topbtns{display:contents}
+  .logo{font-size:19px;gap:6px;flex:1;min-width:0;order:0;white-space:nowrap}.logoimg{height:30px}
+  #gmchip{order:1;padding:0 7px;font-size:11px;letter-spacing:.5px;white-space:nowrap}
+  body.semconta #gmchip{display:none}
+  #gmconta{order:2}#gmlogin{padding:3px 8px 3px 3px;gap:6px}#gmlogin span:not(.av){font-size:11px}
+  #gmlogin.on span:not(.av){display:none}#gmlogin.on{padding:3px}
+  #tema{order:3;font-size:0!important;letter-spacing:0!important;padding:6px 8px;line-height:1;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center}#tema:before{content:"☾";font-size:17px}html.dark #tema:before{content:"☀"}
+  #navbtn{order:4;display:inline-flex;align-items:center;justify-content:center;gap:6px;width:40px;height:34px;font-size:0!important;letter-spacing:0!important;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;background:var(--ink);color:var(--paper);-webkit-text-fill-color:var(--paper);border:1.5px solid var(--ink);padding:0;cursor:pointer}
+  #navbtn .hb{width:18px;height:14px}#navbtn .hb:after{top:4px}
+  #gmchip{height:34px;display:inline-flex;align-items:center}#gmlogin{height:34px}
+  #navbtn .hb{width:14px;height:10px;border-top:2px solid currentColor;border-bottom:2px solid currentColor;position:relative}#navbtn .hb:after{content:"";position:absolute;left:0;right:0;top:2px;border-top:2px solid currentColor}
+  .hq{order:10;flex-basis:100%}.hq input{width:100%!important;font-size:16px;padding:9px 12px}
+  nav#nav{display:none;width:100%;flex-direction:column;gap:0;border-top:2px solid var(--ink);margin-top:4px;max-height:70vh;overflow-y:auto}
+  body.navopen nav#nav{display:flex}
+  nav#nav>a,nav#nav .menu summary{font-size:15px;padding:12px 4px;border:0;border-bottom:1px solid rgba(0,0,0,.12)}
+  html.dark nav#nav>a,html.dark nav#nav .menu summary{border-bottom-color:rgba(255,255,255,.12)}
+  nav#nav .menu-p{position:static;border:0;box-shadow:none;min-width:0;padding-left:14px}
+  nav#nav .menu-p a{font-size:14px;padding:10px 4px}
+  .gmmenu{right:-60px}
+  #app{overflow-x:hidden}
+  #app table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -388,13 +428,13 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 <body>
 <header><div class="top">
   <div class="toprow"><a class="logo" href="#inicio"><img src="escudos/logo-gm-preto.webp" alt="Galo Metrics" class="logoimg lclaro"><img src="escudos/logo-gm-branco.webp" alt="Galo Metrics" class="logoimg lescuro">Galo Metrics</a>
-  <span class="topbtns"><form id="hq" class="hq" role="search"><input type="search" id="hqi" placeholder="Pergunte ao Galo…" aria-label="Pergunte ao Galo ou busque"></form><a id="gmchip" href="#perfil" class="gmchip">★ Perfil</a><button id="gmlogin" type="button" hidden>Entrar</button><button id="tema" type="button" onclick="trocaTema()">Modo escuro</button></span></div>
+  <span class="topbtns"><form id="hq" class="hq" role="search"><input type="search" id="hqi" placeholder="Pergunte ao Galo…" aria-label="Pergunte ao Galo ou busque"></form><a id="gmchip" href="#perfil" class="gmchip">★ Perfil</a><span id="gmconta" class="gmconta" hidden><button id="gmlogin" type="button" aria-haspopup="true"></button><span id="gmmenu" class="gmmenu" hidden></span></span><button id="tema" type="button" onclick="trocaTema()">Modo escuro</button><button id="navbtn" type="button" aria-label="Abrir menu" aria-expanded="false" onclick="var o=document.body.classList.toggle('navopen');this.setAttribute('aria-expanded',o)"><span class="hb"></span>Menu</button></span></div>
   <nav id="nav" aria-label="Principal">
     <a href="#inicio">Início</a><a href="#jogos">Jogos</a><a href="#jogadores">Jogadores</a><a href="#adversarios">Adversários</a><a href="#competicoes">Competições</a><a href="#mapa">Mapa</a><a href="#pergunte">Pergunte</a>
     <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
     <span class="nav-sep" aria-hidden="true"></span>
     <details class="menu jogar"><summary>★ Jogar</summary><div class="menu-p"><a href="#desafios">Desafios do dia</a><a href="#palpites">Palpites</a><a href="#album">Álbum de figurinhas</a><a href="#ranking">Ranking da semana</a></div></details>
-    <details class="menu area"><summary>Minha área</summary><div class="menu-p"><a href="#perfil">Perfil e conquistas</a><a href="#diario">Meu diário</a><a href="#sugestoes">Sugestões e correções</a><a href="#colaboradores">Colaboradores</a><a href="#apoie">♥ Apoie</a><a href="#dono" id="navdono" hidden>Página do dono</a></div></details>
+    <details class="menu area"><summary>Meu perfil</summary><div class="menu-p"><a href="#perfil">Perfil e conquistas</a><a href="#diario">Meu diário</a><a href="#sugestoes">Sugestões e correções</a><a href="#colaboradores">Colaboradores</a><a href="#apoie">♥ Apoie</a><a href="#dono" id="navdono" hidden>Página do dono</a></div></details>
   </nav>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
@@ -1516,6 +1556,18 @@ function aplicaCfg(c){
   const nx=J.find(j=>!j.resultado&&j.data>=hojeStr()); if(nx){ D.proximo=D.proximo||{}; const px=Object.fromEntries(Object.entries(CFG.proximo||{}).filter(([k,v])=>v)); D.proximo[nx.id]=Object.assign({}, D.proximo[nx.id]||{}, px); }
   FIG=null;
 }
+const AV_VAZIO='<span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M2 24c0-6 4.5-9 10-9s10 3 10 9z"/></svg></span>';
+function contaBotao(){
+  const box=document.getElementById('gmconta'), lg=document.getElementById('gmlogin'), mn=document.getElementById('gmmenu'); if(!box||window.GM_BACKEND!=='firebase') return;
+  box.hidden=false; document.body.classList.toggle('semconta',!GUID);
+  if(!GUID){ lg.className=''; lg.innerHTML=AV_VAZIO+'<span>Entrar</span>'; lg.title='Entre com sua conta Google para salvar pontos, enviar sugestões e aparecer nos rankings'; lg.onclick=()=>window.GM_LOGIN(); mn.hidden=true; return; }
+  const nome=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||'Você', foto=window.GM_USER_PHOTO;
+  lg.className='on'; lg.innerHTML=(foto?`<span class="av"><img src="${esc(foto)}" alt="" referrerpolicy="no-referrer"></span>`:AV_VAZIO)+`<span>${esc(nome.split(' ')[0])}</span>`; lg.title='Sua conta';
+  mn.innerHTML=`<span class="quem">Conectado como <b>${esc(window.GM_USER_NAME||nome)}</b></span><a href="#perfil">Meu perfil e conquistas</a><a href="#diario">Meu diário</a><a href="#album">Meu álbum</a><button type="button" id="gmsair">Sair</button>`;
+  lg.onclick=e=>{ e.stopPropagation(); mn.hidden=!mn.hidden; };
+  mn.onclick=e=>{ if(e.target.id==='gmsair') window.GM_LOGOUT(); mn.hidden=true; };
+  document.addEventListener('click',e=>{ if(!box.contains(e.target)) mn.hidden=true; });
+}
 async function gmInit(){
   gLoad(); aplicaAnim(); atualizaChip();
   setTimeout(()=>{ if(!GM_PRONTO){ GM_PRONTO=true; route(); } }, 8000);
@@ -1526,7 +1578,7 @@ async function gmInit(){
   try{ DONO=GUSER?!!(await GUSER.isOwner()):false; }catch(e){ DONO=false; }
   try{ GUID=GUSER?await GUSER.id():null; }catch(e){ GUID=null; }
   const nd=document.getElementById('navdono'); if(nd) nd.hidden=!DONO;
-  const lg=document.getElementById('gmlogin'); if(lg&&window.GM_BACKEND==='firebase'){ lg.hidden=false; lg.textContent=GUID?'Sair':'Entrar'; lg.title=GUID?('Conectado como '+(window.GM_USER_NAME||'')):'Entrar com Google para salvar pontos, enviar sugestões e aparecer nos rankings'; lg.onclick=()=>GUID?window.GM_LOGOUT():window.GM_LOGIN(); }
+  contaBotao();
   if(GDB){ try{ const s=await GDB.doc('site/config').get(); if(s.exists){ aplicaCfg(JSON.parse(s.data().json||'{}')); } }catch(e){} }
   await carregaEdicoes(); await carregaRanking(); await carregaAval(); try{ await carregaColab(); }catch(e){}
   NUVEM = lsGet('gm-nuvem')==='1' && !!GDB && !!GUID; if(NUVEM){ await nuvemCarrega(); lsSet(GMK, JSON.stringify(G)); }
@@ -2326,6 +2378,7 @@ document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closes
 document.addEventListener('click',e=>{ document.querySelectorAll('#nav details[open]').forEach(d=>{ if(!d.contains(e.target)) d.removeAttribute('open'); }); });
 
 function route(){
+  document.body.classList.remove('navopen'); const nb=document.getElementById('navbtn'); if(nb) nb.setAttribute('aria-expanded','false');
   try{ sincronizaVivo(); }catch(e){}
   const raw=(location.hash||'#inicio').slice(1); const [h0,params]=raw.split('?'); const h=decodeURIComponent(h0); let html, sec=h.split('-')[0];
   if(h==='inicio') html=vInicio();
