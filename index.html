@@ -552,9 +552,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261116203747';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261116203747"></script>
-<script src="backend-firebase.js?v=20261116203747"></script>
+<script>window.GM_BUILD='20261116203958';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261116203958"></script>
+<script src="backend-firebase.js?v=20261116203958"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2221,7 +2221,7 @@ async function autoRank(txt){ if(!GDB||!GUID||DIA_JOGO) return; const it=leTexto
     o.ap=novos[0].ap; o.em=new Date().toISOString(); await ref.set(o); RKU[GUID]=o;
     novos.forEach(x=>{ G.rkEnv[x.jogo+' '+x.d]=x.pts; }); gSave(); toast('Resultado lançado no ranking da semana.'); }catch(e){ console.warn('autoRank',e); } }
 function rankSemana(sem){ const doc=JSON.parse(JSON.stringify(RANK[sem]||{pessoas:{}})); doc.pessoas ||= {};
-  Object.values(RKU).forEach(u=>Object.values(u.res||{}).forEach(x=>{ if(!x||!x.d||semanaDe(x.d)!==sem) return; if(hashTxt([RK_SAL,x.ap,x.d,x.jogo,+x.pts].join('|'))!==x.cod) return; (doc.pessoas[x.ap] ||= {})[x.jogo+' '+x.d]=+x.pts; }));
+  Object.values(RKU).forEach(u=>Object.values(u.res||{}).forEach(x=>{ if(!x||!x.d||semanaDe(x.d)!==sem) return; if(hashTxt([RK_SAL,x.ap,x.d,x.jogo,+x.pts].join('|'))!==x.cod) return; const nm=u.ap||x.ap; if(nm!==x.ap&&doc.pessoas[x.ap]){ doc.pessoas[nm]=Object.assign(doc.pessoas[nm]||{},doc.pessoas[x.ap]); delete doc.pessoas[x.ap]; } (doc.pessoas[nm] ||= {})[x.jogo+' '+x.d]=+x.pts; }));
   return doc; }
 function vRanking(){
   const sem=semanaDe(fmtD(hojeStr())); const semSet=new Set(Object.keys(RANK)); Object.values(RKU).forEach(u=>Object.values(u.res||{}).forEach(x=>{ if(x&&x.d) semSet.add(semanaDe(x.d)); })); const semanas=[...semSet].sort().reverse(); const atual=rankSemana(sem);
@@ -3340,10 +3340,10 @@ function pagaPresentes(){
   if(ganhou||pacs){ gSave(); atualizaChip(); const o=[ganhou?`${N(ganhou)} Metricoins`:'', pacs?`${pacs} ${pacs===1?'pacotinho':'pacotinhos'}`:''].filter(Boolean).join(' e '); setTimeout(()=>toast(`Você ganhou ${o}!${motivo?' '+motivo:''}${pacs?' Abra no Álbum.':''}`),600); }
 }
 async function registraPerfil(){
-  if(!GDB||!GUID) return; const hoje=hojeStr(); if(G.perfilReg===hoje) return;
+  if(!GDB||!GUID) return; const hoje=hojeStr(), rk=hoje+'|'+((G.perfil&&G.perfil.apelido)||''); if(G.perfilReg===rk) return;
   try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}};
     o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.nome=window.GM_USER_NAME||o.nome||''; o.visto=hoje;
-    await ref.set(o); RKU[GUID]=o; G.perfilReg=hoje; gSave(); }catch(e){}
+    await ref.set(o); RKU[GUID]=o; G.perfilReg=rk; gSave(); }catch(e){}
 }
 /* ---------- Ajustes do dono na conta de um torcedor ---------- */
 const AJ_NOMES={zera:'Desafios do dia reiniciados', zeratudo:'Todos os desafios reiniciados', perfil:'Perfil atualizado', est:'Marcações de estádio apagadas'};
@@ -3571,7 +3571,7 @@ function vEscalacao(){
 async function publicaResumo(){
   if(!GDB||!GUID) return;
   try{ const L=typeof figuras==='function'?figuras():[]; const r={fig:Object.keys(G.owned||{}).filter(k=>G.owned[k]).length, figTot:L.length, conq:Object.keys(G.conq||{}).length, est:vistoAoVivo().length, fav:(G.perfil||{}).fav||'', total:G.total||0, seq:(G.seq||{}).max||0, foto:fotoPerfil()};
-    const k=JSON.stringify(r)+((G.perfil||{}).oculto?'o':''); if(G.resumoPub===k) return;
+    const k=JSON.stringify(r)+((G.perfil||{}).oculto?'o':'')+'|'+((G.perfil||{}).apelido||''); if(G.resumoPub===k) return;
     const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}};
     o.oculto=!!(DONO&&(G.perfil||{}).oculto); o.pub=r; o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.visto=hojeStr(); await ref.set(o); RKU[GUID]=o; G.resumoPub=k; gSave(); }catch(e){}
 }
