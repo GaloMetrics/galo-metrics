@@ -543,6 +543,7 @@ button.more{-webkit-text-fill-color:currentColor}
 .fig.ultra{background:linear-gradient(135deg,#1a1a1a,#3a2a05 40%,#C9962B 60%,#111);color:#F4F1E8;outline-color:var(--gold)}.fig.ultra .fig-ph{background:radial-gradient(circle at 50% 30%,#3a2a05,#111)}.fig.ultra .fig-nome{color:var(--gold)}.fig.ultra .fig-top{color:var(--gold)}
 .fig-secreta{background:repeating-linear-gradient(45deg,#111 0 10px,#1d1d1b 10px 20px);color:var(--gold);border-color:var(--gold)}.fig-secreta b{color:var(--gold);font-size:56px}
 .pko-card.r-ultra.vira .pko-front{filter:drop-shadow(0 0 30px rgba(232,193,90,1)) drop-shadow(0 0 60px rgba(201,150,43,.8))}.pko-mini.r-ultra{filter:drop-shadow(0 0 14px rgba(232,193,90,1))}
+.uso-barras{display:flex;align-items:flex-end;gap:6px;height:170px;border-bottom:2px solid var(--ink);overflow-x:auto;padding-top:20px}.uso-barras>div{position:relative;flex:1;min-width:22px;max-width:70px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}.uso-barras i{display:block;width:70%;background:var(--gold);opacity:.45}.uso-barras i.l{position:absolute;bottom:18px;background:var(--ink);opacity:1;width:40%}.uso-barras small{font-size:10px;color:var(--mute);height:18px;line-height:18px}.uso-barras b{position:absolute;top:-2px;font-size:11px}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -563,9 +564,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117183434';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117183434"></script>
-<script src="backend-firebase.js?v=20261117183434"></script>
+<script>window.GM_BUILD='20261117183839';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261117183839"></script>
+<script src="backend-firebase.js?v=20261117183839"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1598,6 +1599,7 @@ function albumUI(){
   const abre=(gratis)=>{
     if(gratis==='presente'){ if(!(G.pacPres>0)) return; G.pacPres--; } else if(gratis){ if(!G.gratis) return; G.gratis=false; } else if(!DONO) { if(G.pts<CFG.pontos.pacote){ toast(`Faltam ${CFG.pontos.pacote-G.pts} Metricoins para um pacotinho.`); return; } G.pts-=CFG.pontos.pacote; G.hist.unshift({d:Date.now(), n:-CFG.pontos.pacote, m:'pacotinho aberto'}); }
     const pac=[]; for(let i=0;i<5;i++){ const e=sorteiaEsp(); const f=e||sorteiaFig(); pac.push({f, nova:cola(f)}); }
+    try{ trk('pacote'); trk('figurinha',5); trk('figurinha_nova',pac.filter(x=>x.nova).length); const ns=pac.filter(x=>x.f.esp).length; if(ns) trk('secreta',ns); }catch(e){}
     gSave(); atualizaChip();
     if(animOn()&&typeof mostraPacote==='function'){ mostraPacote(pac, ()=>{ ALB.pacote=pac; route.keep=true; route(); const pk=$('#pkarea'); if(pk) pk.scrollIntoView({block:'start'}); }, abreDeNovo); return; }
     ALB.pacote=pac; route.keep=true; route(); const pk=$('#pkarea'); if(pk) pk.scrollIntoView({block:'start'});
@@ -1632,6 +1634,7 @@ function vDono(){
   return `<div class="kicker">Só você vê esta página</div><h1>Página do dono</h1>
   <p class="lede">O que você muda aqui vale para todo mundo que abre o site, na hora. Os dados da base não são apagados: estes ajustes ficam por cima deles.</p>
   <a class="capa-breve" href="#dono-falta" style="text-decoration:none;color:inherit;margin-bottom:22px"><span class="kk">★ O que falta</span><span>Escudos de adversários, fotos de jogadores, fichas de jogos e outros dados que ainda faltam na base, em ordem de prioridade →</span></a>
+  <a class="capa-breve" href="#dono-uso" style="text-decoration:none;color:inherit;margin-bottom:22px"><span class="kk">★ Uso do site</span><span>Quantas pessoas entraram (com e sem login), páginas mais abertas, pacotinhos, desafios, amigos e de onde vieram →</span></a>
   <a class="capa-breve" href="#dono-secretas" style="text-decoration:none;color:inherit;margin-bottom:22px"><span class="kk">★ Figurinhas secretas</span><span>Crie figurinhas ultra raras (influenciadores, apoiadores, memes). No álbum elas ficam escondidas até alguém tirar no pacotinho →</span></a>
   <form id="dform" class="dono">
   <h2>Página inicial</h2>
@@ -1722,7 +1725,7 @@ async function gmInit(){
   contaBotao();
   if(GDB){ try{ const s=await GDB.doc('site/config').get(); if(s.exists){ aplicaCfg(JSON.parse(s.data().json||'{}')); } }catch(e){} }
   if(DONO&&GDB&&GUID&&CFG.criador!==GUID){ try{ const s=await GDB.doc('site/config').get(); const c=s.exists?JSON.parse(s.data().json||'{}'):{}; c.criador=GUID; await GDB.doc('site/config').set({json:JSON.stringify(c), em:Date.now()}); CFG.criador=GUID; }catch(e){} }
-  await carregaEdicoes(); await carregaRanking(); await carregaAval(); try{ await carregaColab(); }catch(e){} try{ await carregaPresentes(); }catch(e){} try{ registraPerfil(); }catch(e){} try{ checaPrimeiros(); }catch(e){} try{ publicaResumo(); }catch(e){}
+  await carregaEdicoes(); await carregaRanking(); await carregaAval(); try{ await carregaColab(); }catch(e){} try{ await carregaPresentes(); }catch(e){} try{ registraPerfil(); }catch(e){} try{ checaPrimeiros(); }catch(e){} try{ if(GUID) trk('login'); }catch(e){} try{ publicaResumo(); }catch(e){}
   NUVEM = lsGet('gm-nuvem')==='1' && !!GDB && !!GUID; if(NUVEM){ await nuvemCarrega(); lsSet(GMK, JSON.stringify(G)); }
   GM_PRONTO=true; atualizaChip(); route();
 }
@@ -2543,7 +2546,7 @@ function blocoPalpite(j){
       const esc_=[...f.querySelectorAll('[data-slot]')].sort((x,y)=>+x.dataset.slot-+y.dataset.slot).map(s=>s.value||''); const cheios=esc_.filter(Boolean);
       if(new Set(cheios).size!==cheios.length){ $('#perr-'+j.id).textContent='Tem jogador repetido na escalação.'; return; }
       const marc=[...f.querySelectorAll('[data-gol]')].map(s=>s.value).filter(Boolean).slice(0,+gp);
-      palp()[j.id]={gp:+gp, gc:+gc, marc, esc:esc_, form:f.elements.form.value, em:Date.now(), v:2};
+      palp()[j.id]={gp:+gp, gc:+gc, marc, esc:esc_, form:f.elements.form.value, em:Date.now(), v:2}; try{ trk('palpite'); }catch(e){}
       gSave(); checaConquistas(); toast('Palpite salvo.'); route.keep=true; route(); };
     const optsG=`<option value="">Não sei</option>${C.L.map(n=>`<option value="${esc(n)}">${esc(nomeV(n))}${posTxt(n)?' · '+posTxt(n):''}</option>`).join('')}`;
     const desenhaGols=()=>{ const box=$('#plgols-'+j.id); if(!box) return; const n=Math.max(0,Math.min(10,+f.elements.gp.value||0)); const atuais=[...box.querySelectorAll('select')].map(s=>s.value); const base=atuais.length?atuais:(p.marc||[]);
@@ -2660,7 +2663,7 @@ async function abreArte(spec){
       else { const a=document.createElement('a'); a.href=url; a.download=nome; document.body.appendChild(a); a.click(); a.remove(); } };
   }catch(e){ console.error(e); box.querySelector('.arte-in').innerHTML='<p>Não foi possível gerar a arte.</p>'; }
 }
-document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('[data-arte]'); if(!b) return; e.preventDefault(); let s; try{ s=JSON.parse(b.dataset.arte); }catch(err){ return; }
+document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('[data-arte]'); if(!b) return; e.preventDefault(); try{ trk('baixou_arte'); }catch(_){} let s; try{ s=JSON.parse(b.dataset.arte); }catch(err){ return; }
   if(s.t==='jogo'&&!(diario()[s.id]||{}).n&&!(diario()[s.id]||{}).est){ const d=document.querySelector('details.diario'); toast('Dica: avalie o jogo em "Meu diário" para a nota, o craque e o carimbo aparecerem na arte.'); if(d) d.open=true; }
   abreArte(s); });
 document.addEventListener('click',e=>{ document.querySelectorAll('#nav details[open]').forEach(d=>{ if(!d.contains(e.target)) d.removeAttribute('open'); }); });
@@ -2670,6 +2673,7 @@ function route(){
   try{ sincronizaVivo(); }catch(e){}
   const raw=(location.hash||'#inicio').slice(1); const [h0,params]=raw.split('?'); const h=decodeURIComponent(h0); let html, sec=h.split('-')[0];
   DIA_JOGO=(h==='desafios'||h.startsWith('desafio-'))?diaArquivo(params):null;
+  try{ if(!route.keep) trkPagina(h); }catch(e){}
   if(h==='inicio') html=vInicio();
   else if(h==='jogos') html=vJogos(params);
   else if(h.startsWith('jogo-')) {html=vJogo(+h.slice(5)); sec='jogos';}
@@ -2702,6 +2706,7 @@ function route(){
   else if(h==='dono') html=vDono()+blocoMoedas()+blocoAjuste();
   else if(h==='dono-falta') html=vFalta();
   else if(h==='dono-secretas') html=vDonoSecretas();
+  else if(h==='dono-uso') html=vDonoStats(params);
   else if(h==='embreve') html=vEmBreve();
   else if(h==='comparar') {html=vComparar(params); sec='jogadores';}
   else if(h==='competicoes') html=vCompeticoes();
@@ -2720,7 +2725,7 @@ function route(){
   if(DIA_JOGO&&(h==='desafios'||h.startsWith('desafio-'))) html=html.replace(/href="#desafio(s|-[a-z]+)"/g,(m,x)=>`href="#desafio${x}?dia=${DIA_JOGO}"`);
   $('#app').innerHTML=notaPagina(h)+html;
   ligaNota();
-  const alvo = ['palpites','diario','ranking','album','perfil','dono','dono-falta','dono-secretas','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve','torcedores'].includes(h)?h:sec;
+  const alvo = ['palpites','diario','ranking','album','perfil','dono','dono-falta','dono-secretas','dono-uso','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve','torcedores'].includes(h)?h:sec;
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href').slice(1)===alvo));
   document.querySelectorAll('#nav details').forEach(d=>{ d.removeAttribute('open'); d.classList.toggle('on', !!d.querySelector('a.on')); });
   if(!route.keep) window.scrollTo(0,0); route.keep=false;
@@ -2849,7 +2854,7 @@ const GENERICAS=new Set('gol gols marcou marcaram fez fizeram jogou jogos jogo m
 function listasParecidas(q){ const w=nrm(q).replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(x=>x&&!PALAVRAS_VAZIAS.has(x)); if(!w.length) return [];
   return LISTAS.map(L=>{ const alvo=(nrm(L[2])+' '+(LISTA_SIN[L[1]]||'')).replace(/[^a-z0-9 ]/g,' ').split(/\s+/); let s=0; w.forEach(x=>{ const peso=GENERICAS.has(x)?1:3; if(alvo.includes(x)) s+=peso; else if(x.length>=4&&alvo.some(a=>a.length>=4&&(a.startsWith(x.slice(0,5))||x.startsWith(a.slice(0,5))))) s+=peso/2; }); return {L, s}; }).filter(o=>o.s>=1).sort((a,b)=>b.s-a.s).map(o=>o.L); }
 function vPergunte(params){
-  const P=new URLSearchParams(params||''), q=P.get('q')||'', lid=P.get('lista')||'';
+  const P=new URLSearchParams(params||''), q=P.get('q')||'', lid=P.get('lista')||''; try{ if(!route.keep){ if(q) trk('busca'); if(lid) trk('lista'); } }catch(e){}
   let corpo='';
   const L=LISTAS.find(x=>x[1]===lid);
   if(L){ const [,id,tit,unid,fn]=L; const linhas=fn().filter(x=>x.v>0).slice(0,30);
@@ -3142,7 +3147,7 @@ async function ligaSugestoes(){
     btn.disabled=true; msg.textContent='Enviando…';
     try{
       if(file){ const A=await window.claude.use('assets'); if(!A) throw new Error('upload indisponível para você'); const up=await A.upload(file); item.asset=up.id; item.url=up.url; item.tipoArq=up.contentType; }
-      const ref=GDB.doc('sugestoes/'+GUID); const s=await ref.get(); const atual=s.exists?(s.data().itens||[]):[];
+      try{ trk('sugestao'); }catch(_){} const ref=GDB.doc('sugestoes/'+GUID); const s=await ref.get(); const atual=s.exists?(s.data().itens||[]):[];
       await ref.set({itens:[...atual, item].slice(-100), atualizado:item.quando});
       f.reset(); sync(); msg.textContent='Recebido, obrigado! O dono do site vai conferir.'; toast('Envio recebido. Valeu!'); mostraMinhas(); if(DONO) carregaSugestoes();
     }catch(err){ console.error(err); msg.textContent='Não foi possível enviar agora ('+(err&&err.message||'erro')+'). Tente de novo mais tarde.'; }
@@ -3382,7 +3387,7 @@ function ligaStars(root){
 }
 /* Avaliações da torcida: cada torcedor publica as suas em rankuser/{uid}.aval */
 function avalTorcida(id, campo='aval'){ return Object.entries(RKU||{}).map(([uid,o])=>{ const a=o&&o[campo]&&o[campo][id]; return a&&(a.n||a.t)?{uid, ap:o.ap||'Torcedor', ...a}:null; }).filter(Boolean).sort((a,b)=>String(b.d||'').localeCompare(String(a.d||''))); }
-async function publicaAval(id, a, publicar){
+async function publicaAval(id, a, publicar){ try{ trk("avaliacao"); }catch(e){}
   if(!GDB||!GUID) return;
   try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.aval ||= {};
     if(publicar&&(a.n||a.t)) o.aval[id]={n:a.n||0, t:(a.t||'').slice(0,600), cr:a.cr||'', est:a.est?1:0, d:hojeStr()}; else delete o.aval[id];
@@ -3529,7 +3534,7 @@ function vTorcedores(){
   G.amigos ||= []; const meu=GUID?codTorcedor(GUID):null;
   setTimeout(()=>{ const f=$('#trform'); if(f) f.onsubmit=ev=>{ ev.preventDefault(); const c=$('#trq').value.trim().toUpperCase(), u=uidPorCodigo(c), m=$('#trmsg');
       if(!u){ m.textContent='Nenhum torcedor com esse código. Confira as 6 letras e números.'; return; }
-      if(!G.amigos.includes(c)&&u!==GUID){ G.amigos.unshift(c); gSave(); } location.hash='#torcedor-'+c; };
+      if(!G.amigos.includes(c)&&u!==GUID){ G.amigos.unshift(c); gSave(); try{ trk('amigo'); }catch(e){} } location.hash='#torcedor-'+c; };
     const cp=$('#trcopia'); if(cp) cp.onclick=()=>{ const t=`Meu código no Galo Metrics: ${meu}\\nhttps://galometrics.com.br/#torcedor-${meu}`; try{ navigator.clipboard.writeText(t).then(()=>toast('Código copiado.'),()=>toast(meu)); }catch(err){ toast(meu); } };
     document.querySelectorAll('[data-tira]').forEach(b=>b.onclick=()=>{ G.amigos=G.amigos.filter(x=>x!==b.dataset.tira); gSave(); route.keep=true; route(); }); });
   const amigos=G.amigos.map(c=>({c,u:uidPorCodigo(c)})).filter(x=>x.u);
@@ -3647,6 +3652,58 @@ function vDonoSecretas(){
     <p id="espmsg" class="count" role="status"></p><button type="button" class="more" id="espok">Criar figurinha</button></div>
   <h2>Criadas (${ESP.length})</h2>
   ${ESP.length?`<div class="alb-grid">${ESP.map((x,i)=>`<div class="alb-cel" style="${x.ativa===false?'opacity:.45':''}">${espHTML(espCarta(x,i))}<div style="display:flex;flex-direction:column;gap:4px;margin-top:6px"><button type="button" class="ghost" data-esp-on="${x.id}">${x.ativa===false?'Pausada · reativar':'Ativa · pausar'}</button><label class="ghost" style="cursor:pointer;text-align:center">Trocar imagem<input type="file" data-esp-img="${x.id}" accept="image/*" hidden></label><button type="button" class="ghost" data-esp-meu="${x.id}">Colar no meu álbum</button><button type="button" class="ghost" data-esp-del="${x.id}">Apagar</button></div></div>`).join('')}</div>`:'<p class="count">Nenhuma ainda.</p>'}`;
+}
+
+/* ---------- Registro de uso (anônimo) ----------
+   Conta páginas abertas e ações (pacotinho, desafios, amigos, buscas…) por sessão. Não guarda nome, e-mail
+   nem o que a pessoa escreveu: só um número aleatório do aparelho, se está logado e as contagens. */
+const TRK={pg:{}, ev:{}, n:0, ini:Date.now()};
+const trkVid=(()=>{ try{ let v=localStorage.getItem('gm-vid'); if(!v){ v=Math.random().toString(36).slice(2,12); localStorage.setItem('gm-vid',v); } return v; }catch(e){ return 'x'+Math.random().toString(36).slice(2,8); } })();
+const trkSid=Math.random().toString(36).slice(2,10);
+let trkSeq=0, trkUlt=0;
+function trk(nome, k=1){ if(DONO) return; TRK.ev[nome]=(TRK.ev[nome]||0)+k; TRK.n++; }
+function trkPagina(h){ if(DONO) return; const base=String(h||'inicio').split('?')[0].replace(/-.*$/,'')||'inicio'; TRK.pg[base]=(TRK.pg[base]||0)+1; TRK.n++; }
+function trkDesafios(){ try{ const jd=(G.jd||{})[hojeStr()]||{}; const o={}; Object.keys(jd).forEach(k=>{ const s=jd[k]; if(s&&typeof s==='object') o[k]=s.fim?2:1; }); return o; }catch(e){ return {}; } }
+async function trkEnvia(forca){ try{ if(DONO||!window.GM_EV_GRAVA) return; if(!TRK.n) return; if(!forca&&Date.now()-trkUlt<60000) return;
+  const o={d:hojeStr(), v:trkVid, s:trkSid, q:trkSeq, u:GUID?1:0, m:/Mobi|Android|iPhone/i.test(navigator.userAgent)?1:0, r:(document.referrer||'').replace(/^https?:\/\//,'').split('/')[0].slice(0,40), pg:TRK.pg, ev:TRK.ev, ds:trkDesafios(), t:Math.round((Date.now()-TRK.ini)/1000)};
+  TRK.pg={}; TRK.ev={}; TRK.n=0; trkUlt=Date.now(); const id=`${o.d}_${trkVid}_${trkSid}_${trkSeq++}`; await window.GM_EV_GRAVA(id,o); }catch(e){} }
+setInterval(()=>trkEnvia(false),30000);
+document.addEventListener('visibilitychange',()=>{ if(document.hidden) trkEnvia(true); });
+window.addEventListener('pagehide',()=>trkEnvia(true));
+document.addEventListener('click',ev=>{ const a=ev.target.closest&&ev.target.closest('a.tw'); if(a) trk('tweet'); const c=ev.target.closest&&ev.target.closest('[data-copia-res],.copia-res'); if(c) trk('copiou_resultado'); },true);
+
+/* ---------- Painel de uso (só o dono) ---------- */
+let STATS_CACHE=null;
+async function carregaStats(dias){ const d=new Date(Date.now()-3*36e5); d.setDate(d.getDate()-dias+1); const desde=d.toISOString().slice(0,10); STATS_CACHE={dias, desde, L:await window.GM_EV_LE(desde)}; return STATS_CACHE; }
+const NOME_PG={inicio:'Início', jogos:'Jogos', jogo:'Página de jogo', jogadores:'Jogadores', jogador:'Página de jogador', adversarios:'Adversários', adversario:'Página de adversário', competicoes:'Competições', competicao:'Página de competição', mapa:'Mapa', pergunte:'Busca', recordes:'Recordes', album:'Álbum', desafios:'Desafios do dia', desafio:'Um desafio', ranking:'Ranking', perfil:'Meu perfil', diario:'Meu diário', torcedores:'Amigos', torcedor:'Perfil de amigo', embreve:'Em breve', sugestoes:'Sugestões', colaboradores:'Colaboradores', apoie:'Apoie', palpites:'Palpites', tecnicos:'Técnicos', temporada:'Temporada', cidade:'Cidade', comparar:'Comparar'};
+const NOME_EV={pacote:'Pacotinhos abertos', figurinha:'Figurinhas tiradas', figurinha_nova:'Figurinhas novas', secreta:'Figurinhas secretas tiradas', amigo:'Amigos adicionados', avaliacao:'Avaliações dadas', palpite:'Palpites salvos', busca:'Buscas feitas', lista:'Listas prontas abertas', tweet:'Cliques em tweetar', baixou_arte:'Artes baixadas', sugestao:'Sugestões enviadas', login:'Entradas com login'};
+function vDonoStats(params){
+  if(!DONO) return vDono();
+  const dias=+(new URLSearchParams(params||'').get('dias')||7);
+  if(!STATS_CACHE||STATS_CACHE.dias!==dias){ carregaStats(dias).then(()=>{ if(location.hash.startsWith('#dono-uso')){ route.keep=true; route(); } }).catch(e=>{ STATS_CACHE={dias, erro:String(e.message||e), L:[]}; route.keep=true; route(); }); return `<a class="back" href="#dono">← Página do dono</a><h1>Uso do site</h1><p class="count">Carregando…</p>`; }
+  if(STATS_CACHE.erro) return `<a class="back" href="#dono">← Página do dono</a><h1>Uso do site</h1><p class="empty">Não consegui ler os registros: ${esc(STATS_CACHE.erro)}. Confira se a regra "ev" está publicada no Firestore.</p>`;
+  const L=STATS_CACHE.L, vis={}, ses={}, porDia={}, pg={}, ev={}, refs={}, des={};
+  L.forEach(o=>{ const sk=o.v+'|'+o.s; (vis[o.v] ||= {u:0,m:o.m,dias:new Set()}); if(o.u) vis[o.v].u=1; vis[o.v].dias.add(o.d);
+    (ses[sk] ||= {t:0,u:0,d:o.d,v:o.v}); ses[sk].t=Math.max(ses[sk].t,o.t||0); if(o.u) ses[sk].u=1;
+    const pd=(porDia[o.d] ||= {v:new Set(), vl:new Set(), pv:0}); pd.v.add(o.v); if(o.u) pd.vl.add(o.v);
+    Object.entries(o.pg||{}).forEach(([k,n])=>{ pg[k]=(pg[k]||0)+n; pd.pv+=n; }); Object.entries(o.ev||{}).forEach(([k,n])=>{ ev[k]=(ev[k]||0)+n; });
+    if(o.r&&!/galometrics/.test(o.r)) refs[o.r]=(refs[o.r]||0)+1;
+    Object.entries(o.ds||{}).forEach(([k,st])=>{ const x=(des[k] ||= {ini:new Set(), fim:new Set()}); x.ini.add(o.v+o.d); if(st===2) x.fim.add(o.v+o.d); }); });
+  const V=Object.values(vis), nv=V.length, nlog=V.filter(x=>x.u).length, nmob=V.filter(x=>x.m).length, volt=V.filter(x=>x.dias.size>1).length;
+  const S=Object.values(ses), tempo=S.length?Math.round(S.reduce((s,x)=>s+x.t,0)/S.length):0, pvTot=Object.values(pg).reduce((s,n)=>s+n,0);
+  const dk=Object.keys(porDia).sort(), mx=Math.max(1,...dk.map(d=>porDia[d].v.size));
+  const top=(o,nm,n=15)=>Object.entries(o).sort((a,b)=>b[1]-a[1]).slice(0,n).map(([k,v])=>`<tr><td>${esc(nm?(nm[k]||k):k)}</td><td class="n">${N(v)}</td></tr>`).join('')||'<tr><td colspan="2" class="count">Nada ainda.</td></tr>';
+  const mm=t=>t>=60?`${Math.floor(t/60)} min ${t%60} s`:`${t} s`;
+  return `<a class="back" href="#dono">← Página do dono</a><div class="kicker">Só você vê esta página</div><h1>Uso do site</h1>
+  <p class="lede">Quem entrou, o que abriu e o que fez, com e sem login. Conta a partir de 17/11/2026; suas próprias visitas não entram.</p>
+  <p>${[1,7,30].map(n=>`<a class="${n===dias?'more':'ghost'}" href="#dono-uso?dias=${n}">${n===1?'Hoje':'Últimos '+n+' dias'}</a>`).join(' ')}</p>
+  <div class="kpis" style="margin:18px 0"><div><b>${N(nv)}</b><span>visitantes</span></div><div><b>${N(nv-nlog)}</b><span>sem login</span></div><div><b>${N(nlog)}</b><span>com login</span></div><div><b>${N(pvTot)}</b><span>páginas vistas</span></div></div>
+  <div class="kpis" style="margin:0 0 24px"><div><b>${N(S.length)}</b><span>visitas</span></div><div><b>${mm(tempo)}</b><span>tempo médio</span></div><div><b>${nv?Math.round(100*nmob/nv):0}%</b><span>no celular</span></div><div><b>${N(volt)}</b><span>voltaram outro dia</span></div></div>
+  ${dk.length>1?`<h2>Visitantes por dia</h2><div class="uso-barras">${dk.map(d=>`<div title="${fmtD(d)}: ${porDia[d].v.size} visitantes, ${porDia[d].vl.size} com login"><i style="height:${Math.round(120*porDia[d].v.size/mx)}px"></i><i class="l" style="height:${Math.round(120*porDia[d].vl.size/mx)}px"></i><small>${d.slice(8)}/${d.slice(5,7)}</small><b>${porDia[d].v.size}</b></div>`).join('')}</div><p class="count">Barra clara: todos os visitantes. Barra escura: com login.</p>`:''}
+  <div class="grid2"><div><h2>Páginas mais abertas</h2><table><tbody>${top(pg,NOME_PG)}</tbody></table></div>
+  <div><h2>O que fizeram</h2><table><tbody>${top(ev,NOME_EV,20)}</tbody></table></div></div>
+  <div class="grid2"><div><h2>Desafios do dia</h2><table><thead><tr><th>Desafio</th><th class="n">Começaram</th><th class="n">Terminaram</th></tr></thead><tbody>${Object.entries(des).sort((a,b)=>b[1].ini.size-a[1].ini.size).map(([k,x])=>`<tr><td>${esc((DESAF.find(d=>d[0]===k)||[k,k])[1])}</td><td class="n">${N(x.ini.size)}</td><td class="n">${N(x.fim.size)}</td></tr>`).join('')||'<tr><td colspan="3" class="count">Nada ainda.</td></tr>'}</tbody></table><p class="count">Pessoas por dia (cada torcedor conta uma vez por dia em cada desafio).</p></div>
+  <div><h2>De onde vieram</h2><table><tbody>${top(refs,null,12)}</tbody></table><p class="count">Visitas que chegaram por link de outro site. Quem digitou o endereço ou abriu pelo app não aparece aqui.</p></div></div>`;
 }
 
 </script>

@@ -34,6 +34,12 @@ service cloud.firestore {
       allow update: if false;
       allow delete: if dono();
     }
+    // Registro de uso anônimo: qualquer visitante (com ou sem login) cria; só o dono lê
+    match /ev/{id} {
+      allow create: if jsonAte(6000);
+      allow read, delete: if dono();
+      allow update: if false;
+    }
     // Álbum salvo na nuvem de cada torcedor
     match /data/users/{uid}/{doc} {
       allow read, delete: if eu(uid) || dono();
