@@ -552,9 +552,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261116205724';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261116205724"></script>
-<script src="backend-firebase.js?v=20261116205724"></script>
+<script>window.GM_BUILD='20261117065500';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117065500"></script>
+<script src="backend-firebase.js?v=20261117065500"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2043,17 +2043,25 @@ function categorias(){
   const C=[];
   // q = "quase": quem chega perto do tema sem cumprir (usado para escolher impostores difíceis)
   const conh=new Set(figuras().filter(f=>{ if(!fConhecido(f)||/\(/.test(f.nome)) return false; const p=pjDe(f.nome)||{}; const x=+(String(p.primeiro||'').slice(0,4))||0, y=+(String(p.ultimo||'').slice(0,4))||0; return !(x&&y&&y-x>18); }).map(f=>f.nome));
-  const add=(id,nome,lista,quase)=>{ const all=new Set(lista); const s=[...all].filter(n=>byN[n]); if(s.length<4) return; const m=new Set(s); const q=new Set((quase||[]).filter(n=>conh.has(n)&&!all.has(n))); C.push({id,nome,m,q,all}); };
+  const add=(id,nome,lista,quase,ext)=>{ const all=new Set(lista); const s=[...all].filter(n=>byN[n]); if(s.length<4) return; const m=new Set(s); const q=new Set((quase||[]).filter(n=>conh.has(n)&&!all.has(n))); C.push(Object.assign({id,nome,m,q,all},ext||{})); };
   const temp=(a,b)=>freq(j=>j.temporada>=a&&j.temporada<=b,5);
   const golsP=n=>golsBest(pj(n)||{})||0;
   const elencoIds=ids=>{ const s=new Set(); ids.forEach(id=>{ const e=(byId[id]||{}).escalacao_galo; if(!e) return; e.titulares.forEach(n=>s.add(n)); e.substituicoes.forEach(x=>x.entrou&&s.add(x.entrou)); }); return [...s]; };
   const freq=(f,min)=>{ const c={}; J.filter(f).forEach(j=>{ const e=j.escalacao_galo; if(!e) return; new Set([...e.titulares,...e.substituicoes.map(x=>x.entrou)]).forEach(n=>{ c[n]=(c[n]||0)+1; }); }); return Object.keys(c).filter(n=>c[n]>=min); };
   const marcou=f=>{ const s=new Set(); J.filter(f).forEach(j=>j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)) s.add(g.jogador); })); return [...s]; };
   // finais nacionais e internacionais
-  (D.finais_outras||[]).filter(x=>!x.sem_final&&x.ids.length&&x.res!=='pendente').forEach(x=>add('fin-'+x.comp+x.ano, `Jogaram a final da ${x.comp} ${x.ano}${x.res==='titulo'?' (campeões)':' (vice)'}`, elencoIds(x.ids), temp(x.ano-1,x.ano+1)));
+  (D.finais_outras||[]).filter(x=>!x.sem_final&&x.ids.length&&x.res!=='pendente').forEach(x=>add('fin-'+x.comp+x.ano, `Jogaram a final ${/^(copa|libertadores|recopa|supercopa|primeira liga|taça|sul)/i.test(x.comp)?'da':'do'} ${x.comp} ${x.ano}${x.res==='titulo'?' (campeões)':' (vice)'}`, elencoIds(x.ids), temp(x.ano-1,x.ano+1), {fam:/libertadores|recopa|conmebol|sul-americana/i.test(x.comp)?'int':/copa do brasil/i.test(x.comp)?'cdb':/brasileiro/i.test(x.comp)?'bra':undefined}));
   // Mineiro: finais recentes
-  (D.finais_mineiro||[]).filter(x=>x.ano>=2000&&x.titulo).forEach(x=>add('min'+x.ano,`Jogaram a final do Mineiro ${x.ano}`, elencoIds(x.ids), temp(x.ano-1,x.ano+1)));
-  add('bra2021','Campeões brasileiros de 2021', freq(j=>j.temporada===2021&&j.grupo==='Campeonato Brasileiro',12), temp(2020,2022));
+  (D.finais_mineiro||[]).filter(x=>x.ano>=2000&&x.titulo).forEach(x=>add('min'+x.ano,`Jogaram a final do Mineiro ${x.ano}`, elencoIds(x.ids), temp(x.ano-1,x.ano+1), {so:'imp'}));
+  // campeões: quem jogou na campanha do título é campeão
+  const camp=f=>freq(f,1);
+  const ehLib13=j=>j.competicao==='Libertadores'&&j.temporada===2013, ehRec14=j=>/recopa/i.test(j.competicao||'')&&j.temporada===2014, ehCon=j=>j.competicao==='CONMEBOL'&&(j.temporada===1992||j.temporada===1997);
+  const ehCdb=j=>j.competicao==='Copa do Brasil'&&(j.temporada===2014||j.temporada===2021);
+  const ehBra=j=>(j.competicao==='Brasileiro-Nacional'&&j.temporada===1971)||(j.competicao==='Brasileiro'&&j.temporada===2021);
+  add('c-cdb','Campeões da Copa do Brasil', camp(ehCdb), freq(j=>j.competicao==='Copa do Brasil'&&j.temporada>=2010&&!ehCdb(j),1), {fam:'cdb'});
+  add('c-int','Campeões internacionais (Libertadores, Recopa ou Conmebol)', camp(j=>ehLib13(j)||ehRec14(j)||ehCon(j)), freq(j=>/libertadores|sul-americana|sudamericana/i.test(j.competicao||'')&&!ehLib13(j),1), {fam:'int'});
+  add('c-lib','Campeões da Libertadores', camp(ehLib13), freq(j=>j.competicao==='Libertadores'&&j.temporada!==2013,1), {fam:'int'});
+  add('c-bra','Campeões brasileiros', camp(ehBra), freq(j=>j.competicao==='Brasileiro'&&j.temporada>=2019&&j.temporada<=2023&&j.temporada!==2021,5), {fam:'bra'});
   add('serieb2006','Campanha da Série B de 2006', freq(j=>j.temporada===2006&&j.competicao==='Brasileiro-Série B',12), temp(2005,2008));
   // gols em momentos grandes
   const jogouFinal=freq(j=>ehFinal(j),1);
@@ -2072,17 +2080,17 @@ function categorias(){
   const hat={}; J.forEach(j=>{ const c={}; j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)) c[g.jogador]=(c[g.jogador]||0)+1; }); Object.entries(c).forEach(([n,v])=>{ if(v>=3) hat[n]=1; }); });
   add('hat','Fizeram hat-trick pelo Galo', Object.keys(hat), [...conh].filter(n=>!hat[n]&&golsP(n)>=15));
   POSS.forEach(p=>add('pos-'+p,{Goleiro:'Goleiros',Defensor:'Defensores',Meia:'Meias',Atacante:'Atacantes'}[p], L.filter(f=>posTxt(f.nome)===p).map(f=>f.nome)));
-  [1970,1980,1990,2000,2010,2020].forEach(d=>add('dec'+d,`Estrearam nos anos ${String(d).slice(2)}`, L.filter(f=>f.dec===d).map(f=>f.nome), figuras().filter(f=>conh.has(f.nome)&&(f.dec===d-10||f.dec===d+10)).map(f=>f.nome)));
+  [1970,1980,1990,2000,2010,2020].forEach(d=>add('dec'+d,`Estrearam nos anos ${d<2000?String(d).slice(2):d}`, L.filter(f=>f.dec===d).map(f=>f.nome), figuras().filter(f=>conh.has(f.nome)&&(f.dec===d-10||f.dec===d+10)).map(f=>f.nome)));
   CATS=C; return C;
 }
 function embaralha(a,r){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const k=Math.floor(r()*(i+1)); [a[i],a[k]]=[a[k],a[i]]; } return a; }
 
 /* ---------- Conexões ---------- */
 function conexoesDia(){
-  const r=rngDia('conexoes'), C=categorias();
+  const r=rngDia('conexoes'), C=categorias().filter(c=>c.so!=='imp');
   for(let tent=0;tent<200;tent++){
     const esc4=embaralha(C,r).slice(0,4); const grupos=[];
-    let ok=true;
+    let ok=new Set(esc4.map(c=>c.fam||c.id)).size===4;
     for(const c of esc4){ const outros=esc4.filter(x=>x!==c); const pool=embaralha([...c.m].filter(n=>!outros.some(o=>o.m.has(n))&&!grupos.some(g=>g.m.includes(n))),r);
       if(pool.length<4){ ok=false; break; } grupos.push({id:c.id, nome:c.nome, m:pool.slice(0,4)}); }
     if(ok) return grupos;
@@ -3541,7 +3549,7 @@ function vEscalacao(){
     campo=campo.replace(a,`<button type="button" class="esc-oc${ESC_SEL===n?' sel':''}" data-esc="${i}" aria-label="Posição escondida, ${pw.join(' + ')} letras">?<small>${pw.join(' + ')} letras</small>${s.t.length?`<small class="esc-tt">${s.t.length}/${ESC_TENT}</small>`:''}</button>`); });
   const painel=()=>{ if(!ESC_SEL||st.fim) return ''; const n=ESC_SEL, s=S(n), al=escAlvo(n), pos=posTxt(n), pw=escPalavras(n);
     const grupos=html=>{ const out=[]; let k=0; pw.forEach(w=>{ out.push(`<span class="esc-w">${html.slice(k,k+w).join('')}</span>`); k+=w; }); return out.join(''); };
-    const linhas=s.t.map(g=>{ const c=g.length===al.length?escCores(g,al):null; return `<div class="esc-row">${c?grupos([...g].map((ch,k)=>`<span class="gd-c ${c[k]==='v'?'v':c[k]==='a'?'a':'x'}">${ch}</span>`)):`<span class="esc-erro">${esc(g)}</span>`}</div>`; }).join('');
+    const linhas=s.t.map(g=>{ const c=escCores(g,al), tl=[...g].map((ch,k)=>`<span class="gd-c ${c[k]==='v'?'v':c[k]==='a'?'a':'x'}">${esc(ch)}</span>`); return `<div class="esc-row">${g.length===al.length?grupos(tl):tl.join('')}</div>`; }).join('');
     return `<div class="esc-painel" id="escpainel"><div class="osw">${pos?esc(pos)+' · ':''}${pw.length>1?pw.join(' + ')+' letras (nome e sobrenome)':al.length+' letras'} · ${ESC_TENT-s.t.length} ${ESC_TENT-s.t.length===1?'chance':'chances'}</div>${linhas}<div class="esc-row">${grupos([...Array(al.length)].map(()=>'<span class="gd-c"></span>'))}</div>
       <div class="filters"><label>Quem é?<input id="escin" placeholder="nome do jogador" autocomplete="off" autocapitalize="characters"></label><button type="button" class="more" id="escenv" style="align-self:flex-end">Chutar</button><button type="button" class="ghost" id="escfecha" style="align-self:flex-end">Fechar</button></div><p id="escerr" class="count" role="alert" style="color:var(--d)"></p>
       <p class="count">Escreva o nome pelo qual ele é chamado (com sobrenome quando tiver). Verde: letra no lugar certo. Amarelo: a letra existe em outra posição.</p></div>`; };
