@@ -563,9 +563,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117153528';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117153528"></script>
-<script src="backend-firebase.js?v=20261117153528"></script>
+<script>window.GM_BUILD='20261117153824';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261117153824"></script>
+<script src="backend-firebase.js?v=20261117153824"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2804,6 +2804,7 @@ const ehCruz=j=>j.adversario_id==='cruzeiro mg';
 const contaEv=f=>{ const m={}; eventos().forEach(e=>{ if(f(e)) m[e.nome]=(m[e.nome]||0)+1; }); return Object.entries(m).filter(([n])=>n&&!/^n[aã]o identificado/i.test(n)).sort((a,b)=>b[1]-a[1]).map(([n,v])=>({nome:nomeV(n), href:'#jogador-'+slug(n), v})); };
 const contaJ=(f,chave,href)=>{ const m={}; J.forEach(j=>{ if(!j.resultado||!f(j)) return; const k=chave(j); if(!k) return; (m[k] ||= {v:0, j}).v++; }); return Object.entries(m).sort((a,b)=>b[1].v-a[1].v).map(([k,o])=>({nome:k, href:href?href(o.j,k):'', v:o.v})); };
 const listaJogos=(L,val)=>L.map(j=>({nome:`${fmtD(j.data)} · Galo ${placar(j)} ${j.adversario}`, href:'#jogo-'+j.id, v:val(j)}));
+const LISTA_SIN={"art": "artilheiro artilheiros gols marcou fez mais gols goleador maior", "finais": "finais final decisao decisoes titulo", "cruzeiro": "cruzeiro classico raposa clasico", "vitoria": "vitoria vencedor decisivo decidiu deu a vitoria gol da vitoria", "penalti": "penalti penaltis penalidade cobranca", "falta": "falta faltas bola parada cobranca de falta", "acrescimos": "acrescimos 90 minutos final do jogo ultimo minuto apagar das luzes", "libertadores": "libertadores liberta continental", "hat": "hat trick hattrick tres gols triplete", "jogos": "jogou jogos partidas mais vezes vestiu camisa atuou", "tecnicos": "tecnico tecnicos treinador treinadores comandou jogos", "tecv": "tecnico tecnicos treinador vitorias venceu", "goleadas": "goleada goleadas maior vitoria maiores vitorias atropelou", "publico": "publico publicos torcida pagantes lotado estadio cheio", "golsjogo": "jogo mais gols placar elastico", "adv": "adversario adversarios enfrentou enfrentados rival time clube", "advv": "adversario adversarios time times clube venceu vitorias fregues freguesia", "estadios": "estadio estadios onde jogou mineirao independencia", "cidades": "cidade cidades onde jogou viajou"};
 const LISTAS=[
  ['Gols','art','Maiores artilheiros','gols',()=>D.jogadores.map(p=>({nome:nomeV(p.nome), href:'#jogador-'+slug(p.nome), v:golsBest(p)})).sort((a,b)=>b.v-a.v)],
  ['Gols','finais','Quem marcou em mais finais','gols',()=>contaEv(e=>ehFinal(e.j))],
@@ -2843,18 +2844,27 @@ function buscaEntidades(q){
     + bloco('Temporada', temp.map(y=>`<li><a href="#temporada-${y}">Temporada ${y}</a></li>`));
   return html;
 }
+const PALAVRAS_VAZIAS=new Set('quem qual quais que o a os as de do da dos das em no na nos nas e mais pelo pela galo atletico com por para um uma foi tem teve ja the me diga mostre lista quero ver'.split(' '));
+const GENERICAS=new Set('gol gols marcou marcaram fez fizeram jogou jogos jogo maior maiores vitoria vitorias venceu historia time clube artilheiro'.split(' '));
+function listasParecidas(q){ const w=nrm(q).replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(x=>x&&!PALAVRAS_VAZIAS.has(x)); if(!w.length) return [];
+  return LISTAS.map(L=>{ const alvo=(nrm(L[2])+' '+(LISTA_SIN[L[1]]||'')).replace(/[^a-z0-9 ]/g,' ').split(/\s+/); let s=0; w.forEach(x=>{ const peso=GENERICAS.has(x)?1:3; if(alvo.includes(x)) s+=peso; else if(x.length>=4&&alvo.some(a=>a.length>=4&&(a.startsWith(x.slice(0,5))||x.startsWith(a.slice(0,5))))) s+=peso/2; }); return {L, s}; }).filter(o=>o.s>=1).sort((a,b)=>b.s-a.s).map(o=>o.L); }
 function vPergunte(params){
   const P=new URLSearchParams(params||''), q=P.get('q')||'', lid=P.get('lista')||'';
   let corpo='';
   const L=LISTAS.find(x=>x[1]===lid);
   if(L){ const [,id,tit,unid,fn]=L; const linhas=fn().filter(x=>x.v>0).slice(0,30);
     corpo=`<h2>${esc(tit)}</h2>${linhas.length?`<ol class="rank">${linhas.map((x,i)=>`<li><span class="rank-n">${i+1}</span>${x.href?`<a href="${x.href}">${esc(x.nome)}</a>`:esc(x.nome)}<b>${N(x.v)}</b></li>`).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
-  else if(q.trim()){ const ents=buscaEntidades(q); corpo=ents?`<h2>Resultados para "${esc(q)}"</h2><div class="busca-grid">${ents}</div>`:`<p class="empty">Nada encontrado para "${esc(q)}". Tente só o nome do jogador, do clube, da cidade ou do estádio, ou um ano.</p>`; }
+  else if(q.trim()){ const ents=buscaEntidades(q), par=listasParecidas(q);
+    if(par.length){ const [,id,tit,unid,fn]=par[0]; const linhas=fn().filter(x=>x.v>0).slice(0,15);
+      corpo+=`<h2>${esc(tit)}</h2><ol class="rank">${linhas.map((x,i)=>`<li><span class="rank-n">${i+1}</span>${x.href?`<a href="${x.href}">${esc(x.nome)}</a>`:esc(x.nome)}<b>${N(x.v)}</b></li>`).join('')}</ol><p class="count">Em ${esc(unid)}. <a href="#pergunte?lista=${id}">Ver a lista completa →</a></p>`;
+      if(par.length>1) corpo+=`<h3>Talvez você procure</h3><div class="pq-ex">${par.slice(1,5).map(x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`).join('')}</div>`; }
+    if(ents) corpo+=`<h2>${par.length?'Na base':'Resultados para "'+esc(q)+'"'}</h2><div class="busca-grid">${ents}</div>`;
+    if(!corpo) corpo=`<p class="empty">Nada encontrado para "${esc(q)}". Tente o nome de um jogador, clube, cidade ou estádio, um ano, ou uma pergunta como "quem fez mais gols de falta".</p>`; }
   setTimeout(()=>{ const f=$('#pqform'); if(f) f.onsubmit=ev=>{ ev.preventDefault(); location.hash='pergunte?'+new URLSearchParams({q:$('#pq').value}); }; const i=$('#pq'); if(i&&!q&&!lid) i.focus(); });
   const grupos=[...new Set(LISTAS.map(x=>x[0]))];
   return `<div class="kicker">Galo Metrics · busca</div><h1>Busca</h1>
-  <p class="lede">Encontre um jogador, um adversário, uma cidade, um estádio, um técnico ou uma temporada. Ou abra uma das listas prontas.</p>
-  <form id="pqform" class="pq"><input id="pq" type="search" value="${esc(q)}" placeholder="Ex.: Reinaldo, Cruzeiro, Uberlândia, 1971" aria-label="Buscar"><button class="more" type="submit">Buscar</button></form>
+  <p class="lede">Escreva um nome, um ano ou uma pergunta, como "quem fez mais gols de falta" ou "maiores públicos". Ou abra uma das listas prontas.</p>
+  <form id="pqform" class="pq"><input id="pq" type="search" value="${esc(q)}" placeholder="Ex.: Reinaldo, 1971, quem mais marcou no clássico" aria-label="Buscar"><button class="more" type="submit">Buscar</button></form>
   ${corpo}
   ${L?'':`<h2>Listas prontas</h2>${grupos.map(g=>`<h3>${esc(g)}</h3><div class="pq-ex">${LISTAS.filter(x=>x[0]===g).map(x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`).join('')}</div>`).join('')}`}`;
 }
@@ -3223,21 +3233,19 @@ function vColaboradores(){
 function vApoie(){
   const A=APOIE||{}, ap=(A.apoiadores||'').split('\n').map(s=>s.trim()).filter(Boolean);
   setTimeout(()=>{ if($('#apcopia')) $('#apcopia').onclick=()=>{ try{ navigator.clipboard.writeText(A.pix).then(()=>toast('Chave Pix copiada.'),()=>toast('Selecione a chave e copie.')); }catch(e){ toast('Selecione a chave e copie.'); } }; const b=$('#apsalva'); if(!b) return;
-    b.onclick=async()=>{ const f=$('#apform'), o={texto:f.texto.value.trim(), pix:f.pix.value.trim(), link:f.link.value.trim(), linkNome:f.linkNome.value.trim(), insta:f.insta.value.trim().replace(/^@/,''), apoiadores:f.apoiadores.value}; try{ await GDB.doc('site/apoie').set(o); APOIE=o; toast('Página Apoie salva.'); route.keep=true; route(); }catch(e){ $('#apmsg').textContent='Não foi possível salvar agora.'; } }; });
+    b.onclick=async()=>{ const f=$('#apform'), o={texto:f.texto.value.trim(), pix:'', link:'', linkNome:'', insta:f.insta.value.trim().replace(/^@/,''), apoiadores:f.apoiadores.value}; try{ await GDB.doc('site/apoie').set(o); APOIE=o; toast('Página Apoie salva.'); route.keep=true; route(); }catch(e){ $('#apmsg').textContent='Não foi possível salvar agora.'; } }; });
   const temDin = A.pix||A.link;
   return `<div class="kicker">Galo Metrics · apoie</div><h1>Apoie o Galo Metrics</h1>
-  <p class="lede">${esc(A.texto||'O Galo Metrics é um projeto independente, feito por torcedor para torcedor, com horas de pesquisa em jornais, livros e arquivos para reunir toda a história do Atlético em números. Se o site te ajuda, dá para apoiar de várias formas.')}</p>
+  <p class="lede">${esc(A.texto||'O Galo Metrics é um projeto independente, feito por torcedor para torcedor, com horas de pesquisa em jornais, livros e arquivos para reunir toda a história do Galo em números. Se o site te ajuda, dá para apoiar mandando informação e espalhando o site.')}</p>
   <div class="apoie-grid">
-   <div class="apoie-c"><div class="kicker">Com uma contribuição</div>${temDin?`${A.pix?`<p><b>Pix</b></p><p class="mono pixk">${esc(A.pix)}</p><button type="button" class="more" id="apcopia">Copiar chave Pix</button>`:''}${A.link?`<p style="margin-top:14px"><a class="more" href="${esc(A.link)}" target="_blank" rel="noopener">${esc(A.linkNome||'Apoiar pelo link')} ↗</a></p>`:''}<p class="count">Apoiadores ganham o selo ${apoiadorSelo()} ao lado do nome no site.</p>`:'<p class="count">As formas de apoio em dinheiro chegam em breve.</p>'}</div>
    <div class="apoie-c"><div class="kicker">Com informação</div><p>Mande correções, escudos e fotos. Cada contribuição aceita vale pontos e selo de colaborador.</p><a class="more" href="#sugestoes">Enviar contribuição</a> <a class="ghost" href="#colaboradores">Ver colaboradores</a></div>
    <div class="apoie-c"><div class="kicker">Espalhando</div><p>Compartilhe o site, um recorde ou um jogo com outros atleticanos.${A.insta?` E siga <a href="https://instagram.com/${esc(A.insta)}" target="_blank" rel="noopener">@${esc(A.insta)}</a>.`:''}</p>${tw('Toda a história do Galo em números, jogo a jogo, no Galo Metrics.','Compartilhar no X')}</div>
   </div>
   ${ap.length?`<h2>Apoiadores</h2><p class="apoiadores">${ap.map(n=>`${apoiadorSelo()} ${esc(n)}`).join(' · ')}</p>`:''}
   ${DONO?`<details class="dono-ed"><summary>✎ Editar página Apoie (só você vê)</summary><form id="apform" class="dono" onsubmit="return false">
    <label>Texto de abertura<textarea name="texto" rows="3" style="width:100%">${esc(A.texto||'')}</textarea></label>
-   <div class="dgrid"><label>Chave Pix<input name="pix" value="${esc(A.pix||'')}" placeholder="e-mail, celular ou chave aleatória"></label><label>Instagram (sem @)<input name="insta" value="${esc(A.insta||'')}"></label>
-   <label>Link de apoio (Apoia.se, LivePix, etc.)<input name="link" value="${esc(A.link||'')}" placeholder="https://"></label><label>Texto do botão do link<input name="linkNome" value="${esc(A.linkNome||'')}" placeholder="Apoiar pelo Apoia.se"></label></div>
-   <label>Apoiadores (um nome por linha, igual ao apelido no site para ganhar o selo)<textarea name="apoiadores" rows="4" style="width:100%">${esc(A.apoiadores||'')}</textarea></label>
+   <div class="dgrid"><label>Instagram (sem @)<input name="insta" value="${esc(A.insta||'')}"></label></div>
+   <label>Apoiadores em destaque (um nome por linha, igual ao apelido no site para ganhar o selo)<textarea name="apoiadores" rows="4" style="width:100%">${esc(A.apoiadores||'')}</textarea></label>
    <p id="apmsg" class="count" role="status"></p><button type="button" class="more" id="apsalva">Salvar</button></form></details>`:''}`;
 }
 
