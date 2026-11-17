@@ -560,9 +560,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117091857';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117091857"></script>
-<script src="backend-firebase.js?v=20261117091857"></script>
+<script>window.GM_BUILD='20261117092149';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117092149"></script>
+<script src="backend-firebase.js?v=20261117092149"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -940,7 +940,7 @@ function vAdversario(s){
     ${resultBar(ac)}
     <div class="note acc-note"><b>Número aceito.</b> Contagem do Atlético até ${fmtD(H.ate)} (${H.jogos} jogos, ${H.V}V ${H.E}E ${H.D}D; ${fonteLink(H.fonte)})${pos.n?`, somada aos ${pos.n} jogos disputados depois, registrados na base`:''}. Em cinza, o que a base Galo Metrics registra jogo a jogo, incluindo a era Palestra Itália. ${esc(H.explicacao)} *Gols só pela base.</div>`;
   } else topo = tiles(a)+resultBar(a);
-  return `<a class="back" href="#adversarios">← Adversários</a><div class="kicker">Retrospecto do Galo contra</div><div class="advhead">${cr('galo','crh')}<span class="vs">×</span>${cr(a.id,'crh crh2')}<h1>${esc(a.nome)} <span class="uf">${esc(a.uf)}</span></h1></div>
+  return `<a class="back" href="#adversarios">← Adversários</a>${blocoDonoImg('adv',a.id,a.nome)}<div class="kicker">Retrospecto do Galo contra</div><div class="advhead">${cr('galo','crh')}<span class="vs">×</span>${cr(a.id,'crh crh2')}<h1>${esc(a.nome)} <span class="uf">${esc(a.uf)}</span></h1></div>
   ${topo}
   <div class="grid2"><div><h2>Em casa</h2><p class="mono">${casa.n} jogos · ${casa.V}V ${casa.E}E ${casa.D}D · ${casa.gp}-${casa.gc}</p><h2>Fora</h2><p class="mono">${fora.n} jogos · ${fora.V}V ${fora.E}E ${fora.D}D · ${fora.gp}-${fora.gc}</p>${neu.n?`<h2>Neutro ou sem mando informado</h2><p class="mono">${neu.n} jogos · ${neu.V}V ${neu.E}E ${neu.D}D · ${neu.gp}-${neu.gc}</p>`:''}
   ${best&&best.resultado==='V'?`<div class="note">Maior vitória: <a href="#jogo-${best.id}">${linha(best)}</a> (${fmtD(best.data)})</div>`:''}
@@ -1838,7 +1838,23 @@ function blocoDonoJogador(p){
     <label>Texto de perfil<textarea id="jxbio" rows="4" style="width:100%">${esc(x.bio||'')}</textarea></label>
     <label>Raridade da figurinha<select id="jxrar"><option value="">Automática</option>${['comum','brilhante','lendaria'].map(r=>`<option value="${r}"${CFG.raridade[p.nome]===r?' selected':''}>${ROT[r]}</option>`).join('')}</select></label>
     <p class="count">Para mudar gols e escalações, edite os jogos: os totais do jogador se recalculam sozinhos.</p>
-    <button type="button" class="more" id="jxsalva">Salvar</button></div></details>`;
+    <button type="button" class="more" id="jxsalva">Salvar</button></div></details>${blocoDonoImg('jogador',slug(p.nome),p.nome)}`;
+}
+// dono sobe foto de jogador ou escudo de clube direto pelo site
+function blocoDonoImg(tipo, chave, nome){
+  if(!DONO) return '';
+  const atual=tipo==='jogador'?(JOGX[chave]||{}).foto:(ESCX||{})[chave];
+  setTimeout(()=>{ const inp=$('#dimg'), msg=$('#dimgmsg'), rm=$('#dimgrm'); if(!inp) return;
+    const grava=async url=>{ if(tipo==='jogador'){ const r=GDB.doc('jogadoresx/'+chave); const s=await r.get(); const o={...(s.exists?s.data():{}), em:Date.now()}; if(url){ o.foto=url; o.fotoDe='Galo Metrics'; } else delete o.foto; await r.set(o); JOGX[chave]=o; }
+      else { const r=GDB.doc('site/escudosx'); const s=await r.get(); const m=(s.exists?s.data().map:{})||{}; if(url) m[chave]=url; else delete m[chave]; await r.set({map:m, em:Date.now()}); ESCX=m; } };
+    inp.onchange=async()=>{ const f=inp.files[0]; if(!f) return; msg.textContent='Enviando…';
+      try{ const A=await window.claude.use('assets'); if(!A) throw new Error('sem upload'); const up=await A.upload(f); await grava(up.url); msg.textContent='Pronto, a imagem já está no site.'; toast(tipo==='jogador'?'Foto colocada.':'Escudo colocado.'); route.keep=true; setTimeout(route,600); }
+      catch(e){ console.error(e); msg.textContent='Não consegui enviar: '+(e.message||'tente outra imagem.'); } };
+    if(rm) rm.onclick=async()=>{ try{ await grava(null); toast('Imagem tirada.'); route.keep=true; route(); }catch(e){ msg.textContent='Não foi possível agora.'; } }; });
+  return `<details class="dono-ed"><summary>✎ ${tipo==='jogador'?'Foto do jogador':'Escudo do clube'} (só você vê este botão)</summary><div class="dono">
+    <p class="count">${atual?'Já tem imagem. Escolha outra para trocar.':`${esc(nome)} ainda não tem ${tipo==='jogador'?'foto':'escudo'} enviado.`} A imagem é reduzida no navegador antes de subir${tipo==='jogador'?'; dá preferência a foto em pé, com o rosto no alto':'; PNG com fundo transparente fica melhor'}.</p>
+    <label class="ghost" style="cursor:pointer;display:inline-block">Escolher imagem<input type="file" id="dimg" accept="image/*" hidden></label>${atual?' <button type="button" class="ghost" id="dimgrm">Tirar a imagem</button>':''}
+    <p id="dimgmsg" class="count" role="status"></p></div></details>`;
 }
 
 /* ---------- Perfil e conquistas ---------- */
