@@ -558,9 +558,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117082059';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117082059"></script>
-<script src="backend-firebase.js?v=20261117082059"></script>
+<script>window.GM_BUILD='20261117082554';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117082554"></script>
+<script src="backend-firebase.js?v=20261117082554"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2256,7 +2256,13 @@ function vRanking(){
   const sem=semanaDe(fmtD(hojeStr())); const semSet=new Set(Object.keys(RANK)); Object.values(RKU).forEach(u=>Object.values(u.res||{}).forEach(x=>{ if(x&&x.d) semSet.add(semanaDe(x.d)); })); const semanas=[...semSet].sort().reverse(); const atual=rankSemana(sem);
   const tab=o=>{ const l=Object.entries(o.pessoas||{}).map(([ap,x])=>({ap, pts:Object.values(x).reduce((s,v)=>s+v,0), n:Object.keys(x).length})).sort((a,b)=>b.pts-a.pts);
     return l.length?`<table><thead><tr><th>#</th><th>Torcedor</th><th class="n">Desafios</th><th class="n">Pontos</th></tr></thead><tbody>${l.map((x,i)=>`<tr><td class="mono">${i+1}</td><td>${i===0?'★ ':''}${esc(x.ap)}${ehCriador((o.uids||{})[x.ap])?' '+seloCriador():''}${seloPrimeiro(numPrimeiro((o.uids||{})[x.ap]))}</td><td class="n">${x.n}</td><td class="n"><b>${x.pts}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Ninguém no ranking desta semana ainda.</p>'; };
-  setTimeout(()=>{ const b=$('#rkadd'); if(!b) return; b.onclick=async()=>{ const it=leTextoRank($('#rktxt').value); const msg=$('#rkmsg');
+  setTimeout(()=>{ const z=$('#rkzera'); if(z){ let arm=false; z.onclick=async()=>{ const msg=$('#rkzmsg');
+      if(!arm){ arm=true; z.textContent='Clique de novo para confirmar'; msg.textContent='Tem certeza? Todos os resultados desta semana serão apagados.'; return; }
+      z.disabled=true; msg.textContent='Zerando…'; let n=0, err=0;
+      for(const uid of Object.keys(RKU)){ try{ const r=GDB.doc('rankuser/'+uid); const s=await r.get(); if(!s.exists) continue; const o=s.data(); const k0=Object.keys(o.res||{}).length; Object.keys(o.res||{}).forEach(k=>{ const x=o.res[k]; if(x&&x.d&&semanaDe(x.d)===sem) delete o.res[k]; }); if(Object.keys(o.res||{}).length!==k0){ await r.set(o); RKU[uid]=o; n++; } }catch(e){ err++; } }
+      try{ await GDB.doc('ranking/'+sem).delete(); }catch(e){} delete RANK[sem];
+      msg.textContent=`Pronto: ranking da semana zerado (${n} torcedores tinham resultados)${err?`, ${err} não puderam ser alterados`:''}.`; toast('Ranking da semana zerado.'); setTimeout(()=>{ route.keep=true; route(); },1200); }; }
+    const b=$('#rkadd'); if(!b) return; b.onclick=async()=>{ const it=leTextoRank($('#rktxt').value); const msg=$('#rkmsg');
     if(!it.length){ msg.textContent='Nenhum resultado reconhecido. Cole o texto copiado pelo botão "Copiar resultado".'; return; }
     const val=it.filter(x=>x.ok), inv=it.length-val.length; const por={};
     val.forEach(x=>{ const s=semanaDe(x.d); const doc=(por[s] ||= JSON.parse(JSON.stringify(RANK[s]||{pessoas:{}}))); const p=(doc.pessoas[x.ap] ||= {}); p[x.jogo+' '+x.d]=x.pts; });
@@ -2266,7 +2272,8 @@ function vRanking(){
   <p class="lede">${GUID?'Jogue os desafios: com você conectado, cada resultado entra sozinho no ranking da semana (de segunda a domingo).':(window.GM_LOGIN?'Jogue os desafios e <a href="javascript:GM_LOGIN()">entre com sua conta Google</a>: assim cada resultado entra sozinho no ranking da semana (de segunda a domingo).':`Jogue os desafios, copie o resultado e mande para ${esc(CFG.contato||'o Galo Metrics')}. Cada resultado tem um código de conferência, e os pontos entram no ranking da semana (de segunda a domingo).`)}</p>
   <h2>Semana de ${fmtD(sem)}</h2>${tab(atual)}
   ${semanas.filter(s=>s!==sem).slice(0,4).map(s=>`<h2>Semana de ${fmtD(s)}</h2>${tab(rankSemana(s))}`).join('')}
-  ${DONO?`<details class="dono-ed"><summary>✎ Lançar resultados recebidos por mensagem (só você vê)</summary><div class="dono"><label>Cole aqui um ou vários resultados<textarea id="rktxt" rows="6" style="width:100%"></textarea></label><p id="rkmsg" class="count" role="status"></p><button type="button" class="more" id="rkadd">Conferir e lançar</button></div></details>`:''}
+  ${DONO?`<details class="dono-ed"><summary>✎ Lançar resultados recebidos por mensagem (só você vê)</summary><div class="dono"><label>Cole aqui um ou vários resultados<textarea id="rktxt" rows="6" style="width:100%"></textarea></label><p id="rkmsg" class="count" role="status"></p><button type="button" class="more" id="rkadd">Conferir e lançar</button></div></details>
+  <details class="dono-ed"><summary>✎ Zerar o ranking desta semana (só você vê)</summary><div class="dono"><p class="count">Apaga todos os resultados da semana de ${fmtD(sem)} de todos os torcedores. As outras semanas não mudam. Não dá para desfazer.</p><p id="rkzmsg" class="count" role="status"></p><button type="button" class="more" id="rkzera">Zerar a semana de ${fmtD(sem)}</button></div></details>`:''}
   <p class="count">Pontos por desafio: Galodle 7 menos as tentativas, Quem é? 9 menos os chutes, Placar do dia 4 menos os chutes, Mais ou menos 1 por acerto, Conexões 5 menos os erros, Impostor 1 por impostor achado, Carreira 7 menos os chutes. Para aparecer com outro nome, defina um apelido no <a href="#perfil">Perfil</a> antes de jogar.</p>`;
 }
 
