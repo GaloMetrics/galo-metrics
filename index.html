@@ -478,6 +478,7 @@ body.pko-on{overflow:hidden}
 .aceita input{width:70px;padding:6px}.aceita{display:inline-flex;gap:6px;align-items:center;margin-right:6px}
 .selo-colab{display:inline-block;font-size:.85em;line-height:1;padding:3px 6px;border:2px solid var(--ink);font-family:'Oswald',sans-serif;letter-spacing:.04em;vertical-align:middle;text-transform:uppercase}
 .colab-ouro{background:#c9a227;color:#111;border-color:#8a6d0f}.colab-prata{background:#c7c9cc;color:#111;border-color:#7d8085}.colab-bronze{background:#b8743d;color:#fff;border-color:#7a4a22}
+.selo-prim{display:inline-block;font-size:.72em;line-height:1;padding:3px 7px;background:#111;color:var(--gold);border:1.5px solid var(--gold);font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle;margin-left:6px;white-space:nowrap}.gmchip .selo-prim{font-size:10px;padding:1px 4px}
 .selo-criador{display:inline-block;font-size:.78em;line-height:1;padding:3px 7px;background:var(--gold);color:#111;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle;margin-left:6px;white-space:nowrap}.gmchip .selo-criador{font-size:10px;padding:2px 4px}
 .conq.rara{border-color:var(--gold);border-style:double;border-width:4px}.conq.rara .conq-ic{color:var(--gold)}.tag-rara{display:inline-block;font-size:10px;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 5px;background:var(--gold);color:#111;vertical-align:middle}
 .pf-foto{display:flex;gap:14px;align-items:center;margin-top:14px}.pf-av{width:64px;height:64px;border:2px solid var(--ink);border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex:none;background:var(--soft)}.pf-av img{width:100%;height:100%;object-fit:cover}.pf-av .av,.pf-av svg{width:100%;height:100%}
@@ -555,9 +556,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117075957';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117075957"></script>
-<script src="backend-firebase.js?v=20261117075957"></script>
+<script>window.GM_BUILD='20261117080610';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117080610"></script>
+<script src="backend-firebase.js?v=20261117080610"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1524,7 +1525,7 @@ function achou(f,nova){
   box.innerHTML=`<div class="gm-achou-in"><p class="osw">${nova?'Você encontrou uma figurinha!':'Figurinha repetida!'}</p>${figHTML(f,'a-flip')}<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><a class="more" href="#album">Ver álbum</a><button type="button" class="more" id="gmfecha">Fechar</button></div></div>`;
   document.body.appendChild(box); const fecha=()=>box.remove(); box.querySelector('#gmfecha').onclick=fecha; box.onclick=e=>{ if(e.target===box) fecha(); }; box.querySelector('#gmfecha').focus();
 }
-function atualizaChip(){ const c=document.getElementById('gmchip'); if(c&&G) c.innerHTML=`★ ${G.perfil&&G.perfil.apelido?'<span class="ap">'+esc(G.perfil.apelido)+' · </span>':''}${DONO?'∞':N(G.pts)} <span class="mc" title="Metricoins">MC</span>${DONO?' '+seloCriador():''}${typeof COLAB_MEU!=='undefined'&&COLAB_MEU?' '+seloColab(COLAB_MEU.n):''}${typeof ehApoiador==='function'&&G.perfil&&ehApoiador(G.perfil.apelido)?' '+apoiadorSelo():''}`; }
+function atualizaChip(){ const c=document.getElementById('gmchip'); if(c&&G) c.innerHTML=`★ ${G.perfil&&G.perfil.apelido?'<span class="ap">'+esc(G.perfil.apelido)+' · </span>':''}${DONO?'∞':N(G.pts)} <span class="mc" title="Metricoins">MC</span>${DONO?' '+seloCriador():''}${!DONO&&G.primPago?' <span class="selo-prim" title="Um dos 10 primeiros torcedores">★ Nº '+G.primPago+'</span>':''}${typeof COLAB_MEU!=='undefined'&&COLAB_MEU?' '+seloColab(COLAB_MEU.n):''}${typeof ehApoiador==='function'&&G.perfil&&ehApoiador(G.perfil.apelido)?' '+apoiadorSelo():''}`; }
 
 /* página do álbum */
 let ALB={dec:null, filtro:'todas', q:'', pacote:[]};
@@ -1709,7 +1710,7 @@ async function gmInit(){
   contaBotao();
   if(GDB){ try{ const s=await GDB.doc('site/config').get(); if(s.exists){ aplicaCfg(JSON.parse(s.data().json||'{}')); } }catch(e){} }
   if(DONO&&GDB&&GUID&&CFG.criador!==GUID){ try{ const s=await GDB.doc('site/config').get(); const c=s.exists?JSON.parse(s.data().json||'{}'):{}; c.criador=GUID; await GDB.doc('site/config').set({json:JSON.stringify(c), em:Date.now()}); CFG.criador=GUID; }catch(e){} }
-  await carregaEdicoes(); await carregaRanking(); await carregaAval(); try{ await carregaColab(); }catch(e){} try{ await carregaPresentes(); }catch(e){} try{ registraPerfil(); }catch(e){} try{ publicaResumo(); }catch(e){}
+  await carregaEdicoes(); await carregaRanking(); await carregaAval(); try{ await carregaColab(); }catch(e){} try{ await carregaPresentes(); }catch(e){} try{ registraPerfil(); }catch(e){} try{ checaPrimeiros(); }catch(e){} try{ publicaResumo(); }catch(e){}
   NUVEM = lsGet('gm-nuvem')==='1' && !!GDB && !!GUID; if(NUVEM){ await nuvemCarrega(); lsSet(GMK, JSON.stringify(G)); }
   GM_PRONTO=true; atualizaChip(); route();
 }
@@ -1889,6 +1890,7 @@ const CONQ=[
   {id:'s_origem', nome:'Desde o começo', desc:'Abriu a ficha do primeiro jogo da história da base.', pts:20, secreta:true, p:()=>[J.length&&G.vis.jogo[String([...J].sort((a,b)=>a.data<b.data?-1:1)[0].id)]?1:0,1]},
   {id:'s_seculo', nome:'Cem anos atrás', desc:'Abriu um jogo disputado exatamente 100 anos antes do dia da visita.', pts:30, secreta:true, p:()=>{ const h=hojeStr(), alvo=(+h.slice(0,4)-100)+h.slice(4); return [Object.keys(G.vis.jogo||{}).some(id=>byId[id]&&byId[id].data===alvo)?1:0,1]; }},
   {id:'s_rei', nome:'Eu vi o Rei', desc:'Registrou no estádio um jogo com o Reinaldo em campo.', pts:50, secreta:true, p:()=>[(G.vivo||{})['Reinaldo']?1:0,1]},
+  {id:'primeiros', nome:'Os primeiros', desc:'Foi um dos 10 primeiros torcedores a se cadastrar no Galo Metrics.', pts:50, rara:true, p:()=>[G.primPago?1:0,1]},
   {id:'amigo_criador', nome:'Amigo do criador', desc:'Adicionou o criador do Galo Metrics aos amigos. Só quem tem o código dele consegue.', pts:100, rara:true, p:()=>[CFG.criador&&GUID!==CFG.criador&&(G.amigos||[]).some(c=>uidPorCodigo(c)===CFG.criador)?1:0,1]},
   {id:'s_mapa', nome:'Turista alvinegro', desc:'Esteve no estádio em 5 cidades diferentes.', pts:40, secreta:true, p:()=>[new Set(vistoAoVivo().map(j=>j.cidade).filter(Boolean)).size,5]},
 ];
@@ -2094,10 +2096,13 @@ function categorias(){
 function embaralha(a,r){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const k=Math.floor(r()*(i+1)); [a[i],a[k]]=[a[k],a[i]]; } return a; }
 
 /* ---------- Conexões ---------- */
+// temas escolhidos à mão para dias especiais (lançamento: nível médio)
+const CONEX_FIXO={'2026-11-17':['c-lib','jt-Hulk','g100','pos-Goleiro']};
 function conexoesDia(){
   const r=rngDia('conexoes'), C=categorias().filter(c=>c.so!=='imp');
+  const fixo=(CONEX_FIXO[diaDesafio()]||[]).map(id=>C.find(c=>c.id===id)).filter(Boolean);
   for(let tent=0;tent<200;tent++){
-    const esc4=embaralha(C,r).slice(0,4); const grupos=[];
+    const esc4=fixo.length===4&&tent<50?embaralha(fixo,r):embaralha(C,r).slice(0,4); const grupos=[];
     let ok=new Set(esc4.map(c=>c.fam||c.id)).size===4;
     for(const c of esc4){ const outros=esc4.filter(x=>x!==c); const pool=embaralha([...c.m].filter(n=>!outros.some(o=>o.m.has(n))&&!grupos.some(g=>g.m.includes(n))),r);
       if(pool.length<4){ ok=false; break; } grupos.push({id:c.id, nome:c.nome, m:pool.slice(0,4)}); }
@@ -2108,8 +2113,9 @@ function conexoesDia(){
 const CORES=['#C9962B','#F5F2EA','#9a958a','#111'];
 function vConexoes(){
   const G4=conexoesDia(); if(!G4) return `<p class="empty">Não foi possível montar o desafio de hoje.</p>`;
-  const st=(jdHoje().conexoes ||= {achados:[], erros:0, fim:false, ok:false, sel:[]});
-  const resolvidos=st.achados.map(id=>G4.find(g=>g.id===id));
+  const ck=G4.map(g=>g.id).sort().join(','); if(jdHoje().conexoes&&jdHoje().conexoes.k!==ck&&!jdHoje().conexoes.fim) delete jdHoje().conexoes;
+  const st=(jdHoje().conexoes ||= {achados:[], erros:0, fim:false, ok:false, sel:[], k:ck});
+  const resolvidos=st.achados.map(id=>G4.find(g=>g.id===id)).filter(Boolean);
   const resta=embaralha(G4.filter(g=>!st.achados.includes(g.id)).flatMap(g=>g.m), rngDia('cx-ordem'+(st.mix||0)));
   setTimeout(()=>{
     document.querySelectorAll('[data-cx]').forEach(b=>b.onclick=()=>{ const n=b.dataset.cx; const i=st.sel.indexOf(n); if(i>=0) st.sel.splice(i,1); else if(st.sel.length<4) st.sel.push(n); route.keep=true; route(); });
@@ -2242,7 +2248,7 @@ function rankSemana(sem){ const doc=JSON.parse(JSON.stringify(RANK[sem]||{pessoa
 function vRanking(){
   const sem=semanaDe(fmtD(hojeStr())); const semSet=new Set(Object.keys(RANK)); Object.values(RKU).forEach(u=>Object.values(u.res||{}).forEach(x=>{ if(x&&x.d) semSet.add(semanaDe(x.d)); })); const semanas=[...semSet].sort().reverse(); const atual=rankSemana(sem);
   const tab=o=>{ const l=Object.entries(o.pessoas||{}).map(([ap,x])=>({ap, pts:Object.values(x).reduce((s,v)=>s+v,0), n:Object.keys(x).length})).sort((a,b)=>b.pts-a.pts);
-    return l.length?`<table><thead><tr><th>#</th><th>Torcedor</th><th class="n">Desafios</th><th class="n">Pontos</th></tr></thead><tbody>${l.map((x,i)=>`<tr><td class="mono">${i+1}</td><td>${i===0?'★ ':''}${esc(x.ap)}${ehCriadorAp(x.ap)?' '+seloCriador():''}</td><td class="n">${x.n}</td><td class="n"><b>${x.pts}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Ninguém no ranking desta semana ainda.</p>'; };
+    return l.length?`<table><thead><tr><th>#</th><th>Torcedor</th><th class="n">Desafios</th><th class="n">Pontos</th></tr></thead><tbody>${l.map((x,i)=>`<tr><td class="mono">${i+1}</td><td>${i===0?'★ ':''}${esc(x.ap)}${ehCriadorAp(x.ap)?' '+seloCriador():''}${numPrimeiroAp(x.ap)?' '+seloPrimeiro(numPrimeiroAp(x.ap)):''}</td><td class="n">${x.n}</td><td class="n"><b>${x.pts}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Ninguém no ranking desta semana ainda.</p>'; };
   setTimeout(()=>{ const b=$('#rkadd'); if(!b) return; b.onclick=async()=>{ const it=leTextoRank($('#rktxt').value); const msg=$('#rkmsg');
     if(!it.length){ msg.textContent='Nenhum resultado reconhecido. Cole o texto copiado pelo botão "Copiar resultado".'; return; }
     const val=it.filter(x=>x.ok), inv=it.length-val.length; const por={};
@@ -3272,6 +3278,13 @@ function colabRows(){
 }
 function nivelColab(n){ const x=NIVEIS_COLAB.find(([min])=>n>=min); return x?{nome:x[1], ic:x[2], cls:'colab-'+x[1].toLowerCase()}:null; }
 function seloColab(n, txt){ const v=nivelColab(n); return v?`<span class="selo-colab ${v.cls}" title="Colaborador ${v.nome}">${v.ic}${txt?' Colaborador '+v.nome:''}</span>`:''; }
+/* ---------- Os primeiros: os 10 primeiros cadastros depois do lançamento ---------- */
+const PRIM_N=10, PRIM_MC=500;
+function primeiros(){ const L=Object.entries(RKU||{}).filter(([u,o])=>o&&o.criado&&!(CFG&&u===CFG.criador)).sort((a,b)=>a[1].criado-b[1].criado).slice(0,PRIM_N); const m={}; L.forEach(([u],i)=>m[u]=i+1); return m; }
+const numPrimeiro=uid=>uid?primeiros()[uid]||0:0;
+const numPrimeiroAp=ap=>{ const u=Object.keys(RKU||{}).find(k=>RKU[k].ap===ap); return numPrimeiro(u); };
+function seloPrimeiro(n){ return n?`<span class="selo-prim" title="Um dos ${PRIM_N} primeiros torcedores do Galo Metrics">★ Os primeiros · Nº ${n}</span>`:''; }
+function checaPrimeiros(){ try{ if(!GUID||DONO) return; const n=numPrimeiro(GUID); if(!n||G.primPago) return; G.primPago=n; G.pts=(G.pts||0)+PRIM_MC; gSave(); setTimeout(()=>{ toast(`★ Você é o torcedor Nº ${n} do Galo Metrics! Ganhou ${PRIM_MC} Metricoins e o selo "Os primeiros".`); try{ atualizaChip(); }catch(e){} },1500); }catch(e){} }
 function seloCriador(){ return '<span class="selo-criador" title="Criador do Galo Metrics">✦ Criador</span>'; }
 const ehCriador=uid=>!!(uid&&CFG&&CFG.criador&&uid===CFG.criador);
 const ehCriadorAp=ap=>{ const o=CFG&&CFG.criador&&(RKU||{})[CFG.criador]; return !!(o&&ap&&o.ap===ap); };
@@ -3359,9 +3372,9 @@ function pagaPresentes(){
 }
 async function registraPerfil(){
   if(!GDB||!GUID) return; const hoje=hojeStr(), rk=hoje+'|'+((G.perfil&&G.perfil.apelido)||''); if(G.perfilReg===rk) return;
-  try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}};
+  try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}, criado:Date.now()};
     o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.nome=window.GM_USER_NAME||o.nome||''; o.visto=hoje;
-    await ref.set(o); RKU[GUID]=o; G.perfilReg=rk; gSave(); }catch(e){}
+    await ref.set(o); RKU[GUID]=o; G.perfilReg=rk; gSave(); checaPrimeiros(); }catch(e){}
 }
 /* ---------- Ajustes do dono na conta de um torcedor ---------- */
 const AJ_NOMES={zera:'Desafios do dia reiniciados', zeratudo:'Todos os desafios reiniciados', perfil:'Perfil atualizado', est:'Marcações de estádio apagadas'};
@@ -3470,7 +3483,7 @@ function blocoTorcida(j, campo='aval', id=j&&j.id, titulo='Avaliações da torci
   return head+`<div class="torc">
     ${notas.length?`<div class="torc-res"><div class="torc-med"><b>${fmtNota(med.toFixed(1))}</b>${starsHTML(Math.round(med*2)/2,'stx-m')}<span class="uf">${notas.length} ${notas.length===1?'nota':'notas'}</span></div>
     <div class="torc-hist" aria-label="Distribuição das notas">${starsHTML(0.5,'stx-xs')}<div class="bars">${hist.map((n,i)=>`<span title="${n} ${n===1?'nota':'notas'} de ${fmtNota((i+1)/2)}" style="height:${Math.max(3,n/mx*100)}%"></span>`).join('')}</div>${starsHTML(5,'stx-xs')}</div></div>`:''}
-    <div class="torc-list">${L.slice(0,40).map(x=>`<div class="torc-it">${((RKU[x.uid]||{}).pub||{}).foto?`<img class="torc-av" src="${esc(RKU[x.uid].pub.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av" aria-hidden="true">${esc((x.ap||'?').trim()[0]||'?').toUpperCase()}</span>`}<div><div class="torc-top"><b>${linkTorcedor(x.uid,x.ap)}</b>${ehCriador(x.uid)?seloCriador():''}${x.n?starsHTML(x.n,'stx-s'):''}${x.est?'<span class="tag light">no estádio</span>':''}${x.uid===GUID?'<span class="tag">você</span>':''}</div>${x.t?`<p>${esc(x.t)}</p>`:''}${x.cr?`<small class="uf">Craque: ${esc(nomeV(x.cr))}</small>`:''}</div></div>`).join('')}</div></div>`;
+    <div class="torc-list">${L.slice(0,40).map(x=>`<div class="torc-it">${((RKU[x.uid]||{}).pub||{}).foto?`<img class="torc-av" src="${esc(RKU[x.uid].pub.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av" aria-hidden="true">${esc((x.ap||'?').trim()[0]||'?').toUpperCase()}</span>`}<div><div class="torc-top"><b>${linkTorcedor(x.uid,x.ap)}</b>${ehCriador(x.uid)?seloCriador():''}${seloPrimeiro(numPrimeiro(x.uid))}${x.n?starsHTML(x.n,'stx-s'):''}${x.est?'<span class="tag light">no estádio</span>':''}${x.uid===GUID?'<span class="tag">você</span>':''}</div>${x.t?`<p>${esc(x.t)}</p>`:''}${x.cr?`<small class="uf">Craque: ${esc(nomeV(x.cr))}</small>`:''}</div></div>`).join('')}</div></div>`;
 }
 
 /* ---------- Abertura de pacotinho, uma figurinha por vez ---------- */
@@ -3622,7 +3635,7 @@ function vTorcedor(cod){
   const pj=id=>D.jogadores.find(x=>slug(x.nome)===id);
   const sem=semanaDe(fmtD(hojeStr())); const rk=Object.values(o.res||{}).filter(x=>x&&x.d&&semanaDe(x.d)===sem).reduce((s,x)=>s+(+x.pts||0),0);
   return `<a class="back" href="#torcedores">← Amigos</a><div class="kicker">Perfil do torcedor${uid===GUID?' · você':''}</div>
-  <div class="trc-head">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av" style="width:64px;height:64px;font-size:28px">${esc(o.ap.trim()[0]||'?').toUpperCase()}</span>`}<h1 style="margin:0">${esc(o.ap)}</h1>${ehCriador(uid)?seloCriador():''}</div>
+  <div class="trc-head">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av" style="width:64px;height:64px;font-size:28px">${esc(o.ap.trim()[0]||'?').toUpperCase()}</span>`}<h1 style="margin:0">${esc(o.ap)}</h1>${ehCriador(uid)?seloCriador():''}${seloPrimeiro(numPrimeiro(uid))}</div>
   <div class="perfil-top">${fav?figHTML(fav):''}<div style="flex:1;min-width:260px"><div class="tiles">
    <div class="tile"><b>${N(p.fig||0)}</b><small class="basesm">de ${N(p.figTot||0)}</small><span>Figurinhas</span></div>
    <div class="tile"><b>${p.conq||0}</b><span>Conquistas</span></div>
