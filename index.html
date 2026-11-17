@@ -558,9 +558,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117090344';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117090344"></script>
-<script src="backend-firebase.js?v=20261117090344"></script>
+<script>window.GM_BUILD='20261117090606';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117090606"></script>
+<script src="backend-firebase.js?v=20261117090606"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2193,7 +2193,7 @@ function vImpostor(){
 }
 
 /* ---------- Adivinhe pela carreira ---------- */
-function carreiraResp(){ const r=rngDia('carreira'); const l=figuras().filter(f=>{ if(!fFamoso(f)) return false; const p=D.jogadores.find(x=>x.nome===f.nome); const ys=J.filter(j=>jogouOuMarcou(j,f.nome)).map(j=>j.temporada); return new Set(ys).size>=3&&(golsBest(p)>=15||(p.jogos||0)>=80); }); return escolheDia(l,'carreira',f=>f.nome); }
+function carreiraResp(){ const r=rngDia('carreira'); const l=figuras().filter(f=>{ if(!fFamoso(f)) return false; const pp=pjDe(f.nome)||{}; const recente=String(pp.ultimo||'')>='2005'&&((pp.jogos||0)>=130||golsBest(pp)>=30), idolo=f.nome==='João Leite'||(f.r==='lendaria'&&(golsBest(pp)>=100||String(pp.ultimo||'')>='2000')); if(!recente&&!idolo) return false; const p=D.jogadores.find(x=>x.nome===f.nome); const ys=J.filter(j=>jogouOuMarcou(j,f.nome)).map(j=>j.temporada); return new Set(ys).size>=3&&(golsBest(p)>=15||(p.jogos||0)>=80); }); const ord=l.slice().sort((x,y)=>hashDia('cr-ordem|'+x.nome)-hashDia('cr-ordem|'+y.nome)); const dias=Math.round((new Date(diaDesafio()+'T12:00:00')-new Date('2026-11-17T12:00:00'))/864e5); const ini=Math.max(0,ord.findIndex(f=>f.nome==='André')); return ord[(((ini+dias)%ord.length)+ord.length)%ord.length]; }
 function vCarreira(){
   const alvo=carreiraResp(), nome=alvo.nome, p=D.jogadores.find(x=>x.nome===nome); if(jdHoje().carreira&&!jdHoje().carreira.fim&&jdHoje().carreira.alvo!==nome) delete jdHoje().carreira; const st=(jdHoje().carreira ||= {t:[], fim:false, ok:false, alvo:nome});
   const list=J.filter(j=>jogouOuMarcou(j,nome)); const gpj=j=>j.gols.filter(g=>isGoal(g)&&g.jogador===nome).length;
