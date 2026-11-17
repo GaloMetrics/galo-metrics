@@ -191,7 +191,7 @@ table.cmp tr.tot td{border-top:2px solid var(--ink);font-size:22px;font-weight:9
 .fig-top{display:flex;justify-content:space-between;font-size:10px;font-weight:700;text-transform:uppercase}
 .fig-ph{flex:1;display:flex;align-items:flex-end;justify-content:center;position:relative;overflow:hidden;background:repeating-linear-gradient(90deg,#111 0 11px,#fff 11px 22px)}.fig.brilhante .fig-ph{background:#111}.fig.lendaria .fig-ph{background:#C9962B}
 .fig-ph svg{width:84px;height:98px}.fig-ph svg *{fill:#F5F2EA;stroke:#111;stroke-width:3}
-.fig-ph{align-items:center}.fig-ph .fig-cr{width:68%;max-height:82%;object-fit:contain;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}.fig.comum .fig-ph{background:repeating-linear-gradient(90deg,#e9e5da 0 11px,#f7f5ef 11px 22px)}
+.fig-ph{align-items:center;min-height:0;flex:none;height:96px}.fig-stat{line-height:1.15}.fig-ph .fig-cr{height:84%;width:auto;max-width:86%;object-fit:contain;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}.fig-per{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fig-ph .fig-vivo{position:absolute;left:0;right:0;bottom:0;margin:0;text-align:center}.fig.comum .fig-ph{background:repeating-linear-gradient(90deg,#e9e5da 0 11px,#f7f5ef 11px 22px)}
 .fig-dup{position:absolute;top:5px;right:5px;background:#111;color:#C9962B;font-size:11px;font-weight:700;padding:1px 5px}
 .fig-nome{font-weight:900;font-stretch:75%;text-transform:uppercase;font-family:Archivo,sans-serif;font-size:17px;line-height:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.fig-stat{font-size:10px;font-weight:700}.fig-per{font-size:10px}
 .fig-vazio{width:140px;height:204px;box-sizing:border-box;border:3px dashed var(--mute);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--mute);background:var(--soft);text-align:center;padding:8px}.fig-vazio b{font-family:'Courier Prime',monospace;font-size:30px}.fig-vazio span{font-size:12px;font-weight:700;text-transform:uppercase}.fig-vazio small{font-size:10px}
@@ -555,9 +555,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117073909';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117073909"></script>
-<script src="backend-firebase.js?v=20261117073909"></script>
+<script>window.GM_BUILD='20261117074419';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117074419"></script>
+<script src="backend-firebase.js?v=20261117074419"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -572,6 +572,7 @@ const placar = j => j.gp==null ? (j.wo ? 'WO' : 'x') : `${j.gp} x ${j.gc}`;
 const mandoTxt = {C:'Casa', F:'Fora', N:'Neutro'};
 const mandoLbl = j => j.mando==='N' && !j.tem_ficha && !j.cidade ? '' : (mandoTxt[j.mando]||'');
 let ESC={};
+const antes30 = p => { const y=+(String((p&&(p.periodo_aceito||p.primeiro))||'').match(/\d{4}/)||[0])[0]; return !!y && y<=+String(D.meta.escalacoes_desde).slice(0,4)+1; };
 const GALO_ESC=[[1908,1915],[1915,1927],[1927,1937],[1937,1940],[1940,1950],[1950,1960],[1960,1970],[1970,1972],[1972,1980],[1980,1982],[1982,1983],[1983,1987],[1987,1992],[1992,1997],[1997,1998],[1998,2006],[2006,2026]];
 const galoEsc = d => { const y=+String(d||'').slice(0,4); if(!y) return ESC.__galo; if(y===2008) return 'escudos/galo/2008.webp'; const r=GALO_ESC.find(([a,b])=>y>=a&&y<b)||(y>=2026?GALO_ESC[GALO_ESC.length-1]:GALO_ESC[0]); return `escudos/galo/${r[0]}-${r[1]}.webp`; };
 const cr = (id, cls='cr', quando) => { const f = id==='galo' ? (quando?galoEsc(quando):ESC.__galo) : ESC[id]; return f ? `<img class="${cls}" src="${f}" alt="" loading="lazy">` : `<span class="${cls} nocr"></span>`; };
@@ -875,7 +876,7 @@ function vJogador(s){
   <div class="tiles">${GK&&!(ag?ag.atual:p.gols)?'':`<div class="tile"><b>${ag?ag.atual:p.gols}</b>${ag&&ag.base!==ag.atual?`<small class="basesm">base ${ag.base}</small>`:''}<span>Gols</span></div>`}${aj&&!p.jogos?`<div class="tile"><b>${N(ajAtual)}</b><small class="basesm">sem escalações na base</small><span>Jogos</span></div>`:''}${p.jogos?`<div class="tile"><b>${aj?N(ajAtual):p.jogos}</b>${aj&&p.jogos!==ajAtual?`<small class="basesm">base ${p.jogos}*</small>`:''}<span>Jogos${aj?'':'*'}</span></div>${GK?`<div class="tile"><b>${N(GK.cs.length)}</b><small class="basesm">${Math.round(100*GK.cs.length/GK.gj.length)}% dos ${GK.gj.length} jogos no gol</small><span>Sem sofrer gols*</span></div><div class="tile"><b>${(GK.sofr/Math.max(1,GK.tit)).toFixed(2).replace('.',',')}</b><span>Gols sofridos por jogo*</span></div>${(()=>{ const pr=penResumo(p.nome); return pr.l.length?`<div class="tile"><b>${pr.l.length}</b><small class="basesm">${pr.jogo} no jogo · ${pr.disputa} em disputas</small><span>Pênaltis defendidos*</span></div>`:''; })()}`:`<div class="tile"><b>${p.gols_penalti}</b><span>De pênalti*</span></div>${(()=>{ const f=golsDeTipo(p.nome,e=>e.falta); return f?`<div class="tile"><b>${f}</b><span>De falta</span></div>`:''; })()}${(()=>{ const d=golsDeTipo(p.nome,e=>e.decisivo); return d?`<div class="tile"><b>${d}</b><span>Gols da vitória</span></div>`:''; })()}`}<div class="tile"><b>${aprov(r)}</b><span>Aproveit. do time*</span></div>`:''}</div>
   ${blocoDonoJogador(p)}
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">${tw(`${nomeV(p.nome)} pelo Galo: ${N(ag?ag.atual:p.gols)} gols${p.jogos?`, ${N(aj?ajAtual:p.jogos)} jogos`:''}, de ${(p.primeiro||'').slice(0,4)} a ${(p.ultimo||'').slice(0,4)}.`)}</div>
-  ${cartaArquivo(p)}${notaAcc}${p.jogos?`<p class="count">*Na base, a partir de ${fmtD(D.meta.escalacoes_desde)}, período com escalações.</p>`:''}
+  ${cartaArquivo(p)}${notaAcc}${p.jogos&&antes30(p)?`<p class="count">*Na base, a partir de ${fmtD(D.meta.escalacoes_desde)}, período com escalações.</p>`:''}
   ${perfilJogador(p,list,gpj,comps,GK)}
   ${typeof blocoAvalJogador==='function'?blocoAvalJogador(p):''}
   ${(()=>{ const pr=penResumo(p.nome); if(!pr.l.length) return '';
@@ -894,7 +895,7 @@ function perfilJogador(p,list,gpj,comps,GK){
   const vits=Object.values(vit).sort((a,b)=>b.g-a.g).slice(0,8);
   const marc=list.filter(j=>gpj(j)), hat=marc.filter(j=>gpj(j)>=3), maxg=marc.length?Math.max(...marc.map(gpj)):0, best=marc.find(j=>gpj(j)===maxg);
   return `<div class="grid2"><div><h2>Por temporada</h2><table class="seas"><thead><tr><th>Ano</th>${p.jogos?'<th class="n">J*</th>':''}<th class="n">${GK?'Sem sofrer':'Gols'}</th><th></th></tr></thead><tbody>${ys.map(y=>`<tr class="click" onclick="location.hash='${'jogos?'+new URLSearchParams({jog:p.nome,temp:y})}'"><td class="mono">${y}</td>${p.jogos?`<td class="n">${anos[y].j||''}</td>`:''}<td class="n">${anos[y].g||''}</td><td style="width:45%"><div class="hb"><i style="width:${100*anos[y].g/mx}%"></i>${p.jogos?`<i class="j" style="width:${100*anos[y].j/mx}%"></i>`:''}</div></td></tr>`).join('')}</tbody></table>
-   <p class="count">Barra preta: ${GK?'jogos sem sofrer gols':'gols'}. ${p.jogos?'Amarela: jogos (desde '+fmtD(D.meta.escalacoes_desde)+').':''}</p></div>
+   <p class="count">Barra preta: ${GK?'jogos sem sofrer gols':'gols'}. ${p.jogos?'Amarela: jogos'+(antes30(p)?' (desde '+fmtD(D.meta.escalacoes_desde)+')':'')+'.':''}</p></div>
   <div><h2>Por competição</h2><table><thead><tr><th>Competição</th><th class="n">${GK?'Sem sofrer':'Gols'}</th>${p.jogos?'<th class="n">Jogos*</th>':''}</tr></thead><tbody>${comps.map(c=>`<tr><td>${esc(c)}</td><td class="n">${GK?(csComp[c]||0):(p.gols_comp[c]||0)}</td>${p.jogos?`<td class="n">${p.por_comp[c]||0}</td>`:''}</tr>`).join('')}</tbody></table>
   ${vits.length?`<h2>${GK?'Mais jogos sem sofrer gols contra':'Vítimas preferidas'}</h2><table><tbody>${vits.map(v=>`<tr class="click" onclick="location.hash='adversario-${slug(v.id)}'"><td>${cr(v.id)}${esc(v.n)}</td><td class="n">${v.g}</td></tr>`).join('')}</tbody></table>`:''}
   ${marc.length?`<div class="note">${marc.length} jogos com gol${hat.length?` · ${hat.length} com 3 ou mais`:''}${best&&maxg>1?` · recorde: ${maxg} gols contra <a href="#jogo-${best.id}">${esc(best.adversario)}</a> (${fmtD(best.data,best.data_aprox)})`:''}. Primeiro gol na base: <a href="#jogo-${marc[0].id}">${fmtD(marc[0].data,marc[0].data_aprox)}</a>.</div>`:''}</div></div>`;
@@ -1488,8 +1489,8 @@ function figHTML(f, extra=''){
   const n=G.owned[f.nome]||0;
   return `<a class="fig ${f.r}${f.r!=='comum'?' foil':''} ${extra}" href="#jogador-${slug(f.nome)}" aria-label="Figurinha ${f.num}, ${esc(f.nomeV)}, ${ROT[f.r]}">
     <span class="fig-top"><span>Nº ${f.num}</span><span>${ROT[f.r]}</span></span>
-    <span class="fig-ph"><img class="fig-cr" src="${galoEsc(f.a1)}" alt="" loading="lazy">${n>1?`<span class="fig-dup">+${n-1}</span>`:''}</span>
-    <span class="fig-nome">${esc(f.nomeV)}</span><span class="fig-stat">${esc(f.stat)}</span><span class="fig-per">${esc(f.periodo)}${posTxt(f.nome)?' · '+posTxt(f.nome):''}</span>${(G.vivo||{})[f.nome]&&n?'<span class="fig-vivo">visto ao vivo</span>':''}</a>`;
+    <span class="fig-ph"><img class="fig-cr" src="${galoEsc(f.a1)}" alt="" loading="lazy">${n>1?`<span class="fig-dup">+${n-1}</span>`:''}${(G.vivo||{})[f.nome]&&n?'<span class="fig-vivo">visto ao vivo</span>':''}</span>
+    <span class="fig-nome">${esc(f.nomeV)}</span><span class="fig-stat">${esc(f.stat)}</span><span class="fig-per">${esc(f.periodo)}${posTxt(f.nome)?' · '+posTxt(f.nome):''}</span></a>`;
 }
 function vazioHTML(f){ return `<div class="fig-vazio" aria-label="Espaço vazio da figurinha ${f.num}"><b>${f.num}</b><span>${esc(f.nomeV)}</span><small>${ROT[f.r]}</small></div>`; }
 
@@ -2195,7 +2196,7 @@ function vCarreira(){
   const jg=(()=>{ const x=ACC.p[nome]?.jogos; return x?x.v+(x.dataAte?jogosApos(nome,x.dataAte):0):(p.jogos||0); })();
   const pistas=[
     ['Período e posição', `${alvo.periodo} · ${ys.length} temporadas · ${posTxt(nome)||'posição não registrada'}`],
-    ['Números no Galo', `${N(golsBest(p))} gols${jg?` · ${N(jg)} jogos desde ${D.meta.escalacoes_desde.slice(0,4)}`:''}`],
+    ['Números no Galo', `${N(golsBest(p))} gols${jg?` · ${N(jg)} jogos${antes30(p)?` desde ${D.meta.escalacoes_desde.slice(0,4)}`:''}`:''}`],
     ['Gols por temporada', `<div class="cr-bars">${ys.map(y=>`<span title="${y}: ${anos[y].g} gols"><i style="height:${Math.max(2,70*anos[y].g/mx)}px"></i><small>${y.slice(2)}</small></span>`).join('')}</div>`],
     ['Onde mais marcou', top(comp)?`${esc(top(comp)[0])} (${top(comp)[1]} gols)`:'não marcou gols'],
     ['Vítima preferida', top(vit)?`${esc(top(vit)[0])} (${top(vit)[1]} gols)`:'não marcou gols'],
