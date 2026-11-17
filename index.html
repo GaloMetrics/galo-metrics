@@ -545,6 +545,7 @@ button.more{-webkit-text-fill-color:currentColor}
 .pko-card.r-ultra.vira .pko-front{filter:drop-shadow(0 0 30px rgba(232,193,90,1)) drop-shadow(0 0 60px rgba(201,150,43,.8))}.pko-mini.r-ultra{filter:drop-shadow(0 0 14px rgba(232,193,90,1))}
 .uso-barras{display:flex;align-items:flex-end;gap:6px;height:170px;border-bottom:2px solid var(--ink);overflow-x:auto;padding-top:20px}.uso-barras>div{position:relative;flex:1;min-width:22px;max-width:70px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}.uso-barras i{display:block;width:70%;background:var(--gold);opacity:.45}.uso-barras i.l{position:absolute;bottom:18px;background:var(--ink);opacity:1;width:40%}.uso-barras small{font-size:10px;color:var(--mute);height:18px;line-height:18px}.uso-barras b{position:absolute;top:-2px;font-size:11px}
 .uf-resumo{border:3px solid var(--ink);box-shadow:6px 6px 0 var(--gold);background:var(--paper);padding:18px 22px;margin:8px 0 26px}.uf-frase{font-family:'Abril Fatface',serif;font-size:clamp(22px,3vw,32px);line-height:1.15;margin:6px 0 14px}.uf-n{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--ink);margin-bottom:10px}.uf-n>div{padding:10px 14px;border-right:1px solid var(--line)}.uf-n>div:last-child{border-right:0}.uf-n b{display:block;font-family:'Abril Fatface',serif;font-size:32px;line-height:1}.uf-n b.v{color:#1f7a43}.uf-n b.e{color:var(--gold)}.uf-n b.d{color:#b3261e}.uf-n span{font-family:'Oswald',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute)}@media(max-width:600px){.uf-n{grid-template-columns:1fr 1fr}}
+.rank-t{font-family:Oswald,Archivo,sans-serif!important;font-size:15px!important;letter-spacing:.02em;white-space:nowrap}.rank-t.v{color:#1f7a43!important}.rank-t.d{color:#b3261e!important}.rank-t.e{color:#8C6610!important}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -565,9 +566,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117193041';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117193041"></script>
-<script src="backend-firebase.js?v=20261117193041"></script>
+<script>window.GM_BUILD='20261117193655';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261117193655"></script>
+<script src="backend-firebase.js?v=20261117193655"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2921,19 +2922,21 @@ function buscaEntidades(q){
     + bloco('Temporada', temp.map(y=>`<li><a href="#temporada-${y}">Temporada ${y}</a></li>`));
   return html;
 }
-const PALAVRAS_VAZIAS=new Set('quem qual quais que o a os as de do da dos das em no na nos nas e mais pelo pela galo atletico com por para um uma foi tem teve ja the me diga mostre lista quero ver'.split(' '));
+const PALAVRAS_VAZIAS=new Set('contra quem qual quais que o a os as de do da dos das em no na nos nas e mais pelo pela galo atletico com por para um uma foi tem teve ja the me diga mostre lista quero ver'.split(' '));
 const GENERICAS=new Set('gol gols marcou marcaram fez fizeram jogou jogos jogo maior maiores vitoria vitorias venceu historia time clube artilheiro'.split(' '));
-function listasParecidas(q){ const w=nrm(q).replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(x=>x&&!PALAVRAS_VAZIAS.has(x)); if(!w.length) return [];
+function listasParecidas(q){ try{ garantePaisesMM(); }catch(e){} const w=nrm(q).replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(x=>x&&!PALAVRAS_VAZIAS.has(x)); if(!w.length) return [];
   return LISTAS.map(L=>{ const alvo=(nrm(L[2])+' '+(LISTA_SIN[L[1]]||'')).replace(/[^a-z0-9 ]/g,' ').split(/\s+/); let s=0; w.forEach(x=>{ const peso=GENERICAS.has(x)?1:3; if(alvo.includes(x)) s+=peso; else if(x.length>=4&&alvo.some(a=>a.length>=4&&(a.startsWith(x.slice(0,5))||x.startsWith(a.slice(0,5))))) s+=peso/2; }); return {L, s}; }).filter(o=>o.s>=1).sort((a,b)=>b.s-a.s).map(o=>o.L); }
+const liLista=(x,i)=>`<li><span class="rank-n">${i+1}</span>${x.href?`<a href="${x.href}">${esc(x.nome)}</a>`:esc(x.nome)}${x.txt?`<b class="rank-t ${x.cls||''}">${esc(x.txt)}</b>`:`<b>${N(x.v)}</b>`}</li>`;
 function vPergunte(params){
+  try{ garantePaisesMM(); }catch(e){}
   const P=new URLSearchParams(params||''), q=P.get('q')||'', lid=P.get('lista')||''; try{ if(!route.keep){ if(q) trk('busca'); if(lid) trk('lista'); } }catch(e){}
   let corpo='';
   const L=LISTAS.find(x=>x[1]===lid);
-  if(L){ const [,id,tit,unid,fn]=L; const linhas=fn().filter(x=>x.v>0).slice(0,30);
-    corpo=`<h2>${esc(tit)}</h2>${linhas.length?`<ol class="rank">${linhas.map((x,i)=>`<li><span class="rank-n">${i+1}</span>${x.href?`<a href="${x.href}">${esc(x.nome)}</a>`:esc(x.nome)}<b>${N(x.v)}</b></li>`).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
+  if(L){ const [,id,tit,unid,fn,tipo]=L; const todas=fn().filter(x=>x.v>0), linhas=tipo==='mm'?todas:todas.slice(0,30);
+    corpo=`<h2>${esc(tit)}</h2>${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'))}</p>`:''}${linhas.length?`<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
   else if(q.trim()){ const ents=buscaEntidades(q), par=listasParecidas(q);
-    if(par.length){ const [,id,tit,unid,fn]=par[0]; const linhas=fn().filter(x=>x.v>0).slice(0,15);
-      corpo+=`<h2>${esc(tit)}</h2><ol class="rank">${linhas.map((x,i)=>`<li><span class="rank-n">${i+1}</span>${x.href?`<a href="${x.href}">${esc(x.nome)}</a>`:esc(x.nome)}<b>${N(x.v)}</b></li>`).join('')}</ol><p class="count">Em ${esc(unid)}. <a href="#pergunte?lista=${id}">Ver a lista completa →</a></p>`;
+    if(par.length){ const [,id,tit,unid,fn,tipo]=par[0]; const todas=fn().filter(x=>x.v>0), linhas=todas.slice(0,15);
+      corpo+=`<h2>${esc(tit)}</h2>${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'))}</p>`:''}<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. <a href="#pergunte?lista=${id}">Ver a lista completa →</a></p>`;
       if(par.length>1) corpo+=`<h3>Talvez você procure</h3><div class="pq-ex">${par.slice(1,5).map(x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`).join('')}</div>`; }
     if(ents) corpo+=`<h2>${par.length?'Na base':'Resultados para "'+esc(q)+'"'}</h2><div class="busca-grid">${ents}</div>`;
     if(!corpo) corpo=`<p class="empty">Nada encontrado para "${esc(q)}". Tente o nome de um jogador, clube, cidade ou estádio, um ano, ou uma pergunta como "quem fez mais gols de falta".</p>`; }
@@ -3810,6 +3813,64 @@ async function desenhaArteUF(s){
     T(r.nome,P+68,y,'cas',32,INK,'left',520); T(`${r.V}V  ${r.E}E  ${r.D}D`,W-P,y,'osw',26,'#4a4640','right'); x.fillStyle='rgba(17,17,17,.12)'; x.fillRect(P,y+22,W-2*P,1); y+=passo; }
   return cv;
 }
+
+/* ---------- Busca: mata-matas, sequências e competições ---------- */
+let _MMX=null;
+function mataMatas(){
+  if(_MMX) return _MMX; if(!J.length) return []; const out=[]; const por={};
+  const FIN=(D.finais_outras||[]).filter(f=>!f.sem_final&&(f.ids||[]).length), finId={}; FIN.forEach(f=>(f.ids||[]).forEach(id=>{ finId[id]=f; }));
+  const ehMM=j=>['Copa do Brasil','Libertadores','Sul-Americana','Outras Conmebol'].includes(j.grupo)||(j.grupo==='Campeonato Brasileiro'&&/semi|final|quarta|oitava/i.test(j.fase||''));
+  J.filter(j=>j.resultado&&j.gp!=null&&ehMM(j)&&!finId[j.id]&&!(j.grupo==='Libertadores'&&j.temporada<1988)).forEach(j=>{ (por[j.grupo+'|'+j.competicao+'|'+j.temporada] ||= []).push(j); });
+  const dias=(a,b)=>Math.abs((new Date(b.data)-new Date(a.data))/864e5);
+  const fim=o=>/final|decis/i.test(o.fase||'')&&!/semi|quarta|oitava/i.test(o.fase||'');
+  Object.values(por).forEach(L=>{ L.sort((a,b)=>a.data.localeCompare(b.data)); const ties=[];
+    if(L[0].grupo==='Copa do Brasil'||L[0].grupo==='Campeonato Brasileiro'){ for(let i=0;i<L.length;){ const t=[L[i]]; if(L[i+1]&&L[i+1].adversario_id===L[i].adversario_id&&dias(L[i],L[i+1])<=21) t.push(L[i+1]); ties.push(t); i+=t.length; } }
+    else { let i=L.length-1; while(i>=0){ const a=L[i], b=L[i-1];
+        if(b&&b.adversario_id===a.adversario_id&&dias(b,a)<=21){ ties.unshift([b,a]); i-=2; }
+        else if(i===L.length-1||fim(a)){ ties.unshift([a]); i--; } else break; } }
+    ties.forEach((t,k)=>{ const gp=t.reduce((s,j)=>s+j.gp,0), gc=t.reduce((s,j)=>s+j.gc,0), u=t[t.length-1], ob=t.map(j=>j.obs||'').join(' ');
+      let r = gp>gc?'C':gp<gc?'E':null;
+      const ultimo=k===ties.length-1;
+      if(!r){ if(/desclassific|eliminad/i.test(ob)) r='E'; else if(/atl[eé]tico (venceu|conquistou|se classific)|galo venceu/i.test(ob)) r='C'; else r=ultimo?'E':'C'; }
+      const final=fim(u);
+      out.push({jogos:t, j:u, gp, gc, r, pen:gp===gc, final, adv:u.adversario, uf:u.adversario_uf||'', id:u.adversario_id, comp:u.competicao, grupo:u.grupo, ano:u.temporada}); }); });
+  FIN.forEach(f=>{ const t=(f.ids||[]).map(id=>byId[id]).filter(j=>j&&j.gp!=null); if(!t.length) return; t.sort((a,b)=>a.data.localeCompare(b.data)); const u=t[t.length-1];
+    out.push({jogos:t, j:u, gp:t.reduce((s,j)=>s+j.gp,0), gc:t.reduce((s,j)=>s+j.gc,0), r:f.res==='titulo'?'C':f.res==='vice'?'E':null, pen:/p[eê]nalti/i.test(f.nota||''), final:true, adv:u.adversario, uf:u.adversario_uf||'', id:u.adversario_id, comp:u.competicao, grupo:u.grupo, ano:u.temporada}); });
+  const pend=FIN.filter(f=>f.res==='pendente'); pend.forEach(f=>{ const u=byId[(f.ids||[])[0]]; if(u&&u.gp==null) out.push({jogos:[u], j:u, gp:0, gc:0, r:null, pen:false, final:true, futuro:true, adv:u.adversario, uf:u.adversario_uf||'', id:u.adversario_id, comp:u.competicao, grupo:u.grupo, ano:u.temporada}); });
+  return _MMX=out.sort((a,b)=>b.j.data.localeCompare(a.j.data));
+}
+const MM_TXT=m=>m.futuro?'Final a disputar':(m.r==='C'?(m.final?'Campeão':'Passou'):m.r==='E'?(m.final?'Vice':'Caiu'):'Empate')+` · ${m.gp}–${m.gc}${m.pen?' (pên.)':''}`;
+const linhasMM=f=>mataMatas().filter(f).map(m=>({nome:`${m.ano} · ${m.comp}: ${m.adv}${m.uf&&m.uf.length===3?' ('+m.uf+')':''}`, href:'#jogo-'+m.j.id, v:1, txt:MM_TXT(m), cls:m.futuro?'e':m.r==='C'?'v':m.r==='E'?'d':'e'}));
+const resumoMM=(L,fin)=>{ const c=L.filter(x=>x.cls==='v').length, e=L.filter(x=>x.cls==='d').length, f=L.length-c-e; return (fin?`${c+e} finais decididas: o Galo foi campeão em ${c} e vice em ${e}`:`${c+e} confrontos de mata-mata decididos: o Galo passou em ${c} e caiu em ${e}`)+`${f?`. ${f===1?'Uma final ainda será disputada':f+' ainda sem resultado'}`:''}.`; };
+function todasSequencias(f, min){ const pl=J.filter(j=>j.resultado&&j.gp!=null), out=[]; let cur=null;
+  pl.forEach(j=>{ if(f(j)){ if(!cur) cur={n:0,a:j}; cur.n++; cur.b=j; } else { if(cur&&cur.n>=min) out.push(cur); cur=null; } }); if(cur&&cur.n>=min) out.push(cur);
+  return out.sort((a,b)=>b.n-a.n||a.a.data.localeCompare(b.a.data)).map(s=>({nome:`${fmtD(s.a.data)} a ${fmtD(s.b.data)}`, href:'#jogo-'+s.a.id, v:s.n})); }
+function porCompeticao(){ const m={}; J.filter(j=>j.resultado&&j.grupo!=='Amistoso').forEach(j=>{ (m[j.competicao] ||= []).push(j); }); return Object.entries(m).map(([c,l])=>{ const r=rec(l); return {c, l, r, ap:r.n?Math.round(100*(3*r.V+r.E)/(3*r.n)):0}; }); }
+(function(){
+  const add=(g,id,t,u,fn,sin,tipo)=>{ LISTAS.push([g,id,t,u,fn,tipo]); if(sin) LISTA_SIN[id]=sin; };
+  const MMS='mata mata matamata matas eliminatoria eliminatorias confronto confrontos classificacao classificacoes classificou passou caiu eliminado eliminou';
+  add('Mata-matas','mm','Todos os mata-matas do Galo','confrontos',()=>linhasMM(()=>true),MMS,'mm');
+  [['mm-lib','Libertadores','libertadores liberta'],['mm-cdb','Copa do Brasil','copa do brasil cdb'],['mm-sula','Sul-Americana','sul americana sulamericana sula']].forEach(([id,g,s])=>add('Mata-matas',id,`Mata-matas na ${g}`,'confrontos',()=>linhasMM(m=>m.grupo===g),MMS+' '+s,'mm'));
+  add('Mata-matas','mm-fin','Finais de mata-mata','finais',()=>linhasMM(m=>m.final),'final finais decisao decisoes titulo '+MMS,'mm');
+  add('Mata-matas','mm-est','Mata-matas contra clubes estrangeiros','confrontos',()=>linhasMM(m=>m.uf.length===3),MMS+' estrangeiro estrangeiros gringos internacional internacionais exterior','mm');
+  window.garantePaisesMM=()=>{ if(garantePaisesMM.ok||!J.length) return; garantePaisesMM.ok=true;
+  const paises={}; mataMatasSafe().forEach(m=>{ if(m.uf.length===3) paises[m.uf]=(paises[m.uf]||0)+1; });
+  Object.entries(paises).filter(([,n])=>n>=2).sort((a,b)=>b[1]-a[1]).forEach(([p])=>{ const gent=(UFS[p]||[p,p])[1], nome=(UFS[p]||[p])[0];
+    add('Mata-matas','mm-'+p.toLowerCase(),`Mata-matas contra clubes ${gent}`,'confrontos',()=>linhasMM(m=>m.uf===p),MMS+' '+nrm(gent)+' '+nrm(gent).replace(/s$/,'')+' '+nrm(nome)+' '+p.toLowerCase(),'mm'); });
+  const iS=LISTAS.findIndex(x=>x[0]==='Sequências'); if(iS>0){ const novos=LISTAS.splice(LISTAS.length-(LISTAS.length-LISTAS.findIndex(x=>/^mm-[a-z]{3}$/.test(x[1])&&!['mm-lib','mm-cdb','mm-fin','mm-est'].includes(x[1]))),99); LISTAS.splice(iS,0,...novos); } };
+  const SQ='sequencia sequencias seguidas seguidos serie';
+  add('Sequências','seq-v','Maiores sequências de vitórias','vitórias seguidas',()=>todasSequencias(j=>j.resultado==='V',4),SQ+' vitorias vencendo','seq');
+  add('Sequências','seq-inv','Maiores sequências invictas','jogos sem perder',()=>todasSequencias(j=>j.resultado!=='D',8),SQ+' sem perder invicto invicta invencibilidade invictos','seq');
+  add('Sequências','seq-gol','Mais jogos seguidos marcando','jogos marcando',()=>todasSequencias(j=>j.gp>0,10),SQ+' marcando fazendo gol balancou','seq');
+  add('Sequências','seq-zero','Mais jogos seguidos sem sofrer gol','jogos sem sofrer',()=>todasSequencias(j=>j.gc===0,4),SQ+' sem sofrer gol defesa zerado','seq');
+  add('Sequências','seq-sv','Maiores jejuns sem vencer','jogos sem vencer',()=>todasSequencias(j=>j.resultado!=='V',5),SQ+' sem vencer jejum','seq');
+  add('Sequências','seq-d','Maiores sequências de derrotas','derrotas seguidas',()=>todasSequencias(j=>j.resultado==='D',3),SQ+' derrotas perdendo','seq');
+  const CP='competicao competicoes campeonato campeonatos torneio torneios disputou';
+  add('Competições','comp-j','Competições com mais jogos do Galo','jogos',()=>porCompeticao().sort((a,b)=>b.l.length-a.l.length).map(o=>({nome:o.c, href:linkJogos({comp:o.c}), v:o.l.length})),CP+' mais jogos');
+  add('Competições','comp-ap','Melhor aproveitamento por competição (20+ jogos)','% de aproveitamento',()=>porCompeticao().filter(o=>o.l.length>=20).sort((a,b)=>b.ap-a.ap).map(o=>({nome:`${o.c} (${o.l.length} jogos)`, href:linkJogos({comp:o.c}), v:o.ap})),CP+' aproveitamento melhor desempenho');
+  add('Competições','comp-bra','Melhores campanhas no Brasileirão','% de aproveitamento',()=>{ const m={}; J.filter(j=>j.resultado&&j.grupo==='Campeonato Brasileiro').forEach(j=>(m[j.temporada] ||= []).push(j)); return Object.entries(m).filter(([,l])=>l.length>=10).map(([y,l])=>{ const r=rec(l); return {nome:`Brasileiro ${y} (${r.V}V ${r.E}E ${r.D}D)`, href:'#temporada-'+y, v:Math.round(100*(3*r.V+r.E)/(3*r.n))}; }).sort((a,b)=>b.v-a.v); },'brasileiro brasileirao campanha campanhas melhores aproveitamento');
+  function mataMatasSafe(){ try{ return mataMatas(); }catch(e){ return []; } }
+})();
 
 </script>
 </body>
