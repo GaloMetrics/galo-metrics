@@ -476,7 +476,7 @@ body.pko-on{overflow:hidden}
 .tipos-sug{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tipos-sug .chip{cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 12px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-size:13px}.tipos-sug .chip:has(input:checked){background:var(--ink);color:var(--paper)}.tipos-sug input{margin:0}
 .sug-it{border-bottom:1px dotted var(--ink);padding:12px 0}.sug-it p{margin:6px 0}.sug-it.vista{opacity:.55}.sug-img{display:block;max-width:220px;max-height:220px;margin:8px 0;border:2px solid var(--ink);background:#fff}
 .aceita input{width:70px;padding:6px}.aceita{display:inline-flex;gap:6px;align-items:center;margin-right:6px}
-.selo-colab{display:inline-block;font-size:.85em;line-height:1;padding:3px 6px;border:2px solid var(--ink);font-family:'Oswald',sans-serif;letter-spacing:.04em;vertical-align:middle;text-transform:uppercase}
+.selo-colab{display:inline-block;font-size:.85em;line-height:1;padding:0 2px;font-family:'Oswald',sans-serif;letter-spacing:.04em;vertical-align:middle;text-transform:uppercase;cursor:help}
 .colab-ouro{background:#c9a227;color:#111;border-color:#8a6d0f}.colab-prata{background:#c7c9cc;color:#111;border-color:#7d8085}.colab-bronze{background:#b8743d;color:#fff;border-color:#7a4a22}
 .selo-prim-ic{display:inline-block;width:1.25em;height:1.25em;object-fit:contain;vertical-align:-.25em;margin-left:6px;cursor:help}.gmchip .selo-prim-ic{width:16px;height:16px;vertical-align:-3px}
 .prim-bloco{display:flex;gap:16px;align-items:center;border:2px solid var(--ink);box-shadow:5px 5px 0 var(--gold);background:var(--paper);padding:14px 18px;margin:10px 0 22px;max-width:560px}.prim-bloco img{width:72px;height:72px;object-fit:contain;flex:none}.prim-bloco .osw{display:block;color:var(--gold);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.prim-bloco b{display:block;font-family:'Abril Fatface',serif;font-size:24px;line-height:1.1;margin:2px 0 4px}.prim-bloco small{color:var(--mute);font-size:14px}
@@ -485,7 +485,7 @@ body.pko-on{overflow:hidden}
 .conq.rara{border-color:var(--gold);border-style:double;border-width:4px}.conq.rara .conq-ic{color:var(--gold)}.tag-rara{display:inline-block;font-size:10px;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 5px;background:var(--gold);color:#111;vertical-align:middle}
 .pf-foto{display:flex;gap:14px;align-items:center;margin-top:14px}.pf-av{width:64px;height:64px;border:2px solid var(--ink);border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex:none;background:var(--soft)}.pf-av img{width:100%;height:100%;object-fit:cover}.pf-av .av,.pf-av svg{width:100%;height:100%}
 img.torc-av{object-fit:cover}
-.selo-apoio{color:#c0392b;font-weight:700}.gmchip .selo-colab{font-size:10px;padding:2px 4px;border-width:1px}
+.selo-apoio{color:#c0392b;font-weight:700}.gmchip .selo-colab{font-size:10px;padding:0}
 tr.eu td{background:rgba(201,162,39,.15)}.lista-colab{list-style:none;padding:0}.lista-colab li{padding:8px 0;border-bottom:1px dotted var(--ink)}
 .apoie-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin:24px 0}.apoie-c{border:3px solid var(--ink);padding:18px;background:var(--paper)}.pixk{font-size:15px;word-break:break-all;padding:8px;border:1px dashed var(--ink)}.apoiadores{line-height:2}
 .sug-link{margin-top:40px;border-top:1px dotted var(--ink);padding-top:10px}
@@ -538,6 +538,8 @@ button.more{-webkit-text-fill-color:currentColor}
 }
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--ink)}.kpis>div{padding:14px 16px;border-right:1px solid var(--line)}.kpis>div:last-child{border-right:0}.kpis b{display:block;font-family:'Abril Fatface',serif;font-size:34px;line-height:1}.kpis span{font-family:'Oswald',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute)}@media(max-width:600px){.kpis{grid-template-columns:1fr 1fr}.kpis>div:nth-child(2){border-right:0}.kpis>div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
 .falta{border:2px solid var(--ink);padding:12px 16px;margin:12px 0;background:var(--paper)}.falta summary{cursor:pointer;font-family:'Oswald',sans-serif;font-size:20px;text-transform:uppercase;letter-spacing:.03em}.falta .tag{margin-left:8px}.falta .tw{overflow-x:auto;margin-top:10px}
+.fig-ph .fig-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}.jog-foto{float:right;width:150px;height:180px;object-fit:cover;object-position:top;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--gold);margin:0 0 12px 16px}@media(max-width:600px){.jog-foto{width:96px;height:116px}}
+.selo-trof{display:inline-block;height:1.5em;width:auto;vertical-align:-.35em;filter:drop-shadow(0 1px 0 rgba(0,0,0,.25))}.selo-colab .selo-trof{margin-right:2px}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -558,9 +560,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117091352';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117091352"></script>
-<script src="backend-firebase.js?v=20261117091352"></script>
+<script>window.GM_BUILD='20261117091857';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117091857"></script>
+<script src="backend-firebase.js?v=20261117091857"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -578,7 +580,8 @@ let ESC={};
 const antes30 = p => { const y=+(String((p&&(p.periodo_aceito||p.primeiro))||'').match(/\d{4}/)||[0])[0]; return !!y && y<=+String(D.meta.escalacoes_desde).slice(0,4)+1; };
 const GALO_ESC=[[1908,1915],[1915,1927],[1927,1937],[1937,1940],[1940,1950],[1950,1960],[1960,1970],[1970,1972],[1972,1980],[1980,1982],[1982,1983],[1983,1987],[1987,1992],[1992,1997],[1997,1998],[1998,2006],[2006,2026]];
 const galoEsc = d => { const y=+String(d||'').slice(0,4); if(!y) return ESC.__galo; if(y===2008) return 'escudos/galo/2008.webp'; const r=GALO_ESC.find(([a,b])=>y>=a&&y<b)||(y>=2026?GALO_ESC[GALO_ESC.length-1]:GALO_ESC[0]); return `escudos/galo/${r[0]}-${r[1]}.webp`; };
-const cr = (id, cls='cr', quando) => { const f = id==='galo' ? (quando?galoEsc(quando):ESC.__galo) : ESC[id]; return f ? `<img class="${cls}" src="${f}" alt="" loading="lazy">` : `<span class="${cls} nocr"></span>`; };
+const PIX='data:image/gif;base64,R0lGODlhAQABAAAAACw=';
+const cr = (id, cls='cr', quando) => { const f = id==='galo' ? (quando?galoEsc(quando):ESC.__galo) : ((ESCX||{})[id]||ESC[id]); if(f&&String(f).startsWith('fb:')) return `<img class="${cls}" src="${PIX}" data-up="${String(f).slice(3)}" alt="">`; return f ? `<img class="${cls}" src="${f}" alt="" loading="lazy">` : `<span class="${cls} nocr"></span>`; };
 const advNome = j => { const w=String(j.adversario||'').split(' '), u=w.pop(); return `${w.length?esc(w.join(' '))+' ':''}<span class="an">${esc(u)}${j.adversario_uf?` <small class="uf">${esc(j.adversario_uf)}</small>`:''}${cr(j.adversario_id,'cr cra')}</span>`; };
 const linha = j => `<span class="ln">${cr('galo','crg',j.data)}<b>Atlético</b> <span class="score">${placar(j)}</span> ${advNome(j)}</span>`;
 function rec(list){ const r={V:0,E:0,D:0,gp:0,gc:0,n:0}; list.forEach(j=>{ if(!j.resultado) return; r[j.resultado]++; r.gp+=j.gp||0; r.gc+=j.gc||0; r.n++; }); return r; }
@@ -875,7 +878,7 @@ function vJogador(s){
   if (p.soAceito) return `<a class="back" href="#jogadores">← Jogadores</a><div class="kicker">Jogador · ${esc(p.periodo_aceito)}</div><h1>${esc(p.nome)}</h1>
     <div class="tiles"><div class="tile"><b>${N(ajAtual)}</b><small class="basesm">ainda sem escalações na base</small><span>Jogos</span></div></div>${notaAcc.replace(/Em cinza,[^<]*/,'')}
     <p class="count">A base tem escalações a partir de ${fmtD(D.meta.escalacoes_desde)}; os jogos deste período serão conferidos quando as fichas antigas entrarem.</p>`;
-  return `<a class="back" href="#jogadores">← Jogadores</a><div class="kicker">${(()=>{ const x=posicaoDe(p.nome); return x?esc(x.pos)+(x.est?' (estimada)':'')+' · ':'Jogador · '; })()}${fmtD(p.primeiro)} a ${fmtD(p.ultimo)}</div><h1>${esc(p.nome)}</h1>
+  return `<a class="back" href="#jogadores">← Jogadores</a><div class="kicker">${(()=>{ const x=posicaoDe(p.nome); return x?esc(x.pos)+(x.est?' (estimada)':'')+' · ':'Jogador · '; })()}${fmtD(p.primeiro)} a ${fmtD(p.ultimo)}</div>${fotoJog(p.nome)?`<img class="jog-foto" src="${PIX}" data-up="${fotoJog(p.nome)}" alt="Foto de ${esc(p.nome)}">`:''}<h1>${esc(p.nome)}</h1>
   <div class="tiles">${GK&&!(ag?ag.atual:p.gols)?'':`<div class="tile"><b>${ag?ag.atual:p.gols}</b>${ag&&ag.base!==ag.atual?`<small class="basesm">base ${ag.base}</small>`:''}<span>Gols</span></div>`}${aj&&!p.jogos?`<div class="tile"><b>${N(ajAtual)}</b><small class="basesm">sem escalações na base</small><span>Jogos</span></div>`:''}${p.jogos?`<div class="tile"><b>${aj?N(ajAtual):p.jogos}</b>${aj&&p.jogos!==ajAtual?`<small class="basesm">base ${p.jogos}*</small>`:''}<span>Jogos${aj?'':'*'}</span></div>${GK?`<div class="tile"><b>${N(GK.cs.length)}</b><small class="basesm">${Math.round(100*GK.cs.length/GK.gj.length)}% dos ${GK.gj.length} jogos no gol</small><span>Sem sofrer gols*</span></div><div class="tile"><b>${(GK.sofr/Math.max(1,GK.tit)).toFixed(2).replace('.',',')}</b><span>Gols sofridos por jogo*</span></div>${(()=>{ const pr=penResumo(p.nome); return pr.l.length?`<div class="tile"><b>${pr.l.length}</b><small class="basesm">${pr.jogo} no jogo · ${pr.disputa} em disputas</small><span>Pênaltis defendidos*</span></div>`:''; })()}`:`<div class="tile"><b>${p.gols_penalti}</b><span>De pênalti*</span></div>${(()=>{ const f=golsDeTipo(p.nome,e=>e.falta); return f?`<div class="tile"><b>${f}</b><span>De falta</span></div>`:''; })()}${(()=>{ const d=golsDeTipo(p.nome,e=>e.decisivo); return d?`<div class="tile"><b>${d}</b><span>Gols da vitória</span></div>`:''; })()}`}<div class="tile"><b>${aprov(r)}</b><span>Aproveit. do time*</span></div>`:''}</div>
   ${blocoDonoJogador(p)}
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">${tw(`${nomeV(p.nome)} pelo Galo: ${N(ag?ag.atual:p.gols)} gols${p.jogos?`, ${N(aj?ajAtual:p.jogos)} jogos`:''}, de ${(p.primeiro||'').slice(0,4)} a ${(p.ultimo||'').slice(0,4)}.`)}</div>
@@ -1488,11 +1491,12 @@ function figuras(){
   return FIG;
 }
 const ROT={comum:'Comum', brilhante:'Brilhante', lendaria:'Lendária'};
+const fotoJog=n=>{ const u=String((JOGX[slug(n)]||{}).foto||''); return u.startsWith('fb:')?u.slice(3):''; };
 function figHTML(f, extra=''){
   const n=G.owned[f.nome]||0;
   return `<a class="fig ${f.r}${f.r!=='comum'?' foil':''} ${extra}" href="#jogador-${slug(f.nome)}" aria-label="Figurinha ${f.num}, ${esc(f.nomeV)}, ${ROT[f.r]}">
     <span class="fig-top"><span>Nº ${f.num}</span><span>${ROT[f.r]}</span></span>
-    <span class="fig-ph"><img class="fig-cr" src="${galoEsc(f.a1)}" alt="" loading="lazy">${n>1?`<span class="fig-dup">+${n-1}</span>`:''}${(G.vivo||{})[f.nome]&&n?'<span class="fig-vivo">visto ao vivo</span>':''}</span>
+    <span class="fig-ph">${fotoJog(f.nome)?`<img class="fig-foto" src="${PIX}" data-up="${fotoJog(f.nome)}" alt="">`:`<img class="fig-cr" src="${galoEsc(f.a1)}" alt="" loading="lazy">`}${n>1?`<span class="fig-dup">+${n-1}</span>`:''}${(G.vivo||{})[f.nome]&&n?'<span class="fig-vivo">visto ao vivo</span>':''}</span>
     <span class="fig-nome">${esc(f.nomeV)}</span><span class="fig-stat">${esc(f.stat)}</span><span class="fig-per">${esc(f.periodo)}${posTxt(f.nome)?' · '+posTxt(f.nome):''}</span></a>`;
 }
 function vazioHTML(f){ return `<div class="fig-vazio" aria-label="Espaço vazio da figurinha ${f.num}"><b>${f.num}</b><span>${esc(f.nomeV)}</span><small>${ROT[f.r]}</small></div>`; }
@@ -1718,7 +1722,7 @@ async function gmInit(){
 }
 
 /* ---------- Edição pelo dono: jogos, notas de página, jogadores ---------- */
-let EDIC={}, NOTAS={}, JOGX={};
+let EDIC={}, NOTAS={}, JOGX={}, ESCX={};
 const isPenTxt=t=>/p[eê]n/i.test(t||'');
 function contrib(j){
   const m={}; const add=(n,k,v)=>{ (m[n] ||= {g:0,pen:0,jg:0,tit:0,comp:{},gcomp:{},datas:[]}); m[n][k]+=v; };
@@ -1753,6 +1757,7 @@ async function carregaEdicoes(){
   try{ const s=await GDB.collection('edicoes').limit(1000).get(); s.docs.forEach(d=>{ EDIC[d.id]=d.data(); }); }catch(e){}
   try{ const s=await GDB.collection('notas').limit(1000).get(); s.docs.forEach(d=>{ NOTAS[d.id]=d.data().texto||''; }); }catch(e){}
   try{ const s=await GDB.collection('jogadoresx').limit(1000).get(); s.docs.forEach(d=>{ JOGX[d.id]=d.data(); }); }catch(e){}
+  try{ const s=await GDB.doc('site/escudosx').get(); if(s.exists) ESCX=s.data().map||{}; }catch(e){}
   Object.keys(EDIC).sort((a,b)=>+a-+b).forEach(id=>aplicaEdicao(id, EDIC[id])); reordena();
 }
 const chaveNota=h=>h.replace(/[^A-Za-z0-9_\-.~:@+]/g,'_').slice(0,180)||'inicio';
@@ -1824,7 +1829,7 @@ function blocoDonoJogador(p){
   const x=JOGX[slug(p.nome)]||{};
   const vis=x.bio?`<div class="nota-gm bio"><b>Perfil.</b> ${esc(x.bio)}</div>`:'';
   if(!DONO) return vis;
-  setTimeout(()=>{ const b=$('#jxsalva'); if(b) b.onclick=async()=>{ const o={bio:$('#jxbio').value.trim(), posicao:$('#jxpos').value.trim(), em:Date.now()}; const r=$('#jxrar').value;
+  setTimeout(()=>{ const b=$('#jxsalva'); if(b) b.onclick=async()=>{ const o={...(JOGX[slug(p.nome)]||{}), bio:$('#jxbio').value.trim(), posicao:$('#jxpos').value.trim(), em:Date.now()}; const r=$('#jxrar').value;
     try{ await GDB.doc('jogadoresx/'+slug(p.nome)).set(o); JOGX[slug(p.nome)]=o;
       if(r!==(CFG.raridade[p.nome]||'')){ const c=JSON.parse(JSON.stringify(CFG)); if(r) c.raridade[p.nome]=r; else delete c.raridade[p.nome]; await GDB.doc('site/config').set({json:JSON.stringify(c), em:Date.now()}); aplicaCfg(c); }
       toast('Jogador salvo.'); route.keep=true; route(); }catch(e){ toast('Não foi possível salvar agora.'); } }; });
@@ -1954,7 +1959,8 @@ function compartilha(txt){ try{ navigator.clipboard.writeText(txt).then(()=>toas
 
 /* Galodle (formato Letroso): o nome tem qualquer tamanho; se o chute tiver o tamanho certo, o fim da palavra aparece */
 const GD_TENT=6;
-function galodleResp(){ const cabe=f=>{ const n=normNome(f.nomeV).replace(/ /g,''); return n.length>=4&&n.length<=14; }; if(diaDesafio()<='2026-11-17'){ const l=figuras().filter(f=>cabe(f)&&fConhecido(f)); return escolheDia(l,'galodle',f=>f.nome); } return rodizio(poolConhecidos().filter(cabe),'galodle',[carreiraResp(),quemResp()]); }
+function galodleResp(){ return memoDia('galodle',galodleResp0); }
+function galodleResp0(){ const cabe=f=>{ const n=normNome(f.nomeV).replace(/ /g,''); return n.length>=4&&n.length<=14; }; if(diaDesafio()<='2026-11-17'){ const l=figuras().filter(f=>cabe(f)&&fConhecido(f)); return escolheDia(l,'galodle',f=>f.nome); } return rodizio(poolConhecidos().filter(cabe),'galodle',[carreiraResp(),quemResp()]); }
 let GD_NOMES=null; const gdNomes=()=>GD_NOMES||(GD_NOMES=new Set(figuras().map(f=>normNome(f.nomeV).replace(/ /g,''))));
 function gdMarca(g,alvo){ const res=Array(g.length).fill('x'), sobra={}; [...alvo].forEach((c,i)=>{ if(g[i]===c) res[i]='v'; else sobra[c]=(sobra[c]||0)+1; }); [...g].forEach((c,i)=>{ if(res[i]!=='v'&&sobra[c]){ res[i]='a'; sobra[c]--; } }); return res; }
 function vGalodle(){
@@ -1979,7 +1985,8 @@ function vGalodle(){
 }
 
 /* Quem é? */
-function quemResp(){ if(diaDesafio()<='2026-11-17'){ const l=figuras().filter(f=>f.r!=='comum'&&fConhecido(f)); return escolheDia(l,'quem',f=>f.nome); } return rodizio(poolConhecidos(),'quem',[carreiraResp()]); }
+function quemResp(){ return memoDia('quem',quemResp0); }
+function quemResp0(){ if(diaDesafio()<='2026-11-17'){ const l=figuras().filter(f=>f.r!=='comum'&&fConhecido(f)); return escolheDia(l,'quem',f=>f.nome); } return rodizio(poolConhecidos(),'quem',[carreiraResp()]); }
 function infoJ(nome){ const p=D.jogadores.find(x=>x.nome===nome), f=FIGN[nome]; const jg=(()=>{ const x=ACC.p[nome]?.jogos; return x?x.v+(x.dataAte?jogosApos(nome,x.dataAte):0):(p.jogos||0); })(); return {nome, dec:f.dec, gols:golsBest(p), jogos:jg, r:f.r, pos:posTxt(nome), ini:semAc(f.nomeV)[0]}; }
 function vQuem(){
   const alvo=quemResp(), A=infoJ(alvo.nome); if(jdHoje().quem&&!jdHoje().quem.fim&&jdHoje().quem.alvo&&jdHoje().quem.alvo!==alvo.nome) delete jdHoje().quem; const st=(jdHoje().quem ||= {t:[], fim:false, ok:false, alvo:alvo.nome});
@@ -2045,7 +2052,9 @@ const posTxt=n=>{ const x=posicaoDe(n); return x?x.pos:''; };
 /* ---------- categorias para Conexões e Impostor ---------- */
 let CATS=null;
 /* Jogador "famoso" para Conexões e Impostor: conhecido, sem homônimos misturados (carreira de até 18 anos) e com peso no clube */
-function fFamoso(f){ if(!fConhecido(f)) return false; const p=pjDe(f.nome); const a=+(String(p.primeiro||'').slice(0,4))||0, b=+(String(p.ultimo||'').slice(0,4))||0;
+// todo jogador deste século com 20+ jogos e todo mundo que jogou dos anos 2020 para cá
+function fRecente(f){ if(!f||/\(/.test(f.nome)) return false; const p=pjDe(f.nome)||{}; const u=String(p.ultimo||''), j=p.jogos||0; return (u>='2020'&&j>=1)||(u>='2000'&&j>=20); }
+function fFamoso(f){ if(fRecente(f)) return true; if(!fConhecido(f)) return false; const p=pjDe(f.nome); const a=+(String(p.primeiro||'').slice(0,4))||0, b=+(String(p.ultimo||'').slice(0,4))||0;
   if(/\(/.test(f.nome)||(a&&b&&b-a>18)) return false; if(f.r==='lendaria') return true; return b>=1990&&((p.jogos||0)>=150||golsBest(p)>=30); }
 function categorias(){
   if(CATS) return CATS;
@@ -2194,10 +2203,15 @@ function vImpostor(){
 
 /* ---------- Adivinhe pela carreira ---------- */
 // jogadores que a torcida de hoje conhece: ídolos com 100+ gols e quem jogou de 2005 para cá com bastante jogo ou gol
-function poolConhecidos(){ return figuras().filter(f=>{ if(!fFamoso(f)) return false; const pp=pjDe(f.nome)||{}; const recente=String(pp.ultimo||'')>='2005'&&((pp.jogos||0)>=130||golsBest(pp)>=30), idolo=f.nome==='João Leite'||(f.r==='lendaria'&&(golsBest(pp)>=100||String(pp.ultimo||'')>='2000')); return recente||idolo; }); }
+let POOLC=null;
+function poolConhecidos(){ return POOLC||(POOLC=figuras().filter(f=>{ if(fRecente(f)) return true; if(!fFamoso(f)) return false; const pp=pjDe(f.nome)||{}; const recente=String(pp.ultimo||'')>='2005'&&((pp.jogos||0)>=130||golsBest(pp)>=30), idolo=f.nome==='João Leite'||(f.r==='lendaria'&&(golsBest(pp)>=100||String(pp.ultimo||'')>='2000')); return recente||idolo; })); }
 // rodízio: a lista embaralhada com semente fixa, um por dia, só repete depois de passar por todos
 function rodizio(l, nome, fora=[], inicio='2026-11-18'){ const ord=l.slice().sort((x,y)=>hashDia(nome+'|ordem|'+x.nome)-hashDia(nome+'|ordem|'+y.nome)); const d=Math.round((new Date(diaDesafio()+'T12:00:00')-new Date(inicio+'T12:00:00'))/864e5); const out=new Set(fora.filter(Boolean).map(f=>f.nome)); const half=Math.floor(ord.length/2); for(let k=0;k<ord.length;k++){ const f=ord[(((d+(k?half+k-1:0))%ord.length)+ord.length)%ord.length]; if(!out.has(f.nome)) return f; } return ord[0]; }
-function carreiraResp(){ const l=poolConhecidos().filter(f=>{ const p=D.jogadores.find(x=>x.nome===f.nome); const ys=J.filter(j=>jogouOuMarcou(j,f.nome)).map(j=>j.temporada); return new Set(ys).size>=3&&(golsBest(p)>=15||(p.jogos||0)>=80); }); const ord=l.slice().sort((x,y)=>hashDia('cr-ordem|'+x.nome)-hashDia('cr-ordem|'+y.nome)); const dias=Math.round((new Date(diaDesafio()+'T12:00:00')-new Date('2026-11-17T12:00:00'))/864e5); const ini=Math.max(0,ord.findIndex(f=>f.nome==='André')); return ord[(((ini+dias)%ord.length)+ord.length)%ord.length]; }
+let CR_POOL=null, MEMO_DIA={};
+const memoDia=(k,fn)=>{ const d=diaDesafio(); const m=(MEMO_DIA[d] ||= {}); return k in m?m[k]:(m[k]=fn()); };
+function carreiraPool(){ if(CR_POOL) return CR_POOL; const temps={}; J.forEach(j=>{ const e=j.escalacao_galo; if(!e) return; [...e.titulares,...e.substituicoes.map(x=>x.entrou)].forEach(n=>{ if(n) (temps[n] ||= new Set()).add(j.temporada); }); }); return CR_POOL=poolConhecidos().filter(f=>{ const p=pjDe(f.nome)||{}; return (temps[f.nome]||new Set()).size>=3&&(golsBest(p)>=15||(p.jogos||0)>=80); }); }
+function carreiraResp(){ return memoDia('carreira',carreiraResp0); }
+function carreiraResp0(){ const l=carreiraPool(); const ord=l.slice().sort((x,y)=>hashDia('cr-ordem|'+x.nome)-hashDia('cr-ordem|'+y.nome)); const dias=Math.round((new Date(diaDesafio()+'T12:00:00')-new Date('2026-11-17T12:00:00'))/864e5); const ini=Math.max(0,ord.findIndex(f=>f.nome==='André')); return ord[(((ini+dias)%ord.length)+ord.length)%ord.length]; }
 function vCarreira(){
   const alvo=carreiraResp(), nome=alvo.nome, p=D.jogadores.find(x=>x.nome===nome); if(jdHoje().carreira&&!jdHoje().carreira.fim&&jdHoje().carreira.alvo!==nome) delete jdHoje().carreira; const st=(jdHoje().carreira ||= {t:[], fim:false, ok:false, alvo:nome});
   const list=J.filter(j=>jogouOuMarcou(j,nome)); const gpj=j=>j.gols.filter(g=>isGoal(g)&&g.jogador===nome).length;
@@ -3225,6 +3239,17 @@ function vViradas(params){
 const upId = x => (x && String(x.url||'').startsWith('fb:')) ? String(x.url).slice(3) : '';
 const upSrc = x => upId(x) ? 'data:image/gif;base64,R0lGODlhAQABAAAAACw=' : '/_blob/'+(x&&x.asset||'');
 async function resolveUps(root){ if(!window.GM_UP_GET) return; (root||document).querySelectorAll('img[data-up]:not([data-up=""])').forEach(async im=>{ try{ const u=await window.GM_UP_GET(im.dataset.up); if(u){ im.src=u; const a=im.closest('a'); if(a) a.href=u; } }catch(e){} }); }
+// coloca a imagem aceita no site: foto vai para o jogador, escudo vai para o adversário
+function alvoImagem(x){ const pg=String(x&&x.pagina||''); let m=pg.match(/^jogador-(.+)/); if(m){ const p=D.jogadores.find(q=>slug(q.nome)===m[1]); if(p) return {t:'jogador', nome:p.nome, s:slug(p.nome)}; }
+  m=pg.match(/^adversario-(.+)/); if(m){ const a=advRows().find(q=>slug(q.id)===m[1]); if(a) return {t:'adv', nome:a.nome, id:a.id}; }
+  const txt=normNome(String(x&&(x.sobre||'')+' '+(x.msg||''))); if(x&&x.tipo==='foto'){ const p=D.jogadores.slice().sort((a,b)=>b.nome.length-a.nome.length).find(q=>txt.includes(normNome(q.nome))); if(p) return {t:'jogador', nome:p.nome, s:slug(p.nome)}; }
+  if(x&&x.tipo==='escudo'){ const a=advRows().slice().sort((a,b)=>b.nome.length-a.nome.length).find(q=>q.nome.length>3&&txt.includes(normNome(q.nome))); if(a) return {t:'adv', nome:a.nome, id:a.id}; }
+  return null; }
+const imagemAplicada=x=>{ const a=alvoImagem(x); if(!a||!upId(x)) return false; return a.t==='jogador'?(JOGX[a.s]||{}).foto===x.url:(ESCX||{})[a.id]===x.url; };
+async function aplicaImagem(x){ const a=alvoImagem(x); if(!a) return 'Não achei de qual jogador ou clube é a imagem: abra a página dele e use o botão de colocar a foto.'; if(!upId(x)) return 'Essa sugestão não tem imagem.';
+  try{ if(a.t==='jogador'){ const r=GDB.doc('jogadoresx/'+a.s); const s=await r.get(); const o={...(s.exists?s.data():{}), foto:x.url, fotoDe:(x.quem||x.apelido||''), em:Date.now()}; await r.set(o); JOGX[a.s]=o; FIG=null; return `A foto já aparece na figurinha e na página de ${a.nome}.`; }
+    const r=GDB.doc('site/escudosx'); const s=await r.get(); const m=(s.exists?s.data().map:{})||{}; m[a.id]=x.url; await r.set({map:m, em:Date.now()}); ESCX=m; return `O escudo já aparece em ${a.nome}.`; }
+  catch(e){ console.error(e); return 'Não foi possível colocar a imagem agora.'; } }
 const TIPOS_SUG = [['sugestao','Sugestão'],['correcao','Correção de dado'],['escudo','Enviar escudo'],['foto','Enviar foto']];
 let SUG_TODAS = null;
 function vSugestoes(params){
@@ -3281,17 +3306,19 @@ function desenhaSugDono(){
   const box=$('#sugdono'); if(!box||!SUG_TODAS) return;
   let vistas={}; try{ vistas=JSON.parse(localStorage.getItem('gm-sug-vistas')||'{}'); }catch(e){}
   const T=k=>(TIPOS_SUG.find(t=>t[0]===k)||[,''])[1];
-  box.innerHTML=SUG_TODAS.length?`<p class="count">${SUG_TODAS.length} envios · ${SUG_TODAS.filter(x=>!vistas[x.k]).length} novos</p>${SUG_TODAS.map(x=>`<div class="sug-it${vistas[x.k]?' vista':''}"><span class="tag${x.tipo==='correcao'?'':' light'}">${esc(T(x.tipo))}</span> <b>${esc(x.sobre||'(sem assunto)')}</b> <small class="uf">${fmtD(String(x.quando).slice(0,10))}${x.quem?' · '+esc(x.quem):''}</small>${x.pagina?` · <a href="#${esc(x.pagina)}">abrir página</a>`:''}${x.msg?`<p>${esc(x.msg)}</p>`:''}${x.asset?`<a href="${upSrc(x)}" target="_blank" rel="noopener"><img src="${upSrc(x)}" data-up="${esc(upId(x))}" alt="Imagem enviada" class="sug-img"></a>`:''}${(COLAB.itens||[]).some(c=>c.k===x.k)?`<span class="tag">✓ Aceita (+${(COLAB.itens.find(c=>c.k===x.k)||{}).pts} pts)</span> <button type="button" class="ghost" data-desfaz="${esc(x.k)}">Desfazer</button> `:`<span class="aceita"><input type="number" min="0" max="500" value="${PTS_COLAB[x.tipo]||20}" aria-label="Pontos" data-pts="${esc(x.k)}"> <button type="button" class="more" data-aceita="${esc(x.k)}">Aceitar e dar pontos</button></span> `}<button type="button" class="ghost" data-vista="${esc(x.k)}">${vistas[x.k]?'Marcar como nova':'Marcar como vista'}</button></div>`).join('')}`:'<p class="empty">Nenhum envio ainda.</p>'; resolveUps(box);
+  box.innerHTML=SUG_TODAS.length?`<p class="count">${SUG_TODAS.length} envios · ${SUG_TODAS.filter(x=>!vistas[x.k]).length} novos</p>${SUG_TODAS.map(x=>`<div class="sug-it${vistas[x.k]?' vista':''}"><span class="tag${x.tipo==='correcao'?'':' light'}">${esc(T(x.tipo))}</span> <b>${esc(x.sobre||'(sem assunto)')}</b> <small class="uf">${fmtD(String(x.quando).slice(0,10))}${x.quem?' · '+esc(x.quem):''}</small>${x.pagina?` · <a href="#${esc(x.pagina)}">abrir página</a>`:''}${x.msg?`<p>${esc(x.msg)}</p>`:''}${x.asset?`<a href="${upSrc(x)}" target="_blank" rel="noopener"><img src="${upSrc(x)}" data-up="${esc(upId(x))}" alt="Imagem enviada" class="sug-img"></a>`:''}${(COLAB.itens||[]).some(c=>c.k===x.k)?`<span class="tag">✓ Aceita (+${(COLAB.itens.find(c=>c.k===x.k)||{}).pts} pts)</span> ${upId(x)&&(x.tipo==='foto'||x.tipo==='escudo')?(imagemAplicada(x)?'<span class="tag">✓ No site</span> ':`<button type="button" class="more" data-aplica="${esc(x.k)}">Colocar no site</button> `):''}<button type="button" class="ghost" data-desfaz="${esc(x.k)}">Desfazer</button> `:`<span class="aceita"><input type="number" min="0" max="500" value="${PTS_COLAB[x.tipo]||20}" aria-label="Pontos" data-pts="${esc(x.k)}"> <button type="button" class="more" data-aceita="${esc(x.k)}">Aceitar e dar pontos</button></span> `}<button type="button" class="ghost" data-vista="${esc(x.k)}">${vistas[x.k]?'Marcar como nova':'Marcar como vista'}</button></div>`).join('')}`:'<p class="empty">Nenhum envio ainda.</p>'; resolveUps(box);
   const salvaColab=async(novo)=>{ try{ const r=GDB.doc('colab/aceitos'); const c=await r.get(); const at=c.exists?(c.data().itens||[]):[]; const it=novo(at); await r.set({itens:it, atualizado:new Date().toISOString()}); COLAB={itens:it}; desenhaSugDono(); }catch(e){ console.error(e); toast('Não foi possível salvar agora.'); } };
   box.querySelectorAll('[data-aceita]').forEach(b=>b.onclick=()=>{ const k=b.dataset.aceita, x=SUG_TODAS.find(y=>y.k===k); const pts=Math.max(0,Math.min(500,+box.querySelector(`[data-pts="${k}"]`).value||0)); vistas[k]=1; try{ localStorage.setItem('gm-sug-vistas',JSON.stringify(vistas)); }catch(e){}
-    salvaColab(at=>at.some(c=>c.k===k)?at:[...at,{k, uid:x.uid, nome:(x.quem||x.apelido||'').slice(0,80), tipo:x.tipo, sobre:(x.sobre||'').slice(0,200), pts, quando:new Date().toISOString()}]).then(()=>toast(`Aceita, +${pts} pontos para ${x.quem||x.apelido||'o colaborador'}.`)); });
+    salvaColab(at=>at.some(c=>c.k===k)?at:[...at,{k, uid:x.uid, nome:(x.quem||x.apelido||'').slice(0,80), tipo:x.tipo, sobre:(x.sobre||'').slice(0,200), pts, quando:new Date().toISOString()}]).then(async()=>{ let extra=''; if(upId(x)&&(x.tipo==='foto'||x.tipo==='escudo')) extra=' '+await aplicaImagem(x); toast(`Aceita, +${pts} pontos para ${x.quem||x.apelido||'o colaborador'}.${extra}`); }); });
+  box.querySelectorAll('[data-aplica]').forEach(b=>b.onclick=async()=>{ const x=SUG_TODAS.find(y=>y.k===b.dataset.aplica); const r=await aplicaImagem(x); toast(r); desenhaSugDono(); });
   box.querySelectorAll('[data-desfaz]').forEach(b=>b.onclick=()=>{ const k=b.dataset.desfaz; salvaColab(at=>at.filter(c=>c.k!==k)); });
   box.querySelectorAll('[data-vista]').forEach(b=>b.onclick=()=>{ const k=b.dataset.vista; if(vistas[k]) delete vistas[k]; else vistas[k]=1; try{ localStorage.setItem('gm-sug-vistas',JSON.stringify(vistas)); }catch(e){} desenhaSugDono(); });
 }
 
 /* ---------- Colaboradores: pontos, selos e ranking ---------- */
 const PTS_COLAB = {sugestao:20, correcao:40, escudo:60, foto:50};
-const NIVEIS_COLAB = [[15,'Ouro','◆'],[5,'Prata','◆'],[1,'Bronze','◆']];
+// selos de colaborador: as taças, da primeira contribuição aceita até a Libertadores
+const NIVEIS_COLAB = [[15,'Libertadores','libertadores'],[7,'Brasileirão','brasileirao'],[3,'Copa do Brasil','copa-do-brasil'],[1,'Mineiro','mineiro']];
 let COLAB = {itens:[]}, APOIE = {}, COLAB_MEU = null;
 async function carregaColab(){
   if(!GDB) return;
@@ -3303,8 +3330,8 @@ function colabRows(){
   const m={}; (COLAB.itens||[]).forEach(x=>{ const r=(m[x.uid] ||= {uid:x.uid, nome:'', pts:0, n:0, tipos:{}, ult:''}); r.pts+=+x.pts||0; r.n++; r.tipos[x.tipo]=(r.tipos[x.tipo]||0)+1; if(x.nome) r.nome=x.nome; if(String(x.quando)>r.ult) r.ult=String(x.quando); });
   return Object.values(m).map(r=>({...r, nome:r.nome||'Torcedor anônimo'})).sort((a,b)=>b.pts-a.pts||b.n-a.n);
 }
-function nivelColab(n){ const x=NIVEIS_COLAB.find(([min])=>n>=min); return x?{nome:x[1], ic:x[2], cls:'colab-'+x[1].toLowerCase()}:null; }
-function seloColab(n, txt){ const v=nivelColab(n); return v?`<span class="selo-colab ${v.cls}" title="Colaborador ${v.nome}">${v.ic}${txt?' Colaborador '+v.nome:''}</span>`:''; }
+function nivelColab(n){ const x=NIVEIS_COLAB.find(([min])=>n>=min); return x?{nome:x[1], ic:`<img class="selo-trof" src="escudos/trofeus/${x[2]}.webp" alt="">`, cls:'colab-'+x[2]}:null; }
+function seloColab(n, txt){ const v=nivelColab(n); return v?`<span class="selo-colab ${v.cls}" title="Colaborador nível ${v.nome}">${v.ic}${txt?' Colaborador nível '+v.nome:''}</span>`:''; }
 /* ---------- Os primeiros: os 10 primeiros cadastros depois do lançamento ---------- */
 const PRIM_N=10, PRIM_MC=500;
 function primeiros(){ const srv=CAD&&Object.keys(CAD).length; const t=u=>srv?CAD[u]:RKU[u].criado; const L=Object.entries(RKU||{}).filter(([u,o])=>o&&o.criado&&(!srv||CAD[u])&&!(CFG&&u===CFG.criador)).sort((a,b)=>t(a[0])-t(b[0])).slice(0,PRIM_N); const m={}; L.forEach(([u],i)=>m[u]=i+1); return m; }
@@ -3340,7 +3367,7 @@ function vColaboradores(){
   ${L.length?`<table><thead><tr><th>#</th><th>Colaborador</th><th class="n">Aceitas</th><th>Tipos</th><th class="n">Pontos</th></tr></thead><tbody>${L.map((r,i)=>`<tr${r.uid===GUID?' class="eu"':''}><td class="mono">${i+1}</td><td>${seloColab(r.n)} ${linkTorcedor(r.uid,r.nome)}${ehCriador(r.uid)?' '+seloCriador():''}${ehApoiador(r.nome)?' '+apoiadorSelo():''}</td><td class="n">${r.n}</td><td><small>${Object.entries(r.tipos).map(([k,v])=>`${esc(T(k).replace('Enviar ','').replace(' de dado',''))} ${v}`).join(' · ')}</small></td><td class="n"><b>${N(r.pts)}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">O ranking começa com a primeira contribuição aceita. Pode ser a sua.</p>'}
   <h2>Como ganhar pontos e selo</h2>
   <div class="tiles">${Object.entries(PTS_COLAB).map(([k,p])=>`<div class="tile"><b>+${p}</b><span>${esc(T(k))}</span></div>`).join('')}</div>
-  <p class="count">Os pontos entram quando a contribuição é conferida e aceita, e caem direto no seu saldo do álbum na próxima visita. Selos por contribuições aceitas: ${NIVEIS_COLAB.slice().reverse().map(([n,nome])=>`${seloColab(n)} ${nome} a partir de ${n}`).join(' · ')}.</p>
+  <p class="count">Os pontos entram quando a contribuição é conferida e aceita, e caem direto no seu saldo do álbum na próxima visita. Selos por contribuições aceitas, como as taças do Galo: ${NIVEIS_COLAB.slice().reverse().map(([n,nome])=>`${seloColab(n)} ${nome} a partir de ${n}`).join(' · ')}.</p>
   ${rec.length?`<h2>Últimas contribuições</h2><ul class="lista-colab">${rec.map(x=>`<li><span class="tag light">${esc(T(x.tipo))}</span> ${esc(x.sobre||'')} <small class="uf">por ${esc(x.nome||'Torcedor anônimo')} · ${fmtD(String(x.quando).slice(0,10))}</small></li>`).join('')}</ul>`:''}
   <p><a class="more" href="#sugestoes">Quero colaborar →</a> <a class="ghost" href="#apoie">Apoie o Galo Metrics</a></p>`;
 }
@@ -3719,6 +3746,9 @@ function vFalta(){
   ${ser('Jogos sem técnico (desde 1950)','tec',st.length,'Jogos desde 1950 sem o técnico do Galo.',['Data','Jogo','Competição'],st.map(jl))}
   ${ser('Jogos com data aproximada','data',sd.length,'Jogos em que a fonte só dá o mês ou o ano.',['Data','Jogo','Competição'],sd.map(jl))}`;
 }
+
+/* imagens guardadas no banco (fb:id) aparecem sozinhas onde forem desenhadas */
+(function(){ try{ const mo=new MutationObserver(()=>{ if(document.querySelector('img[data-up]:not([data-ok])')){ document.querySelectorAll('img[data-up]:not([data-ok])').forEach(im=>im.setAttribute('data-ok','1')); resolveUps(); } }); mo.observe(document.documentElement,{childList:true,subtree:true}); }catch(e){} })();
 
 </script>
 </body>
