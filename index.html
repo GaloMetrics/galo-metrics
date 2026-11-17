@@ -563,9 +563,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117093156';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117093156"></script>
-<script src="backend-firebase.js?v=20261117093156"></script>
+<script>window.GM_BUILD='20261117093400';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117093400"></script>
+<script src="backend-firebase.js?v=20261117093400"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -3808,7 +3808,7 @@ function vDonoSecretas(){
   return `<a class="back" href="#dono">← Página do dono</a><div class="kicker">Só você vê esta página</div><h1>Figurinhas secretas</h1>
   <p class="lede">Figurinhas ultra raras que você cria: influenciadores, apoiadores, memes. No álbum aparecem como "?" até a pessoa tirar. Cada figurinha de pacotinho tem ${(ESP_CHANCE*100).toLocaleString('pt-BR')}% de chance de virar uma secreta (cerca de 1 a cada 14 pacotinhos), e quem ainda não tem nenhuma secreta tem mais chance de pegar uma nova.</p>
   <div class="dono"><h2 style="margin-top:0">Nova figurinha secreta</h2>
-    <div class="dgrid"><label>Nome<input id="espnome" maxlength="40" placeholder="Ex.: nome do influenciador"></label><label>Legenda<input id="espsub" maxlength="60" placeholder="Ex.: Apoiador do Galo Metrics"></label><label>Tipo<select id="esptipo">${ESP_TIPOS.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')}</select></label></div>
+    <div class="dgrid"><label>Nome<input id="espnome" maxlength="40" placeholder="Ex.: Savel"></label><label>Legenda<input id="espsub" maxlength="60" placeholder="Ex.: Apoiador do Galo Metrics"></label><label>Tipo<select id="esptipo">${ESP_TIPOS.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')}</select></label></div>
     <label class="ghost" style="cursor:pointer;display:inline-block;margin-top:10px">Escolher imagem<input type="file" id="espimg" accept="image/*" hidden></label>
     <p id="espmsg" class="count" role="status"></p><button type="button" class="more" id="espok">Criar figurinha</button></div>
   <h2>Criadas (${ESP.length})</h2>
