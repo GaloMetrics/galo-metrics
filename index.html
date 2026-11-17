@@ -563,9 +563,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117102343';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117102343"></script>
-<script src="backend-firebase.js?v=20261117102343"></script>
+<script>window.GM_BUILD='20261117102732';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261117102732"></script>
+<script src="backend-firebase.js?v=20261117102732"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2502,7 +2502,7 @@ function linhasCampo(tit, form){
 }
 function campoHTML(tit, extra={}){
   const ls=linhasCampo(tit, extra.form);
-  return `<div class="campo" role="img" aria-label="Escalação em campo: ${esc(tit.map(nomeV).join(', '))}">${ls.slice().reverse().map(l=>`<div class="campo-l">${l.map(n=>{ const g=(extra.gols||{})[n]||0, nt=(extra.notas||{})[n];
+  return `<div class="campo" role="img" aria-label="Escalação em campo: ${esc(tit.map(nomeV).join(', '))}">${ls.slice().reverse().map(l=>`<div class="campo-l">${l.filter(Boolean).map(n=>{ const g=(extra.gols||{})[n]||0, nt=(extra.notas||{})[n];
     return `<div class="campo-p${extra.craque===n?' craque':''}"><span class="campo-dot" aria-hidden="true">${extra.craque===n?'★':''}</span><a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>${g?`<span class="campo-g">${'⚽'.repeat(Math.min(g,4))}</span>`:''}${nt!=null?`<span class="campo-n">${String(nt).replace('.',',')}</span>`:''}</div>`; }).join('')}</div>`).join('')}</div>`;
 }
 
@@ -2533,17 +2533,20 @@ function blocoPalpite(j){
   if(j.resultado){ if(p.gp==null) return ''; const r=pontuaPalpite(j,p);
     return `<div class="aval-pub"><span class="osw">Seu palpite</span><b>Atlético ${p.gp} x ${p.gc} ${esc(j.adversario)}</b>${(p.marc||[]).length?`<span>Marcadores: ${esc(contaMarc(p.marc))}</span>`:''}${r?`<span>Resultado: <b>${r.total} pontos</b>${r.det.length?' ('+r.det.join(', ')+')':''}</span>`:''}</div>`; }
   const C=candidatos(), form=p.form||'4-3-3', F=FORMS[form];
-  setTimeout(()=>{ const f=$('#pform'); if(!f) return;
+  // palpites salvos antes da correção vinham na ordem da tela (ataque primeiro): reordena para a ordem do campo
+  if(p.esc&&p.v!==2&&p.esc.length===F.reduce((s,n)=>s+n,0)){ const ord=[]; let k=0; const rows=F.map(n=>{ const r=[...Array(n)].map(()=>k++); return r; }); rows.slice().reverse().forEach(r=>r.forEach(i=>ord.push(i))); const novo=Array(ord.length); ord.forEach((i,pos)=>{ novo[i]=p.esc[pos]; }); p.esc=novo; p.v=2; palp()[j.id]=p; gSave(); }
+  setTimeout(()=>{ const f=$('#pform-'+j.id); if(!f) return;
     f.elements.form.onchange=()=>{ const q=palp()[j.id]||{}; q.form=f.elements.form.value; palp()[j.id]=q; gSave(); route.keep=true; route(); };
     f.onsubmit=ev=>{ ev.preventDefault(); if(!palpAberto(j)){ toast('Os palpites deste jogo já fecharam.'); return; }
-      const gp=f.elements.gp.value, gc=f.elements.gc.value; if(gp===''||gc===''){ $('#perr').textContent='Preencha o placar dos dois lados.'; return; }
-      const esc_=[...f.querySelectorAll('[data-slot]')].map(s=>s.value).filter(Boolean);
-      if(new Set(esc_).size!==esc_.length){ $('#perr').textContent='Tem jogador repetido na escalação.'; return; }
+      const gp=f.elements.gp.value, gc=f.elements.gc.value; if(gp===''||gc===''){ $('#perr-'+j.id).textContent='Preencha o placar dos dois lados.'; return; }
+      // guarda pela posição do campo (data-slot), não pela ordem em que os campos aparecem na tela
+      const esc_=[...f.querySelectorAll('[data-slot]')].sort((x,y)=>+x.dataset.slot-+y.dataset.slot).map(s=>s.value||''); const cheios=esc_.filter(Boolean);
+      if(new Set(cheios).size!==cheios.length){ $('#perr-'+j.id).textContent='Tem jogador repetido na escalação.'; return; }
       const marc=[...f.querySelectorAll('[data-gol]')].map(s=>s.value).filter(Boolean).slice(0,+gp);
-      palp()[j.id]={gp:+gp, gc:+gc, marc, esc:esc_, form:f.elements.form.value, em:Date.now()};
+      palp()[j.id]={gp:+gp, gc:+gc, marc, esc:esc_, form:f.elements.form.value, em:Date.now(), v:2};
       gSave(); checaConquistas(); toast('Palpite salvo.'); route.keep=true; route(); };
     const optsG=`<option value="">Não sei</option>${C.L.map(n=>`<option value="${esc(n)}">${esc(nomeV(n))}${posTxt(n)?' · '+posTxt(n):''}</option>`).join('')}`;
-    const desenhaGols=()=>{ const box=$('#plgols'); if(!box) return; const n=Math.max(0,Math.min(10,+f.elements.gp.value||0)); const atuais=[...box.querySelectorAll('select')].map(s=>s.value); const base=atuais.length?atuais:(p.marc||[]);
+    const desenhaGols=()=>{ const box=$('#plgols-'+j.id); if(!box) return; const n=Math.max(0,Math.min(10,+f.elements.gp.value||0)); const atuais=[...box.querySelectorAll('select')].map(s=>s.value); const base=atuais.length?atuais:(p.marc||[]);
       box.innerHTML=n?[...Array(n)].map((_,i)=>`<label>${i+1}º gol<select data-gol="${i}" ${aberto?'':'disabled'}>${optsG}</select></label>`).join(''):'<p class="count">Com 0 gols do Galo, não tem marcador.</p>';
       box.querySelectorAll('select').forEach((s,i)=>{ s.value=base[i]||''; }); };
     desenhaGols(); f.elements.gp.oninput=desenhaGols;
@@ -2555,15 +2558,15 @@ function blocoPalpite(j){
   const salvo=p.gp!=null;
   return `<section class="palpite"><h2 style="margin-top:0">★ Meu palpite</h2>
   ${aberto?`<p class="count">Fecha ${kickoff(j).toLocaleString('pt-BR',{weekday:'long',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}. Placar exato vale 10 pontos, acertar o vencedor ou o empate vale 5, cada gol com o autor certo 3 e cada titular certo 1.</p>`:'<p class="count">Os palpites deste jogo estão fechados. Os pontos entram quando o resultado for lançado.</p>'}
-  <form id="pform" class="dono">
+  <form id="pform-${j.id}" class="dono">
   <div class="pl-placar"><label>Atlético<input type="number" name="gp" min="0" max="15" value="${p.gp??''}" ${aberto?'':'disabled'}></label><span class="pl-x">×</span><label>${esc(j.adversario)}<input type="number" name="gc" min="0" max="15" value="${p.gc??''}" ${aberto?'':'disabled'}></label></div>
-  <div class="pl-gols"><span class="osw">Quem marca os gols do Galo</span><div id="plgols"></div><p class="count">Uma linha por gol do seu placar. Pode repetir o jogador para doblete ou hat-trick.</p></div>
+  <div class="pl-gols"><span class="osw">Quem marca os gols do Galo</span><div id="plgols-${j.id}"></div><p class="count">Uma linha por gol do seu placar. Pode repetir o jogador para doblete ou hat-trick.</p></div>
   <label>Esquema<select name="form" ${aberto?'':'disabled'}>${Object.keys(FORMS).map(f=>`<option${f===form?' selected':''}>${f}</option>`).join('')}</select></label>
   <div class="pl-campo">${slots}</div>
-  <p id="perr" class="count" role="alert" style="color:var(--d)"></p>
+  <p id="perr-${j.id}" class="count" role="alert" style="color:var(--d)"></p>
   ${aberto?`<button type="submit" class="more">${salvo?'Atualizar palpite':'Salvar palpite'}</button>`:''}
   </form>
-  ${salvo&&(p.esc||[]).length?`<h3>Seu time no campinho</h3>${campoHTML(p.esc,{form:p.form, gols:(p.marc||[]).reduce((m,n)=>(m[n]=(m[n]||0)+1,m),{})})}`:''}
+  ${salvo&&(p.esc||[]).some(Boolean)?`<h3>Seu time no campinho</h3>${campoHTML(p.esc,{form:p.form, gols:(p.marc||[]).reduce((m,n)=>(m[n]=(m[n]||0)+1,m),{})})}`:''}
   ${salvo?`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">${tw(`Meu palpite: Atlético ${p.gp} x ${p.gc} ${j.adversario}${(p.marc||[]).length?'. Gols de '+contaMarc(p.marc):''}.`)}${artBtn({t:'palpite', id:j.id})}</div>`:''}</section>`;
 }
 function vPalpites(){
@@ -2619,7 +2622,7 @@ async function desenhaArte(s){
       x.strokeRect(X0+PW/2-90,Y0+PH-60,180,60); x.strokeRect(X0+PW/2-90,Y0,180,60);
       const gols={}; (isP?(d.marc||[]):j.gols.filter(g=>g.lado==='galo'&&isGoal(g)).map(g=>g.jogador)).forEach(n=>{ gols[n]=(gols[n]||0)+1; });
       const ls=linhasCampo(tit, isP?d.form:null); const nl=ls.length;
-      ls.forEach((l,li)=>{ const yP=Y0+PH-48-li*((PH-96)/Math.max(1,nl-1)); l.forEach((n,pi)=>{ const xP=X0+PW*(pi+1)/(l.length+1);
+      ls.forEach((l0,li)=>{ const l=l0.filter(Boolean); const yP=Y0+PH-48-li*((PH-96)/Math.max(1,nl-1)); l.forEach((n,pi)=>{ const xP=X0+PW*(pi+1)/(l.length+1);
         x.beginPath(); x.arc(xP,yP-10,13,0,Math.PI*2); x.fillStyle=(!isP&&d.cr===n)?GOLD:INK; x.fill(); x.strokeStyle=PAP; x.lineWidth=3; x.stroke();
         T(nomeV(n).toUpperCase(),xP,yP+20,'osw',15,INK,'center',PW/(l.length+0.5));
         const extra=[(gols[n]?'⚽'.repeat(Math.min(3,gols[n])):''),(!isP&&d.nj&&d.nj[n]!=null?String(d.nj[n]).replace('.',','):'')].filter(Boolean).join(' ');
