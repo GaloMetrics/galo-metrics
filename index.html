@@ -566,9 +566,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117193655';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117193655"></script>
-<script src="backend-firebase.js?v=20261117193655"></script>
+<script>window.GM_BUILD='20261117202311';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261117202311"></script>
+<script src="backend-firebase.js?v=20261117202311"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -623,7 +623,7 @@ function sortable(id, cols, rows, initial, max=300){
 
 
 let ACC={p:{},h2h:{},vs:{}};
-function buildAcc(){
+function buildAcc(){ ADV=null;
   (D.aceitos||[]).forEach(a=>{ const f=a.fonte, c=a.calculo;
     if(c.tipo==='h2h') ACC.h2h[c.adversario_id]={...a.aceito, ate:a.ate, fonte:f, explicacao:a.explicacao};
     else if(c.tipo==='gols_jogador'){ const o=(ACC.p[c.nome] ||= {}); o.gols={v:a.aceito.gols, de:c.de, ano:9999, dataAte:a.ate, fonte:f}; if(a.aceito.jogos) o.jogos={v:a.aceito.jogos, dataAte:a.ate, fonte:f}; }
@@ -918,7 +918,9 @@ let ADV;
 function advRows(){
   if (ADV) return ADV;
   const m={}; J.forEach(j=>{ const a=(m[j.adversario_id] ||= {id:j.adversario_id,jogos:[]}); a.nome=j.adversario; a.uf=j.adversario_uf||''; a.jogos.push(j); }); // nome atual do clube
-  return ADV = Object.values(m).map(a=>{const r=rec(a.jogos); return {...a,...r,J:a.jogos.length,saldo:r.gp-r.gc,ap:r.n?Math.round(100*(3*r.V+r.E)/(3*r.n)):0,_href:'adversario-'+slug(a.id)};});
+  return ADV = Object.values(m).map(a=>{let r=rec(a.jogos); let n=a.jogos.length, acc=false; const H=ACC.h2h[a.id];
+    if(H){ const pos=rec(a.jogos.filter(j=>j.data>H.ate)); r={...r, V:H.V+pos.V, E:H.E+pos.E, D:H.D+pos.D, n:H.jogos+pos.n}; n=r.n; acc=true; }
+    return {...a,...r,J:n,acc,saldo:r.gp-r.gc,ap:r.n?Math.round(100*(3*r.V+r.E)/(3*r.n)):0,_href:'adversario-'+slug(a.id)};});
 }
 function vAdversarios(params){
   const P=new URLSearchParams(params||''); const ufSel=P.get('uf')||''; let todos=P.get('todos')==='1';
@@ -926,7 +928,7 @@ function vAdversarios(params){
   setTimeout(()=>{ const draw=()=>{ const q=$('#aq').value.toLowerCase(), uf=$('#auf').value;
       const R=rows.filter(r=>(!uf||r.uf===uf)&&(r.nome+' '+r.uf).toLowerCase().includes(q));
       sortable('atab',[
-      {k:'nome',t:'Adversário',f:o=>`${cr(o.id)}${esc(o.nome)} <small class="uf">${esc(o.uf)}</small>`},{k:'J',t:'J',n:1},{k:'V',t:'V',n:1},{k:'E',t:'E',n:1},{k:'D',t:'D',n:1},{k:'gp',t:'GP',n:1},{k:'gc',t:'GC',n:1},{k:'saldo',t:'SG',n:1},{k:'ap',t:'Aprov.',n:1,f:o=>o.ap+'%'}],
+      {k:'nome',t:'Adversário',f:o=>`${cr(o.id)}${esc(o.nome)} <small class="uf">${esc(o.uf)}</small>${o.acc?' <small class="uf" title="Número aceito: contagem do Atlético, somada aos jogos seguintes">✓ aceito</small>':''}`},{k:'J',t:'J',n:1},{k:'V',t:'V',n:1},{k:'E',t:'E',n:1},{k:'D',t:'D',n:1},{k:'gp',t:'GP',n:1},{k:'gc',t:'GC',n:1},{k:'saldo',t:'SG',n:1},{k:'ap',t:'Aprov.',n:1,f:o=>o.ap+'%'}],
       R,'J',todos?100000:150);
       const mt=$('#atodos'); if(mt){ mt.hidden=todos||R.length<=150; mt.textContent=`Mostrar todos os ${N(R.length)}`; }
       $('#aresumo').innerHTML=uf?resumoUF(uf):''; };
