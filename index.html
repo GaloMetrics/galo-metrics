@@ -558,9 +558,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117090044';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117090044"></script>
-<script src="backend-firebase.js?v=20261117090044"></script>
+<script>window.GM_BUILD='20261117090251';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117090251"></script>
+<script src="backend-firebase.js?v=20261117090251"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1971,7 +1971,7 @@ function vGalodle(){
   const usadas={}; st.t.forEach(g=>gdMarca(g,alvo).forEach((m,i)=>{ const c=g[i]; if(m==='v'||usadas[c]==='v') usadas[c]='v'; else if(m==='a'||usadas[c]==='a') usadas[c]='a'; else usadas[c]='x'; }));
   const kb=['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
   const grade=()=>st.t.map(g=>gdMarca(g,alvo).map(m=>m==='v'?'🟩':m==='a'?'🟨':'⬛').join('')+(g.length===alvo.length?'🏁':'')).join('\n');
-  setTimeout(()=>{ const s=$('#gdshare'); if(s) { const _t=()=>textoRank('Galodle', (st.ok?st.t.length:'X')+'/'+GD_TENT+'\n'+grade(), st.ok?7-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); } });
+  setTimeout(()=>{ const s=$('#gdshare'); if(s) { const _t=()=>textoRank('Galodle', (st.ok?st.t.length:'X')+'/'+GD_TENT+'\n'+grade(), st.ok?7-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href=twHref(_t()); } });
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Galodle</h1><p class="count">Descubra o jogador do Galo em ${GD_TENT} chutes. O nome pode ter qualquer tamanho: escreva o nome sem espaço (ex.: DIEGOTARDELLI). Verde: letra no lugar certo. Amarelo: a letra existe em outra posição. Quando o chute tem o tamanho certo, a última letra ganha a bandeirinha de fim.</p>
   <div class="gd-board lt" role="grid" aria-label="Tentativas">${st.t.map(linha).join('')}${st.fim?'':`<div class="gd-row lt cur" role="row"></div>`}<p class="count" style="text-align:center">${st.fim?'':`${GD_TENT-st.t.length} ${GD_TENT-st.t.length===1?'chute restante':'chutes restantes'}`}</p></div>
   ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} O jogador era:</p>${figHTML(f,'a-flip')}<button type="button" class="more" id="gdshare">Copiar resultado</button><a class="ghost tw" id="gdtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a></div>`
@@ -1987,7 +1987,7 @@ function vQuem(){
   setTimeout(()=>{ const b=$('#qmenv'); if(!b) return; const go=()=>{ const v=$('#qmin').value.trim(); if(!FIGN[v]){ $('#qmerr').textContent='Escolha um nome da lista.'; return; } if(st.t.includes(v)){ $('#qmerr').textContent='Você já tentou esse.'; return; }
       st.t.push(v); const ok=v===alvo.nome; if(ok||st.t.length>=8){ st.fim=true; st.ok=ok; jdFim('quem', ok, ok?Math.max(6,24-2*st.t.length):0); } else gSave(); route.keep=true; route(); };
     b.onclick=go; $('#qmin').onkeydown=e=>{ if(e.key==='Enter') go(); }; $('#qmin').oninput=()=>{ $('#qmerr').textContent=''; }; $('#qmin').focus(); });
-  setTimeout(()=>{ const s=$('#qmshare'); if(s) { const _t=()=>textoRank('Quem é?', (st.ok?st.t.length:'X')+'/8', st.ok?9-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); }; });
+  setTimeout(()=>{ const s=$('#qmshare'); if(s) { const _t=()=>textoRank('Quem é?', (st.ok?st.t.length:'X')+'/8', st.ok?9-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href=twHref(_t()); }; });
   const decTxt=d=>d<1910?'1900s':`anos ${String(d).slice(2)}`;
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Quem é?</h1><p class="count">Chute qualquer jogador da base. As setas dizem se o jogador do dia estreou depois (↑) ou antes (↓), e se tem mais ou menos gols e jogos; verde na posição e na inicial é acerto. Jogos só contam de 2000 em diante. Você tem 8 chutes.</p>
   ${st.fim?'':`<div class="filters"><label>Seu chute<input id="qmin" list="qml" placeholder="nome do jogador" autocomplete="off"></label><button type="button" class="more" id="qmenv" style="align-self:flex-end">Chutar</button></div><datalist id="qml">${figuras().map(f=>`<option value="${esc(f.nome)}">`).join('')}</datalist><p id="qmerr" class="count" role="alert" style="color:var(--d)"></p>`}
@@ -2004,7 +2004,7 @@ function vPlacar(){
   setTimeout(()=>{ const b=$('#plenv'); if(!b) return; b.onclick=()=>{ const a=$('#plg').value, c=$('#pla').value; if(a===''||c===''){ $('#plerr').textContent='Preencha os dois lados.'; return; } const g=[+a,+c];
     st.t.push(g); const ok=g[0]===j.gp&&g[1]===j.gc; if(ok||st.t.length>=3){ st.fim=true; st.ok=ok; jdFim('placar', ok, ok?[15,10,6][st.t.length-1]:0); } else gSave(); route.keep=true; route(); }; });
   const dica=(x,y)=>x===y?'<span class="qc v">certo</span>':x<y?'<span class="qc a">foi mais ↑</span>':'<span class="qc a">foi menos ↓</span>';
-  setTimeout(()=>{ const s=$('#plshare'); if(s) { const _t=()=>textoRank('Placar do dia', (st.ok?st.t.length:'X')+'/3', st.ok?4-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); }; });
+  setTimeout(()=>{ const s=$('#plshare'); if(s) { const _t=()=>textoRank('Placar do dia', (st.ok?st.t.length:'X')+'/3', st.ok?4-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href=twHref(_t()); }; });
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Placar do dia</h1>
   <div class="pl-card a-up"><span class="osw">${esc(j.competicao||'')}${j.fase?' · '+esc(j.fase):''}</span><div class="pl-vs">${cr('galo','crb',j.data)}<b>Atlético</b><span class="vs">?  ×  ?</span><b>${esc(j.adversario)}</b>${cr(j.adversario_id,'crb crb2')}</div><span class="cou">${DIAS[new Date(j.data+'T12:00').getDay()]}, ${fmtD(j.data)}${j.estadio?' · '+esc(j.estadio):''}${j.cidade?' · '+esc(j.cidade):''}</span></div>
   <table><tbody>${st.t.map(g=>`<tr><td class="mono">${g[0]} x ${g[1]}</td><td>Galo: ${dica(g[0],j.gp)}</td><td>${esc(j.adversario)}: ${dica(g[1],j.gc)}</td></tr>`).join('')}</tbody></table>
@@ -2021,7 +2021,7 @@ function vMaisMenos(){
   setTimeout(()=>{ document.querySelectorAll('[data-mm]').forEach(bt=>bt.onclick=()=>{ const esc_=bt.dataset.mm==='a'?a:b, outro=bt.dataset.mm==='a'?b:a; const ok=esc_.g>=outro.g;
     if(ok){ st.seq++; st.i++; st.ult=`${nomeV(a.f.nome)} ${a.g} × ${b.g} ${nomeV(b.f.nome)}`; if(st.i>=L.length-1){ st.fim=true; st.ok=true; jdFim('maismenos', true, Math.min(25,st.seq*2)); } else gSave(); }
     else { st.fim=true; st.ok=st.seq>=5; st.ult=`${nomeV(a.f.nome)} ${a.g} × ${b.g} ${nomeV(b.f.nome)}`; jdFim('maismenos', st.ok, Math.min(25,st.seq*2)); }
-    route.keep=true; route(); }); const s=$('#mmshare'); if(s) { const _t=()=>textoRank('Mais ou menos', 'sequência de '+st.seq, st.seq); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); }; });
+    route.keep=true; route(); }); const s=$('#mmshare'); if(s) { const _t=()=>textoRank('Mais ou menos', 'sequência de '+st.seq, st.seq); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href=twHref(_t()); }; });
   const lado=(x,k)=>`<button type="button" class="mm-op" data-mm="${k}">${figHTML({...x.f, r:'comum', stat:'? gols'}).replace(/^<a /,'<span ').replace(/<\/a>$/,'</span>').replace(/ href="[^"]*"/,'')}<span class="osw">${k==='a'?'Este fez mais':'Este fez mais'}</span></button>`;
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Mais ou menos</h1><p class="count">Quem fez mais gols pelo Galo? Cada acerto aumenta a sequência; o primeiro erro encerra o jogo do dia. Com 5 acertos ou mais, conta como vitória. Gols pelo número aceito, quando existe.</p>
   <p class="classico-num"><b>${st.seq}</b> acertos seguidos${st.ult?` · último: ${esc(st.ult)}`:''}</p>
@@ -2129,7 +2129,7 @@ function vConexoes(){
       route.keep=true; route(); };
     const mx=$('#cxmix'); if(mx) mx.onclick=()=>{ st.mix=(st.mix||0)+1; gSave(); route.keep=true; route(); };
     const lp=$('#cxlimpa'); if(lp) lp.onclick=()=>{ st.sel=[]; route.keep=true; route(); };
-    const s=$('#cxshare'); if(s) { const _t=()=>textoRank('Conexões alvinegras', `${st.ok?`${(st.h||[]).length} tentativas`:'X'}\n${(st.h||[]).map(i=>i<0?'❌':['🟨','⬜','🟫','⬛'][i]||'⬛').join('')}`, st.ok?Math.max(1,5-st.erros):0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); };
+    const s=$('#cxshare'); if(s) { const _t=()=>textoRank('Conexões alvinegras', `${st.ok?`${(st.h||[]).length} tentativas`:'X'}\n${(st.h||[]).map(i=>i<0?'❌':['🟨','⬜','🟫','⬛'][i]||'⬛').join('')}`, st.ok?Math.max(1,5-st.erros):0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href=twHref(_t()); };
   });
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Conexões alvinegras</h1>
   <p class="count">Separe os 16 jogadores em 4 grupos de 4 que têm algo em comum. Você pode errar 3 vezes.</p>
@@ -2214,7 +2214,7 @@ function vCarreira(){
   setTimeout(()=>{ const b=$('#crenv'); if(b){ const go=()=>{ const v=$('#crin').value.trim(); if(!FIGN[v]){ $('#crerr').textContent='Escolha um nome da lista.'; return; } if(st.t.includes(v)){ $('#crerr').textContent='Você já tentou esse.'; return; }
       st.t.push(v); const ok=v===nome; if(ok||st.t.length>=6){ st.fim=true; st.ok=ok; jdFim('carreira', ok, ok?Math.max(6,24-3*st.t.length):0); } else gSave(); route.keep=true; route(); };
     b.onclick=go; $('#crin').onkeydown=e=>{ if(e.key==='Enter') go(); }; $('#crin').oninput=()=>{ $('#crerr').textContent=''; }; }
-    const s=$('#crshare'); if(s) { const _t=()=>textoRank('Adivinhe pela carreira', st.ok?`${st.t.length}/6`:'X/6', st.ok?7-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); }; });
+    const s=$('#crshare'); if(s) { const _t=()=>textoRank('Adivinhe pela carreira', st.ok?`${st.t.length}/6`:'X/6', st.ok?7-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href=twHref(_t()); }; });
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Adivinhe pela carreira</h1>
   <p class="count">Uma pista nova a cada chute errado. Você tem 6 chutes.</p>
   <div class="cr-pistas">${pistas.slice(0,ab).map(([t,v],i)=>`<div class="cr-p a-up" style="animation-delay:${i===ab-1?0:0}s"><span class="osw">Pista ${i+1} · ${t}</span><div>${v}</div></div>`).join('')}${pistas.slice(ab).map((x,i)=>`<div class="cr-p fechada"><span class="osw">Pista ${ab+i+1}</span><div>?</div></div>`).join('')}</div>
@@ -2227,7 +2227,7 @@ function vCarreira(){
 function hashTxt(s){ let h=5381; for(let i=0;i<s.length;i++) h=(h*33+s.charCodeAt(i))>>>0; return h.toString(36).toUpperCase().slice(-5); }
 const RK_SAL='galo-1908';
 function textoRank(jogo, res, pts){ const ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||'Torcedor'; const d=fmtD(diaDesafio()); const cod=hashTxt([RK_SAL,ap,d,jogo,pts].join('|'));
-  return `${jogo} ${d}: ${res}\n${ap} · ${pts} pts no ranking · cód ${cod}\nGalo Metrics`; }
+  return `${jogo} ${d}: ${res}\n${ap} · ${pts} pts no ranking · cód ${cod}\nGalo Metrics · galometrics.com.br`; }
 function leTextoRank(t){ const out=[]; const re=/^(.+?) (\d\d\/\d\d\/\d{4}): [^\n]*\n(?:[^\n]*\n){0,8}?([^\n]+?) · (\d+) pts no ranking · cód ([0-9A-Z]+)/gm; let m;
   while((m=re.exec(t))){ const [_,jogo,d,ap,pts,cod]=m; out.push({jogo,d,ap,pts:+pts,ok:hashTxt([RK_SAL,ap,d,jogo,+pts].join('|'))===cod}); } return out; }
 const semanaDe=dstr=>{ const [dd,mm,yy]=dstr.split('/').map(Number); const d=new Date(yy,mm-1,dd); const seg=new Date(d); seg.setDate(d.getDate()-((d.getDay()+6)%7)); return `${seg.getFullYear()}-${String(seg.getMonth()+1).padStart(2,'0')}-${String(seg.getDate()).padStart(2,'0')}`; };
@@ -2278,7 +2278,11 @@ function vRanking(){
 }
 
 /* ---------- Pronto para tweet ---------- */
-function tw(texto, rotulo='Pronto para tweet'){ const t=(texto+'\n#GaloMetrics').slice(0,280); return `<a class="ghost tw" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(t)}" target="_blank" rel="noopener">${rotulo} ↗</a>`; }
+// link da página no site (o Twitter conta qualquer link como 23 caracteres)
+const SITE_URL='https://galometrics.com.br/';
+const linkPagina=()=>SITE_URL+(location.hash&&location.hash!=='#inicio'?location.hash:'');
+function twHref(texto, link=linkPagina()){ const fim='\n#GaloMetrics', max=280-23-1-fim.length; let t=String(texto).replace(/\n?Galo Metrics · galometrics\.com\.br$/,''); if(t.length>max) t=t.slice(0,max-1)+'…'; return 'https://twitter.com/intent/tweet?text='+encodeURIComponent(t+'\n'+link+fim); }
+function tw(texto, rotulo='Pronto para tweet'){ return `<a class="ghost tw" href="${twHref(texto)}" target="_blank" rel="noopener">${rotulo} ↗</a>`; }
 const estrelas=n=>n?('★'.repeat(Math.floor(n))+(n%1?'½':'')):'';
 const resumoJogo=j=>{ const gg=(j.gols||[]).filter(g=>g.lado==='galo').map(g=>`${nomeV(g.jogador)}${g.minuto!=null?' '+g.minuto+"'":''}`);
   return `Atlético ${placar(j)} ${j.adversario}${j.fase?', '+j.fase:''}${j.competicao?' ('+j.competicao+')':''}, ${fmtD(j.data,j.data_aprox)}.${gg.length?' Gols do Galo: '+gg.join(', ')+'.':''}`; };
