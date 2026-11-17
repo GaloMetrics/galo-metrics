@@ -285,7 +285,7 @@ nav a.on{background:var(--ink);color:var(--paper)}
 html.dark .pl-campo{background:repeating-linear-gradient(180deg,#1e1d1a 0 46px,#252420 46px 92px)}
 .pl-linha{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;align-items:center}.pl-linha .osw{width:60px;font-size:11px;font-weight:700;text-transform:uppercase;color:var(--mute)}
 .pl-linha select{max-width:170px;font-family:'Oswald',sans-serif;font-size:14px}.pl-linha select.dup{outline:3px solid var(--d)}
-.arte-in{max-width:min(92vw,820px)!important}.arte-img{width:100%;height:auto;border:2px solid var(--ink)}
+.arte-in{max-width:min(92vw,560px)!important}.arte-img{width:100%;height:auto;max-height:68vh;object-fit:contain;border:2px solid var(--ink)}
 .gm-achou-in .ghost{color:var(--ink);background:var(--paper)}
 .campo{background:repeating-linear-gradient(180deg,#e6e0cf 0 52px,#ddd6c2 52px 104px);border:3px solid var(--ink);padding:18px 10px;display:flex;flex-direction:column;gap:20px;max-width:760px;margin:0 auto}
 html.dark .campo{background:repeating-linear-gradient(180deg,#1e1d1a 0 52px,#252420 52px 104px)}
@@ -565,9 +565,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117190811';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117190811"></script>
-<script src="backend-firebase.js?v=20261117190811"></script>
+<script>window.GM_BUILD='20261117191124';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261117191124"></script>
+<script src="backend-firebase.js?v=20261117191124"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2593,72 +2593,104 @@ function vPalpites(){
   <table><thead><tr><th>Jogo</th><th>Palpite</th><th class="n">Pontos</th></tr></thead><tbody>${ant.map(x=>`<tr class="click" onclick="location.hash='jogo-${x.j.id}'"><td>${linha(x.j)}</td><td class="mono">${x.p.gp} x ${x.p.gc}</td><td class="n"><b>${x.r?x.r.total:'–'}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Os palpites aparecem aqui depois que os jogos acontecem.</p>'}`;
 }
 
-/* ---------- Artes para o Twitter (1200×675) ---------- */
+/* ---------- Artes (1080×1350, moldura de navegador) ---------- */
+async function arteBase(caminho, aba){
+  const W=1080,H=1350,P=70, cv=document.createElement('canvas'); cv.width=W; cv.height=H; const x=cv.getContext('2d');
+  await Promise.all(['400 80px "Abril Fatface"','700 40px Oswald','700 30px "Courier Prime"','400 30px "Libre Caslon Text"'].map(f=>document.fonts.load(f).catch(()=>{})));
+  const INK='#111', PAP='#F5F2EA', GOLD='#C9962B', GOLDD='#8C6610', V='#1f7a43', R='#b3261e', CINZA='#6b6458';
+  const F=(f,sz)=>({abril:`400 ${sz}px "Abril Fatface", Georgia, serif`, osw:`700 ${sz}px Oswald, Archivo, sans-serif`, mono:`700 ${sz}px "Courier Prime", monospace`, cas:`400 ${sz}px "Libre Caslon Text", Georgia, serif`}[f]);
+  const T=(t,px,py,f,sz,c=INK,al='left',max=0)=>{ x.font=F(f,sz); if(max) while(sz>14&&x.measureText(t).width>max){ sz-=2; x.font=F(f,sz); } x.fillStyle=c; x.textAlign=al; x.textBaseline='alphabetic'; x.fillText(t,px,py); return x.measureText(t).width; };
+  const Tm=(t,px,py,sz,max,al='left')=>{ x.font=F('abril',sz); while(sz>20&&x.measureText(t).width>max){ sz-=2; x.font=F('abril',sz); } x.textAlign=al; x.textBaseline='alphabetic'; x.fillStyle='rgba(201,150,43,.85)'; x.fillText(t,px+5,py+5); x.fillStyle=INK; x.fillText(t,px,py); return sz; };
+  const wrap=(t,px,py,f,sz,max,lh,c=INK,al='left',maxL=99)=>{ x.font=F(f,sz); x.fillStyle=c; x.textAlign=al; x.textBaseline='alphabetic'; const ws=String(t).split(/\s+/); let ln='', y=py, n=0; for(const w of ws){ const tt=ln?ln+' '+w:w; if(x.measureText(tt).width>max&&ln){ if(++n>=maxL){ ln+='…'; break; } x.fillText(ln,px,y); ln=w; y+=lh; } else ln=tt; } if(ln) x.fillText(ln,px,y); return y; };
+  const rr=(px,py,w,h,r)=>{ x.beginPath(); x.moveTo(px+r,py); x.arcTo(px+w,py,px+w,py+h,r); x.arcTo(px+w,py+h,px,py+h,r); x.arcTo(px,py+h,px,py,r); x.arcTo(px,py,px+w,py,r); x.closePath(); };
+  const crest=async(id,cx,cy,sz)=>{ const im=await loadImg(escSrc(id)); if(im) cvImg(x,im,cx-sz/2,cy-sz/2,sz,sz); return im; };
+  const galoIm=await loadImg(galoEsc(hojeStr()));
+  const galo=(cx,cy,sz,sombra=true)=>{ if(!galoIm) return; if(sombra){ x.save(); x.shadowColor='rgba(17,17,17,.28)'; x.shadowBlur=sz*.12; x.shadowOffsetY=sz*.04; } cvImg(x,galoIm,cx-sz/2,cy-sz/2,sz,sz); if(sombra) x.restore(); };
+  const carimbo=(t,cx,cy,rot=-0.12,sz=36)=>{ x.save(); x.translate(cx,cy); x.rotate(rot); x.font=F('abril',sz); const w=x.measureText(t).width+40, h=sz*1.75; x.strokeStyle=GOLD; x.lineWidth=5; x.strokeRect(-w/2,-h/2,w,h); x.lineWidth=2; x.strokeRect(-w/2+8,-h/2+8,w-16,h-16); x.fillStyle=GOLD; x.textAlign='center'; x.textBaseline='middle'; x.fillText(t,0,2); x.restore(); };
+  // papel
+  x.fillStyle=PAP; x.fillRect(0,0,W,H); x.fillStyle='rgba(17,17,17,.05)'; for(let i=0;i<W;i+=8) for(let k=0;k<H;k+=8) x.fillRect(i,k,1.3,1.3);
+  // marca d'água do Galo
+  if(galoIm){ x.save(); x.globalAlpha=.05; cvImg(x,galoIm,W-560,H-700,640,640); x.restore(); }
+  // barra de navegador
+  const g=x.createLinearGradient(0,0,0,150); g.addColorStop(0,'#262523'); g.addColorStop(1,'#151514'); x.fillStyle=g; x.fillRect(0,0,W,150);
+  [['#7a7468',36],['#C9962B',66],['#e9e4d6',96]].forEach(([c,cx])=>{ x.fillStyle=c; x.beginPath(); x.arc(cx,36,9,0,7); x.fill(); });
+  x.fillStyle=PAP; rr(132,12,340,58,14); x.fill(); x.fillRect(132,44,340,30);
+  if(galoIm) cvImg(x,galoIm,148,22,34,34); T(aba||'Galo Metrics',192,51,'osw',24,INK,'left',230); T('×',448,50,'osw',22,'#9a9385','center');
+  T('‹  ›',P-22,121,'osw',34,'#9a9385');
+  x.fillStyle='#34322f'; rr(P+50,84,W-2*P-30,50,25); x.fill();
+  T('🔒',P+72,117,'osw',18,PAP); const wb=T('galometrics.com.br',P+104,119,'osw',27,PAP); T(caminho||'',P+106+wb,119,'osw',27,'#a59e8f','left',W-2*P-wb-90);
+  T('★',W-P-6,119,'osw',26,GOLD,'right');
+  x.fillStyle=GOLD; x.fillRect(0,150,W,6);
+  // rodapé (sem faixa preta)
+  x.fillStyle=INK; x.fillRect(P,H-112,W-2*P,3); x.fillStyle=GOLD; x.fillRect(P,H-104,W-2*P,2);
+  galo(P+34,H-54,64,false); T('GALO METRICS',P+80,H-38,'abril',38,INK); T('Para ver todos os números da história do Galo:',W-P,H-64,'cas',20,GOLDD,'right',520); T('galometrics.com.br',W-P,H-30,'osw',30,INK,'right');
+  return {cv,x,W,H,P,T,Tm,F,wrap,rr,crest,galo,carimbo,INK,PAP,GOLD,GOLDD,V,R,CINZA,TOP:156,BOT:H-130};
+}
 const artBtn=spec=>`<button type="button" class="ghost" data-arte="${esc(JSON.stringify(spec))}">Baixar arte</button>`;
 async function desenhaArte(s){
   if(s.t==='uf') return desenhaArteUF(s);
-  const W=1200,H=675,P=60, cv=document.createElement('canvas'); cv.width=W; cv.height=H; const x=cv.getContext('2d');
-  await Promise.all(['400 80px "Abril Fatface"','700 40px Oswald','700 30px "Courier Prime"','400 30px "Libre Caslon Text"'].map(f=>document.fonts.load(f).catch(()=>{})));
-  const INK='#111', PAP='#F5F2EA', GOLD='#C9962B';
-  const F=(f,sz)=>({abril:`400 ${sz}px "Abril Fatface", Georgia, serif`, osw:`700 ${sz}px Oswald, Archivo, sans-serif`, mono:`700 ${sz}px "Courier Prime", monospace`, cas:`400 ${sz}px "Libre Caslon Text", Georgia, serif`}[f]);
-  const T=(t,px,py,f,sz,c=INK,al='left',max=0)=>{ x.font=F(f,sz); if(max) while(sz>14&&x.measureText(t).width>max){ sz-=2; x.font=F(f,sz); } x.fillStyle=c; x.textAlign=al; x.textBaseline='alphabetic'; x.fillText(t,px,py); return x.measureText(t).width; };
-  const Tm=(t,px,py,sz,max,al='left')=>{ x.font=F('abril',sz); while(sz>20&&x.measureText(t).width>max){ sz-=2; x.font=F('abril',sz); } x.textAlign=al; x.textBaseline='alphabetic'; x.fillStyle='rgba(201,150,43,.8)'; x.fillText(t,px+5,py+4); x.fillStyle=INK; x.fillText(t,px,py); return sz; };
-  x.fillStyle=PAP; x.fillRect(0,0,W,H);
-  x.fillStyle='rgba(17,17,17,.06)'; for(let i=0;i<W;i+=7) for(let k=0;k<H;k+=7) x.fillRect(i,k,1.2,1.2);
-  x.fillStyle=INK; x.fillRect(0,0,W,3); for(let i=0;i<W;i+=36) x.fillRect(i,3,18,18); x.fillRect(0,21,W,3);
-  x.fillStyle=INK; x.fillRect(0,H-70,W,70); T('GALO METRICS',P,H-24,'abril',34,PAP); T('galometrics.com.br · #GaloMetrics',W-P,H-27,'mono',18,GOLD,'right');
-  const crest=async(id,cx,cy,sz)=>{ const im=await loadImg(escSrc(id)); if(im) cvImg(x,im,cx-sz/2,cy-sz/2,sz,sz); };
-  const carimbo=(t,cx,cy,rot=-0.12)=>{ x.save(); x.translate(cx,cy); x.rotate(rot); x.font=F('abril',34); const w=x.measureText(t).width+36; x.strokeStyle=GOLD; x.lineWidth=5; x.strokeRect(-w/2,-30,w,58); x.lineWidth=2; x.strokeRect(-w/2+7,-23,w-14,44); x.fillStyle=GOLD; x.textAlign='center'; x.fillText(t,0,14); x.restore(); };
+  const caminho = s.t==='jogo'?`/jogo-${s.id}`: s.t==='palpite'?'/palpites': s.t==='estadio'?'/diario':'/desafios';
+  const A=await arteBase(caminho); const {cv,x,W,H,P,T,Tm,wrap,crest,galo,carimbo,INK,PAP,GOLD,GOLDD,V,R,CINZA}=A;
   if(s.t==='jogo'||s.t==='palpite'){
     const j=byId[s.id]; const isP=s.t==='palpite'; const d=isP?(palp()[j.id]||{}):(diario()[j.id]||{});
     const tit=isP?(d.esc||[]):((j.escalacao_galo&&j.escalacao_galo.titulares)||[]);
-    const temCampo=tit.length>=7, LW=temCampo?640:W;
-    const gL=j.galo_mandante!=null?j.galo_mandante:j.mando!=='F', L=gL?'galo':j.adversario_id, R=gL?j.adversario_id:'galo';
-    T(isP?'MEU PALPITE':(d.est?'EU ESTAVA LÁ':'MEU JOGO'),P,72,'osw',24,GOLD);
-    T(`${(j.competicao||'').toUpperCase()}${j.fase?' · '+j.fase.toUpperCase():''} · ${fmtD(j.data,j.data_aprox)}`,P,104,'osw',22,INK,'left',LW-2*P);
-    const cxL=temCampo?P+80:P+110, cxR=temCampo?LW-80:W-P-110, csz=temCampo?120:160;
-    await crest(L,cxL,210,L==='galo'?csz:csz*0.82); await crest(R,cxR,210,R==='galo'?csz:csz*0.82);
+    const temCampo=tit.length>=7;
+    const gL=j.galo_mandante!=null?j.galo_mandante:j.mando!=='F', L=gL?'galo':j.adversario_id, Rr=gL?j.adversario_id:'galo';
+    T('★ '+(isP?'MEU PALPITE':(d.est?'EU ESTAVA LÁ':'MEU JOGO')),P,226,'osw',34,GOLD);
+    T(`${(j.competicao||'').toUpperCase()}${j.fase?' · '+j.fase.toUpperCase():''} · ${fmtD(j.data,j.data_aprox)}`,P,268,'osw',24,INK,'left',W-2*P-260);
+    // placar
+    const nInfo=isP?(d.marc&&d.marc.length?1:0):((j.gols.some(g=>g.lado==='galo')?1:0)+(d.n?1:0)+(d.cr?1:0)+(d.t?2:0)); const bh=temCampo?300:400, by=temCampo?300:Math.max(310,Math.round(310+(A.BOT-310-bh-nInfo*70)/2-40)); x.fillStyle='rgba(255,255,255,.55)'; x.fillRect(P,by,W-2*P,bh); x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P,by,W-2*P,bh);
+    const cxL=P+170, cxR=W-P-170, cy=by+(temCampo?120:150), cs=temCampo?170:210;
+    for(const [id,cx] of [[L,cxL],[Rr,cxR]]){ if(id==='galo') galo(cx,cy,cs*1.08); else await crest(id,cx,cy,cs*0.8); }
     const gp=isP?d.gp:j.gp, gc=isP?d.gc:j.gc;
-    Tm(gp==null?'×':(gL?`${gp} – ${gc}`:`${gc} – ${gp}`),(cxL+cxR)/2,255,temCampo?110:150,temCampo?260:420,'center');
-    T(gL?'ATLÉTICO':j.adversario.toUpperCase(),cxL,310,'osw',temCampo?24:32,INK,'center',200); T(gL?j.adversario.toUpperCase():'ATLÉTICO',cxR,310,'osw',temCampo?24:32,INK,'center',200);
+    Tm(gp==null?'×':(gL?`${gp}–${gc}`:`${gc}–${gp}`),W/2,cy+48,temCampo?130:160,300,'center');
+    T(gL?'ATLÉTICO':j.adversario.toUpperCase(),cxL,by+bh-34,'osw',30,INK,'center',290); T(gL?j.adversario.toUpperCase():'ATLÉTICO',cxR,by+bh-34,'osw',30,INK,'center',290);
+    if(isP||d.est) carimbo(isP?'PALPITE':'EU FUI!',W-P-110,236,0.1,30);
+    let yy=by+bh+58;
     const marc=isP?contaMarc(d.marc):j.gols.filter(g=>g.lado==='galo').map(g=>`${nomeV(g.jogador)}${g.minuto!=null?' '+g.minuto+"'":''}`).join(' · ');
-    let yy=360; if(marc){ T((isP?'Gols de ':'Gols: ')+marc,temCampo?P:W/2,yy,'mono',20,INK,temCampo?'left':'center',LW-2*P); yy+=48; }
+    if(marc){ yy=wrap((isP?'Gols de ':'⚽ ')+marc,P,yy,'mono',24,W-2*P,32,INK,'left',2)+50; }
     if(!isP){
-      if(d.n){ T('★'.repeat(Math.floor(d.n))+(d.n%1?'½':''),temCampo?P:W/2,yy+20,'cas',50,GOLD,temCampo?'left':'center'); yy+=62; }
-      if(d.cr){ T('Craque do jogo: '+nomeV(d.cr),temCampo?P:W/2,yy,'osw',24,INK,temCampo?'left':'center',LW-2*P); yy+=36; }
-      if(d.t){ x.font=F('cas',20); const ws=('“'+d.t+'”').split(/\s+/); let ln='', n=0; for(const w of ws){ const t2=ln?ln+' '+w:w; if(x.measureText(t2).width>LW-2*P&&ln){ T(ln,temCampo?P:W/2,yy,'cas',20,INK,temCampo?'left':'center'); yy+=28; ln=w; if(++n>=3){ ln+='…'; break; } } else ln=t2; } if(ln&&yy<H-90) T(ln,temCampo?P:W/2,yy,'cas',20,INK,temCampo?'left':'center'); }
-      if(!d.n&&!d.cr&&!d.t&&!d.est) T('Avalie este jogo no Galo Metrics',temCampo?P:W/2,yy+10,'cas',22,'#6b665c',temCampo?'left':'center');
-      if(d.est) carimbo('EU FUI!',temCampo?LW-120:W-200,temCampo?78:150,0.1);
-    } else carimbo('PALPITE',temCampo?LW-120:W-190,temCampo?78:150,0.1);
+      if(d.n){ T('★'.repeat(Math.floor(d.n))+(d.n%1?'½':''),P,yy+8,'cas',54,GOLD); yy+=62; }
+      if(d.cr){ T('Craque do jogo: '+nomeV(d.cr),P,yy,'osw',30,INK,'left',W-2*P); yy+=48; }
+      if(d.t) yy=wrap('“'+d.t+'”',P,yy,'cas',26,W-2*P,36,INK,'left',temCampo?2:6)+48;
+      if(!d.n&&!d.cr&&!d.t&&!d.est&&!temCampo) T('Avalie este jogo no Galo Metrics',P,yy,'cas',26,CINZA);
+    }
     if(temCampo){
-      const X0=660,Y0=40,PW=W-X0-30,PH=H-70-Y0-20;
+      const X0=P,PW=W-2*P,Y0=Math.max(yy-10,isP?700:760),PH=A.BOT-Y0-10;
       x.fillStyle='#E6E0CF'; x.fillRect(X0,Y0,PW,PH); for(let i=0;i<6;i++){ if(i%2){ x.fillStyle='#DDD6C2'; x.fillRect(X0,Y0+i*PH/6,PW,PH/6); } }
-      x.strokeStyle=INK; x.lineWidth=3; x.strokeRect(X0,Y0,PW,PH); x.beginPath(); x.moveTo(X0,Y0+PH/2); x.lineTo(X0+PW,Y0+PH/2); x.stroke(); x.beginPath(); x.arc(X0+PW/2,Y0+PH/2,46,0,Math.PI*2); x.stroke();
-      x.strokeRect(X0+PW/2-90,Y0+PH-60,180,60); x.strokeRect(X0+PW/2-90,Y0,180,60);
+      x.strokeStyle=INK; x.lineWidth=3; x.strokeRect(X0,Y0,PW,PH); x.beginPath(); x.moveTo(X0,Y0+PH/2); x.lineTo(X0+PW,Y0+PH/2); x.stroke(); x.beginPath(); x.arc(X0+PW/2,Y0+PH/2,Math.min(56,PH/6),0,Math.PI*2); x.stroke();
+      x.strokeRect(X0+PW/2-130,Y0+PH-56,260,56); x.strokeRect(X0+PW/2-130,Y0,260,56);
       const gols={}; (isP?(d.marc||[]):j.gols.filter(g=>g.lado==='galo'&&isGoal(g)).map(g=>g.jogador)).forEach(n=>{ gols[n]=(gols[n]||0)+1; });
       const ls=linhasCampo(tit, isP?d.form:null); const nl=ls.length;
-      ls.forEach((l0,li)=>{ const l=l0.filter(Boolean); const yP=Y0+PH-48-li*((PH-96)/Math.max(1,nl-1)); l.forEach((n,pi)=>{ const xP=X0+PW*(pi+1)/(l.length+1);
-        x.beginPath(); x.arc(xP,yP-10,13,0,Math.PI*2); x.fillStyle=(!isP&&d.cr===n)?GOLD:INK; x.fill(); x.strokeStyle=PAP; x.lineWidth=3; x.stroke();
-        T(nomeV(n).toUpperCase(),xP,yP+20,'osw',15,INK,'center',PW/(l.length+0.5));
+      ls.forEach((l0,li)=>{ const l=l0.filter(Boolean); const yP=Y0+PH-46-li*((PH-92)/Math.max(1,nl-1)); l.forEach((n,pi)=>{ const xP=X0+PW*(pi+1)/(l.length+1);
+        x.beginPath(); x.arc(xP,yP-12,14,0,Math.PI*2); x.fillStyle=(!isP&&d.cr===n)?GOLD:INK; x.fill(); x.strokeStyle=PAP; x.lineWidth=3; x.stroke();
+        T(nomeV(n).toUpperCase(),xP,yP+20,'osw',17,INK,'center',PW/(l.length+0.4));
         const extra=[(gols[n]?'⚽'.repeat(Math.min(3,gols[n])):''),(!isP&&d.nj&&d.nj[n]!=null?String(d.nj[n]).replace('.',','):'')].filter(Boolean).join(' ');
-        if(extra) T(extra,xP,yP+40,'mono',14,'#8C6610','center'); }); });
+        if(extra) T(extra,xP,yP+40,'mono',15,GOLDD,'center'); }); });
     }
   }
   if(s.t==='estadio'){
-    const S=statsEstadio(); T('FICHA DO TORCEDOR',P,80,'osw',24,GOLD); Tm('Fui ao estádio',P,170,92,W-2*P);
-    const cols=[['JOGOS',S.ids.length,INK],['VITÓRIAS',S.r.V,'#1f7a43'],['EMPATES',S.r.E,'#b8860b'],['DERROTAS',S.r.D,'#c0392b'],['APROV.',S.r.V+S.r.E+S.r.D?aprov(S.r):'–',INK]];
-    const cw=(W-2*P)/5; cols.forEach(([l,v,c],i)=>{ T(String(v),P+i*cw,300,'abril',96,c,'left',cw-20); T(l,P+i*cw,340,'osw',22,INK); });
-    const top=Object.entries(S.gols).sort((a,b)=>b[1]-a[1])[0];
-    T(`${S.r.gp} gols do Galo vistos${top?` · quem mais vi marcar: ${nomeV(top[0])} (${top[1]})`:''}`,P,420,'cas',28,INK,'left',W-2*P);
-    if(S.big) T(`Maior vitória que vi: Atlético ${placar(S.big)} ${S.big.adversario} (${fmtD(S.big.data)})`,P,465,'cas',24,INK,'left',W-2*P);
-    if(S.ids.length>=5) carimbo(pct(S.r)>=0.6?'PÉ-QUENTE':pct(S.r)<0.4?'PÉ-FRIO':'FIEL',W-230,150,0.12);
+    const S=statsEstadio(); galo(W-P-90,300,190);
+    T('★ FICHA DO TORCEDOR',P,226,'osw',34,GOLD); Tm('Fui ao',P,330,96,W-2*P-220); Tm('estádio',P,430,96,W-2*P-220);
+    let y=500; x.strokeStyle=INK; x.lineWidth=4; x.fillStyle='rgba(255,255,255,.55)'; x.fillRect(P,y,W-2*P,190); x.strokeRect(P,y,W-2*P,190);
+    const cw=(W-2*P)/2; T(String(S.ids.length),P+30,y+120,'abril',100,INK); T('JOGOS NO ESTÁDIO',P+30,y+165,'osw',24,INK);
+    x.fillStyle=INK; x.fillRect(P+cw,y,2,190); T(S.r.V+S.r.E+S.r.D?aprov(S.r):'–',P+cw+30,y+120,'abril',100,GOLD,'left',cw-60); T('APROVEITAMENTO',P+cw+30,y+165,'osw',24,INK);
+    y+=210; const c3=(W-2*P)/3; [['VITÓRIAS',S.r.V,V],['EMPATES',S.r.E,GOLD],['DERROTAS',S.r.D,R]].forEach(([l,v,c],i)=>{ x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P+i*c3+(i?10:0),y,c3-(i===1?20:10),150); T(String(v),P+i*c3+34,y+92,'abril',72,c); T(l,P+i*c3+34,y+130,'osw',22,INK); });
+    y+=220; const top=Object.entries(S.gols).sort((a,b)=>b[1]-a[1])[0];
+    T(`${S.r.gp} gols do Galo vistos`,P,y,'osw',34,INK,'left',W-2*P); y+=50;
+    if(top){ T(`Quem mais vi marcar: ${nomeV(top[0])} (${top[1]})`,P,y,'cas',28,INK,'left',W-2*P); y+=46; }
+    if(S.big) wrap(`Maior vitória que vi: Atlético ${placar(S.big)} ${S.big.adversario} (${fmtD(S.big.data)})`,P,y,'cas',28,W-2*P,40,INK,'left',2);
+    if(S.ids.length>=5) carimbo(pct(S.r)>=0.6?'PÉ-QUENTE':pct(S.r)<0.4?'PÉ-FRIO':'FIEL',W-P-150,A.BOT-60,-0.1,40);
   }
   if(s.t==='desafio'){
-    T('DESAFIO DO DIA · '+fmtD(hojeStr()),P,80,'osw',24,GOLD); Tm(s.nome,P,175,96,s.grade?W-2*P-330:W-2*P);
-    Tm(String(s.res),P,330,120,W-2*P-(s.grade?330:0));
-    if(s.grade){ s.grade.split('\n').forEach((r,ri)=>[...r].forEach((c,ci)=>{ x.fillStyle=c==='v'?'#2f7d47':c==='a'?'#D9A21B':'#555'; x.fillRect(W-P-5*58+ci*58,70+ri*58,50,50); })); }
-    T((G.perfil&&G.perfil.apelido)||'',P,420,'osw',30,INK);
-    carimbo(s.ok?'VENCI!':'AMANHÃ TEM MAIS',W-260,530,-0.08);
+    galo(W-P-90,300,190);
+    T('★ DESAFIO DO DIA · '+fmtD(hojeStr()),P,226,'osw',34,GOLD); Tm(s.nome,P,350,100,W-2*P-230);
+    let y=420; x.fillStyle='rgba(255,255,255,.55)'; x.fillRect(P,y,W-2*P,230); x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P,y,W-2*P,230);
+    Tm(String(s.res),W/2,y+160,130,W-2*P-60,'center'); y+=300;
+    if(s.grade){ const rows=s.grade.split('\n').filter(Boolean); const n=Math.max(...rows.map(r=>[...r].length)); const sq=Math.min(92,(W-2*P)/n-12, (A.BOT-y-150)/rows.length-12); const gx=(W-n*(sq+12)+12)/2;
+      rows.forEach((r,ri)=>[...r].forEach((c,ci)=>{ x.fillStyle=c==='v'?'#2f7d47':c==='a'?'#D9A21B':'#555'; A.rr(gx+ci*(sq+12),y+ri*(sq+12),sq,sq,8); x.fill(); })); y+=rows.length*(sq+12)+40; }
+    const ap=(G.perfil&&G.perfil.apelido)||''; if(ap) T(ap,P,Math.min(y+30,A.BOT-90),'osw',36,INK,'left',W-2*P-380);
+    carimbo(s.ok?'VENCI!':'AMANHÃ TEM MAIS',W-P-190,A.BOT-70,-0.08,40);
   }
   return cv;
 }
@@ -2667,7 +2699,7 @@ async function abreArte(spec){
   box.innerHTML=`<div class="gm-achou-in arte-in"><p class="osw">Preparando a arte…</p></div>`; document.body.appendChild(box);
   const fecha=()=>box.remove(); box.onclick=e=>{ if(e.target===box) fecha(); };
   try{ const cv=await desenhaArte(spec); const url=cv.toDataURL('image/png');
-    box.querySelector('.arte-in').innerHTML=`<p class="osw">${spec.t==='uf'?'Arte pronta para o post':'Arte pronta para o Twitter'}</p><img src="${url}" alt="Prévia da arte" class="arte-img"><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button type="button" class="more" id="artdl">Baixar PNG</button><button type="button" class="ghost" id="artfx">Fechar</button></div><p class="count">Baixe a imagem e anexe no tweet. Se o download não abrir, clique com o botão direito (ou toque e segure) na imagem para salvar.</p>`;
+    box.querySelector('.arte-in').innerHTML=`<p class="osw">Arte pronta para o post</p><img src="${url}" alt="Prévia da arte" class="arte-img"><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button type="button" class="more" id="artdl">Baixar PNG</button><button type="button" class="ghost" id="artfx">Fechar</button></div><p class="count">Baixe a imagem e anexe no tweet. Se o download não abrir, clique com o botão direito (ou toque e segure) na imagem para salvar.</p>`;
     box.querySelector('#artfx').onclick=fecha; box.querySelector('#artdl').focus();
     box.querySelector('#artdl').onclick=async()=>{ const nome=`galo-metrics-${spec.t}.png`; const blob=await (await fetch(url)).blob();
       const dl = window.claude&&window.claude.use ? await window.claude.use('downloads').catch(()=>null) : null;
@@ -3736,40 +3768,18 @@ function resumoUF(uf){ const d=dadosUF(uf); if(!d.C.length) return '';
   <p class="count">Conta só clubes: seleções, combinados e times B ficam de fora.</p>
   <p>${artBtn({t:'uf', uf})} ${tw(fraseUF(d))}</p></div>`; }
 async function desenhaArteUF(s){
-  const d=dadosUF(s.uf); const W=1080,H=1350,P=70, cv=document.createElement('canvas'); cv.width=W; cv.height=H; const x=cv.getContext('2d');
-  await Promise.all(['400 80px "Abril Fatface"','700 40px Oswald','700 30px "Courier Prime"','400 30px "Libre Caslon Text"'].map(f=>document.fonts.load(f).catch(()=>{})));
-  const INK='#111', PAP='#F5F2EA', GOLD='#C9962B', V='#1f7a43', R='#b3261e';
-  const F=(f,sz)=>({abril:`400 ${sz}px "Abril Fatface", Georgia, serif`, osw:`700 ${sz}px Oswald, Archivo, sans-serif`, mono:`700 ${sz}px "Courier Prime", monospace`, cas:`400 ${sz}px "Libre Caslon Text", Georgia, serif`}[f]);
-  const T=(t,px,py,f,sz,c=INK,al='left',max=0)=>{ x.font=F(f,sz); if(max) while(sz>14&&x.measureText(t).width>max){ sz-=2; x.font=F(f,sz); } x.fillStyle=c; x.textAlign=al; x.textBaseline='alphabetic'; x.fillText(t,px,py); return x.measureText(t).width; };
-  const wrap=(t,px,py,f,sz,max,lh,c=INK)=>{ x.font=F(f,sz); const ws=t.split(' '); let ln='', y=py; ws.forEach(w=>{ const tt=ln?ln+' '+w:w; if(x.measureText(tt).width>max&&ln){ x.fillStyle=c; x.textAlign='left'; x.fillText(ln,px,y); ln=w; y+=lh; } else ln=tt; }); if(ln){ x.fillStyle=c; x.fillText(ln,px,y); } return y; };
-  const rr=(px,py,w,h,r)=>{ x.beginPath(); x.moveTo(px+r,py); x.arcTo(px+w,py,px+w,py+h,r); x.arcTo(px+w,py+h,px,py+h,r); x.arcTo(px,py+h,px,py,r); x.arcTo(px,py,px+w,py,r); x.closePath(); };
-  // fundo
-  x.fillStyle=PAP; x.fillRect(0,0,W,H); x.fillStyle='rgba(17,17,17,.05)'; for(let i=0;i<W;i+=8) for(let k=0;k<H;k+=8) x.fillRect(i,k,1.3,1.3);
-  // barra de navegador
-  x.fillStyle='#1b1b1a'; x.fillRect(0,0,W,150);
-  [['#7a7468',36],['#C9962B',70],['#e9e4d6',104]].forEach(([c,cx])=>{ x.fillStyle=c; x.beginPath(); x.arc(cx,38,10,0,7); x.fill(); });
-  x.fillStyle=PAP; rr(140,14,300,52,12); x.fill(); x.fillRect(140,40,300,30);
-  T('★',160,50,'osw',22,GOLD); T('Galo Metrics',190,50,'osw',24,INK);
-  x.fillStyle='#2c2b29'; rr(P-20,84,W-2*P+40,52,26); x.fill();
-  T('🔒',P+4,119,'osw',20,PAP); T('galometrics.com.br',P+40,120,'osw',28,PAP); const wb=x.measureText('galometrics.com.br').width;
-  T(`/adversarios?uf=${s.uf}`,P+44+wb,120,'osw',28,'#9a9385');
-  x.fillStyle=GOLD; x.fillRect(0,150,W,6);
-  // título
-  T('★ VOCÊ SABIA?',P,250,'osw',38,GOLD);
-  const fr=fraseUF(d), fs=fr.length>110?54:fr.length>80?62:72; let y=wrap(fr,P,340,'abril',fs,W-2*P,Math.round(fs*1.18));
-  // números
-  y+=60; const cols=[[d.pos.length,'positivo',V],[d.igu.length,'igual',GOLD],[d.neg.length,'negativo',R]]; const cw=(W-2*P)/3;
-  x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P,y,W-2*P,190);
-  cols.forEach(([n,l,c],i)=>{ if(i){ x.fillStyle=INK; x.fillRect(P+i*cw,y,2,190); } T(String(n),P+i*cw+30,y+115,'abril',96,c,'left',cw-50); T(('RETROSPECTO '+l).toUpperCase(),P+i*cw+30,y+160,'osw',22,INK,'left',cw-50); });
-  y+=245;
-  // mais enfrentados
-  T('OS MAIS ENFRENTADOS',P,y,'osw',28,INK); x.fillStyle=INK; x.fillRect(P,y+14,W-2*P,3); y+=56;
-  const top=d.C.slice().sort((a,b)=>b.J-a.J); const limite=H-170;
-  for(const r of top){ if(y>limite) break; const im=await loadImg(escSrc(r.id)); if(im) cvImg(x,im,P,y-34,44,44);
-    T(r.nome,P+60,y,'cas',30,INK,'left',470); T(`${r.J} jogos`,W-P-250,y,'mono',22,INK,'right'); T(`${r.V}V ${r.E}E ${r.D}D`,W-P,y,'mono',22,r.V>r.D?V:r.D>r.V?R:GOLD,'right'); x.fillStyle='rgba(17,17,17,.15)'; x.fillRect(P,y+18,W-2*P,1); y+=66; }
-  // rodapé
-  x.fillStyle=INK; x.fillRect(0,H-96,W,96); T('GALO METRICS',P,H-36,'abril',40,PAP); T('O site mais completo de estatísticas do Galo',W-P,H-40,'cas',22,GOLD,'right');
-  T('Só clubes: seleções, combinados e times B ficam de fora.',P,H-116,'cas',18,'#6b6458');
+  const d=dadosUF(s.uf); const A=await arteBase(`/adversarios?uf=${s.uf}`); const {cv,x,W,H,P,T,wrap,galo,INK,GOLD,V,R}=A;
+  galo(W-P-85,250,170);
+  T('★ VOCÊ SABIA?',P,236,'osw',38,GOLD);
+  const fr=fraseUF(d), fs=fr.length>110?48:fr.length>80?54:62; let y=wrap(fr,P,316,'abril',fs,W-2*P-210,Math.round(fs*1.18));
+  y+=50; const cols=[[d.pos.length,'positivo',V],[d.igu.length,'igual',GOLD],[d.neg.length,'negativo',R]]; const cw=(W-2*P)/3;
+  x.fillStyle='rgba(255,255,255,.55)'; x.fillRect(P,y,W-2*P,180); x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P,y,W-2*P,180);
+  cols.forEach(([n,l,c],i)=>{ if(i){ x.fillStyle=INK; x.fillRect(P+i*cw,y,2,180); } T(String(n),P+i*cw+30,y+108,'abril',90,c,'left',cw-50); T(('RETROSPECTO '+l).toUpperCase(),P+i*cw+30,y+152,'osw',21,INK,'left',cw-50); });
+  y+=240;
+  T('OS MAIS ENFRENTADOS',P,y,'osw',28,INK); x.fillStyle=INK; x.fillRect(P,y+14,W-2*P,3); y+=60;
+  const top=d.C.slice().sort((a,b)=>b.J-a.J); const limite=A.BOT-40;
+  for(const r of top){ if(y>limite) break; const im=await loadImg(escSrc(r.id)); if(im) cvImg(x,im,P,y-36,46,46);
+    T(r.nome,P+64,y,'cas',30,INK,'left',460); T(`${r.J} jogos`,W-P-250,y,'mono',22,INK,'right'); T(`${r.V}V ${r.E}E ${r.D}D`,W-P,y,'mono',22,r.V>r.D?V:r.D>r.V?R:GOLD,'right'); x.fillStyle='rgba(17,17,17,.15)'; x.fillRect(P,y+18,W-2*P,1); y+=64; }
   return cv;
 }
 
