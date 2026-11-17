@@ -540,6 +540,9 @@ button.more{-webkit-text-fill-color:currentColor}
 .falta{border:2px solid var(--ink);padding:12px 16px;margin:12px 0;background:var(--paper)}.falta summary{cursor:pointer;font-family:'Oswald',sans-serif;font-size:20px;text-transform:uppercase;letter-spacing:.03em}.falta .tag{margin-left:8px}.falta .tw{overflow-x:auto;margin-top:10px}
 .fig-ph .fig-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}.jog-foto{float:right;width:150px;height:180px;object-fit:cover;object-position:top;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--gold);margin:0 0 12px 16px}@media(max-width:600px){.jog-foto{width:96px;height:116px}}
 .selo-trof{display:inline-block;height:1.5em;width:auto;vertical-align:-.35em;filter:drop-shadow(0 1px 0 rgba(0,0,0,.25))}.selo-colab .selo-trof{margin-right:2px}
+.fig.ultra{background:linear-gradient(135deg,#1a1a1a,#3a2a05 40%,#C9962B 60%,#111);color:#F4F1E8;outline-color:var(--gold)}.fig.ultra .fig-ph{background:radial-gradient(circle at 50% 30%,#3a2a05,#111)}.fig.ultra .fig-nome{color:var(--gold)}.fig.ultra .fig-top{color:var(--gold)}
+.fig-secreta{background:repeating-linear-gradient(45deg,#111 0 10px,#1d1d1b 10px 20px);color:var(--gold);border-color:var(--gold)}.fig-secreta b{color:var(--gold);font-size:56px}
+.pko-card.r-ultra.vira .pko-front{filter:drop-shadow(0 0 30px rgba(232,193,90,1)) drop-shadow(0 0 60px rgba(201,150,43,.8))}.pko-mini.r-ultra{filter:drop-shadow(0 0 14px rgba(232,193,90,1))}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -560,9 +563,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117092149';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117092149"></script>
-<script src="backend-firebase.js?v=20261117092149"></script>
+<script>window.GM_BUILD='20261117093156';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117093156"></script>
+<script src="backend-firebase.js?v=20261117093156"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1490,9 +1493,10 @@ function figuras(){
     FIGN[p.nome]=f; return f; });
   return FIG;
 }
-const ROT={comum:'Comum', brilhante:'Brilhante', lendaria:'Lendária'};
+const ROT={comum:'Comum', brilhante:'Brilhante', lendaria:'Lendária', ultra:'Ultra rara'};
 const fotoJog=n=>{ const u=String((JOGX[slug(n)]||{}).foto||''); return u.startsWith('fb:')?u.slice(3):''; };
 function figHTML(f, extra=''){
+  if(f&&f.esp) return espHTML(f, extra);
   const n=G.owned[f.nome]||0;
   return `<a class="fig ${f.r}${f.r!=='comum'?' foil':''} ${extra}" href="#jogador-${slug(f.nome)}" aria-label="Figurinha ${f.num}, ${esc(f.nomeV)}, ${ROT[f.r]}">
     <span class="fig-top"><span>Nº ${f.num}</span><span>${ROT[f.r]}</span></span>
@@ -1559,6 +1563,7 @@ function vAlbum(){
   <label>Mostrar<select id="albfil">${[['todas','Todas'],['coladas','Só as coladas'],['faltam','Só as que faltam'],['repetidas','Repetidas']].map(([v,l])=>`<option value="${v}"${ALB.filtro===v?' selected':''}>${l}</option>`).join('')}</select></label>
   <label>Buscar<input id="albq" value="${esc(ALB.q)}" placeholder="nome do jogador"></label>${DONO?`<label class="chk" style="align-self:flex-end"><input type="checkbox" id="albver" ${ALB.verTodas?'checked':''}> Ver todas as figurinhas (só você)</label>`:''}</div>
   <div id="albgrid"></div>
+  ${blocoSecretas()}
   <h2>Meu progresso</h2>
   <div class="grid2"><div>
     <p class="count">${NUVEM?'Seu álbum está salvo na sua conta e neste aparelho.':'Seu álbum fica salvo neste aparelho, sem precisar de login.'} Para levar para outro aparelho, copie o código de backup e cole lá em "Restaurar".</p>
@@ -1592,7 +1597,7 @@ function albumUI(){
   $('#albq').oninput=e=>{ ALB.q=e.target.value; re(); };
   const abre=(gratis)=>{
     if(gratis==='presente'){ if(!(G.pacPres>0)) return; G.pacPres--; } else if(gratis){ if(!G.gratis) return; G.gratis=false; } else if(!DONO) { if(G.pts<CFG.pontos.pacote){ toast(`Faltam ${CFG.pontos.pacote-G.pts} Metricoins para um pacotinho.`); return; } G.pts-=CFG.pontos.pacote; G.hist.unshift({d:Date.now(), n:-CFG.pontos.pacote, m:'pacotinho aberto'}); }
-    const pac=[]; for(let i=0;i<5;i++){ const f=sorteiaFig(); pac.push({f, nova:cola(f)}); }
+    const pac=[]; for(let i=0;i<5;i++){ const e=sorteiaEsp(); const f=e||sorteiaFig(); pac.push({f, nova:cola(f)}); }
     gSave(); atualizaChip();
     if(animOn()&&typeof mostraPacote==='function'){ mostraPacote(pac, ()=>{ ALB.pacote=pac; route.keep=true; route(); const pk=$('#pkarea'); if(pk) pk.scrollIntoView({block:'start'}); }, abreDeNovo); return; }
     ALB.pacote=pac; route.keep=true; route(); const pk=$('#pkarea'); if(pk) pk.scrollIntoView({block:'start'});
@@ -1627,6 +1632,7 @@ function vDono(){
   return `<div class="kicker">Só você vê esta página</div><h1>Página do dono</h1>
   <p class="lede">O que você muda aqui vale para todo mundo que abre o site, na hora. Os dados da base não são apagados: estes ajustes ficam por cima deles.</p>
   <a class="capa-breve" href="#dono-falta" style="text-decoration:none;color:inherit;margin-bottom:22px"><span class="kk">★ O que falta</span><span>Escudos de adversários, fotos de jogadores, fichas de jogos e outros dados que ainda faltam na base, em ordem de prioridade →</span></a>
+  <a class="capa-breve" href="#dono-secretas" style="text-decoration:none;color:inherit;margin-bottom:22px"><span class="kk">★ Figurinhas secretas</span><span>Crie figurinhas ultra raras (influenciadores, apoiadores, memes). No álbum elas ficam escondidas até alguém tirar no pacotinho →</span></a>
   <form id="dform" class="dono">
   <h2>Página inicial</h2>
   <label>Manchete (aparece no topo do início)<input name="manchete" value="${esc(CFG.manchete||'')}" placeholder="Ex.: Final em Barranquilla: tudo sobre o Galo contra o Boca"></label>
@@ -1758,6 +1764,7 @@ async function carregaEdicoes(){
   try{ const s=await GDB.collection('notas').limit(1000).get(); s.docs.forEach(d=>{ NOTAS[d.id]=d.data().texto||''; }); }catch(e){}
   try{ const s=await GDB.collection('jogadoresx').limit(1000).get(); s.docs.forEach(d=>{ JOGX[d.id]=d.data(); }); }catch(e){}
   try{ const s=await GDB.doc('site/escudosx').get(); if(s.exists) ESCX=s.data().map||{}; }catch(e){}
+  try{ const s=await GDB.doc('site/especiais').get(); if(s.exists) ESP=s.data().itens||[]; }catch(e){}
   Object.keys(EDIC).sort((a,b)=>+a-+b).forEach(id=>aplicaEdicao(id, EDIC[id])); reordena();
 }
 const chaveNota=h=>h.replace(/[^A-Za-z0-9_\-.~:@+]/g,'_').slice(0,180)||'inicio';
@@ -2691,6 +2698,7 @@ function route(){
   else if(h==='album') html=vAlbum();
   else if(h==='dono') html=vDono()+blocoMoedas()+blocoAjuste();
   else if(h==='dono-falta') html=vFalta();
+  else if(h==='dono-secretas') html=vDonoSecretas();
   else if(h==='embreve') html=vEmBreve();
   else if(h==='comparar') {html=vComparar(params); sec='jogadores';}
   else if(h==='competicoes') html=vCompeticoes();
@@ -2709,7 +2717,7 @@ function route(){
   if(DIA_JOGO&&(h==='desafios'||h.startsWith('desafio-'))) html=html.replace(/href="#desafio(s|-[a-z]+)"/g,(m,x)=>`href="#desafio${x}?dia=${DIA_JOGO}"`);
   $('#app').innerHTML=notaPagina(h)+html;
   ligaNota();
-  const alvo = ['palpites','diario','ranking','album','perfil','dono','dono-falta','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve','torcedores'].includes(h)?h:sec;
+  const alvo = ['palpites','diario','ranking','album','perfil','dono','dono-falta','dono-secretas','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve','torcedores'].includes(h)?h:sec;
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href').slice(1)===alvo));
   document.querySelectorAll('#nav details').forEach(d=>{ d.removeAttribute('open'); d.classList.toggle('on', !!d.querySelector('a.on')); });
   if(!route.keep) window.scrollTo(0,0); route.keep=false;
@@ -3765,6 +3773,47 @@ function vFalta(){
 
 /* imagens guardadas no banco (fb:id) aparecem sozinhas onde forem desenhadas */
 (function(){ try{ const mo=new MutationObserver(()=>{ if(document.querySelector('img[data-up]:not([data-ok])')){ document.querySelectorAll('img[data-up]:not([data-ok])').forEach(im=>im.setAttribute('data-ok','1')); resolveUps(); } }); mo.observe(document.documentElement,{childList:true,subtree:true}); }catch(e){} })();
+
+/* ---------- Figurinhas secretas (ultra raras, criadas pelo dono) ---------- */
+let ESP=[];
+const ESP_TIPOS=[['influenciador','Influenciador'],['apoiador','Apoiador'],['meme','Meme'],['outro','Especial']];
+const ESP_CHANCE=0.015; // por figurinha do pacotinho (cerca de 7% de chance por pacotinho)
+const espCarta=(x,i)=>({esp:true, id:x.id, nome:'esp:'+x.id, nomeV:x.nome, r:'ultra', num:'S'+String(i+1).padStart(2,'0'), stat:x.sub||'', periodo:(ESP_TIPOS.find(t=>t[0]===x.tipo)||ESP_TIPOS[3])[1], img:x.img||''});
+const espAtivas=()=>ESP.map(espCarta).filter((c,i)=>ESP[i].ativa!==false);
+function sorteiaEsp(){ const l=espAtivas(); if(!l.length||Math.random()>=ESP_CHANCE) return null; const novas=l.filter(c=>!G.owned[c.nome]); const p=novas.length&&Math.random()<0.7?novas:l; return p[Math.floor(Math.random()*p.length)]; }
+function espHTML(f, extra=''){ const n=G.owned[f.nome]||0, up=String(f.img||'').startsWith('fb:')?String(f.img).slice(3):'';
+  return `<a class="fig ultra foil ${extra}" href="#album" aria-label="Figurinha secreta ${esc(f.num)}, ${esc(f.nomeV)}, Ultra rara">
+    <span class="fig-top"><span>Nº ${esc(f.num)}</span><span>Ultra rara</span></span>
+    <span class="fig-ph">${up?`<img class="fig-foto" src="${PIX}" data-up="${up}" alt="">`:`<img class="fig-cr" src="escudos/galo/1908-1915.webp" alt="">`}${n>1?`<span class="fig-dup">+${n-1}</span>`:''}</span>
+    <span class="fig-nome">${esc(f.nomeV)}</span><span class="fig-stat">${esc(f.stat)}</span><span class="fig-per">${esc(f.periodo)}</span></a>`; }
+function blocoSecretas(){ const l=ESP.map(espCarta).filter((c,i)=>ESP[i].ativa!==false||G.owned[c.nome]); if(!l.length) return '';
+  const tem=l.filter(c=>G.owned[c.nome]).length;
+  return `<h2>★ Secretas <small class="uf">${tem} de ${l.length}</small></h2>
+  <p class="count">Figurinhas ultra raras que só aparecem de vez em quando no pacotinho. Ninguém sabe quem são até tirar.</p>
+  <div class="alb-grid">${l.map(c=>G.owned[c.nome]||(DONO&&ALB.verTodas)?`<div class="alb-cel">${espHTML(c)}</div>`:`<div class="alb-cel"><div class="fig-vazio fig-secreta" aria-label="Figurinha secreta"><b>?</b><span>Secreta</span><small>Ultra rara</small></div></div>`).join('')}</div>`; }
+function vDonoSecretas(){
+  if(!DONO) return vDono();
+  const salva=async lista=>{ await GDB.doc('site/especiais').set({itens:lista, em:Date.now()}); ESP=lista; };
+  setTimeout(()=>{ const b=$('#espok'); if(!b) return; const msg=$('#espmsg'); $('#espimg').onchange=()=>{ const f=$('#espimg').files[0]; msg.textContent=f?'Imagem escolhida: '+f.name:''; };
+    b.onclick=async()=>{ const nome=$('#espnome').value.trim().slice(0,40), sub=$('#espsub').value.trim().slice(0,60), tipo=$('#esptipo').value, f=$('#espimg').files[0];
+      if(!nome){ msg.textContent='Dê um nome para a figurinha.'; return; } msg.textContent='Salvando…';
+      try{ let img=''; if(f){ const A=await window.claude.use('assets'); if(!A) throw new Error('sem upload'); img=(await A.upload(f)).url; }
+        const id=Date.now().toString(36); await salva([...ESP,{id, nome, sub, tipo, img, ativa:true, criada:hojeStr()}]); toast('Figurinha secreta criada.'); route.keep=true; route(); }
+      catch(e){ console.error(e); msg.textContent='Não foi possível salvar: '+(e.message||'tente de novo.'); } };
+    document.querySelectorAll('[data-esp-on]').forEach(x=>x.onclick=async()=>{ const L=ESP.map(y=>y.id===x.dataset.espOn?{...y, ativa:y.ativa===false}:y); await salva(L); route.keep=true; route(); });
+    document.querySelectorAll('[data-esp-img]').forEach(x=>x.onchange=async()=>{ const f=x.files[0]; if(!f) return; try{ const A=await window.claude.use('assets'); const u=(await A.upload(f)).url; await salva(ESP.map(y=>y.id===x.dataset.espImg?{...y, img:u}:y)); toast('Imagem trocada.'); route.keep=true; route(); }catch(e){ toast('Não foi possível enviar a imagem.'); } });
+    let arm=null; document.querySelectorAll('[data-esp-del]').forEach(x=>x.onclick=async()=>{ if(arm!==x.dataset.espDel){ arm=x.dataset.espDel; x.textContent='Clique de novo para apagar'; return; } await salva(ESP.filter(y=>y.id!==arm)); route.keep=true; route(); });
+    document.querySelectorAll('[data-esp-meu]').forEach(x=>x.onclick=()=>{ const c=ESP.map(espCarta).find(c=>c.id===x.dataset.espMeu); if(c){ cola(c); gSave(); toast('Colada no seu álbum.'); } });
+  });
+  return `<a class="back" href="#dono">← Página do dono</a><div class="kicker">Só você vê esta página</div><h1>Figurinhas secretas</h1>
+  <p class="lede">Figurinhas ultra raras que você cria: influenciadores, apoiadores, memes. No álbum aparecem como "?" até a pessoa tirar. Cada figurinha de pacotinho tem ${(ESP_CHANCE*100).toLocaleString('pt-BR')}% de chance de virar uma secreta (cerca de 1 a cada 14 pacotinhos), e quem ainda não tem nenhuma secreta tem mais chance de pegar uma nova.</p>
+  <div class="dono"><h2 style="margin-top:0">Nova figurinha secreta</h2>
+    <div class="dgrid"><label>Nome<input id="espnome" maxlength="40" placeholder="Ex.: nome do influenciador"></label><label>Legenda<input id="espsub" maxlength="60" placeholder="Ex.: Apoiador do Galo Metrics"></label><label>Tipo<select id="esptipo">${ESP_TIPOS.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')}</select></label></div>
+    <label class="ghost" style="cursor:pointer;display:inline-block;margin-top:10px">Escolher imagem<input type="file" id="espimg" accept="image/*" hidden></label>
+    <p id="espmsg" class="count" role="status"></p><button type="button" class="more" id="espok">Criar figurinha</button></div>
+  <h2>Criadas (${ESP.length})</h2>
+  ${ESP.length?`<div class="alb-grid">${ESP.map((x,i)=>`<div class="alb-cel" style="${x.ativa===false?'opacity:.45':''}">${espHTML(espCarta(x,i))}<div style="display:flex;flex-direction:column;gap:4px;margin-top:6px"><button type="button" class="ghost" data-esp-on="${x.id}">${x.ativa===false?'Pausada · reativar':'Ativa · pausar'}</button><label class="ghost" style="cursor:pointer;text-align:center">Trocar imagem<input type="file" data-esp-img="${x.id}" accept="image/*" hidden></label><button type="button" class="ghost" data-esp-meu="${x.id}">Colar no meu álbum</button><button type="button" class="ghost" data-esp-del="${x.id}">Apagar</button></div></div>`).join('')}</div>`:'<p class="count">Nenhuma ainda.</p>'}`;
+}
 
 </script>
 </body>
