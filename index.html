@@ -565,9 +565,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117191124';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117191124"></script>
-<script src="backend-firebase.js?v=20261117191124"></script>
+<script>window.GM_BUILD='20261117191809';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261117191809"></script>
+<script src="backend-firebase.js?v=20261117191809"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2608,22 +2608,18 @@ async function arteBase(caminho, aba){
   const galo=(cx,cy,sz,sombra=true)=>{ if(!galoIm) return; if(sombra){ x.save(); x.shadowColor='rgba(17,17,17,.28)'; x.shadowBlur=sz*.12; x.shadowOffsetY=sz*.04; } cvImg(x,galoIm,cx-sz/2,cy-sz/2,sz,sz); if(sombra) x.restore(); };
   const carimbo=(t,cx,cy,rot=-0.12,sz=36)=>{ x.save(); x.translate(cx,cy); x.rotate(rot); x.font=F('abril',sz); const w=x.measureText(t).width+40, h=sz*1.75; x.strokeStyle=GOLD; x.lineWidth=5; x.strokeRect(-w/2,-h/2,w,h); x.lineWidth=2; x.strokeRect(-w/2+8,-h/2+8,w-16,h-16); x.fillStyle=GOLD; x.textAlign='center'; x.textBaseline='middle'; x.fillText(t,0,2); x.restore(); };
   // papel
-  x.fillStyle=PAP; x.fillRect(0,0,W,H); x.fillStyle='rgba(17,17,17,.05)'; for(let i=0;i<W;i+=8) for(let k=0;k<H;k+=8) x.fillRect(i,k,1.3,1.3);
-  // marca d'água do Galo
-  if(galoIm){ x.save(); x.globalAlpha=.05; cvImg(x,galoIm,W-560,H-700,640,640); x.restore(); }
+  x.fillStyle=PAP; x.fillRect(0,0,W,H);
   // barra de navegador
   const g=x.createLinearGradient(0,0,0,150); g.addColorStop(0,'#262523'); g.addColorStop(1,'#151514'); x.fillStyle=g; x.fillRect(0,0,W,150);
-  [['#7a7468',36],['#C9962B',66],['#e9e4d6',96]].forEach(([c,cx])=>{ x.fillStyle=c; x.beginPath(); x.arc(cx,36,9,0,7); x.fill(); });
-  x.fillStyle=PAP; rr(132,12,340,58,14); x.fill(); x.fillRect(132,44,340,30);
-  if(galoIm) cvImg(x,galoIm,148,22,34,34); T(aba||'Galo Metrics',192,51,'osw',24,INK,'left',230); T('×',448,50,'osw',22,'#9a9385','center');
-  T('‹  ›',P-22,121,'osw',34,'#9a9385');
-  x.fillStyle='#34322f'; rr(P+50,84,W-2*P-30,50,25); x.fill();
-  T('🔒',P+72,117,'osw',18,PAP); const wb=T('galometrics.com.br',P+104,119,'osw',27,PAP); T(caminho||'',P+106+wb,119,'osw',27,'#a59e8f','left',W-2*P-wb-90);
-  T('★',W-P-6,119,'osw',26,GOLD,'right');
-  x.fillStyle=GOLD; x.fillRect(0,150,W,6);
+  [36,62,88].forEach(cx=>{ x.fillStyle='#5a5650'; x.beginPath(); x.arc(cx,36,8,0,7); x.fill(); });
+  x.fillStyle=PAP; rr(124,14,300,56,14); x.fill(); x.fillRect(124,44,300,30);
+  T(aba||'Galo Metrics',148,51,'osw',24,INK,'left',260);
+  x.fillStyle='#34322f'; rr(P-20,84,W-2*P+40,50,25); x.fill();
+  const wb=T('galometrics.com.br',P+8,119,'osw',27,PAP); T(caminho||'',P+10+wb,119,'osw',27,'#a59e8f','left',W-2*P-wb-40);
+  x.fillStyle=GOLD; x.fillRect(0,150,W,5);
   // rodapé (sem faixa preta)
-  x.fillStyle=INK; x.fillRect(P,H-112,W-2*P,3); x.fillStyle=GOLD; x.fillRect(P,H-104,W-2*P,2);
-  galo(P+34,H-54,64,false); T('GALO METRICS',P+80,H-38,'abril',38,INK); T('Para ver todos os números da história do Galo:',W-P,H-64,'cas',20,GOLDD,'right',520); T('galometrics.com.br',W-P,H-30,'osw',30,INK,'right');
+  x.fillStyle=INK; x.fillRect(P,H-108,W-2*P,2);
+  T('GALO METRICS',P,H-44,'abril',36,INK); T('galometrics.com.br',W-P,H-46,'osw',28,GOLDD,'right');
   return {cv,x,W,H,P,T,Tm,F,wrap,rr,crest,galo,carimbo,INK,PAP,GOLD,GOLDD,V,R,CINZA,TOP:156,BOT:H-130};
 }
 const artBtn=spec=>`<button type="button" class="ghost" data-arte="${esc(JSON.stringify(spec))}">Baixar arte</button>`;
@@ -3768,18 +3764,18 @@ function resumoUF(uf){ const d=dadosUF(uf); if(!d.C.length) return '';
   <p class="count">Conta só clubes: seleções, combinados e times B ficam de fora.</p>
   <p>${artBtn({t:'uf', uf})} ${tw(fraseUF(d))}</p></div>`; }
 async function desenhaArteUF(s){
-  const d=dadosUF(s.uf); const A=await arteBase(`/adversarios?uf=${s.uf}`); const {cv,x,W,H,P,T,wrap,galo,INK,GOLD,V,R}=A;
+  const d=dadosUF(s.uf); const A=await arteBase(`/adversarios?uf=${s.uf}`); const {cv,x,W,H,P,T,wrap,galo,INK,GOLD,GOLDD,V,R}=A;
   galo(W-P-85,250,170);
   T('★ VOCÊ SABIA?',P,236,'osw',38,GOLD);
-  const fr=fraseUF(d), fs=fr.length>110?48:fr.length>80?54:62; let y=wrap(fr,P,316,'abril',fs,W-2*P-210,Math.round(fs*1.18));
-  y+=50; const cols=[[d.pos.length,'positivo',V],[d.igu.length,'igual',GOLD],[d.neg.length,'negativo',R]]; const cw=(W-2*P)/3;
-  x.fillStyle='rgba(255,255,255,.55)'; x.fillRect(P,y,W-2*P,180); x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P,y,W-2*P,180);
-  cols.forEach(([n,l,c],i)=>{ if(i){ x.fillStyle=INK; x.fillRect(P+i*cw,y,2,180); } T(String(n),P+i*cw+30,y+108,'abril',90,c,'left',cw-50); T(('RETROSPECTO '+l).toUpperCase(),P+i*cw+30,y+152,'osw',21,INK,'left',cw-50); });
+  const fr=fraseUF(d), fs=fr.length>110?48:fr.length>80?54:62; let y=wrap(fr,P,326,'abril',fs,W-2*P-210,Math.round(fs*1.2));
+  y+=64; const cols=[[d.pos.length,'positivo',V],[d.igu.length,'igual',GOLD],[d.neg.length,'negativo',R]]; const cw=(W-2*P)/3;
+  x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+180,W-2*P,3);
+  cols.forEach(([n,l,c],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+30,2,120); } T(String(n),P+i*cw+30,y+108,'abril',90,c,'left',cw-50); T(('RETROSPECTO '+l).toUpperCase(),P+i*cw+30,y+152,'osw',21,INK,'left',cw-50); });
   y+=240;
-  T('OS MAIS ENFRENTADOS',P,y,'osw',28,INK); x.fillStyle=INK; x.fillRect(P,y+14,W-2*P,3); y+=60;
-  const top=d.C.slice().sort((a,b)=>b.J-a.J); const limite=A.BOT-40;
-  for(const r of top){ if(y>limite) break; const im=await loadImg(escSrc(r.id)); if(im) cvImg(x,im,P,y-36,46,46);
-    T(r.nome,P+64,y,'cas',30,INK,'left',460); T(`${r.J} jogos`,W-P-250,y,'mono',22,INK,'right'); T(`${r.V}V ${r.E}E ${r.D}D`,W-P,y,'mono',22,r.V>r.D?V:r.D>r.V?R:GOLD,'right'); x.fillStyle='rgba(17,17,17,.15)'; x.fillRect(P,y+18,W-2*P,1); y+=64; }
+  T('OS MAIS ENFRENTADOS',P,y,'osw',26,GOLDD); y+=66;
+  const top=d.C.slice().sort((a,b)=>b.J-a.J).slice(0,5); const passo=Math.min(76,Math.floor((A.BOT-20-y)/Math.max(1,top.length)));
+  for(const r of top){ const im=await loadImg(escSrc(r.id)); if(im) cvImg(x,im,P,y-38,48,48);
+    T(r.nome,P+68,y,'cas',32,INK,'left',520); T(`${r.V}V  ${r.E}E  ${r.D}D`,W-P,y,'osw',26,'#4a4640','right'); x.fillStyle='rgba(17,17,17,.12)'; x.fillRect(P,y+22,W-2*P,1); y+=passo; }
   return cv;
 }
 
