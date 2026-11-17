@@ -563,9 +563,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117095550';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117095550"></script>
-<script src="backend-firebase.js?v=20261117095550"></script>
+<script>window.GM_BUILD='20261117102140';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117102140"></script>
+<script src="backend-firebase.js?v=20261117102140"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2495,7 +2495,7 @@ function blocoPublico(det){
 }
 /* ---------- Campinho ---------- */
 function linhasCampo(tit, form){
-  if(form&&FORMS[form]){ const F=FORMS[form]; const out=[]; let k=0; F.forEach(n=>{ out.push(tit.slice(k,k+n).reverse()); k+=n; }); return out; }
+  if(form&&FORMS[form]){ const F=FORMS[form]; const out=[]; let k=0; F.forEach(n=>{ out.push(tit.slice(k,k+n)); k+=n; }); return out; } // palpite: a ordem dos campos já é da esquerda para a direita
   const L={Goleiro:[],Defensor:[],Meia:[],Atacante:[]}; tit.forEach((n,i)=>{ let p=posTxt(n)||(i===0?'Goleiro':'Meia'); if(p==='Goleiro'&&L.Goleiro.length) p='Defensor'; L[p].push(n); });
   if(!L.Goleiro.length&&tit.length) L.Goleiro.push(L.Defensor.shift()||tit[0]);
   return [L.Goleiro,L.Defensor,L.Meia,L.Atacante].filter(x=>x.length).map(x=>x.slice().reverse());
