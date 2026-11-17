@@ -191,6 +191,7 @@ table.cmp tr.tot td{border-top:2px solid var(--ink);font-size:22px;font-weight:9
 .fig-top{display:flex;justify-content:space-between;font-size:10px;font-weight:700;text-transform:uppercase}
 .fig-ph{flex:1;display:flex;align-items:flex-end;justify-content:center;position:relative;overflow:hidden;background:repeating-linear-gradient(90deg,#111 0 11px,#fff 11px 22px)}.fig.brilhante .fig-ph{background:#111}.fig.lendaria .fig-ph{background:#C9962B}
 .fig-ph svg{width:84px;height:98px}.fig-ph svg *{fill:#F5F2EA;stroke:#111;stroke-width:3}
+.fig-ph{align-items:center}.fig-ph .fig-cr{width:68%;max-height:82%;object-fit:contain;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}.fig.comum .fig-ph{background:repeating-linear-gradient(90deg,#e9e5da 0 11px,#f7f5ef 11px 22px)}
 .fig-dup{position:absolute;top:5px;right:5px;background:#111;color:#C9962B;font-size:11px;font-weight:700;padding:1px 5px}
 .fig-nome{font-weight:900;font-stretch:75%;text-transform:uppercase;font-family:Archivo,sans-serif;font-size:17px;line-height:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.fig-stat{font-size:10px;font-weight:700}.fig-per{font-size:10px}
 .fig-vazio{width:140px;height:204px;box-sizing:border-box;border:3px dashed var(--mute);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--mute);background:var(--soft);text-align:center;padding:8px}.fig-vazio b{font-family:'Courier Prime',monospace;font-size:30px}.fig-vazio span{font-size:12px;font-weight:700;text-transform:uppercase}.fig-vazio small{font-size:10px}
@@ -532,6 +533,8 @@ button.more{-webkit-text-fill-color:currentColor}
   #app{overflow-x:hidden}
   #app table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
 }
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--ink)}.kpis>div{padding:14px 16px;border-right:1px solid var(--line)}.kpis>div:last-child{border-right:0}.kpis b{display:block;font-family:'Abril Fatface',serif;font-size:34px;line-height:1}.kpis span{font-family:'Oswald',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute)}@media(max-width:600px){.kpis{grid-template-columns:1fr 1fr}.kpis>div:nth-child(2){border-right:0}.kpis>div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+.falta{border:2px solid var(--ink);padding:12px 16px;margin:12px 0;background:var(--paper)}.falta summary{cursor:pointer;font-family:'Oswald',sans-serif;font-size:20px;text-transform:uppercase;letter-spacing:.03em}.falta .tag{margin-left:8px}.falta .tw{overflow-x:auto;margin-top:10px}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -552,9 +555,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117070101';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117070101"></script>
-<script src="backend-firebase.js?v=20261117070101"></script>
+<script>window.GM_BUILD='20261117073909';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117073909"></script>
+<script src="backend-firebase.js?v=20261117073909"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -569,9 +572,11 @@ const placar = j => j.gp==null ? (j.wo ? 'WO' : 'x') : `${j.gp} x ${j.gc}`;
 const mandoTxt = {C:'Casa', F:'Fora', N:'Neutro'};
 const mandoLbl = j => j.mando==='N' && !j.tem_ficha && !j.cidade ? '' : (mandoTxt[j.mando]||'');
 let ESC={};
-const cr = (id, cls='cr') => { const f = id==='galo' ? ESC.__galo : ESC[id]; return f ? `<img class="${cls}" src="${f}" alt="" loading="lazy">` : `<span class="${cls} nocr"></span>`; };
+const GALO_ESC=[[1908,1915],[1915,1927],[1927,1937],[1937,1940],[1940,1950],[1950,1960],[1960,1970],[1970,1972],[1972,1980],[1980,1982],[1982,1983],[1983,1987],[1987,1992],[1992,1997],[1997,1998],[1998,2006],[2006,2026]];
+const galoEsc = d => { const y=+String(d||'').slice(0,4); if(!y) return ESC.__galo; if(y===2008) return 'escudos/galo/2008.webp'; const r=GALO_ESC.find(([a,b])=>y>=a&&y<b)||(y>=2026?GALO_ESC[GALO_ESC.length-1]:GALO_ESC[0]); return `escudos/galo/${r[0]}-${r[1]}.webp`; };
+const cr = (id, cls='cr', quando) => { const f = id==='galo' ? (quando?galoEsc(quando):ESC.__galo) : ESC[id]; return f ? `<img class="${cls}" src="${f}" alt="" loading="lazy">` : `<span class="${cls} nocr"></span>`; };
 const advNome = j => { const w=String(j.adversario||'').split(' '), u=w.pop(); return `${w.length?esc(w.join(' '))+' ':''}<span class="an">${esc(u)}${j.adversario_uf?` <small class="uf">${esc(j.adversario_uf)}</small>`:''}${cr(j.adversario_id,'cr cra')}</span>`; };
-const linha = j => `<span class="ln">${cr('galo','crg')}<b>Atlético</b> <span class="score">${placar(j)}</span> ${advNome(j)}</span>`;
+const linha = j => `<span class="ln">${cr('galo','crg',j.data)}<b>Atlético</b> <span class="score">${placar(j)}</span> ${advNome(j)}</span>`;
 function rec(list){ const r={V:0,E:0,D:0,gp:0,gc:0,n:0}; list.forEach(j=>{ if(!j.resultado) return; r[j.resultado]++; r.gp+=j.gp||0; r.gc+=j.gc||0; r.n++; }); return r; }
 function resultBar(r){ const n=r.V+r.E+r.D||1; return `<div class="bar"><div style="width:${100*r.V/n}%;background:var(--v)"></div><div style="width:${100*r.E/n}%;background:var(--e)"></div><div style="width:${100*r.D/n}%;background:var(--d)"></div></div><div class="legend"><span><i style="background:var(--v)"></i>${r.V.toLocaleString('pt-BR')} ${r.V===1?'vitória':'vitórias'}</span><span><i style="background:var(--e)"></i>${r.E.toLocaleString('pt-BR')} ${r.E===1?'empate':'empates'}</span><span><i style="background:var(--d)"></i>${r.D.toLocaleString('pt-BR')} ${r.D===1?'derrota':'derrotas'}</span></div>`; }
 const N = x => x.toLocaleString('pt-BR');
@@ -829,7 +834,7 @@ function vJogo(id){
     ficha = `${mt?`<div class="meta">${mt}</div>`:''}<div class="note">Ficha completa (escalação${j.estadio?'':', estádio'}${j.publico!=null?'':', público'}) ainda não cadastrada para este jogo.${j.cidade_fonte?' Local e público: RSSSF Brasil (Jackass Molibidenio).':''}</div>`;
   }
   return `${nav}<div class="kicker">${esc(j.competicao||'')}${j.fase?' · '+esc(j.fase):''} · ${fmtD(j.data,j.data_aprox)} ${mandoLbl(j)?' · '+mandoLbl(j):''}</div>
-  <div class="match-head"><div class="t">${cr(galoLeft?'galo':j.adversario_id,'crb')}<div><span>${esc(L.n)} <span class="uf">${esc(L.uf||'')}</span></span>${marc(ladoG)}</div></div><div class="sc">${j.gp==null?(j.wo?'WO':'×'):L.g+'–'+R.g}</div><div class="t r"><div><span>${esc(R.n)} <span class="uf">${esc(R.uf||'')}</span></span>${marc(ladoG==='galo'?'adv':'galo')}</div>${cr(galoLeft?j.adversario_id:'galo','crb')}</div></div>
+  <div class="match-head"><div class="t">${cr(galoLeft?'galo':j.adversario_id,'crb',j.data)}<div><span>${esc(L.n)} <span class="uf">${esc(L.uf||'')}</span></span>${marc(ladoG)}</div></div><div class="sc">${j.gp==null?(j.wo?'WO':'×'):L.g+'–'+R.g}</div><div class="t r"><div><span>${esc(R.n)} <span class="uf">${esc(R.uf||'')}</span></span>${marc(ladoG==='galo'?'adv':'galo')}</div>${cr(galoLeft?j.adversario_id:'galo','crb',j.data)}</div></div>
   ${j.nota?`<div class="note">${esc(j.nota)}</div>`:''}
   ${blocoDonoJogo(j)}
   ${ficha}
@@ -1474,7 +1479,7 @@ function figuras(){
     if(CFG.raridade&&CFG.raridade[p.nome]) r=CFG.raridade[p.nome];
     const a1=ano(p), a2=+(p.ultimo||'').slice(0,4)||+(String(p.periodo_aceito||'').slice(-4))||a1;
     const stat = pen[p.nome]>=3 ? `${pen[p.nome]} pênaltis defendidos` : g ? `${N(g)} ${g===1?'gol':'gols'}` : jg ? `${N(jg)} jogos` : 'elenco';
-    const f={num:i+1, nome:p.nome, nomeV:nomeV(p.nome), r, stat, periodo:a1===a2?String(a1):`${a1}–${a2}`, dec:Math.floor(a1/10)*10};
+    const f={num:i+1, nome:p.nome, nomeV:nomeV(p.nome), r, stat, a1, periodo:a1===a2?String(a1):`${a1}–${a2}`, dec:Math.floor(a1/10)*10};
     FIGN[p.nome]=f; return f; });
   return FIG;
 }
@@ -1483,7 +1488,7 @@ function figHTML(f, extra=''){
   const n=G.owned[f.nome]||0;
   return `<a class="fig ${f.r}${f.r!=='comum'?' foil':''} ${extra}" href="#jogador-${slug(f.nome)}" aria-label="Figurinha ${f.num}, ${esc(f.nomeV)}, ${ROT[f.r]}">
     <span class="fig-top"><span>Nº ${f.num}</span><span>${ROT[f.r]}</span></span>
-    <span class="fig-ph"><svg viewBox="0 0 120 140" aria-hidden="true"><circle cx="60" cy="40" r="22"></circle><path d="M14 140 C14 92 34 72 60 72 C86 72 106 92 106 140 Z"></path></svg>${n>1?`<span class="fig-dup">+${n-1}</span>`:''}</span>
+    <span class="fig-ph"><img class="fig-cr" src="${galoEsc(f.a1)}" alt="" loading="lazy">${n>1?`<span class="fig-dup">+${n-1}</span>`:''}</span>
     <span class="fig-nome">${esc(f.nomeV)}</span><span class="fig-stat">${esc(f.stat)}</span><span class="fig-per">${esc(f.periodo)}${posTxt(f.nome)?' · '+posTxt(f.nome):''}</span>${(G.vivo||{})[f.nome]&&n?'<span class="fig-vivo">visto ao vivo</span>':''}</a>`;
 }
 function vazioHTML(f){ return `<div class="fig-vazio" aria-label="Espaço vazio da figurinha ${f.num}"><b>${f.num}</b><span>${esc(f.nomeV)}</span><small>${ROT[f.r]}</small></div>`; }
@@ -1613,6 +1618,7 @@ function vDono(){
   const ajJ=Object.entries(CFG.jogos||{}), ajR=Object.entries(CFG.raridade||{});
   return `<div class="kicker">Só você vê esta página</div><h1>Página do dono</h1>
   <p class="lede">O que você muda aqui vale para todo mundo que abre o site, na hora. Os dados da base não são apagados: estes ajustes ficam por cima deles.</p>
+  <a class="capa-breve" href="#dono-falta" style="text-decoration:none;color:inherit;margin-bottom:22px"><span class="kk">★ O que falta</span><span>Escudos de adversários, fotos de jogadores, fichas de jogos e outros dados que ainda faltam na base, em ordem de prioridade →</span></a>
   <form id="dform" class="dono">
   <h2>Página inicial</h2>
   <label>Manchete (aparece no topo do início)<input name="manchete" value="${esc(CFG.manchete||'')}" placeholder="Ex.: Final em Barranquilla: tudo sobre o Galo contra o Boca"></label>
@@ -1995,7 +2001,7 @@ function vPlacar(){
   const dica=(x,y)=>x===y?'<span class="qc v">certo</span>':x<y?'<span class="qc a">foi mais ↑</span>':'<span class="qc a">foi menos ↓</span>';
   setTimeout(()=>{ const s=$('#plshare'); if(s) { const _t=()=>textoRank('Placar do dia', (st.ok?st.t.length:'X')+'/3', st.ok?4-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href='https://twitter.com/intent/tweet?text='+encodeURIComponent((_t()+'\n#GaloMetrics').slice(0,280)); }; });
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Placar do dia</h1>
-  <div class="pl-card a-up"><span class="osw">${esc(j.competicao||'')}${j.fase?' · '+esc(j.fase):''}</span><div class="pl-vs">${cr('galo','crb')}<b>Atlético</b><span class="vs">?  ×  ?</span><b>${esc(j.adversario)}</b>${cr(j.adversario_id,'crb crb2')}</div><span class="cou">${DIAS[new Date(j.data+'T12:00').getDay()]}, ${fmtD(j.data)}${j.estadio?' · '+esc(j.estadio):''}${j.cidade?' · '+esc(j.cidade):''}</span></div>
+  <div class="pl-card a-up"><span class="osw">${esc(j.competicao||'')}${j.fase?' · '+esc(j.fase):''}</span><div class="pl-vs">${cr('galo','crb',j.data)}<b>Atlético</b><span class="vs">?  ×  ?</span><b>${esc(j.adversario)}</b>${cr(j.adversario_id,'crb crb2')}</div><span class="cou">${DIAS[new Date(j.data+'T12:00').getDay()]}, ${fmtD(j.data)}${j.estadio?' · '+esc(j.estadio):''}${j.cidade?' · '+esc(j.cidade):''}</span></div>
   <table><tbody>${st.t.map(g=>`<tr><td class="mono">${g[0]} x ${g[1]}</td><td>Galo: ${dica(g[0],j.gp)}</td><td>${esc(j.adversario)}: ${dica(g[1],j.gc)}</td></tr>`).join('')}</tbody></table>
   ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} O placar foi <a href="#jogo-${j.id}">Atlético ${j.gp} x ${j.gc} ${esc(j.adversario)}</a>.</p><button type="button" class="more" id="plshare">Copiar resultado</button><a class="ghost tw" id="pltw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a>${artBtn({t:'desafio',nome:'Placar do dia',res:(st.ok?st.t.length:'X')+'/3',ok:st.ok})}</div>`
   :`<div class="filters"><label>Gols do Galo<input id="plg" type="number" min="0" max="20" inputmode="numeric"></label><label>Gols do ${esc(j.adversario)}<input id="pla" type="number" min="0" max="20" inputmode="numeric"></label><button type="button" class="more" id="plenv" style="align-self:flex-end">Chutar (${3-st.t.length} restantes)</button></div><p id="plerr" class="count" role="alert" style="color:var(--d)"></p>`}`;
@@ -2620,6 +2626,7 @@ function route(){
   else if(h==='novo-jogo') {html=vNovoJogo(); sec='jogos';}
   else if(h==='album') html=vAlbum();
   else if(h==='dono') html=vDono()+blocoMoedas()+blocoAjuste();
+  else if(h==='dono-falta') html=vFalta();
   else if(h==='embreve') html=vEmBreve();
   else if(h==='comparar') {html=vComparar(params); sec='jogadores';}
   else if(h==='competicoes') html=vCompeticoes();
@@ -2638,7 +2645,7 @@ function route(){
   if(DIA_JOGO&&(h==='desafios'||h.startsWith('desafio-'))) html=html.replace(/href="#desafio(s|-[a-z]+)"/g,(m,x)=>`href="#desafio${x}?dia=${DIA_JOGO}"`);
   $('#app').innerHTML=notaPagina(h)+html;
   ligaNota();
-  const alvo = ['palpites','diario','ranking','album','perfil','dono','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve','torcedores'].includes(h)?h:sec;
+  const alvo = ['palpites','diario','ranking','album','perfil','dono','dono-falta','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve','torcedores'].includes(h)?h:sec;
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href').slice(1)===alvo));
   document.querySelectorAll('#nav details').forEach(d=>{ d.removeAttribute('open'); d.classList.toggle('on', !!d.querySelector('a.on')); });
   if(!route.keep) window.scrollTo(0,0); route.keep=false;
@@ -3571,7 +3578,7 @@ function vEscalacao(){
   });
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia · escalações do século</div><h1>Complete a escalação</h1>
   <p class="count">Um jogo marcante do Galo deste século, com o time titular inteiro escondido. Toque em cada "?" e descubra o jogador, como no Galodle: ${ESC_TENT} chances por posição. Acertando 8 ou mais, o desafio conta como vencido.</p>
-  <div class="esc-jogo"><span class="osw">${esc(j.competicao||'')}${j.fase?' · '+esc(j.fase):''} · ${fmtD(j.data)}</span><div class="esc-plac">${cr('galo')}<b>Atlético ${placar(j)} ${esc(j.adversario)}</b>${cr(j.adversario_id)}</div>${j.estadio?`<small class="uf">${esc(j.estadio)}${j.cidade?', '+esc(j.cidade):''}</small>`:''}</div>
+  <div class="esc-jogo"><span class="osw">${esc(j.competicao||'')}${j.fase?' · '+esc(j.fase):''} · ${fmtD(j.data)}</span><div class="esc-plac">${cr('galo','cr',j.data)}<b>Atlético ${placar(j)} ${esc(j.adversario)}</b>${cr(j.adversario_id)}</div>${j.estadio?`<small class="uf">${esc(j.estadio)}${j.cidade?', '+esc(j.cidade):''}</small>`:''}</div>
   <p class="classico-num"><b>${feitos}</b> de ${oc.length} descobertos${encerrados>feitos?` · ${encerrados-feitos} perdidos`:''}</p>
   ${campo}${painel()}
   ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Você descobriu ${feitos} de ${oc.length}!`:`Você descobriu ${feitos} de ${oc.length}.`}</p><a class="ghost" href="#jogo-${j.id}">Ver a ficha do jogo</a> <button type="button" class="more" id="escshare">Copiar resultado</button></div>`
@@ -3624,6 +3631,50 @@ function vTorcedor(cod){
    <div class="tile"><b>${p.seq||0}</b><span>Recorde de dias seguidos</span></div></div></div></div>
   <h2>Notas para jogos</h2>${av.length?`<div class="aval-list">${av.slice(0,60).map(([id,a])=>{ const j=byId[id]; return `<a class="aval-it" href="#jogo-${j.id}"><span class="mono uf">${fmtD(j.data)}</span><span>${linha(j)}</span>${a.n?starsHTML(a.n,'stx-s'):''}${a.est?'<span class="tag light">no estádio</span>':''}${a.t?`<em>“${esc(a.t)}”</em>`:''}</a>`; }).join('')}</div>`:'<p class="count">Ainda não avaliou jogos.</p>'}
   <h2>Notas para jogadores</h2>${avj.length?`<table><tbody>${avj.slice(0,60).map(([id,a])=>{ const x=pj(id); return `<tr${x?` class="click" onclick="location.hash='jogador-${id}'"`:''}><td>${esc(x?nomeV(x.nome):id)}</td><td>${a.n?starsHTML(a.n,'stx-s'):''}</td><td>${a.t?esc(a.t):''}</td></tr>`; }).join('')}</tbody></table>`:'<p class="count">Ainda não avaliou jogadores.</p>'}`;
+}
+
+/* ---------- Dono: o que falta na base ---------- */
+function vFalta(){
+  if(!DONO) return vDono();
+  const ser=(t,id,n,txt,cab,linhas,total)=>`<details class="falta" id="f-${id}" ${n?'':''}><summary><b>${esc(t)}</b> <span class="tag${n?'':' light'}">${N(n)}</span></summary><p class="count">${txt}</p>${n?`<button type="button" class="ghost" data-copia="${id}">Copiar lista</button><div class="tw"><table><thead><tr>${cab.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${linhas.slice(0,150).join('')}</tbody></table></div>${linhas.length>150?`<p class="count">Mostrando 150 de ${N(linhas.length)}. A lista copiada vem completa.</p>`:''}`:'<p class="count">Nada faltando aqui. ★</p>'}</details>`;
+  const listas={};
+  // escudos
+  const advSem=advRows().filter(a=>!ESC[a.id]).sort((x,y)=>y.J-x.J);
+  listas.esc=advSem.map(a=>`${a.nome}${a.uf?' ('+a.uf+')':''};${a.J} jogos;último ${a.jogos[a.jogos.length-1].data.slice(0,4)}`);
+  const lEsc=advSem.map(a=>`<tr><td><a href="#${a._href}">${esc(a.nome)}</a> <small class="uf">${esc(a.uf)}</small></td><td class="n">${N(a.J)}</td><td class="mono">${esc(a.jogos[a.jogos.length-1].data.slice(0,4))}</td></tr>`);
+  // fotos
+  figuras(); const fx=Object.values(FIGN).filter(f=>!(JOGX[slug(f.nome)]||{}).foto);
+  const pesoR={lendaria:0,brilhante:1,comum:2}; fx.sort((a,b)=>pesoR[a.r]-pesoR[b.r]||((pjDe(b.nome)||{}).jogos||0)-((pjDe(a.nome)||{}).jogos||0));
+  listas.foto=fx.map(f=>`${f.nome};${ROT[f.r]};${f.periodo};${(pjDe(f.nome)||{}).jogos||0} jogos`);
+  const lFoto=fx.map(f=>`<tr><td><a href="#jogador-${slug(f.nome)}">${esc(f.nomeV)}</a></td><td>${ROT[f.r]}</td><td class="mono">${esc(f.periodo)}</td><td class="n">${N((pjDe(f.nome)||{}).jogos||0)}</td></tr>`);
+  // fichas
+  const sf=J.filter(j=>j.resultado&&!j.tem_ficha).sort((a,b)=>(ehFinal(b)?1:0)-(ehFinal(a)?1:0)||b.data.localeCompare(a.data));
+  const jl=j=>`<tr><td class="mono">${fmtD(j.data)}</td><td><a href="#jogo-${j.id}">${esc(j.adversario)}</a> <small class="uf">${esc(placar(j))}</small></td><td>${esc(j.competicao||'')}${ehFinal(j)?' <span class="tag">final</span>':''}</td></tr>`;
+  const jt=j=>`${j.data};${j.adversario};${placar(j)};${j.competicao||''}`;
+  listas.ficha=sf.map(jt);
+  const porDec={}; sf.forEach(j=>{ const d=Math.floor(+j.data.slice(0,4)/10)*10; porDec[d]=(porDec[d]||0)+1; });
+  // gols sem autor
+  const sg=J.filter(j=>j.resultado&&(j.gp||0)>0&&(j.gols||[]).filter(g=>g.lado==='galo').length<(j.gp||0)).sort((a,b)=>b.data.localeCompare(a.data));
+  listas.gols=sg.map(j=>`${jt(j)};faltam ${(j.gp||0)-(j.gols||[]).filter(g=>g.lado==='galo').length} gols`);
+  const lGols=sg.map(j=>`<tr><td class="mono">${fmtD(j.data)}</td><td><a href="#jogo-${j.id}">${esc(j.adversario)}</a> <small class="uf">${esc(placar(j))}</small></td><td class="n">${(j.gp||0)-(j.gols||[]).filter(g=>g.lado==='galo').length}</td></tr>`);
+  // local e público
+  const sl=J.filter(j=>j.resultado&&(!j.estadio||!j.cidade)).sort((a,b)=>b.data.localeCompare(a.data)); listas.local=sl.map(j=>`${jt(j)};${j.estadio?'':'sem estádio'} ${j.cidade?'':'sem cidade'}`);
+  const sp=J.filter(j=>j.resultado&&!j.publico&&j.data>='1970').sort((a,b)=>b.data.localeCompare(a.data)); listas.pub=sp.map(jt);
+  const sd=J.filter(j=>j.data_aprox).sort((a,b)=>b.data.localeCompare(a.data)); listas.data=sd.map(jt);
+  const st=J.filter(j=>j.resultado&&!j.tecnico_galo&&j.data>='1950').sort((a,b)=>b.data.localeCompare(a.data)); listas.tec=st.map(jt);
+  setTimeout(()=>document.querySelectorAll('[data-copia]').forEach(b=>b.onclick=async()=>{ try{ await navigator.clipboard.writeText(listas[b.dataset.copia].join('\n')); toast('Lista copiada.'); }catch(e){ toast('Não consegui copiar.'); } }));
+  const tot=advSem.length+sf.length+sg.length;
+  return `<a class="back" href="#dono">← Página do dono</a><div class="kicker">Só você vê esta página</div><h1>O que falta</h1>
+  <p class="lede">O que ainda falta na base, do mais importante para o menos. Cada lista tem o botão "Copiar lista" (separada por ponto e vírgula, cola direto numa planilha). Quando um torcedor manda escudo, foto ou correção pela aba de sugestões, é aqui que dá para ver o que ainda falta.</p>
+  <div class="kpis" style="margin:18px 0 26px"><div><b>${N(advSem.length)}</b><span>escudos</span></div><div><b>${N(fx.length)}</b><span>fotos de jogadores</span></div><div><b>${N(sf.length)}</b><span>jogos sem ficha</span></div><div><b>${N(sg.length)}</b><span>jogos com gols sem autor</span></div></div>
+  ${ser('Escudos de adversários','esc',advSem.length,'Clubes sem escudo, dos que o Galo mais enfrentou para os que menos enfrentou.',['Clube','Jogos','Último'],lEsc)}
+  ${ser('Fotos de jogadores','foto',fx.length,'Figurinhas sem foto: primeiro as lendárias, depois as brilhantes, cada grupo pelos que mais jogaram. Enquanto não tem foto, a figurinha mostra o escudo do Galo da época do jogador.',['Jogador','Raridade','Período','Jogos'],lFoto)}
+  ${ser('Jogos sem ficha (escalação)','ficha',sf.length,`Jogos sem escalação do Galo. Finais primeiro, depois dos mais recentes para os mais antigos. Por década: ${Object.keys(porDec).sort().map(d=>`${d}: ${N(porDec[d])}`).join(' · ')}.`,['Data','Jogo','Competição'],sf.map(jl))}
+  ${ser('Gols sem autor','gols',sg.length,'Jogos em que o Galo marcou mais gols do que os que têm autor registrado.',['Data','Jogo','Gols sem autor'],lGols)}
+  ${ser('Jogos sem estádio ou cidade','local',sl.length,'Jogos sem o estádio ou a cidade na ficha.',['Data','Jogo','Competição'],sl.map(jl))}
+  ${ser('Jogos sem público (desde 1970)','pub',sp.length,'Jogos desde 1970 sem o público registrado.',['Data','Jogo','Competição'],sp.map(jl))}
+  ${ser('Jogos sem técnico (desde 1950)','tec',st.length,'Jogos desde 1950 sem o técnico do Galo.',['Data','Jogo','Competição'],st.map(jl))}
+  ${ser('Jogos com data aproximada','data',sd.length,'Jogos em que a fonte só dá o mês ou o ano.',['Data','Jogo','Competição'],sd.map(jl))}`;
 }
 
 </script>
