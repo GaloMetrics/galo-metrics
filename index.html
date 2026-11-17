@@ -478,6 +478,8 @@ body.pko-on{overflow:hidden}
 .aceita input{width:70px;padding:6px}.aceita{display:inline-flex;gap:6px;align-items:center;margin-right:6px}
 .selo-colab{display:inline-block;font-size:.85em;line-height:1;padding:3px 6px;border:2px solid var(--ink);font-family:'Oswald',sans-serif;letter-spacing:.04em;vertical-align:middle;text-transform:uppercase}
 .colab-ouro{background:#c9a227;color:#111;border-color:#8a6d0f}.colab-prata{background:#c7c9cc;color:#111;border-color:#7d8085}.colab-bronze{background:#b8743d;color:#fff;border-color:#7a4a22}
+.selo-prim-ic{display:inline-block;width:1.25em;height:1.25em;object-fit:contain;vertical-align:-.25em;margin-left:6px;cursor:help}.gmchip .selo-prim-ic{width:16px;height:16px;vertical-align:-3px}
+.prim-bloco{display:flex;gap:16px;align-items:center;border:2px solid var(--ink);box-shadow:5px 5px 0 var(--gold);background:var(--paper);padding:14px 18px;margin:10px 0 22px;max-width:560px}.prim-bloco img{width:72px;height:72px;object-fit:contain;flex:none}.prim-bloco .osw{display:block;color:var(--gold);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.prim-bloco b{display:block;font-family:'Abril Fatface',serif;font-size:24px;line-height:1.1;margin:2px 0 4px}.prim-bloco small{color:var(--mute);font-size:14px}
 .selo-prim{display:inline-block;font-size:.72em;line-height:1;padding:3px 7px;background:#111;color:var(--gold);border:1.5px solid var(--gold);font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle;margin-left:6px;white-space:nowrap}.gmchip .selo-prim{font-size:10px;padding:1px 4px}
 .selo-criador{display:inline-block;font-size:.78em;line-height:1;padding:3px 7px;background:var(--gold);color:#111;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle;margin-left:6px;white-space:nowrap}.gmchip .selo-criador{font-size:10px;padding:2px 4px}
 .conq.rara{border-color:var(--gold);border-style:double;border-width:4px}.conq.rara .conq-ic{color:var(--gold)}.tag-rara{display:inline-block;font-size:10px;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 5px;background:var(--gold);color:#111;vertical-align:middle}
@@ -556,9 +558,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117080610';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117080610"></script>
-<script src="backend-firebase.js?v=20261117080610"></script>
+<script>window.GM_BUILD='20261117080806';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117080806"></script>
+<script src="backend-firebase.js?v=20261117080806"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1525,7 +1527,7 @@ function achou(f,nova){
   box.innerHTML=`<div class="gm-achou-in"><p class="osw">${nova?'Você encontrou uma figurinha!':'Figurinha repetida!'}</p>${figHTML(f,'a-flip')}<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><a class="more" href="#album">Ver álbum</a><button type="button" class="more" id="gmfecha">Fechar</button></div></div>`;
   document.body.appendChild(box); const fecha=()=>box.remove(); box.querySelector('#gmfecha').onclick=fecha; box.onclick=e=>{ if(e.target===box) fecha(); }; box.querySelector('#gmfecha').focus();
 }
-function atualizaChip(){ const c=document.getElementById('gmchip'); if(c&&G) c.innerHTML=`★ ${G.perfil&&G.perfil.apelido?'<span class="ap">'+esc(G.perfil.apelido)+' · </span>':''}${DONO?'∞':N(G.pts)} <span class="mc" title="Metricoins">MC</span>${DONO?' '+seloCriador():''}${!DONO&&G.primPago?' <span class="selo-prim" title="Um dos 10 primeiros torcedores">★ Nº '+G.primPago+'</span>':''}${typeof COLAB_MEU!=='undefined'&&COLAB_MEU?' '+seloColab(COLAB_MEU.n):''}${typeof ehApoiador==='function'&&G.perfil&&ehApoiador(G.perfil.apelido)?' '+apoiadorSelo():''}`; }
+function atualizaChip(){ const c=document.getElementById('gmchip'); if(c&&G) c.innerHTML=`★ ${G.perfil&&G.perfil.apelido?'<span class="ap">'+esc(G.perfil.apelido)+' · </span>':''}${DONO?'∞':N(G.pts)} <span class="mc" title="Metricoins">MC</span>${DONO?' '+seloCriador():''}${!DONO&&G.primPago?' '+seloPrimeiro(G.primPago):''}${typeof COLAB_MEU!=='undefined'&&COLAB_MEU?' '+seloColab(COLAB_MEU.n):''}${typeof ehApoiador==='function'&&G.perfil&&ehApoiador(G.perfil.apelido)?' '+apoiadorSelo():''}`; }
 
 /* página do álbum */
 let ALB={dec:null, filtro:'todas', q:'', pacote:[]};
@@ -1906,7 +1908,7 @@ function vPerfil(){
     const fx=$('#pffotox'); if(fx) fx.onclick=()=>{ delete G.perfil.foto; delete G.resumoPub; gSave(); try{ publicaResumo(); }catch(e){} contaBotao(); route.keep=true; route(); };
     const t=$('#anitog2'); if(t) t.onclick=()=>{ lsSet(GMA, lsGet(GMA)==='0'?'1':'0'); aplicaAnim(); route.keep=true; route(); }; });
   const TC=todasConq(); const feitas=TC.filter(c=>G.conq[c.id]).length;
-  return `<div class="kicker">Ficha do torcedor</div><h1>${esc(G.perfil.apelido||'Meu perfil')}</h1>
+  return `<div class="kicker">Ficha do torcedor</div><h1>${esc(G.perfil.apelido||'Meu perfil')}</h1>${!DONO?blocoPrimeiro(G.primPago||0):''}
   <div class="perfil-top">${fav?figHTML(fav):`<div class="fig-vazio"><b>?</b><span>Escolha seu ídolo</span></div>`}
   <div style="flex:1;min-width:260px"><div class="tiles"><div class="tile"><b>${DONO?'∞':N(G.pts)}</b><span>Metricoins para gastar</span></div><div class="tile"><b>${N(G.total)}</b><span>Metricoins no total</span></div><div class="tile"><b>${G.seq.atual}</b><small class="basesm">recorde: ${G.seq.max}</small><span>Dias seguidos</span></div><div class="tile"><b>${N(cnt(G.owned))}</b><small class="basesm">de ${N(L.length)}</small><span>Figurinhas</span></div><div class="tile"><b>${feitas}</b><small class="basesm">de ${TC.length}</small><span>Conquistas</span></div></div>
   <div class="dono" style="margin-top:14px"><div class="dgrid"><label>Apelido<input id="pfap" value="${esc(G.perfil.apelido||'')}" maxlength="30" placeholder="Como você quer ser chamado"></label><label>Ídolo (figurinha de capa)<input id="pffav" list="pfl" value="${esc(G.perfil.fav||'')}" placeholder="nome do jogador"></label></div>
@@ -3283,7 +3285,9 @@ const PRIM_N=10, PRIM_MC=500;
 function primeiros(){ const L=Object.entries(RKU||{}).filter(([u,o])=>o&&o.criado&&!(CFG&&u===CFG.criador)).sort((a,b)=>a[1].criado-b[1].criado).slice(0,PRIM_N); const m={}; L.forEach(([u],i)=>m[u]=i+1); return m; }
 const numPrimeiro=uid=>uid?primeiros()[uid]||0:0;
 const numPrimeiroAp=ap=>{ const u=Object.keys(RKU||{}).find(k=>RKU[k].ap===ap); return numPrimeiro(u); };
-function seloPrimeiro(n){ return n?`<span class="selo-prim" title="Um dos ${PRIM_N} primeiros torcedores do Galo Metrics">★ Os primeiros · Nº ${n}</span>`:''; }
+const PRIM_IC='escudos/galo/1908-1915.webp';
+function seloPrimeiro(n){ return n?`<img class="selo-prim-ic" src="${PRIM_IC}" alt="Os primeiros, Nº ${n}" title="Os primeiros · Nº ${n}: um dos ${PRIM_N} primeiros torcedores do Galo Metrics">`:''; }
+function blocoPrimeiro(n){ return n?`<div class="prim-bloco"><img src="${PRIM_IC}" alt=""><div><span class="osw">★ Os primeiros · Nº ${n}</span><b>Torcedor Nº ${n} do Galo Metrics</b><small>Um dos ${PRIM_N} primeiros a se cadastrar no site, no dia do lançamento. O símbolo é o primeiro escudo do Galo, de 1908.</small></div></div>`:''; }
 function checaPrimeiros(){ try{ if(!GUID||DONO) return; const n=numPrimeiro(GUID); if(!n||G.primPago) return; G.primPago=n; G.pts=(G.pts||0)+PRIM_MC; gSave(); setTimeout(()=>{ toast(`★ Você é o torcedor Nº ${n} do Galo Metrics! Ganhou ${PRIM_MC} Metricoins e o selo "Os primeiros".`); try{ atualizaChip(); }catch(e){} },1500); }catch(e){} }
 function seloCriador(){ return '<span class="selo-criador" title="Criador do Galo Metrics">✦ Criador</span>'; }
 const ehCriador=uid=>!!(uid&&CFG&&CFG.criador&&uid===CFG.criador);
@@ -3635,7 +3639,7 @@ function vTorcedor(cod){
   const pj=id=>D.jogadores.find(x=>slug(x.nome)===id);
   const sem=semanaDe(fmtD(hojeStr())); const rk=Object.values(o.res||{}).filter(x=>x&&x.d&&semanaDe(x.d)===sem).reduce((s,x)=>s+(+x.pts||0),0);
   return `<a class="back" href="#torcedores">← Amigos</a><div class="kicker">Perfil do torcedor${uid===GUID?' · você':''}</div>
-  <div class="trc-head">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av" style="width:64px;height:64px;font-size:28px">${esc(o.ap.trim()[0]||'?').toUpperCase()}</span>`}<h1 style="margin:0">${esc(o.ap)}</h1>${ehCriador(uid)?seloCriador():''}${seloPrimeiro(numPrimeiro(uid))}</div>
+  <div class="trc-head">${p.foto?`<img src="${esc(p.foto)}" alt="" referrerpolicy="no-referrer">`:`<span class="torc-av" style="width:64px;height:64px;font-size:28px">${esc(o.ap.trim()[0]||'?').toUpperCase()}</span>`}<h1 style="margin:0">${esc(o.ap)}</h1>${ehCriador(uid)?seloCriador():''}${seloPrimeiro(numPrimeiro(uid))}</div>${blocoPrimeiro(numPrimeiro(uid))}
   <div class="perfil-top">${fav?figHTML(fav):''}<div style="flex:1;min-width:260px"><div class="tiles">
    <div class="tile"><b>${N(p.fig||0)}</b><small class="basesm">de ${N(p.figTot||0)}</small><span>Figurinhas</span></div>
    <div class="tile"><b>${p.conq||0}</b><span>Conquistas</span></div>
