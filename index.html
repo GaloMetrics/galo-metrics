@@ -565,9 +565,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117191809';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117191809"></script>
-<script src="backend-firebase.js?v=20261117191809"></script>
+<script>window.GM_BUILD='20261117193041';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261117193041"></script>
+<script src="backend-firebase.js?v=20261117193041"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -955,7 +955,7 @@ function vAdversario(s){
     ${resultBar(ac)}
     <div class="note acc-note"><b>Número aceito.</b> Contagem do Atlético até ${fmtD(H.ate)} (${H.jogos} jogos, ${H.V}V ${H.E}E ${H.D}D; ${fonteLink(H.fonte)})${pos.n?`, somada aos ${pos.n} jogos disputados depois, registrados na base`:''}. Em cinza, o que a base Galo Metrics registra jogo a jogo, incluindo a era Palestra Itália. ${esc(H.explicacao)} *Gols só pela base.</div>`;
   } else topo = tiles(a)+resultBar(a);
-  return `<a class="back" href="#adversarios">← Adversários</a>${blocoDonoImg('adv',a.id,a.nome)}<div class="kicker">Retrospecto do Galo contra</div><div class="advhead">${cr('galo','crh')}<span class="vs">×</span>${cr(a.id,'crh crh2')}<h1>${esc(a.nome)} <span class="uf">${esc(a.uf)}</span></h1></div>
+  return `<a class="back" href="#adversarios">← Adversários</a>${blocoDonoClube(a)}${blocoDonoImg('adv',a.id,a.nome)}<div class="kicker">Retrospecto do Galo contra</div><div class="advhead">${cr('galo','crh')}<span class="vs">×</span>${cr(a.id,'crh crh2')}<h1>${esc(a.nome)} <span class="uf">${esc(a.uf)}</span></h1></div>
   ${topo}
   <div class="grid2"><div><h2>Em casa</h2><p class="mono">${casa.n} jogos · ${casa.V}V ${casa.E}E ${casa.D}D · ${casa.gp}-${casa.gc}</p><h2>Fora</h2><p class="mono">${fora.n} jogos · ${fora.V}V ${fora.E}E ${fora.D}D · ${fora.gp}-${fora.gc}</p>${neu.n?`<h2>Neutro ou sem mando informado</h2><p class="mono">${neu.n} jogos · ${neu.V}V ${neu.E}E ${neu.D}D · ${neu.gp}-${neu.gc}</p>`:''}
   ${best&&best.resultado==='V'?`<div class="note">Maior vitória: <a href="#jogo-${best.id}">${linha(best)}</a> (${fmtD(best.data)})</div>`:''}
@@ -1742,7 +1742,7 @@ async function gmInit(){
 }
 
 /* ---------- Edição pelo dono: jogos, notas de página, jogadores ---------- */
-let EDIC={}, NOTAS={}, JOGX={}, ESCX={};
+let EDIC={}, NOTAS={}, JOGX={}, ESCX={}, CLUBX={};
 const isPenTxt=t=>/p[eê]n/i.test(t||'');
 function contrib(j){
   const m={}; const add=(n,k,v)=>{ (m[n] ||= {g:0,pen:0,jg:0,tit:0,comp:{},gcomp:{},datas:[]}); m[n][k]+=v; };
@@ -1779,7 +1779,39 @@ async function carregaEdicoes(){
   try{ const s=await GDB.collection('jogadoresx').limit(1000).get(); s.docs.forEach(d=>{ JOGX[d.id]=d.data(); }); }catch(e){}
   try{ const s=await GDB.doc('site/escudosx').get(); if(s.exists) ESCX=s.data().map||{}; }catch(e){}
   try{ const s=await GDB.doc('site/especiais').get(); if(s.exists) ESP=s.data().itens||[]; }catch(e){}
-  Object.keys(EDIC).sort((a,b)=>+a-+b).forEach(id=>aplicaEdicao(id, EDIC[id])); reordena();
+  try{ const s=await GDB.doc('site/clubesx').get(); if(s.exists) CLUBX=s.data().map||{}; }catch(e){}
+  Object.keys(EDIC).sort((a,b)=>+a-+b).forEach(id=>aplicaEdicao(id, EDIC[id])); aplicaClubes(); reordena();
+}
+/* Edições de clubes feitas pelo dono: nome, UF/país e "é o mesmo clube que" */
+function destinoClube(id){ let k=id, n=0; while(CLUBX[k]&&CLUBX[k].junta&&CLUBX[k].junta!==k&&n++<6) k=CLUBX[k].junta; return k; }
+function aplicaClubes(){
+  const ult={}; J.forEach(j=>{ ult[j.adversario_id]={n:j.adversario,uf:j.adversario_uf}; });
+  J.forEach(j=>{ const d=destinoClube(j.adversario_id); if(d!==j.adversario_id){ j.adversario_id=d; if(ult[d]){ j.adversario=ult[d].n; j.adversario_uf=ult[d].uf; } }
+    const e=CLUBX[j.adversario_id]; if(e){ if(e.nome) j.adversario=e.nome; if(e.uf!=null&&e.uf!=='') j.adversario_uf=e.uf; } });
+  ADV=null;
+}
+function blocoDonoClube(a){
+  if(!DONO) return ''; const e=CLUBX[a.id]||{};
+  setTimeout(()=>{ const f=$('#clubform'); if(!f) return; const msg=$('#clubmsg');
+    const grava=async m=>{ await GDB.doc('site/clubesx').set({map:m, em:Date.now()}); CLUBX=m; };
+    f.onsubmit=async ev=>{ ev.preventDefault(); const v=k=>(f.elements[k].value||'').trim();
+      const nome=v('nome'), uf=v('uf').toUpperCase(), junta=v('junta').toLowerCase();
+      if(junta&&junta!==a.id&&!advRows().some(r=>r.id===junta)){ msg.textContent='Esse clube não está na lista. Escolha uma das opções.'; return; }
+      const m={...CLUBX}; const o={}; if(nome&&nome!==a.nome) o.nome=nome; if(uf&&uf!==a.uf) o.uf=uf; if(junta&&junta!==a.id) o.junta=junta;
+      if(!Object.keys(o).length){ msg.textContent='Nada mudou.'; return; }
+      m[a.id]={...(m[a.id]||{}),...o,em:Date.now()}; msg.textContent='Salvando…';
+      try{ await grava(m); aplicaClubes(); reordena(); toast(o.junta?'Clubes juntados. Os jogos já contam juntos.':'Clube atualizado. Já vale para todo mundo.'); location.hash='adversario-'+slug(o.junta||a.id); route(); }
+      catch(err){ msg.textContent='Não deu para salvar: '+(err&&err.message||err); } };
+    const d=$('#clubdesfaz'); if(d) d.onclick=async()=>{ const m={...CLUBX}; delete m[a.id]; try{ await grava(m); toast('Edição desfeita.'); setTimeout(()=>location.reload(),600); }catch(err){ msg.textContent='Não deu: '+err.message; } };
+  });
+  const outros=advRows().filter(r=>r.id!==a.id).sort((x,y)=>x.nome.localeCompare(y.nome,'pt'));
+  return `<details class="dono-ed"><summary>✎ Editar este clube (só você vê este botão)</summary><form id="clubform" class="dono jform">
+  <p class="count">Muda o clube em todos os jogos, nas listas por estado, nos filtros e nas artes.</p>
+  <label>Nome<input name="nome" value="${esc(a.nome)}"></label>
+  <label>UF ou país<input name="uf" value="${esc(a.uf||'')}" placeholder="MG, SP, ARG, URU…" maxlength="4"></label>
+  <label>É o mesmo clube que… (junta os jogos)<input name="junta" list="dclubs" placeholder="deixe vazio se não for"></label>
+  <datalist id="dclubs">${outros.map(r=>`<option value="${esc(r.id)}">${esc(r.nome)} ${esc(r.uf)} (${r.J} jogos)</option>`).join('')}</datalist>
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="submit" class="more">Salvar clube</button>${CLUBX[a.id]?'<button type="button" class="ghost" id="clubdesfaz">Desfazer edição deste clube</button>':''}</div><p class="count" id="clubmsg"></p></form></details>`;
 }
 const chaveNota=h=>h.replace(/[^A-Za-z0-9_\-.~:@+]/g,'_').slice(0,180)||'inicio';
 function notaPagina(h){
@@ -1805,7 +1837,7 @@ function formJogo(j){
   return `<form id="jform" class="dono jform"><h2 style="margin-top:0">${novo?'Novo jogo':'Editar este jogo'}</h2>
   <div class="dgrid">${f('data','Data',j.data,'date','required')}${f('competicao','Competição',j.competicao,'text','list="dcomps" required')}${f('fase','Fase',j.fase)}
   <label>Adversário<input name="adversario_id" list="dadvs" value="${esc(j.adversario_id||'')}" placeholder="escolha da lista ou digite um novo" required></label>
-  ${f('adversario','Nome do adversário (se for novo)',j.adversario)}${f('adversario_uf','UF ou país (se for novo)',j.adversario_uf)}
+  ${f('adversario','Nome do adversário (se for novo)',j.adversario)}${f('adversario_uf','UF ou país (se for novo)',j.adversario_uf)}${j.adversario_id&&!novo?`<p class="count">Nome ou estado do clube errado? <a href="#adversario-${slug(j.adversario_id)}">Edite o clube</a> e a mudança vale para todos os jogos dele.</p>`:''}
   <label>Mando<select name="mando"><option value="C"${j.mando==='C'?' selected':''}>Casa</option><option value="F"${j.mando==='F'?' selected':''}>Fora</option><option value="N"${j.mando==='N'?' selected':''}>Neutro</option></select></label>
   ${f('gp','Gols do Galo',j.gp,'number','min="0"')}${f('gc','Gols do adversário',j.gc,'number','min="0"')}</div>
   <datalist id="dadvs">${advs.map(a=>`<option value="${esc(a.id)}">${esc(a.nome)} ${esc(a.uf)}</option>`).join('')}</datalist>
@@ -1837,7 +1869,7 @@ function ligaFormJogo(j){
     if((e.gp!=null)!==(e.gc!=null)){ msg.textContent='Preencha os dois lados do placar, ou deixe os dois em branco.'; return; }
     let id=j.id; if(!id){ id=Math.max(...J.map(x=>x.id))+1; e.novo=true; } else if(j.novo) e.novo=true;
     msg.textContent='Salvando…';
-    try{ await GDB.doc('edicoes/'+id).set(e); EDIC[id]=e; aplicaEdicao(id,e); reordena(); toast('Jogo salvo. Já vale para todo mundo.'); location.hash='jogo-'+id; route(); }
+    try{ await GDB.doc('edicoes/'+id).set(e); EDIC[id]=e; aplicaEdicao(id,e); aplicaClubes(); reordena(); toast('Jogo salvo. Já vale para todo mundo.'); location.hash='jogo-'+id; route(); }
     catch(err){ msg.textContent='Não foi possível salvar agora. Tente de novo.'; }
   };
   const dz=$('#jdesfaz'); if(dz) dz.onclick=async()=>{ try{ await GDB.doc('edicoes/'+j.id).delete(); toast('Edições desfeitas. Recarregando…'); setTimeout(()=>location.reload(),800); }catch(e){ toast('Não foi possível agora.'); } };
