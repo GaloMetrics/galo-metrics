@@ -563,9 +563,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117153824';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117153824"></script>
-<script src="backend-firebase.js?v=20261117153824"></script>
+<script>window.GM_BUILD='20261117183207';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261117183207"></script>
+<script src="backend-firebase.js?v=20261117183207"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2290,7 +2290,7 @@ async function autoRank(txt){ if(!GDB||!GUID||DIA_JOGO) return; const it=leTexto
     const lim=new Date(Date.now()-35*864e5);
     Object.keys(o.res).forEach(k=>{ const [dd,mm,yy]=o.res[k].d.split('/').map(Number); if(new Date(yy,mm-1,dd)<lim) delete o.res[k]; });
     novos.forEach(x=>{ o.res[x.jogo+' '+x.d]={jogo:x.jogo,d:x.d,ap:x.ap,pts:x.pts,cod:hashTxt([RK_SAL,x.ap,x.d,x.jogo,x.pts].join('|'))}; });
-    o.ap=novos[0].ap; o.em=new Date().toISOString(); await ref.set(o); RKU[GUID]=o;
+    o.ap=apAtual(o); o.em=new Date().toISOString(); await ref.set(o); RKU[GUID]=o;
     novos.forEach(x=>{ G.rkEnv[x.jogo+' '+x.d]=x.pts; }); gSave(); toast('Resultado lançado no ranking da semana.'); }catch(e){ console.warn('autoRank',e); } }
 // teto de pontos por desafio: resultado acima disso foi forjado e não entra no ranking
 const RK_TETO=j=>{ const s=String(j||'').toLowerCase(); return /galodle|carreira/.test(s)?7:/quem/.test(s)?9:/placar/.test(s)?4:/conex/.test(s)?5:/impostor/.test(s)?15:/escala/.test(s)?11:/mais ou menos/.test(s)?40:15; };
@@ -3200,6 +3200,8 @@ function blocoPrimeiro(n){ return n?`<div class="prim-bloco"><img src="${PRIM_IC
 function checaPrimeiros(){ try{ if(!GUID||DONO) return; const n=numPrimeiro(GUID); if(!n||G.primPago) return; G.primPago=n; G.pts=(G.pts||0)+PRIM_MC; gSave(); setTimeout(()=>{ toast(`★ Você é o torcedor Nº ${n} do Galo Metrics! Ganhou ${PRIM_MC} Metricoins e o selo "Os primeiros".`); try{ atualizaChip(); }catch(e){} },1500); }catch(e){} }
 function seloCriador(){ return '<span class="selo-criador" title="Criador do Galo Metrics">✦ Criador</span>'; }
 const ehCriador=uid=>!!(uid&&CFG&&CFG.criador&&uid===CFG.criador);
+// apelido mostrado no ranking: o do perfil; se este aparelho ainda não tem apelido, mantém o que já estava salvo na conta
+function apAtual(o){ const meu=((G.perfil||{}).apelido||'').trim(); if(meu) return meu; if(o&&o.ap&&o.ap!=='Torcedor'){ G.perfil ||= {}; if(!(o.ap===window.GM_USER_NAME)) { G.perfil.apelido=o.ap; try{ gSave(); }catch(e){} } return o.ap; } return window.GM_USER_NAME||'Torcedor'; }
 const ehCriadorAp=ap=>{ const o=CFG&&CFG.criador&&(RKU||{})[CFG.criador]; return !!(o&&ap&&o.ap===ap); };
 const fotoPerfil=()=>(G&&G.perfil&&G.perfil.foto)||window.GM_USER_PHOTO||'';
 function iconeDe(file){ return new Promise((ok,err)=>{ const img=new Image(), u=URL.createObjectURL(file); img.onload=()=>{ const n=160, c=document.createElement('canvas'); c.width=c.height=n; const x=c.getContext('2d'); const m=Math.min(img.width,img.height); x.fillStyle='#fff'; x.fillRect(0,0,n,n); x.drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,n,n); URL.revokeObjectURL(u); let d=c.toDataURL('image/webp',0.85); if(!d.startsWith('data:image/webp')) d=c.toDataURL('image/jpeg',0.85); ok(d); }; img.onerror=err; img.src=u; }); }
@@ -3285,7 +3287,7 @@ function pagaPresentes(){
 async function registraPerfil(){
   if(!GDB||!GUID) return; const hoje=hojeStr(), rk=hoje+'|'+((G.perfil&&G.perfil.apelido)||''); if(G.perfilReg===rk) return;
   try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}, criado:Date.now()};
-    o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.nome=window.GM_USER_NAME||o.nome||''; o.visto=hoje;
+    o.ap=apAtual(o); o.nome=window.GM_USER_NAME||o.nome||''; o.visto=hoje;
     await ref.set(o); RKU[GUID]=o; G.perfilReg=rk; gSave(); checaPrimeiros(); }catch(e){}
 }
 /* ---------- Ajustes do dono na conta de um torcedor ---------- */
@@ -3384,7 +3386,7 @@ async function publicaAval(id, a, publicar){
   if(!GDB||!GUID) return;
   try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.aval ||= {};
     if(publicar&&(a.n||a.t)) o.aval[id]={n:a.n||0, t:(a.t||'').slice(0,600), cr:a.cr||'', est:a.est?1:0, d:hojeStr()}; else delete o.aval[id];
-    o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; await ref.set(o); RKU[GUID]=o; }catch(e){ console.warn('publicaAval',e); }
+    o.ap=apAtual(o); await ref.set(o); RKU[GUID]=o; }catch(e){ console.warn('publicaAval',e); }
 }
 function blocoTorcida(j, campo='aval', id=j&&j.id, titulo='Avaliações da torcida', vazio='Ninguém avaliou este jogo ainda.', dica='Seja o primeiro: use "Meu diário" acima.'){
   const L=avalTorcida(id, campo), notas=L.filter(x=>x.n);
@@ -3434,7 +3436,7 @@ function blocoAvalJogador(p){
       if(!n&&!t) delete G.avj[id]; else G.avj[id]={n,t,d:hojeStr(),...(pub?{}:{priv:1})}; gSave();
       if(GUID&&GDB){ try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.avj ||= {};
         if(pub&&(n||t)) o.avj[id]={n,t,d:hojeStr()}; else delete o.avj[id];
-        o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; await ref.set(o); RKU[GUID]=o; }catch(err){ console.warn(err); } }
+        o.ap=apAtual(o); await ref.set(o); RKU[GUID]=o; }catch(err){ console.warn(err); } }
       toast('Avaliação salva.'); route.keep=true; route(); }; });
   return `<details class="diario"${d.n||d.t?'':' open'}><summary>★ Avaliar ${esc(nomeV(p.nome))}${d.n?' (já avaliado)':''}</summary>
    <form id="avjform" class="dono"><div><span class="lblx">Sua nota para o jogador</span>${starsInput('notaj', d.n||0)}</div>
@@ -3516,7 +3518,7 @@ async function publicaResumo(){
   try{ const L=typeof figuras==='function'?figuras():[]; const r={fig:Object.keys(G.owned||{}).filter(k=>G.owned[k]).length, figTot:L.length, conq:Object.keys(G.conq||{}).length, est:vistoAoVivo().length, fav:(G.perfil||{}).fav||'', total:G.total||0, seq:(G.seq||{}).max||0, foto:fotoPerfil()};
     const k=JSON.stringify(r)+((G.perfil||{}).oculto?'o':'')+'|'+((G.perfil||{}).apelido||''); if(G.resumoPub===k) return;
     const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}};
-    o.oculto=!!(DONO&&(G.perfil||{}).oculto); o.pub=r; o.ap=(G.perfil&&G.perfil.apelido)||window.GM_USER_NAME||o.ap||'Torcedor'; o.visto=hojeStr(); await ref.set(o); RKU[GUID]=o; G.resumoPub=k; gSave(); }catch(e){}
+    o.oculto=!!(DONO&&(G.perfil||{}).oculto); o.pub=r; o.ap=apAtual(o); o.visto=hojeStr(); await ref.set(o); RKU[GUID]=o; G.resumoPub=k; gSave(); }catch(e){}
 }
 const linkTorcedor=(uid,nome)=>esc(nome||'Torcedor'); // perfis só abrem pelo código, não por links espalhados
 /* Código do torcedor: 6 caracteres derivados da conta; é o único jeito de achar um perfil */
