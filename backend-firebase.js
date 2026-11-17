@@ -13,6 +13,9 @@
     try { await auth.setPersistence(AU, auth.browserLocalPersistence); } catch(e){}
     try { await auth.getRedirectResult(AU); } catch(e){ console.warn(e); }
     const user = await new Promise(r => { const off = auth.onAuthStateChanged(AU, u => { off(); r(u); }); });
+    // cadastro: horário do primeiro login gravado pelo servidor (as regras só aceitam request.time)
+    if (user) { try { const cr = fs.doc(DB, 'cadastro/' + user.uid); const cs = await fs.getDoc(cr); if (!cs.exists()) await fs.setDoc(cr, { t: fs.serverTimestamp() }); } catch(e){} }
+    window.GM_CADASTROS = async () => { const s = await fs.getDocs(fs.query(fs.collection(DB, 'cadastro'), fs.limit(5000))); const m = {}; s.docs.forEach(d => { const t = d.data().t; if (t && t.toMillis) m[d.id] = t.toMillis(); }); return m; };
     let dono = false;
     if (user) { try { await fs.getDoc(fs.doc(DB, 'admin/dono')); dono = true; } catch(e){ dono = false; } }
     const enc = o => ({ _j: JSON.stringify(o ?? null) });

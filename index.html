@@ -558,9 +558,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117080806';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117080806"></script>
-<script src="backend-firebase.js?v=20261117080806"></script>
+<script>window.GM_BUILD='20261117082059';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117082059"></script>
+<script src="backend-firebase.js?v=20261117082059"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2234,7 +2234,9 @@ const semanaDe=dstr=>{ const [dd,mm,yy]=dstr.split('/').map(Number); const d=new
 let RANK={};
 let RKU={};
 async function carregaRanking(){ if(!GDB) return; try{ const s=await GDB.collection('ranking').limit(60).get(); s.docs.forEach(d=>{ RANK[d.id]=d.data(); }); }catch(e){}
-  try{ const s=await GDB.collection('rankuser').limit(1000).get(); RKU={}; s.docs.forEach(d=>{ RKU[d.id]=d.data(); }); }catch(e){} }
+  try{ const s=await GDB.collection('rankuser').limit(1000).get(); RKU={}; s.docs.forEach(d=>{ RKU[d.id]=d.data(); }); }catch(e){}
+  try{ if(window.GM_CADASTROS) CAD=await window.GM_CADASTROS(); }catch(e){ CAD=null; } }
+let CAD=null; // uid -> horário do cadastro dado pelo servidor (não dá para forjar)
 /* Resultado entra sozinho no ranking quando a pessoa está logada */
 async function autoRank(txt){ if(!GDB||!GUID||DIA_JOGO) return; const it=leTextoRank(txt).filter(x=>x.ok); if(!it.length) return; G.rkEnv ||= {};
   const novos=it.filter(x=>G.rkEnv[x.jogo+' '+x.d]!==x.pts); if(!novos.length) return;
@@ -2244,13 +2246,16 @@ async function autoRank(txt){ if(!GDB||!GUID||DIA_JOGO) return; const it=leTexto
     novos.forEach(x=>{ o.res[x.jogo+' '+x.d]={jogo:x.jogo,d:x.d,ap:x.ap,pts:x.pts,cod:hashTxt([RK_SAL,x.ap,x.d,x.jogo,x.pts].join('|'))}; });
     o.ap=novos[0].ap; o.em=new Date().toISOString(); await ref.set(o); RKU[GUID]=o;
     novos.forEach(x=>{ G.rkEnv[x.jogo+' '+x.d]=x.pts; }); gSave(); toast('Resultado lançado no ranking da semana.'); }catch(e){ console.warn('autoRank',e); } }
-function rankSemana(sem){ const doc=JSON.parse(JSON.stringify(RANK[sem]||{pessoas:{}})); doc.pessoas ||= {};
-  Object.values(RKU).forEach(u=>Object.values(u.res||{}).forEach(x=>{ if(!x||!x.d||semanaDe(x.d)!==sem) return; if(hashTxt([RK_SAL,x.ap,x.d,x.jogo,+x.pts].join('|'))!==x.cod) return; const nm=u.ap||x.ap; if(nm!==x.ap&&doc.pessoas[x.ap]){ doc.pessoas[nm]=Object.assign(doc.pessoas[nm]||{},doc.pessoas[x.ap]); delete doc.pessoas[x.ap]; } (doc.pessoas[nm] ||= {})[x.jogo+' '+x.d]=+x.pts; }));
+// teto de pontos por desafio: resultado acima disso foi forjado e não entra no ranking
+const RK_TETO=j=>{ const s=String(j||'').toLowerCase(); return /galodle|carreira/.test(s)?7:/quem/.test(s)?9:/placar/.test(s)?4:/conex/.test(s)?5:/impostor/.test(s)?15:/escala/.test(s)?11:/mais ou menos/.test(s)?40:15; };
+const rkValido=x=>{ if(!x||!x.d||!(+x.pts>=0)||+x.pts>RK_TETO(x.jogo)) return false; const [dd,mm,yy]=String(x.d).split('/'); return `${yy}-${mm}-${dd}`<=hojeStr(); };
+function rankSemana(sem){ const doc=JSON.parse(JSON.stringify(RANK[sem]||{pessoas:{}})); doc.pessoas ||= {}; doc.uids={};
+  Object.entries(RKU).forEach(([uid,u])=>Object.values(u.res||{}).forEach(x=>{ if(!rkValido(x)||semanaDe(x.d)!==sem) return; if(hashTxt([RK_SAL,x.ap,x.d,x.jogo,+x.pts].join('|'))!==x.cod) return; const nm=u.ap||x.ap; if(nm!==x.ap&&doc.pessoas[x.ap]){ doc.pessoas[nm]=Object.assign(doc.pessoas[nm]||{},doc.pessoas[x.ap]); delete doc.pessoas[x.ap]; } (doc.pessoas[nm] ||= {})[x.jogo+' '+x.d]=+x.pts; doc.uids[nm]=uid; }));
   return doc; }
 function vRanking(){
   const sem=semanaDe(fmtD(hojeStr())); const semSet=new Set(Object.keys(RANK)); Object.values(RKU).forEach(u=>Object.values(u.res||{}).forEach(x=>{ if(x&&x.d) semSet.add(semanaDe(x.d)); })); const semanas=[...semSet].sort().reverse(); const atual=rankSemana(sem);
   const tab=o=>{ const l=Object.entries(o.pessoas||{}).map(([ap,x])=>({ap, pts:Object.values(x).reduce((s,v)=>s+v,0), n:Object.keys(x).length})).sort((a,b)=>b.pts-a.pts);
-    return l.length?`<table><thead><tr><th>#</th><th>Torcedor</th><th class="n">Desafios</th><th class="n">Pontos</th></tr></thead><tbody>${l.map((x,i)=>`<tr><td class="mono">${i+1}</td><td>${i===0?'★ ':''}${esc(x.ap)}${ehCriadorAp(x.ap)?' '+seloCriador():''}${numPrimeiroAp(x.ap)?' '+seloPrimeiro(numPrimeiroAp(x.ap)):''}</td><td class="n">${x.n}</td><td class="n"><b>${x.pts}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Ninguém no ranking desta semana ainda.</p>'; };
+    return l.length?`<table><thead><tr><th>#</th><th>Torcedor</th><th class="n">Desafios</th><th class="n">Pontos</th></tr></thead><tbody>${l.map((x,i)=>`<tr><td class="mono">${i+1}</td><td>${i===0?'★ ':''}${esc(x.ap)}${ehCriador((o.uids||{})[x.ap])?' '+seloCriador():''}${seloPrimeiro(numPrimeiro((o.uids||{})[x.ap]))}</td><td class="n">${x.n}</td><td class="n"><b>${x.pts}</b></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Ninguém no ranking desta semana ainda.</p>'; };
   setTimeout(()=>{ const b=$('#rkadd'); if(!b) return; b.onclick=async()=>{ const it=leTextoRank($('#rktxt').value); const msg=$('#rkmsg');
     if(!it.length){ msg.textContent='Nenhum resultado reconhecido. Cole o texto copiado pelo botão "Copiar resultado".'; return; }
     const val=it.filter(x=>x.ok), inv=it.length-val.length; const por={};
@@ -3282,7 +3287,7 @@ function nivelColab(n){ const x=NIVEIS_COLAB.find(([min])=>n>=min); return x?{no
 function seloColab(n, txt){ const v=nivelColab(n); return v?`<span class="selo-colab ${v.cls}" title="Colaborador ${v.nome}">${v.ic}${txt?' Colaborador '+v.nome:''}</span>`:''; }
 /* ---------- Os primeiros: os 10 primeiros cadastros depois do lançamento ---------- */
 const PRIM_N=10, PRIM_MC=500;
-function primeiros(){ const L=Object.entries(RKU||{}).filter(([u,o])=>o&&o.criado&&!(CFG&&u===CFG.criador)).sort((a,b)=>a[1].criado-b[1].criado).slice(0,PRIM_N); const m={}; L.forEach(([u],i)=>m[u]=i+1); return m; }
+function primeiros(){ const srv=CAD&&Object.keys(CAD).length; const t=u=>srv?CAD[u]:RKU[u].criado; const L=Object.entries(RKU||{}).filter(([u,o])=>o&&o.criado&&(!srv||CAD[u])&&!(CFG&&u===CFG.criador)).sort((a,b)=>t(a[0])-t(b[0])).slice(0,PRIM_N); const m={}; L.forEach(([u],i)=>m[u]=i+1); return m; }
 const numPrimeiro=uid=>uid?primeiros()[uid]||0:0;
 const numPrimeiroAp=ap=>{ const u=Object.keys(RKU||{}).find(k=>RKU[k].ap===ap); return numPrimeiro(u); };
 const PRIM_IC='escudos/galo/1908-1915.webp';

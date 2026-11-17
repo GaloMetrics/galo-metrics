@@ -6,6 +6,8 @@ service cloud.firestore {
       return request.auth != null && request.auth.token.email == 'SEU_EMAIL_AQUI' && request.auth.token.email_verified;
     }
     function eu(uid) { return request.auth != null && request.auth.uid == uid; }
+    // documentos do app guardam tudo em _j (texto JSON): limita o tamanho para ninguém lotar o banco
+    function jsonAte(n) { return request.resource.data.keys().hasOnly(['_j']) && request.resource.data._j is string && request.resource.data._j.size() < n; }
     function publica(col) { return col in ['site', 'colab', 'ranking', 'avaliacoes', 'edicoes', 'jogadoresx', 'notas']; }
 
     // Conteúdo público: todo mundo lê, só o dono escreve
@@ -15,21 +17,35 @@ service cloud.firestore {
     }
     // Sugestões: cada pessoa lê e escreve só as suas; o dono vê todas
     match /sugestoes/{uid} {
-      allow read, write: if eu(uid) || dono();
+      allow read: if eu(uid) || dono();
+      allow delete: if eu(uid) || dono();
+      allow create, update: if dono() || (eu(uid) && jsonAte(200000));
     }
     // Resultados dos desafios: cada um grava os seus, todo mundo lê o ranking
     match /rankuser/{uid} {
       allow read: if true;
-      allow write: if eu(uid) || dono();
+      allow delete: if eu(uid) || dono();
+      allow create, update: if dono() || (eu(uid) && jsonAte(300000));
+    }
+    // Horário do cadastro: só o servidor define (request.time), uma vez, e ninguém altera depois
+    match /cadastro/{uid} {
+      allow read: if true;
+      allow create: if eu(uid) && request.resource.data.keys().hasOnly(['t']) && request.resource.data.t == request.time;
+      allow update: if false;
+      allow delete: if dono();
     }
     // Álbum salvo na nuvem de cada torcedor
     match /data/users/{uid}/{doc} {
-      allow read, write: if eu(uid) || dono();
+      allow read, delete: if eu(uid) || dono();
+      allow create, update: if dono() || (eu(uid) && jsonAte(900000));
     }
     // Imagens enviadas (escudos e fotos), já reduzidas no navegador
     match /uploads/{id} {
       allow read: if true;
-      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid && request.resource.data.d.size() < 950000;
+      allow create: if request.auth != null && request.resource.data.keys().hasOnly(['uid', 'd', 'em'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.d is string && request.resource.data.d.size() < 950000
+        && request.resource.data.d.matches('data:image/(webp|png|jpeg);base64,.*');
       allow update, delete: if dono();
     }
     // Só o dono consegue ler aqui: é assim que o site sabe quem é o dono
