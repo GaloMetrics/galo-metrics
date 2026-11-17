@@ -552,9 +552,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117065500';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
-<script src="firebase-config.js?v=20261117065500"></script>
-<script src="backend-firebase.js?v=20261117065500"></script>
+<script>window.GM_BUILD='20261117070101';(function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(o&&o.v&&o.v>window.GM_BUILD){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+o.v+location.hash);}}).catch(function(){});}catch(e){}})();</script>
+<script src="firebase-config.js?v=20261117070101"></script>
+<script src="backend-firebase.js?v=20261117070101"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2080,7 +2080,8 @@ function categorias(){
   const hat={}; J.forEach(j=>{ const c={}; j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)) c[g.jogador]=(c[g.jogador]||0)+1; }); Object.entries(c).forEach(([n,v])=>{ if(v>=3) hat[n]=1; }); });
   add('hat','Fizeram hat-trick pelo Galo', Object.keys(hat), [...conh].filter(n=>!hat[n]&&golsP(n)>=15));
   POSS.forEach(p=>add('pos-'+p,{Goleiro:'Goleiros',Defensor:'Defensores',Meia:'Meias',Atacante:'Atacantes'}[p], L.filter(f=>posTxt(f.nome)===p).map(f=>f.nome)));
-  [1970,1980,1990,2000,2010,2020].forEach(d=>add('dec'+d,`Estrearam nos anos ${d<2000?String(d).slice(2):d}`, L.filter(f=>f.dec===d).map(f=>f.nome), figuras().filter(f=>conh.has(f.nome)&&(f.dec===d-10||f.dec===d+10)).map(f=>f.nome)));
+  const estreia=n=>+(String((pj(n)||{}).primeiro||'').slice(0,4))||0; const anosE={}; L.forEach(f=>{ const y=estreia(f.nome); if(y>=1970) (anosE[y] ||= []).push(f.nome); });
+  Object.keys(anosE).forEach(y=>{ y=+y; add('est'+y,`Estrearam pelo Galo em ${y}`, anosE[y], [...conh].filter(n=>{ const e=estreia(n); return e&&e!==y&&Math.abs(e-y)<=2; }), {fam:'est'}); });
   CATS=C; return C;
 }
 function embaralha(a,r){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const k=Math.floor(r()*(i+1)); [a[i],a[k]]=[a[k],a[i]]; } return a; }
