@@ -579,9 +579,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261118113238';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261118113238"></script>
-<script src="backend-firebase.js?v=20261118113238"></script>
+<script>window.GM_BUILD='20261118113951';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261118113951"></script>
+<script src="backend-firebase.js?v=20261118113951"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -3510,7 +3510,7 @@ function ligaStars(root){
 }
 /* Avaliações da torcida: cada torcedor publica as suas em rankuser/{uid}.aval */
 function avalTorcida(id, campo='aval'){ return Object.entries(RKU||{}).map(([uid,o])=>{ const a=o&&o[campo]&&o[campo][id]; return a&&(a.n||a.t)?{uid, ap:o.ap||'Torcedor', ...a}:null; }).filter(Boolean).sort((a,b)=>String(b.d||'').localeCompare(String(a.d||''))); }
-async function publicaAval(id, a, publicar){ try{ trk("avaliacao"); }catch(e){}
+async function publicaAval(id, a, publicar){ try{ trk("avaliacao"); if(!DONO&&a&&(a.n||a.t)){ TRK.av.push({k:'jogo-'+id, n:a.n||0, x:a.t?1:0}); clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } }catch(e){}
   if(!GDB||!GUID) return;
   try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.aval ||= {};
     if(publicar&&(a.n||a.t)) o.aval[id]={n:a.n||0, t:(a.t||'').slice(0,600), cr:a.cr||'', est:a.est?1:0, d:hojeStr()}; else delete o.aval[id];
@@ -3577,6 +3577,7 @@ function blocoAvalJogador(p){
   setTimeout(()=>{ const f=$('#avjform'); if(!f) return; ligaStars(f);
     f.onsubmit=async ev=>{ ev.preventDefault(); const n=+f.elements.notaj.value||0, t=f.elements.textoj.value.trim().slice(0,600), pub=!f.elements.torcj||f.elements.torcj.checked;
       if(!n&&!t) delete G.avj[id]; else G.avj[id]={n,t,d:hojeStr(),...(pub?{}:{priv:1})}; gSave();
+      try{ trk('avaliacao'); if(!DONO&&(n||t)){ TRK.av.push({k:'jogador-'+id, n, x:t?1:0}); clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } }catch(e){}
       if(GUID&&GDB){ try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.avj ||= {};
         if(pub&&(n||t)) o.avj[id]={n,t,d:hojeStr()}; else delete o.avj[id];
         o.ap=apAtual(o); await ref.set(o); RKU[GUID]=o; }catch(err){ console.warn(err); } }
@@ -3795,7 +3796,7 @@ function vDonoSecretas(){
 /* ---------- Registro de uso (anônimo) ----------
    Conta páginas abertas e ações (pacotinho, desafios, amigos, buscas…) por sessão. Não guarda nome, e-mail
    nem o que a pessoa escreveu: só um número aleatório do aparelho, se está logado e as contagens. */
-const TRK={pg:{}, ev:{}, bq:[], ls:{}, en:{}, n:0, ini:Date.now()};
+const TRK={pg:{}, ev:{}, bq:[], ls:{}, en:{}, av:[], n:0, ini:Date.now()};
 const trkVid=(()=>{ try{ let v=localStorage.getItem('gm-vid'); if(!v){ v=Math.random().toString(36).slice(2,12); localStorage.setItem('gm-vid',v); } return v; }catch(e){ return 'x'+Math.random().toString(36).slice(2,8); } })();
 const trkSid=Math.random().toString(36).slice(2,10);
 let trkSeq=0, trkUlt=0;
@@ -3804,8 +3805,8 @@ function trkPagina(h){ if(DONO) return; const hh=String(h||'inicio').split('?')[
   if(/^(jogador|jogo|adversario|competicao|temporada|tecnico|estadio|cidade)-/.test(hh)&&(TRK.en[hh]||Object.keys(TRK.en).length<40)){ TRK.en[hh.slice(0,70)]=(TRK.en[hh.slice(0,70)]||0)+1; clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } }
 function trkDesafios(){ try{ const jd=(G.jd||{})[hojeStr()]||{}; const o={}; Object.keys(jd).forEach(k=>{ const s=jd[k]; if(s&&typeof s==='object') o[k]=s.fim?2:1; }); return o; }catch(e){ return {}; } }
 async function trkEnvia(forca){ try{ if(DONO||!window.GM_EV_GRAVA) return; if(!TRK.n) return; if(!forca&&Date.now()-trkUlt<60000) return;
-  const o={d:hojeStr(), v:trkVid, s:trkSid, q:trkSeq, u:GUID?1:0, m:/Mobi|Android|iPhone/i.test(navigator.userAgent)?1:0, r:(document.referrer||'').replace(/^https?:\/\//,'').split('/')[0].slice(0,40), pg:TRK.pg, ev:TRK.ev, ds:trkDesafios(), t:Math.round((Date.now()-TRK.ini)/1000)}; if(TRK.bq.length) o.bq=TRK.bq; if(Object.keys(TRK.ls).length) o.ls=TRK.ls; if(Object.keys(TRK.en).length) o.en=TRK.en;
-  TRK.pg={}; TRK.ev={}; TRK.bq=[]; TRK.ls={}; TRK.en={}; TRK.n=0; trkUlt=Date.now(); const id=`${o.d}_${trkVid}_${trkSid}_${trkSeq++}`; await window.GM_EV_GRAVA(id,o); }catch(e){} }
+  const o={d:hojeStr(), v:trkVid, s:trkSid, q:trkSeq, u:GUID?1:0, m:/Mobi|Android|iPhone/i.test(navigator.userAgent)?1:0, r:(document.referrer||'').replace(/^https?:\/\//,'').split('/')[0].slice(0,40), pg:TRK.pg, ev:TRK.ev, ds:trkDesafios(), t:Math.round((Date.now()-TRK.ini)/1000)}; if(TRK.bq.length) o.bq=TRK.bq; if(Object.keys(TRK.ls).length) o.ls=TRK.ls; if(Object.keys(TRK.en).length) o.en=TRK.en; if(TRK.av.length) o.av=TRK.av.slice(0,20);
+  TRK.pg={}; TRK.ev={}; TRK.bq=[]; TRK.ls={}; TRK.en={}; TRK.av=[]; TRK.n=0; trkUlt=Date.now(); const id=`${o.d}_${trkVid}_${trkSid}_${trkSeq++}`; await window.GM_EV_GRAVA(id,o); }catch(e){} }
 setInterval(()=>trkEnvia(false),30000);
 document.addEventListener('visibilitychange',()=>{ if(document.hidden) trkEnvia(true); });
 window.addEventListener('pagehide',()=>trkEnvia(true));
@@ -3821,8 +3822,8 @@ function vDonoStats(params){
   const dias=+(new URLSearchParams(params||'').get('dias')||7);
   if(!STATS_CACHE||STATS_CACHE.dias!==dias){ carregaStats(dias).then(()=>{ if(location.hash.startsWith('#dono-uso')){ route.keep=true; route(); } }).catch(e=>{ STATS_CACHE={dias, erro:String(e.message||e), L:[]}; route.keep=true; route(); }); return `<a class="back" href="#dono">← Página do dono</a><h1>Uso do site</h1><p class="count">Carregando…</p>`; }
   if(STATS_CACHE.erro) return `<a class="back" href="#dono">← Página do dono</a><h1>Uso do site</h1><p class="empty">Não consegui ler os registros: ${esc(STATS_CACHE.erro)}. Confira se a regra "ev" está publicada no Firestore.</p>`;
-  const L=STATS_CACHE.L, vis={}, ses={}, porDia={}, pg={}, ev={}, refs={}, des={}, lsT={}, bqT={}, bqL=[], enT={};
-  L.forEach(o=>{ Object.entries(o.en||{}).forEach(([k,n])=>{ enT[k]=(enT[k]||0)+n; }); Object.entries(o.ls||{}).forEach(([k,n])=>{ lsT[k]=(lsT[k]||0)+n; }); (o.bq||[]).forEach(b=>{ const k=nrm(b.q||'').trim(); if(!k) return; const x=(bqT[k] ||= {q:b.q, n:0, r:b.r, pes:new Set()}); x.n++; x.pes.add(o.v); bqL.push({...b, d:o.d}); }); });
+  const L=STATS_CACHE.L, vis={}, ses={}, porDia={}, pg={}, ev={}, refs={}, des={}, lsT={}, bqT={}, bqL=[], enT={}, avL=[];
+  L.forEach(o=>{ (o.av||[]).forEach(a=>avL.push({...a, d:o.d})); Object.entries(o.en||{}).forEach(([k,n])=>{ enT[k]=(enT[k]||0)+n; }); Object.entries(o.ls||{}).forEach(([k,n])=>{ lsT[k]=(lsT[k]||0)+n; }); (o.bq||[]).forEach(b=>{ const k=nrm(b.q||'').trim(); if(!k) return; const x=(bqT[k] ||= {q:b.q, n:0, r:b.r, pes:new Set()}); x.n++; x.pes.add(o.v); bqL.push({...b, d:o.d}); }); });
   try{ garantePaisesMM(); }catch(e){}
   const nomeLista=id=>{ const l=LISTAS.find(x=>x[1]===id); return l?l[2]:id; }, resB=r=>r==='@'?'<span class="count">nomes (jogador, clube, cidade…)</span>':r?`<a href="#pergunte?lista=${esc(r)}">${esc(nomeLista(r))}</a>`:'<b style="color:#b3261e">nada encontrado</b>';
   L.forEach(o=>{ const sk=o.v+'|'+o.s; (vis[o.v] ||= {u:0,m:o.m,dias:new Set()}); if(o.u) vis[o.v].u=1; vis[o.v].dias.add(o.d);
@@ -3850,6 +3851,7 @@ function vDonoStats(params){
     const nomeEnt=k=>{ const [t,...r]=k.split('-'), v=r.join('-'); if(t==='jogador'){ const p=D.jogadores.find(x=>slug(x.nome)===v); return p?p.nome:v; } if(t==='jogo'){ const j=byId[+v]; return j?`${fmtD(j.data)} · ${j.adversario} ${placar(j)}`:k; } if(t==='adversario'){ const a=advRows().find(x=>slug(x.id)===v); return a?a.nome+' '+a.uf:v; } return v.replace(/-/g,' '); };
     const tab=(tit,t)=>{ const l=tipo(t); return `<div><h2>${tit}</h2><table><tbody>${l.map(([k,n])=>`<tr><td><a href="#${esc(k)}">${esc(nomeEnt(k))}</a></td><td class="n">${N(n)}</td></tr>`).join('')||'<tr><td colspan="2" class="count">Nada ainda.</td></tr>'}</tbody></table></div>`; };
     return `<div class="grid2">${tab('Jogadores mais abertos','jogador')}${tab('Jogos mais abertos','jogo')}</div><div class="grid2">${tab('Adversários mais abertos','adversario')}${tab('Competições e temporadas mais abertas','competicao|temporada')}</div>`; })()}
+  ${blocoAvalDono(avL)}
   <div class="grid2"><div><h2>Listas prontas mais abertas</h2><table><tbody>${Object.entries(lsT).sort((a,b)=>b[1]-a[1]).slice(0,25).map(([k,v])=>`<tr><td><a href="#pergunte?lista=${esc(k)}">${esc(nomeLista(k))}</a></td><td class="n">${N(v)}</td></tr>`).join('')||'<tr><td colspan="2" class="count">Nada ainda.</td></tr>'}</tbody></table><p class="count">Vezes que alguém abriu a lista completa.</p></div>
   <div><h2>Pesquisas mais feitas</h2><table><thead><tr><th>Pesquisa</th><th class="n">Vezes</th><th>A busca mostrou</th></tr></thead><tbody>${Object.values(bqT).sort((a,b)=>b.n-a.n).slice(0,30).map(x=>`<tr><td><a href="#pergunte?q=${encodeURIComponent(x.q)}">${esc(x.q)}</a></td><td class="n">${N(x.n)}</td><td>${resB(x.r)}</td></tr>`).join('')||'<tr><td colspan="3" class="count">Nada ainda.</td></tr>'}</tbody></table></div></div>
   ${bqL.some(b=>!b.r)?`<h2>Pesquisas sem resposta</h2><p class="count">O que as pessoas procuraram e o site não achou. Bom para ver o que falta.</p><table><tbody>${[...new Map(bqL.filter(b=>!b.r).map(b=>[nrm(b.q),b])).values()].slice(-40).reverse().map(b=>`<tr><td>${esc(b.q)}</td><td class="n">${fmtD(b.d)}</td></tr>`).join('')}</tbody></table>`:''}
@@ -4110,6 +4112,19 @@ async function desenhaArteLista(s){
     x.fillStyle='rgba(17,17,17,.12)'; x.fillRect(P,y+Math.round(lh*0.35),W-2*P,1); y+=lh; });
   if(rows.length>max) T(`E mais ${rows.length-max} na lista completa em galometrics.com.br`,P,Math.min(y+4,A.BOT+2),'cas',20,CINZA,'left',W-2*P);
   return cv;
+}
+
+/* Painel do dono: avaliações de jogos e jogadores */
+function blocoAvalDono(avL){
+  const nomeK=k=>{ const [t,...r]=k.split('-'), v=r.join('-'); if(t==='jogo'){ const j=byId[+v]; return j?`${fmtD(j.data)} · ${j.adversario} ${placar(j)}`:k; } const p=D.jogadores.find(x=>slug(x.nome)===v); return p?p.nome:v; };
+  const pub=[]; Object.entries(RKU||{}).forEach(([uid,o])=>{ if(!o) return; Object.entries(o.aval||{}).forEach(([id,a])=>{ if(a&&(a.n||a.t)) pub.push({k:'jogo-'+id, ...a, ap:o.ap||'Torcedor'}); }); Object.entries(o.avj||{}).forEach(([id,a])=>{ if(a&&(a.n||a.t)) pub.push({k:'jogador-'+id, ...a, ap:o.ap||'Torcedor'}); }); });
+  const agr={}; pub.forEach(a=>{ const x=(agr[a.k] ||= {k:a.k, s:0, c:0, n:0}); x.n++; if(a.n){ x.s+=a.n; x.c++; } });
+  avL.forEach(a=>{ const x=(agr[a.k] ||= {k:a.k, s:0, c:0, n:0, anon:0}); x.anon=(x.anon||0)+1; });
+  const tab=(tit,t)=>{ const l=Object.values(agr).filter(x=>x.k.startsWith(t+'-')).sort((a,b)=>(b.n+(b.anon||0))-(a.n+(a.anon||0))).slice(0,20); return `<div><h2>${tit}</h2><table><thead><tr><th>${t==='jogo'?'Jogo':'Jogador'}</th><th class="n">Notas</th><th class="n">Média</th></tr></thead><tbody>${l.map(x=>`<tr><td><a href="#${esc(x.k)}">${esc(nomeK(x.k))}</a></td><td class="n">${x.n}${x.anon?` <small class="count">(+${x.anon} no período)</small>`:''}</td><td class="n">${x.c?fmtNota((x.s/x.c).toFixed(1)):'–'}</td></tr>`).join('')||'<tr><td colspan="3" class="count">Nada ainda.</td></tr>'}</tbody></table></div>`; };
+  const ult=pub.sort((a,b)=>String(b.d||'').localeCompare(String(a.d||''))).slice(0,30);
+  return `<div class="grid2">${tab('Jogos avaliados','jogo')}${tab('Jogadores avaliados','jogador')}</div>
+  <h2>Últimas avaliações públicas</h2><table><tbody>${ult.map(a=>`<tr><td><a href="#${esc(a.k)}">${esc(nomeK(a.k))}</a></td><td>${a.n?starsHTML(a.n,'stx-xs'):''}</td><td>${esc(a.ap)}${a.t?`: <i>${esc(String(a.t).slice(0,140))}</i>`:''}</td><td class="n">${a.d?fmtD(a.d):''}</td></tr>`).join('')||'<tr><td colspan="4" class="count">Nada ainda.</td></tr>'}</tbody></table>
+  <p class="count">"Notas" conta as avaliações públicas de quem tem conta. O número entre parênteses inclui quem avaliou sem login ou de forma privada no período escolhido (registrado a partir de agora).</p>`;
 }
 
 </script>
