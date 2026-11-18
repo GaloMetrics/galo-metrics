@@ -566,9 +566,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117225942';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117225942"></script>
-<script src="backend-firebase.js?v=20261117225942"></script>
+<script>window.GM_BUILD='20261117230424';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261117230424"></script>
+<script src="backend-firebase.js?v=20261117230424"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2931,13 +2931,13 @@ function listasParecidas(q){ try{ garantePaisesMM(); }catch(e){} const w=nrm(q).
 const liLista=(x,i)=>`<li><span class="rank-n">${i+1}</span>${x.href?`<a href="${x.href}">${esc(x.nome)}</a>`:esc(x.nome)}${x.txt?`<b class="rank-t ${x.cls||''}">${esc(x.txt)}</b>`:`<b>${N(x.v)}</b>`}</li>`;
 function vPergunte(params){
   try{ garantePaisesMM(); }catch(e){}
-  const P=new URLSearchParams(params||''), q=P.get('q')||'', lid=P.get('lista')||''; try{ if(!route.keep){ if(q) trk('busca'); if(lid){ trk('lista'); if(!DONO){ TRK.ls[lid]=(TRK.ls[lid]||0)+1; } } } }catch(e){}
+  const P=new URLSearchParams(params||''), q=P.get('q')||'', lid=P.get('lista')||''; try{ if(!route.keep){ if(q) trk('busca'); if(lid){ trk('lista'); if(!DONO){ TRK.ls[lid]=(TRK.ls[lid]||0)+1; clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } } } }catch(e){}
   let corpo='';
   const L=LISTAS.find(x=>x[1]===lid);
   if(L){ const [,id,tit,unid,fn,tipo]=L; const todas=fn().filter(x=>x.v>0), linhas=tipo==='mm'?todas:todas.slice(0,30);
     corpo=`<h2>${esc(tit)}</h2>${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'))}</p>`:''}${linhas.length?`<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
   else if(q.trim()){ const ents=buscaEntidades(q), par=listasParecidas(q);
-    try{ if(!route.keep&&!DONO&&TRK.bq.length<20&&TRK.bq[TRK.bq.length-1]?.q!==q.slice(0,80)){ TRK.bq.push({q:q.trim().slice(0,80), r:par.length?par[0][1]:(ents?'@':'')}); TRK.n++; } }catch(e){}
+    try{ if(!route.keep&&!DONO&&TRK.bq.length<20&&TRK.bq[TRK.bq.length-1]?.q!==q.slice(0,80)){ TRK.bq.push({q:q.trim().slice(0,80), r:par.length?par[0][1]:(ents?'@':'')}); TRK.n++;  clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } }catch(e){}
     if(par.length){ const [,id,tit,unid,fn,tipo]=par[0]; const todas=fn().filter(x=>x.v>0), linhas=todas.slice(0,15);
       corpo+=`<h2>${esc(tit)}</h2>${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'))}</p>`:''}<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. <a href="#pergunte?lista=${id}">Ver a lista completa →</a></p>`;
       if(par.length>1) corpo+=`<h3>Talvez você procure</h3><div class="pq-ex">${par.slice(1,5).map(x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`).join('')}</div>`; }
@@ -3752,7 +3752,7 @@ document.addEventListener('click',ev=>{ const a=ev.target.closest&&ev.target.clo
 
 /* ---------- Painel de uso (só o dono) ---------- */
 let STATS_CACHE=null;
-async function carregaStats(dias){ const d=new Date(Date.now()-3*36e5); d.setDate(d.getDate()-dias+1); const desde=d.toISOString().slice(0,10); STATS_CACHE={dias, desde, L:await window.GM_EV_LE(desde)}; return STATS_CACHE; }
+async function carregaStats(dias){ const d=new Date(Date.now()-3*36e5); d.setDate(d.getDate()-dias+1); const desde=d.toISOString().slice(0,10); STATS_CACHE={dias, desde, em:Date.now(), L:await window.GM_EV_LE(desde)}; return STATS_CACHE; }
 const NOME_PG={inicio:'Início', jogos:'Jogos', jogo:'Página de jogo', jogadores:'Jogadores', jogador:'Página de jogador', adversarios:'Adversários', adversario:'Página de adversário', competicoes:'Competições', competicao:'Página de competição', mapa:'Mapa', pergunte:'Busca', recordes:'Recordes', album:'Álbum', desafios:'Desafios do dia', desafio:'Um desafio', ranking:'Ranking', perfil:'Meu perfil', diario:'Meu diário', torcedores:'Amigos', torcedor:'Perfil de amigo', embreve:'Em breve', sugestoes:'Sugestões', colaboradores:'Colaboradores', apoie:'Apoie', palpites:'Palpites', tecnicos:'Técnicos', temporada:'Temporada', cidade:'Cidade', comparar:'Comparar'};
 const NOME_EV={pacote:'Pacotinhos abertos', figurinha:'Figurinhas tiradas', figurinha_nova:'Figurinhas novas', secreta:'Figurinhas secretas tiradas', amigo:'Amigos adicionados', avaliacao:'Avaliações dadas', palpite:'Palpites salvos', busca:'Buscas feitas', lista:'Listas prontas abertas', tweet:'Cliques em tweetar', baixou_arte:'Artes baixadas', sugestao:'Sugestões enviadas', login:'Entradas com login'};
 function vDonoStats(params){
@@ -3777,7 +3777,7 @@ function vDonoStats(params){
   const mm=t=>t>=60?`${Math.floor(t/60)} min ${t%60} s`:`${t} s`;
   return `<a class="back" href="#dono">← Página do dono</a><div class="kicker">Só você vê esta página</div><h1>Uso do site</h1>
   <p class="lede">Quem entrou, o que abriu e o que fez, com e sem login. Conta a partir de 17/11/2026; suas próprias visitas não entram.</p>
-  <p>${[1,7,30].map(n=>`<a class="${n===dias?'more':'ghost'}" href="#dono-uso?dias=${n}">${n===1?'Hoje':'Últimos '+n+' dias'}</a>`).join(' ')}</p>
+  <p>${[1,7,30].map(n=>`<a class="${n===dias?'more':'ghost'}" href="#dono-uso?dias=${n}">${n===1?'Hoje':'Últimos '+n+' dias'}</a>`).join(' ')} <button type="button" class="ghost" onclick="STATS_CACHE=null; route();">↻ Atualizar</button></p><p class="count">Lido às ${new Date(STATS_CACHE.em||Date.now()).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}. Para ver o que acabou de acontecer, clique em Atualizar.</p>
   <div class="kpis" style="margin:18px 0"><div><b>${N(nv)}</b><span>visitantes</span></div><div><b>${N(nv-nlog)}</b><span>sem login</span></div><div><b>${N(nlog)}</b><span>com login</span></div><div><b>${N(pvTot)}</b><span>páginas vistas</span></div></div>
   <div class="kpis" style="margin:0 0 24px"><div><b>${N(S.length)}</b><span>visitas</span></div><div><b>${mm(tempo)}</b><span>tempo médio</span></div><div><b>${nv?Math.round(100*nmob/nv):0}%</b><span>no celular</span></div><div><b>${N(volt)}</b><span>voltaram outro dia</span></div></div>
   ${dk.length>1?`<h2>Visitantes por dia</h2><div class="uso-barras">${dk.map(d=>`<div title="${fmtD(d)}: ${porDia[d].v.size} visitantes, ${porDia[d].vl.size} com login"><i style="height:${Math.round(120*porDia[d].v.size/mx)}px"></i><i class="l" style="height:${Math.round(120*porDia[d].vl.size/mx)}px"></i><small>${d.slice(8)}/${d.slice(5,7)}</small><b>${porDia[d].v.size}</b></div>`).join('')}</div><p class="count">Barra clara: todos os visitantes. Barra escura: com login.</p>`:''}
