@@ -570,9 +570,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117231047';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117231047"></script>
-<script src="backend-firebase.js?v=20261117231047"></script>
+<script>window.GM_BUILD='20261118101207';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261118101207"></script>
+<script src="backend-firebase.js?v=20261118101207"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1641,7 +1641,21 @@ function albumUI(){
     gSave(); atualizaChip(); toast(msg); $('#sugtxt').value=''; };
   $('#sugtxt').oninput=()=>{ $('#sugerr').textContent=''; };
 }
-async function nuvemCarrega(){ if(!GDB||!GUID) return; try{ const s=await GDB.doc('data/users/'+GUID+'/album').get(); if(s.exists){ const o=JSON.parse(s.data().estado||'null'); if(o&&o.owned){ Object.entries(o.owned).forEach(([k,v])=>{ G.owned[k]=Math.max(G.owned[k]||0,v); }); G.pts=Math.max(G.pts,o.pts||0); G.total=Math.max(G.total,o.total||0); } } }catch(e){} }
+async function nuvemCarrega(){ if(!GDB||!GUID) return; try{ const s=await GDB.doc('data/users/'+GUID+'/album').get(); if(s.exists){ const o=JSON.parse(s.data().estado||'null'); if(o&&typeof o==='object') gMescla(o); } }catch(e){} }
+/* Junta o que está na conta com o que está no aparelho, sem perder nada dos dois lados */
+function gMescla(o){
+  Object.entries(o.owned||{}).forEach(([k,v])=>{ G.owned[k]=Math.max(G.owned[k]||0,+v||0); });
+  G.pts=Math.max(G.pts||0,+o.pts||0); G.total=Math.max(G.total||0,+o.total||0);
+  const obj=k=>{ if(o[k]&&typeof o[k]==='object'&&!Array.isArray(o[k])){ G[k] ||= {}; Object.entries(o[k]).forEach(([i,v])=>{ if(G[k][i]===undefined) G[k][i]=v; }); } };
+  ['diario','palpites','avj','jd','jogVistos','perfil'].forEach(obj);
+  if(o.conq){ G.conq ||= {}; Object.entries(o.conq).forEach(([i,d])=>{ if(!G.conq[i]||(d&&d<G.conq[i])) G.conq[i]=d; }); }
+  if(o.vis){ G.vis ||= {}; Object.entries(o.vis).forEach(([t,m])=>{ G.vis[t] ||= {}; Object.entries(m||{}).forEach(([i,v])=>{ if(G.vis[t][i]===undefined) G.vis[t][i]=v; }); }); }
+  ['seq','jdSeq'].forEach(k=>{ const a=G[k]||{}, b=o[k]; if(b&&typeof b==='object'){ G[k]={ult:(b.ult||'')>(a.ult||'')?b.ult:a.ult, atual:(b.ult||'')>(a.ult||'')?b.atual:a.atual, max:Math.max(a.max||0,b.max||0)}; } });
+  if(o.perfil&&G.perfil){ for(const k in o.perfil) if(!G.perfil[k]&&o.perfil[k]) G.perfil[k]=o.perfil[k]; }
+  if(o.criado&&(!G.criado||o.criado<G.criado)) G.criado=o.criado;
+  if(Array.isArray(o.hist)){ const vis=new Set((G.hist||[]).map(h=>h.d)); G.hist=[...(G.hist||[]),...o.hist.filter(h=>!vis.has(h.d))].sort((a,b)=>b.d-a.d).slice(0,80); }
+  for(const k in o) if(G[k]===undefined) G[k]=o[k];
+}
 
 /* página do dono */
 function vDono(){
@@ -1652,6 +1666,7 @@ function vDono(){
   return `<div class="kicker">Só você vê esta página</div><h1>Página do dono</h1>
   <p class="lede">O que você muda aqui vale para todo mundo que abre o site, na hora. Os dados da base não são apagados: estes ajustes ficam por cima deles.</p>
   <a class="capa-breve" href="#dono-falta" style="text-decoration:none;color:inherit;margin-bottom:22px"><span class="kk">★ O que falta</span><span>Escudos de adversários, fotos de jogadores, fichas de jogos e outros dados que ainda faltam na base, em ordem de prioridade →</span></a>
+  <a class="capa-breve" href="#dono-listas" style="text-decoration:none;color:inherit;margin-bottom:22px"><span class="kk">★ Listas com datas</span><span>Cole datas (lançamentos de GTA, discos, eleições…) e veja os jogos do Galo ligados a cada uma. Entra na busca.</span></a>
   <a class="capa-breve" href="#dono-uso" style="text-decoration:none;color:inherit;margin-bottom:22px"><span class="kk">★ Uso do site</span><span>Quantas pessoas entraram (com e sem login), páginas mais abertas, pacotinhos, desafios, amigos e de onde vieram →</span></a>
   <a class="capa-breve" href="#dono-secretas" style="text-decoration:none;color:inherit;margin-bottom:22px"><span class="kk">★ Figurinhas secretas</span><span>Crie figurinhas ultra raras (influenciadores, apoiadores, memes). No álbum elas ficam escondidas até alguém tirar no pacotinho →</span></a>
   <form id="dform" class="dono">
@@ -1744,7 +1759,7 @@ async function gmInit(){
   if(GDB){ try{ const s=await GDB.doc('site/config').get(); if(s.exists){ aplicaCfg(JSON.parse(s.data().json||'{}')); } }catch(e){} }
   if(DONO&&GDB&&GUID&&CFG.criador!==GUID){ try{ const s=await GDB.doc('site/config').get(); const c=s.exists?JSON.parse(s.data().json||'{}'):{}; c.criador=GUID; await GDB.doc('site/config').set({json:JSON.stringify(c), em:Date.now()}); CFG.criador=GUID; }catch(e){} }
   await carregaEdicoes(); await carregaRanking(); await carregaAval(); try{ await carregaColab(); }catch(e){} try{ await carregaPresentes(); }catch(e){} try{ registraPerfil(); }catch(e){} try{ checaPrimeiros(); }catch(e){} try{ if(GUID) trk('login'); }catch(e){} try{ publicaResumo(); }catch(e){}
-  NUVEM = lsGet('gm-nuvem')==='1' && !!GDB && !!GUID; if(NUVEM){ await nuvemCarrega(); lsSet(GMK, JSON.stringify(G)); }
+  NUVEM = lsGet('gm-nuvem')!=='0' && !!GDB && !!GUID; if(NUVEM){ await nuvemCarrega(); gExtra(); gSave(); }
   GM_PRONTO=true; atualizaChip(); route();
 }
 
@@ -1787,6 +1802,7 @@ async function carregaEdicoes(){
   try{ const s=await GDB.doc('site/escudosx').get(); if(s.exists) ESCX=s.data().map||{}; }catch(e){}
   try{ const s=await GDB.doc('site/especiais').get(); if(s.exists) ESP=s.data().itens||[]; }catch(e){}
   try{ const s=await GDB.doc('site/clubesx').get(); if(s.exists) CLUBX=s.data().map||{}; }catch(e){}
+  try{ if(typeof carregaListasX==='function') await carregaListasX(); }catch(e){}
   Object.keys(EDIC).sort((a,b)=>+a-+b).forEach(id=>aplicaEdicao(id, EDIC[id])); aplicaClubes(); reordena();
 }
 /* Edições de clubes feitas pelo dono: nome, UF/país e "é o mesmo clube que" */
@@ -2671,8 +2687,8 @@ async function desenhaArte(s){
     const tit=isP?(d.esc||[]):((j.escalacao_galo&&j.escalacao_galo.titulares)||[]);
     const temCampo=tit.length>=7;
     const gL=j.galo_mandante!=null?j.galo_mandante:j.mando!=='F', L=gL?'galo':j.adversario_id, Rr=gL?j.adversario_id:'galo';
-    T('★ '+(isP?'MEU PALPITE':(d.est?'EU ESTAVA LÁ':'MEU JOGO')),P,226,'osw',34,GOLD);
-    T(`${(j.competicao||'').toUpperCase()}${j.fase?' · '+j.fase.toUpperCase():''} · ${fmtD(j.data,j.data_aprox)}`,P,268,'osw',24,INK,'left',W-2*P-260);
+    T('★ '+(s.k||(isP?'MEU PALPITE':(d.est?'EU ESTAVA LÁ':'MEU JOGO'))),P,226,'osw',34,GOLD,'left',W-2*P-240);
+    T(s.f||`${(j.competicao||'').toUpperCase()}${j.fase?' · '+j.fase.toUpperCase():''} · ${fmtD(j.data,j.data_aprox)}`,P,268,'osw',24,INK,'left',W-2*P-260);
     // placar
     const nInfo=isP?(d.marc&&d.marc.length?1:0):((j.gols.some(g=>g.lado==='galo')?1:0)+(d.n?1:0)+(d.cr?1:0)+(d.t?2:0)); const bh=temCampo?300:400, by=temCampo?300:Math.max(310,Math.round(310+(A.BOT-310-bh-nInfo*70)/2-40)); x.fillStyle='rgba(255,255,255,.55)'; x.fillRect(P,by,W-2*P,bh); x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P,by,W-2*P,bh);
     const cxL=P+170, cxR=W-P-170, cy=by+(temCampo?120:150), cs=temCampo?170:210;
@@ -2706,7 +2722,7 @@ async function desenhaArte(s){
   }
   if(s.t==='estadio'){
     const S=statsEstadio(); galo(W-P-90,300,190);
-    T('★ FICHA DO TORCEDOR',P,226,'osw',34,GOLD); Tm('Fui ao',P,330,96,W-2*P-220); Tm('estádio',P,430,96,W-2*P-220);
+    T('★ '+(s.k||'FICHA DO TORCEDOR'),P,226,'osw',34,GOLD,'left',W-2*P-220); if(s.f) wrap(s.f,P,320,'abril',64,W-2*P-220,74,INK,'left',3); else { Tm('Fui ao',P,330,96,W-2*P-220); Tm('estádio',P,430,96,W-2*P-220); }
     let y=500; x.strokeStyle=INK; x.lineWidth=4; x.fillStyle='rgba(255,255,255,.55)'; x.fillRect(P,y,W-2*P,190); x.strokeRect(P,y,W-2*P,190);
     const cw=(W-2*P)/2; T(String(S.ids.length),P+30,y+120,'abril',100,INK); T('JOGOS NO ESTÁDIO',P+30,y+165,'osw',24,INK);
     x.fillStyle=INK; x.fillRect(P+cw,y,2,190); T(S.r.V+S.r.E+S.r.D?aprov(S.r):'–',P+cw+30,y+120,'abril',100,GOLD,'left',cw-60); T('APROVEITAMENTO',P+cw+30,y+165,'osw',24,INK);
@@ -2719,7 +2735,7 @@ async function desenhaArte(s){
   }
   if(s.t==='desafio'){
     galo(W-P-90,300,190);
-    T('★ DESAFIO DO DIA · '+fmtD(hojeStr()),P,226,'osw',34,GOLD); Tm(s.nome,P,350,100,W-2*P-230);
+    T('★ '+(s.k||'DESAFIO DO DIA · '+fmtD(hojeStr())),P,226,'osw',34,GOLD,'left',W-2*P-220); Tm(s.f||s.nome,P,350,100,W-2*P-230);
     let y=420; x.fillStyle='rgba(255,255,255,.55)'; x.fillRect(P,y,W-2*P,230); x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P,y,W-2*P,230);
     Tm(String(s.res),W/2,y+160,130,W-2*P-60,'center'); y+=300;
     if(s.grade){ const rows=s.grade.split('\n').filter(Boolean); const n=Math.max(...rows.map(r=>[...r].length)); const sq=Math.min(92,(W-2*P)/n-12, (A.BOT-y-150)/rows.length-12); const gx=(W-n*(sq+12)+12)/2;
@@ -2734,8 +2750,10 @@ async function abreArte(spec){
   box.innerHTML=`<div class="gm-achou-in arte-in"><p class="osw">Preparando a arte…</p></div>`; document.body.appendChild(box);
   const fecha=()=>box.remove(); box.onclick=e=>{ if(e.target===box) fecha(); };
   try{ const cv=await desenhaArte(spec); const url=cv.toDataURL('image/png');
-    box.querySelector('.arte-in').innerHTML=`<p class="osw">Arte pronta para o post</p><img src="${url}" alt="Prévia da arte" class="arte-img"><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button type="button" class="more" id="artdl">Baixar PNG</button><button type="button" class="ghost" id="artfx">Fechar</button></div><p class="count">Baixe a imagem e anexe no tweet. Se o download não abrir, clique com o botão direito (ou toque e segure) na imagem para salvar.</p>`;
+    const edDono=DONO?`<details class="dono-ed" style="text-align:left"${spec.k||spec.f?' open':''}><summary>✎ Editar textos da arte (só você vê)</summary><form id="artedf" class="dono jform"><label>Chamada (em dourado)<input name="k" value="${esc(spec.k||'')}" placeholder="Deixe vazio para usar a padrão"></label><label>Texto principal<textarea name="f" rows="3" style="width:100%" placeholder="Deixe vazio para usar o padrão">${esc(spec.f||'')}</textarea></label><button type="submit" class="more">Refazer arte</button></form></details>`:'';
+    box.querySelector('.arte-in').innerHTML=`<p class="osw">Arte pronta para o post</p><img src="${url}" alt="Prévia da arte" class="arte-img">${edDono}<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button type="button" class="more" id="artdl">Baixar PNG</button><button type="button" class="ghost" id="artfx">Fechar</button></div><p class="count">Baixe a imagem e anexe no tweet. Se o download não abrir, clique com o botão direito (ou toque e segure) na imagem para salvar.</p>`;
     box.querySelector('#artfx').onclick=fecha; box.querySelector('#artdl').focus();
+    const ef=box.querySelector('#artedf'); if(ef) ef.onsubmit=ev=>{ ev.preventDefault(); const k=ef.elements.k.value.trim(), f=ef.elements.f.value.trim(); fecha(); abreArte({...spec, k:k||undefined, f:f||undefined}); };
     box.querySelector('#artdl').onclick=async()=>{ const nome=`galo-metrics-${spec.t}.png`; const blob=await (await fetch(url)).blob();
       const dl = window.claude&&window.claude.use ? await window.claude.use('downloads').catch(()=>null) : null;
       if(dl){ try{ await dl.save({filename:nome, data:blob}); toast('Arte salva.'); }catch(e){ if(!(e&&e.code==='declined')) toast('Não deu para baixar aqui. Salve pela imagem.'); } }
@@ -2786,6 +2804,7 @@ function route(){
   else if(h==='dono-falta') html=vFalta();
   else if(h==='dono-secretas') html=vDonoSecretas();
   else if(h==='dono-uso') html=vDonoStats(params);
+  else if(h==='dono-listas') html=vDonoListas(params);
   else if(h==='embreve') html=vEmBreve();
   else if(h==='comparar') {html=vComparar(params); sec='jogadores';}
   else if(h==='competicoes') html=vCompeticoes();
@@ -2804,7 +2823,7 @@ function route(){
   if(DIA_JOGO&&(h==='desafios'||h.startsWith('desafio-'))) html=html.replace(/href="#desafio(s|-[a-z]+)"/g,(m,x)=>`href="#desafio${x}?dia=${DIA_JOGO}"`);
   $('#app').innerHTML=notaPagina(h)+html;
   ligaNota();
-  const alvo = ['palpites','diario','ranking','album','perfil','dono','dono-falta','dono-secretas','dono-uso','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve','torcedores'].includes(h)?h:sec;
+  const alvo = ['palpites','diario','ranking','album','perfil','dono','dono-falta','dono-secretas','dono-uso','dono-listas','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve','torcedores'].includes(h)?h:sec;
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href').slice(1)===alvo));
   document.querySelectorAll('#nav details').forEach(d=>{ d.removeAttribute('open'); d.classList.toggle('on', !!d.querySelector('a.on')); });
   if(!route.keep) window.scrollTo(0,0); route.keep=false;
@@ -2931,19 +2950,21 @@ function buscaEntidades(q){
 const PALAVRAS_VAZIAS=new Set('contra quem qual quais que o a os as de do da dos das em no na nos nas e mais pelo pela galo atletico com por para um uma foi tem teve ja the me diga mostre lista quero ver'.split(' '));
 const GENERICAS=new Set('gol gols marcou marcaram fez fizeram jogou jogos jogo maior maiores vitoria vitorias venceu historia time clube artilheiro'.split(' '));
 function listasParecidas(q){ try{ garantePaisesMM(); }catch(e){} const w=nrm(q).replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(x=>x&&!PALAVRAS_VAZIAS.has(x)); if(!w.length) return [];
-  return LISTAS.map(L=>{ const alvo=(nrm(L[2])+' '+(LISTA_SIN[L[1]]||'')).replace(/[^a-z0-9 ]/g,' ').split(/\s+/); let s=0; w.forEach(x=>{ const peso=GENERICAS.has(x)?1:3; if(alvo.includes(x)) s+=peso; else if(x.length>=4&&alvo.some(a=>a.length>=4&&(a.startsWith(x.slice(0,5))||x.startsWith(a.slice(0,5))))) s+=peso/2; }); return {L, s}; }).filter(o=>o.s>=1).sort((a,b)=>b.s-a.s).map(o=>o.L); }
+  return LISTAS.map(L=>{ const alvo=(nrm(L[2])+' '+(LISTA_SIN[L[1]]||'')).replace(/[^a-z0-9 ]/g,' ').split(/\s+/); let s=0; w.forEach(x=>{ const peso=GENERICAS.has(x)?1:3; if(alvo.includes(x)||(x.length>=3&&x.endsWith('s')&&alvo.includes(x.slice(0,-1)))||alvo.includes(x+'s')) s+=peso; else if(x.length>=4&&alvo.some(a=>a.length>=4&&(a.startsWith(x.slice(0,5))||x.startsWith(a.slice(0,5))))) s+=peso/2; }); return {L, s}; }).filter(o=>o.s>=1).sort((a,b)=>b.s-a.s).map(o=>o.L); }
+const filtroDesde=(id,d)=>{ const anos=[...new Set(J.map(j=>j.temporada))].sort((a,b)=>b-a); return `<p class="count">Desde <select onchange="location.hash='pergunte?lista=${id}'+(this.value?'&desde='+this.value:'')"><option value="">o início (1908)</option>${anos.map(a=>`<option ${a===d?'selected':''}>${a}</option>`).join('')}</select></p>`; };
 const liLista=(x,i)=>`<li><span class="rank-n">${i+1}</span>${x.href?`<a href="${x.href}">${esc(x.nome)}</a>`:esc(x.nome)}${x.txt?`<b class="rank-t ${x.cls||''}">${esc(x.txt)}</b>`:`<b>${N(x.v)}</b>`}</li>`;
 function vPergunte(params){
   try{ garantePaisesMM(); }catch(e){}
   const P=new URLSearchParams(params||''), q=P.get('q')||'', lid=P.get('lista')||''; try{ if(!route.keep){ if(q) trk('busca'); if(lid){ trk('lista'); if(!DONO){ TRK.ls[lid]=(TRK.ls[lid]||0)+1; clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } } } }catch(e){}
   let corpo='';
   const L=LISTAS.find(x=>x[1]===lid);
-  if(L){ const [,id,tit,unid,fn,tipo]=L; const todas=fn().filter(x=>x.v>0), linhas=tipo==='mm'?todas:todas.slice(0,30);
-    corpo=`<h2>${esc(tit)}</h2>${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'))}</p>`:''}${linhas.length?`<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
+  const desde=+(P.get('desde')||0)||0;
+  if(L){ const [,id,tit,unid,fn,tipo,res]=L; const todas=fn({desde}).filter(x=>x.v>0), linhas=(tipo==='mm'||tipo==='temp'||tipo==='datas')?todas:todas.slice(0,30);
+    corpo=`<h2>${esc(tit)}</h2>${tipo==='temp'?filtroDesde(id,desde):''}${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'||/^mf-/.test(id)))}</p>`:''}${res&&todas.length?`<p class="lede">${esc(res(todas))}</p>`:''}${linhas.length?`<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
   else if(q.trim()){ const ents=buscaEntidades(q), par=listasParecidas(q);
     try{ if(!route.keep&&!DONO&&TRK.bq.length<20&&TRK.bq[TRK.bq.length-1]?.q!==q.slice(0,80)){ TRK.bq.push({q:q.trim().slice(0,80), r:par.length?par[0][1]:(ents?'@':'')}); TRK.n++;  clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } }catch(e){}
-    if(par.length){ const [,id,tit,unid,fn,tipo]=par[0]; const todas=fn().filter(x=>x.v>0), linhas=todas.slice(0,15);
-      corpo+=`<h2>${esc(tit)}</h2>${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'))}</p>`:''}<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. <a href="#pergunte?lista=${id}">Ver a lista completa →</a></p>`;
+    if(par.length){ const [,id,tit,unid,fn,tipo,res]=par[0]; const dq=tipo==='temp'?(+((q.match(/\b(19|20)\d{2}\b/)||[])[0])||0):0; const todas=fn({desde:dq}).filter(x=>x.v>0), linhas=todas.slice(0,15);
+      corpo+=`<h2>${esc(tit)}${dq?` desde ${dq}`:''}</h2>${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'||/^mf-/.test(id)))}</p>`:''}${res&&todas.length?`<p class="lede">${esc(res(todas))}</p>`:''}<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. <a href="#pergunte?lista=${id}${dq?'&desde='+dq:''}">Ver a lista completa →</a></p>`;
       if(par.length>1) corpo+=`<h3>Talvez você procure</h3><div class="pq-ex">${par.slice(1,5).map(x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`).join('')}</div>`; }
     if(ents) corpo+=`<h2>${par.length?'Na base':'Resultados para "'+esc(q)+'"'}</h2><div class="busca-grid">${ents}</div>`;
     if(!corpo) corpo=`<p class="empty">Nada encontrado para "${esc(q)}". Tente o nome de um jogador, clube, cidade ou estádio, um ano, ou uma pergunta como "quem fez mais gols de falta".</p>`; }
@@ -2953,6 +2974,7 @@ function vPergunte(params){
   <p class="lede">Escreva um nome, um ano ou uma pergunta, como "quem fez mais gols de falta" ou "maiores públicos". Ou abra uma das listas prontas.</p>
   <form id="pqform" class="pq"><input id="pq" type="search" value="${esc(q)}" placeholder="Ex.: Reinaldo, 1971, quem mais marcou no clássico" aria-label="Buscar"><button class="more" type="submit">Buscar</button></form>
   ${corpo}
+  ${DONO?'<p class="count"><a href="#dono-listas">✎ Criar lista com datas (só você vê)</a></p>':''}
   ${L?'':`<h2>Listas prontas</h2>${grupos.map(g=>`<h3>${esc(g)}</h3><div class="pq-ex">${LISTAS.filter(x=>x[0]===g).map(x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`).join('')}</div>`).join('')}`}`;
 }
 
@@ -3835,8 +3857,8 @@ function resumoUF(uf){ const d=dadosUF(uf); if(!d.C.length) return '';
 async function desenhaArteUF(s){
   const d=dadosUF(s.uf); const A=await arteBase(`/adversarios?uf=${s.uf}`); const {cv,x,W,H,P,T,wrap,galo,INK,GOLD,GOLDD,V,R}=A;
   galo(W-P-85,250,170);
-  T('★ VOCÊ SABIA?',P,236,'osw',38,GOLD);
-  const fr=fraseUF(d), fs=fr.length>110?48:fr.length>80?54:62; let y=wrap(fr,P,326,'abril',fs,W-2*P-210,Math.round(fs*1.2));
+  T('★ '+(s.k||'VOCÊ SABIA?'),P,236,'osw',38,GOLD,'left',W-2*P-200);
+  const fr=s.f||fraseUF(d), fs=fr.length>110?48:fr.length>80?54:62; let y=wrap(fr,P,326,'abril',fs,W-2*P-210,Math.round(fs*1.2));
   y+=64; const cols=[[d.pos.length,'positivo',V],[d.igu.length,'igual',GOLD],[d.neg.length,'negativo',R]]; const cw=(W-2*P)/3;
   x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+180,W-2*P,3);
   cols.forEach(([n,l,c],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+30,2,120); } T(String(n),P+i*cw+30,y+108,'abril',90,c,'left',cw-50); T(('RETROSPECTO '+l).toUpperCase(),P+i*cw+30,y+152,'osw',21,INK,'left',cw-50); });
@@ -3905,6 +3927,79 @@ function porCompeticao(){ const m={}; J.filter(j=>j.resultado&&j.grupo!=='Amisto
   add('Competições','comp-bra','Melhores campanhas no Brasileirão','% de aproveitamento',()=>{ const m={}; J.filter(j=>j.resultado&&j.grupo==='Campeonato Brasileiro').forEach(j=>(m[j.temporada] ||= []).push(j)); return Object.entries(m).filter(([,l])=>l.length>=10).map(([y,l])=>{ const r=rec(l); return {nome:`Brasileiro ${y} (${r.V}V ${r.E}E ${r.D}D)`, href:'#temporada-'+y, v:Math.round(100*(3*r.V+r.E)/(3*r.n))}; }).sort((a,b)=>b.v-a.v); },'brasileiro brasileirao campanha campanhas melhores aproveitamento');
   function mataMatasSafe(){ try{ return mataMatas(); }catch(e){ return []; } }
 })();
+
+/* ---------- Artilheiros por temporada ---------- */
+let _ARTT=null;
+function artTemporadas(){ if(_ARTT) return _ARTT; const m={}, nj={};
+  J.forEach(j=>{ if(j.resultado) nj[j.temporada]=(nj[j.temporada]||0)+1; j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)&&g.jogador){ const t=(m[j.temporada] ||= {}); t[g.jogador]=(t[g.jogador]||0)+1; } }); });
+  return _ARTT=Object.entries(m).map(([a,t])=>{ const mx=Math.max(...Object.values(t)); const quem=Object.keys(t).filter(k=>t[k]===mx); return {ano:+a, g:mx, quem, nj:nj[a]||0}; }); }
+const linhaArt=o=>({nome:`${o.ano} · ${o.quem.map(nomeV).join(', ')}`, href:'#temporada-'+o.ano, v:o.g});
+(function(){
+  const add=(g,id,t,u,fn,sin,tipo,res)=>{ LISTAS.push([g,id,t,u,fn,tipo,res]); if(sin) LISTA_SIN[id]=sin; };
+  const AT='artilheiro artilheiros artilharia temporada temporadas ano anos cada goleador';
+  add('Gols','art-temp','Artilheiros de cada temporada','gols do artilheiro',o=>artTemporadas().filter(x=>!o.desde||x.ano>=o.desde).sort((a,b)=>b.ano-a.ano).map(linhaArt),AT+' por temporada do ano','temp');
+  add('Gols','art-temp-mais','Artilheiros de temporada com mais gols','gols do artilheiro',o=>artTemporadas().filter(x=>!o.desde||x.ano>=o.desde).sort((a,b)=>b.g-a.g||b.ano-a.ano).map(linhaArt),AT+' mais gols maior melhor','temp');
+  add('Gols','art-temp-menos','Artilheiros de temporada com menos gols','gols do artilheiro',o=>artTemporadas().filter(x=>x.nj>=20&&x.ano<+hojeStr().slice(0,4)&&(!o.desde||x.ano>=o.desde)).sort((a,b)=>a.g-b.g||b.ano-a.ano).map(linhaArt),AT+' menos gols menor pior pouco poucos desde','temp');
+})();
+(function(){ const velho=window.garantePaisesMM; window.garantePaisesMM=()=>{ const ja=velho&&velho.ok; velho&&velho(); if(ja||garantePaisesMM.ok2||!J.length) return; garantePaisesMM.ok2=true;
+  const fin={}; mataMatas().filter(m=>m.final&&m.uf.length===3).forEach(m=>{ fin[m.uf]=(fin[m.uf]||0)+1; });
+  const est=mataMatas().filter(m=>m.final&&m.uf.length===3).length;
+  const MMS='mata mata matamata confronto confrontos';
+  if(est){ LISTAS.push(['Mata-matas','mf-est','Finais contra clubes estrangeiros','finais',()=>linhasMM(m=>m.final&&m.uf.length===3),'mm']); LISTA_SIN['mf-est']='final finais decisao decisoes titulo estrangeiro estrangeiros gringos internacional internacionais '+MMS; }
+  Object.entries(fin).filter(([,n])=>n>=2).forEach(([p])=>{ const gent=(UFS[p]||[p,p])[1], nome=(UFS[p]||[p])[0], id='mf-'+p.toLowerCase();
+    LISTAS.push(['Mata-matas',id,`Finais contra clubes ${gent}`,'finais',()=>linhasMM(m=>m.final&&m.uf===p),'mm']); LISTA_SIN[id]='final finais decisao decisoes titulo '+nrm(gent)+' '+nrm(gent).replace(/s$/,'')+' '+nrm(nome)+' '+p.toLowerCase(); }); };
+  window.garantePaisesMM.ok=false; })();
+
+/* ---------- Listas com datas, criadas pelo dono (ex.: jogos depois de cada GTA) ---------- */
+let LISTASX=[];
+const MESES_PT={janeiro:1,fevereiro:2,marco:3,abril:4,maio:5,junho:6,julho:7,agosto:8,setembro:9,outubro:10,novembro:11,dezembro:12,jan:1,fev:2,mar:3,abr:4,mai:5,jun:6,jul:7,ago:8,set:9,out:10,nov:11,dez:12};
+function lerDatas(txt){ const out=[];
+  String(txt||'').split(/\n+/).forEach(l0=>{ const l=l0.trim(); if(!l) return; let d=null, resto=l, m;
+    if((m=l.match(/(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})/))){ let y=+m[3]; if(y<100) y+=y>40?1900:2000; d=`${y}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`; resto=l.replace(m[0],''); }
+    else if((m=l.match(/(\d{4})-(\d{2})-(\d{2})/))){ d=m[0]; resto=l.replace(m[0],''); }
+    else if((m=nrm(l).match(/(\d{1,2})\s*(?:de\s+)?([a-z]+)\s*(?:de\s+)?(\d{4})/))&&MESES_PT[m[2]]){ d=`${m[3]}-${String(MESES_PT[m[2]]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`; resto=l.replace(/(\d{1,2})\s*(de\s+)?[A-Za-zçÇãõáéíóú]+\s*(de\s+)?(\d{4})/,''); }
+    if(d&&!isNaN(new Date(d))) out.push({d, l:resto.replace(/^[\s:–—\-|,;·]+|[\s:–—\-|,;·]+$/g,'').trim()}); });
+  return out.sort((a,b)=>a.d.localeCompare(b.d)); }
+function jogosDasDatas(x){ const pl=J.filter(j=>j.resultado&&j.gp!=null); const n=Math.max(1,Math.min(10,+x.n||1)), dias=+x.dias||7;
+  return (x.datas||[]).map(dt=>{ let l=[];
+    if(x.modo==='dia') l=pl.filter(j=>j.data===dt.d);
+    else if(x.modo==='dias'){ const fim=new Date(new Date(dt.d).getTime()+dias*864e5).toISOString().slice(0,10); l=pl.filter(j=>j.data>dt.d&&j.data<=fim); }
+    else if(x.modo==='antes') l=pl.filter(j=>j.data<dt.d).slice(-n);
+    else l=pl.filter(j=>x.mesmoDia?j.data>=dt.d:j.data>dt.d).slice(0,n);
+    return {dt, l}; }); }
+function linhasDatas(x){ const out=[]; jogosDasDatas(x).forEach(({dt,l})=>{ const rot=`${dt.l||'Data'} (${fmtD(dt.d)})`;
+    if(!l.length) out.push({nome:rot+' · sem jogo', v:1, txt:'–', cls:'e'});
+    l.forEach(j=>out.push({nome:`${rot} → ${fmtD(j.data)} · ${j.adversario}`, href:'#jogo-'+j.id, v:1, txt:`${j.resultado==='V'?'Vitória':j.resultado==='E'?'Empate':'Derrota'} · ${placar(j)}`, cls:j.resultado==='V'?'v':j.resultado==='D'?'d':'e', j})); });
+  return out; }
+const resumoDatas=L=>{ const js=L.filter(x=>x.j).map(x=>x.j), r=rec(js); return js.length?`${js.length} ${js.length===1?'jogo':'jogos'}: ${r.V} ${r.V===1?'vitória':'vitórias'}, ${r.E} ${r.E===1?'empate':'empates'} e ${r.D} ${r.D===1?'derrota':'derrotas'} (${aprov(r)} de aproveitamento), ${r.gp} gols marcados e ${r.gc} sofridos.`:'Nenhum jogo encontrado para essas datas.'; };
+function registraListasX(){ for(let i=LISTAS.length-1;i>=0;i--) if(/^dx-/.test(LISTAS[i][1])) LISTAS.splice(i,1);
+  LISTASX.forEach(x=>{ LISTAS.push(['Listas especiais','dx-'+x.id,x.t,'jogos',()=>linhasDatas(x),'datas',resumoDatas]); LISTA_SIN['dx-'+x.id]=nrm((x.kw||'')+' '+x.t+' '+(x.datas||[]).map(d=>d.l).join(' ')+' '+({prox:'depois apos seguinte seguintes proximo proximos',dias:'depois apos seguintes semana',dia:'mesmo dia dia',antes:'antes anterior anteriores vespera'}[x.modo]||'')); }); }
+async function carregaListasX(){ try{ const s=await GDB.doc('site/listasx').get(); if(s.exists){ LISTASX=s.data().L||[]; registraListasX(); } }catch(e){} }
+function vDonoListas(params){
+  if(!DONO) return '<p class="empty">Só o dono abre esta página.</p>';
+  const P=new URLSearchParams(params||''), ed=LISTASX.find(x=>x.id===P.get('id'))||null;
+  setTimeout(()=>{ const f=$('#dxform'); if(!f) return; const prev=$('#dxprev');
+    const ler=()=>{ const v=k=>f.elements[k]?.value||''; return {id:ed?ed.id:Date.now().toString(36), t:v('t').trim(), kw:v('kw').trim(), modo:v('modo'), n:+v('n')||1, dias:+v('dias')||7, mesmoDia:f.elements.mesmo.checked, datas:lerDatas(v('datas'))}; };
+    const mostra=()=>{ const x=ler(); const L=linhasDatas(x); prev.innerHTML=`<p class="count">${x.datas.length} ${x.datas.length===1?'data lida':'datas lidas'}${x.datas.length?': '+x.datas.map(d=>`${esc(d.l||'?')} ${fmtD(d.d)}`).join(' · '):''}.</p>${L.length?`<p class="lede">${esc(resumoDatas(L))}</p><ol class="rank">${L.map((x,i)=>liLista(x,i)).join('')}</ol>`:''}`; };
+    f.oninput=()=>{ clearTimeout(f._t); f._t=setTimeout(mostra,300); }; mostra();
+    f.onsubmit=async ev=>{ ev.preventDefault(); const x=ler(); if(!x.t){ toast('Dê um título para a lista.'); return; } if(!x.datas.length){ toast('Não achei nenhuma data no texto.'); return; }
+      const novo=[...LISTASX.filter(y=>y.id!==x.id), x]; try{ await GDB.doc('site/listasx').set({L:novo, em:Date.now()}); LISTASX=novo; registraListasX(); toast('Lista salva. Já aparece na busca.'); location.hash='pergunte?lista=dx-'+x.id; }catch(err){ toast('Não deu para salvar: '+err.message); } };
+    const del=$('#dxdel'); if(del) del.onclick=async()=>{ if(!confirm('Apagar esta lista?')) return; const novo=LISTASX.filter(y=>y.id!==ed.id); try{ await GDB.doc('site/listasx').set({L:novo, em:Date.now()}); LISTASX=novo; registraListasX(); toast('Lista apagada.'); location.hash='dono-listas'; }catch(err){ toast(err.message); } };
+  });
+  const e=ed||{t:'',kw:'',modo:'prox',n:1,dias:7,datas:[]};
+  return `<a class="back" href="#dono">← Página do dono</a><div class="kicker">Dono · listas especiais</div><h1>Listas com datas</h1>
+  <p class="lede">Cole datas de qualquer coisa (lançamentos de GTA, discos, eleições, aniversários) e o site mostra os jogos do Galo ligados a cada uma. A lista entra na busca e nas listas prontas.</p>
+  ${LISTASX.length?`<h2>Suas listas</h2><div class="pq-ex">${LISTASX.map(x=>`<a class="chip" href="#dono-listas?id=${x.id}">✎ ${esc(x.t)}</a> <a class="chip" href="#pergunte?lista=dx-${x.id}">ver</a>`).join(' ')}</div>`:''}
+  <h2>${ed?'Editar lista':'Nova lista'}</h2>
+  <form id="dxform" class="dono jform">
+   <label>Título<input name="t" value="${esc(e.t)}" placeholder="Jogos do Galo depois de cada lançamento de GTA"></label>
+   <label>Palavras para a busca achar<input name="kw" value="${esc(e.kw)}" placeholder="gta rockstar game lancamento videogame"></label>
+   <label>Datas, uma por linha (o resto da linha vira o nome)<textarea name="datas" rows="8" style="width:100%" placeholder="GTA III 22/10/2001&#10;GTA Vice City 29/10/2002&#10;GTA San Andreas 26/10/2004&#10;GTA IV 29/04/2008&#10;GTA V 17/09/2013">${esc((e.datas||[]).map(d=>`${d.l} ${fmtD(d.d)}`).join('\n'))}</textarea></label>
+   <label>Quais jogos<select name="modo">${[['prox','Os próximos jogos depois da data'],['dias','Todos os jogos nos dias seguintes'],['dia','Jogos no mesmo dia'],['antes','Os últimos jogos antes da data']].map(([v,t])=>`<option value="${v}" ${e.modo===v?'selected':''}>${t}</option>`).join('')}</select></label>
+   <div style="display:flex;gap:14px;flex-wrap:wrap"><label>Quantos jogos<input name="n" type="number" min="1" max="10" value="${e.n||1}" style="width:80px"></label><label>Quantos dias<input name="dias" type="number" min="1" max="365" value="${e.dias||7}" style="width:80px"></label><label class="chk"><input type="checkbox" name="mesmo" ${e.mesmoDia?'checked':''}> Contar jogo no próprio dia</label></div>
+   <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="submit" class="more">Salvar lista</button>${ed?'<button type="button" class="ghost" id="dxdel">Apagar lista</button> <a class="ghost" href="#dono-listas">Nova lista</a>':''}</div>
+  </form><h2>Prévia</h2><div id="dxprev"></div>`;
+}
 
 </script>
 </body>
