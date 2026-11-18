@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261118141500';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script>window.GM_BUILD='20261118135500';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
 <script src="firebase-config.js?v=20261118115302"></script>
 <script src="backend-firebase.js?v=20261118115302"></script>
 <script type="application/json" id="db"></script>
@@ -2973,7 +2973,6 @@ function listasParecidas(q){ try{ garantePaisesMM(); }catch(e){} const w=nrm(q).
   return LISTAS.map(L=>{ const alvo=(nrm(L[2])+' '+(LISTA_SIN[L[1]]||'')).replace(/[^a-z0-9 ]/g,' ').split(/\s+/); let s=0; w.forEach(x=>{ const peso=GENERICAS.has(x)?1:3; if(alvo.includes(x)||(x.length>=3&&x.endsWith('s')&&alvo.includes(x.slice(0,-1)))||alvo.includes(x+'s')) s+=peso; else if(x.length>=4&&alvo.some(a=>a.length>=4&&(a.startsWith(x.slice(0,5))||x.startsWith(a.slice(0,5))))) s+=peso/2; }); return {L, s}; }).filter(o=>o.s>=1).sort((a,b)=>b.s-a.s).map(o=>o.L); }
 const filtroDesde=(id,d)=>{ const anos=[...new Set(J.map(j=>j.temporada))].sort((a,b)=>b-a); return `<p class="count">Desde <select onchange="location.hash='pergunte?lista=${id}'+(this.value?'&desde='+this.value:'')"><option value="">o início (1908)</option>${anos.map(a=>`<option ${a===d?'selected':''}>${a}</option>`).join('')}</select></p>`; };
 const liLista=(x,i)=>`<li><span class="rank-n">${i+1}</span>${x.href?`<a href="${x.href}">${esc(x.nome)}</a>`:esc(x.nome)}${x.obs?`<small class="rank-obs">* ${esc(x.obs)}</small>`:''}${x.txt?`<b class="rank-t ${x.cls||''}">${esc(x.txt)}</b>`:`<b>${N(x.v)}</b>`}</li>`;
-function gmBuscaSubmit(ev,form){ ev.preventDefault(); const q=(form.querySelector('#pq')?.value||'').trim(); if(!q) return false; const alvo='#pergunte?'+new URLSearchParams({q}).toString(); if(location.hash===alvo){ route.keep=false; route(); } else location.hash=alvo; return false; }
 function vPergunte(params){
   try{ garantePaisesMM(); }catch(e){}
   try{ temaVICheca(new URLSearchParams(params||'').get('q')||''); }catch(e){}
@@ -2991,11 +2990,11 @@ function vPergunte(params){
       if(par.length>1) corpo+=`<h3>Talvez você procure</h3><div class="pq-ex">${par.slice(1,5).map(x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`).join('')}</div>`; }
     if(ents) corpo+=`<h2>${par.length?'Na base':'Resultados para "'+esc(q)+'"'}</h2><div class="busca-grid">${ents}</div>`;
     if(!corpo) corpo=`<p class="empty">Nada encontrado para "${esc(q)}". Tente o nome de um jogador, clube, cidade ou estádio, um ano, ou uma pergunta como "quem fez mais gols de falta".</p>`; }
-  setTimeout(()=>{ const i=$('#pq'); if(i&&!q&&!lid) i.focus(); });
+  setTimeout(()=>{ const f=$('#pqform'); if(f) f.onsubmit=ev=>{ ev.preventDefault(); location.hash='pergunte?'+new URLSearchParams({q:$('#pq').value}); }; const i=$('#pq'); if(i&&!q&&!lid) i.focus(); });
   const grupos=[...new Set(LISTAS.map(x=>x[0]))];
   return `<div class="kicker">Galo Metrics · busca</div><h1>Busca</h1>
   <p class="lede">Escreva um nome, um ano ou uma pergunta, como "quem fez mais gols de falta" ou "maiores públicos". Ou abra uma das listas prontas.</p>
-  <form id="pqform" class="pq" onsubmit="return gmBuscaSubmit(event,this)"><input id="pq" type="search" value="${esc(q)}" placeholder="Ex.: Reinaldo, 1971, quem mais marcou no clássico" aria-label="Buscar"><button class="more" type="submit">Buscar</button></form>
+  <form id="pqform" class="pq"><input id="pq" type="search" value="${esc(q)}" placeholder="Ex.: Reinaldo, 1971, quem mais marcou no clássico" aria-label="Buscar"><button class="more" type="submit">Buscar</button></form>
   ${corpo}
   ${DONO?'<p class="count"><a href="#dono-listas">✎ Criar lista com datas (só você vê)</a></p>':''}
   ${L?'':`<h2>Listas prontas</h2>${grupos.map(g=>`<h3>${esc(g)}</h3><div class="pq-ex">${LISTAS.filter(x=>x[0]===g).map(x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`).join('')}</div>`).join('')}`}`;
