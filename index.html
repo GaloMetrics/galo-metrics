@@ -550,6 +550,14 @@ button.more{-webkit-text-fill-color:currentColor}
 .nota-topo{display:inline-flex;align-items:center;gap:12px;padding:10px 16px;border:2px solid var(--ink);background:#fff8e6;box-shadow:5px 5px 0 #C9962B;text-decoration:none!important;color:var(--ink)!important;border-radius:4px}
 .nota-topo b{font-family:"Abril Fatface",Georgia,serif;font-size:44px;line-height:1;font-weight:400}.nota-topo span{font:600 12px/1.35 Oswald,Archivo,sans-serif;letter-spacing:.04em;text-transform:uppercase}
 .nota-topo.vazia{background:transparent;box-shadow:none;border-style:dashed}.nota-topo:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 #C9962B}
+.rank-obs{display:block;font-size:12px;color:var(--mute);margin-top:4px;font-style:italic}
+html.tema-vi:not(.dark){--ink:#2a1032;--ink2:#4a2350;--paper:#fff1ea;--mute:#82586f;--line:#efc3bd;--soft:#fbdcd3;--gold:#e8487f;--goldt:#b02a63}
+html.tema-vi:not(.dark) body{background:linear-gradient(180deg,#fff1ea 0%,#ffe0d2 45%,#ffc9b0 100%) fixed}
+html.tema-vi:not(.dark) header{background:linear-gradient(90deg,#fff1ea,#ffe3ec)}
+#vi-faixa{display:flex;justify-content:center;align-items:center;gap:14px;padding:8px 14px;background:linear-gradient(90deg,#5d2a72,#c2417f,#f08a5d,#f7b267);color:#fff;font:600 13px/1.2 Oswald,Archivo,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+#vi-faixa button{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.6);padding:4px 10px;font:inherit;cursor:pointer}
+#vi-palmas{position:fixed;inset:auto 0 0 0;height:0;pointer-events:none;z-index:-1}.vi-p{position:fixed;bottom:-20px;width:min(26vw,260px);height:auto;color:#6b2b6e;opacity:.16}.vi-e{left:-40px}.vi-d{right:-40px;transform:scaleX(-1)}
+html.dark #vi-palmas{display:none}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -570,9 +578,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261118102259';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261118102259"></script>
-<script src="backend-firebase.js?v=20261118102259"></script>
+<script>window.GM_BUILD='20261118102817';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261118102817"></script>
+<script src="backend-firebase.js?v=20261118102817"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2953,9 +2961,10 @@ const GENERICAS=new Set('gol gols marcou marcaram fez fizeram jogou jogos jogo m
 function listasParecidas(q){ try{ garantePaisesMM(); }catch(e){} const w=nrm(q).replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(x=>x&&!PALAVRAS_VAZIAS.has(x)); if(!w.length) return [];
   return LISTAS.map(L=>{ const alvo=(nrm(L[2])+' '+(LISTA_SIN[L[1]]||'')).replace(/[^a-z0-9 ]/g,' ').split(/\s+/); let s=0; w.forEach(x=>{ const peso=GENERICAS.has(x)?1:3; if(alvo.includes(x)||(x.length>=3&&x.endsWith('s')&&alvo.includes(x.slice(0,-1)))||alvo.includes(x+'s')) s+=peso; else if(x.length>=4&&alvo.some(a=>a.length>=4&&(a.startsWith(x.slice(0,5))||x.startsWith(a.slice(0,5))))) s+=peso/2; }); return {L, s}; }).filter(o=>o.s>=1).sort((a,b)=>b.s-a.s).map(o=>o.L); }
 const filtroDesde=(id,d)=>{ const anos=[...new Set(J.map(j=>j.temporada))].sort((a,b)=>b-a); return `<p class="count">Desde <select onchange="location.hash='pergunte?lista=${id}'+(this.value?'&desde='+this.value:'')"><option value="">o início (1908)</option>${anos.map(a=>`<option ${a===d?'selected':''}>${a}</option>`).join('')}</select></p>`; };
-const liLista=(x,i)=>`<li><span class="rank-n">${i+1}</span>${x.href?`<a href="${x.href}">${esc(x.nome)}</a>`:esc(x.nome)}${x.txt?`<b class="rank-t ${x.cls||''}">${esc(x.txt)}</b>`:`<b>${N(x.v)}</b>`}</li>`;
+const liLista=(x,i)=>`<li><span class="rank-n">${i+1}</span>${x.href?`<a href="${x.href}">${esc(x.nome)}</a>`:esc(x.nome)}${x.obs?`<small class="rank-obs">* ${esc(x.obs)}</small>`:''}${x.txt?`<b class="rank-t ${x.cls||''}">${esc(x.txt)}</b>`:`<b>${N(x.v)}</b>`}</li>`;
 function vPergunte(params){
   try{ garantePaisesMM(); }catch(e){}
+  try{ temaVICheca(new URLSearchParams(params||'').get('q')||''); }catch(e){}
   const P=new URLSearchParams(params||''), q=P.get('q')||'', lid=P.get('lista')||''; try{ if(!route.keep){ if(q) trk('busca'); if(lid){ trk('lista'); if(!DONO){ TRK.ls[lid]=(TRK.ls[lid]||0)+1; clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } } } }catch(e){}
   let corpo='';
   const L=LISTAS.find(x=>x[1]===lid);
@@ -3987,12 +3996,13 @@ function jogosDasDatas(x){ const pl=J.filter(j=>j.resultado&&j.gp!=null); const 
     else if(x.modo==='dias'){ const fim=new Date(new Date(dt.d).getTime()+dias*864e5).toISOString().slice(0,10); l=pl.filter(j=>j.data>dt.d&&j.data<=fim); }
     else if(x.modo==='antes') l=pl.filter(j=>j.data<dt.d).slice(-n);
     else l=pl.filter(j=>x.mesmoDia?j.data>=dt.d:j.data>dt.d).slice(0,n);
+    const noDia=(x.modo==='prox'&&!x.mesmoDia)?pl.find(j=>j.data===dt.d)||null:null;
     let fut=null; if(!l.length&&x.modo!=='antes'){ fut=J.filter(j=>j.gp==null&&(x.mesmoDia?j.data>=dt.d:j.data>dt.d)&&(x.modo!=='dia'||j.data===dt.d)).sort((a,b)=>a.data.localeCompare(b.data))[0]||null; }
-    return {dt, l, fut}; }); }
-function linhasDatas(x){ const out=[]; jogosDasDatas(x).forEach(({dt,l,fut})=>{ const rot=`${dt.l||'Data'} (${fmtD(dt.d)})`;
+    return {dt, l, fut, noDia}; }); }
+function linhasDatas(x){ const out=[]; jogosDasDatas(x).forEach(({dt,l,fut,noDia})=>{ const rot=`${dt.l||'Data'} (${fmtD(dt.d)})`; const obs=noDia?`No próprio dia do lançamento o Galo jogou: ${noDia.resultado==='V'?'vitória':noDia.resultado==='E'?'empate':'derrota'} por ${placar(noDia)} contra o ${noDia.adversario} (não entra na conta).`:'';
     if(!l.length&&fut) out.push({nome:`${rot} → ${fmtD(fut.data)} · ${fut.adversario}`, href:'#jogo-'+fut.id, v:1, txt:'A disputar', cls:'e', fut, dt});
     else if(!l.length) out.push({nome:rot+' · sem jogo', v:1, txt:'–', cls:'e', dt});
-    l.forEach(j=>out.push({nome:`${rot} → ${fmtD(j.data)} · ${j.adversario}`, href:'#jogo-'+j.id, v:1, txt:`${j.resultado==='V'?'Vitória':j.resultado==='E'?'Empate':'Derrota'} · ${placar(j)}`, cls:j.resultado==='V'?'v':j.resultado==='D'?'d':'e', j, dt})); });
+    l.forEach(j=>out.push({nome:`${rot} → ${fmtD(j.data)} · ${j.adversario}`, href:'#jogo-'+j.id, v:1, txt:`${j.resultado==='V'?'Vitória':j.resultado==='E'?'Empate':'Derrota'} · ${placar(j)}`, cls:j.resultado==='V'?'v':j.resultado==='D'?'d':'e', j, dt, obs, noDia})); });
   return out; }
 const resumoDatas=L=>{ const js=[...new Map(L.filter(x=>x.j).map(x=>[x.j.id,x.j])).values()], r=rec(js); return js.length?`${js.length} ${js.length===1?'jogo':'jogos'}: ${r.V} ${r.V===1?'vitória':'vitórias'}, ${r.E} ${r.E===1?'empate':'empates'} e ${r.D} ${r.D===1?'derrota':'derrotas'} (${aprov(r)} de aproveitamento), ${r.gp} gols marcados e ${r.gc} sofridos.`:'Nenhum jogo encontrado para essas datas.'; };
 function registraListasX(){ for(let i=LISTAS.length-1;i>=0;i--) if(/^dx-/.test(LISTAS[i][1])) LISTAS.splice(i,1);
@@ -4037,15 +4047,28 @@ async function desenhaArteDatas(s){
   x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+128,W-2*P,3);
   [[r.V,r.V===1?'vitória':'vitórias',V],[r.E,r.E===1?'empate':'empates',GOLD],[r.D,r.D===1?'derrota':'derrotas',R]].forEach(([n,l,c],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+22,2,86); } T(String(n),P+i*cw+26,y+86,'abril',70,c); T(l.toUpperCase(),P+i*cw+26+x.measureText(String(n)).width+14,y+84,'osw',24,INK); });
   T(`${aprov(r)} de aproveitamento · ${r.gp} gols marcados, ${r.gc} sofridos`,P,y+166,'cas',24,CINZA,'left',W-2*P);
-  y+=212; const n=rows.length, lh=Math.max(26,Math.min(48,Math.floor((A.BOT-10-y)/Math.max(1,n)))), fs=Math.min(24,lh-7);
+  y+=212; const n=rows.length, lh=Math.max(26,Math.min(48,Math.floor((A.BOT-40-y)/Math.max(1,n)))), fs=Math.min(24,lh-7);
   rows.forEach(rw=>{ const dt=rw.dt||{}; const res=rw.j?rw.j.resultado:null;
     const c=res==='V'?V:res==='D'?R:res==='E'?GOLD:'#9a9385';
     x.fillStyle=c; A.rr(P,y-fs+1,fs+8,fs+4,4); x.fill(); T(res||'⏳',P+(fs+8)/2,y,'osw',fs-6,'#fff','center');
-    T(dt.l||'',P+fs+20,y,'osw',fs,INK,'left',420); T(fmtD(dt.d||''),P+fs+20+430,y,'mono',fs-5,CINZA,'left');
-    const jj=rw.j||rw.fut; T(jj?(rw.j?`${placar(rw.j)} ${rw.j.adversario}`:`${jj.fase?jj.fase+' · ':''}${jj.adversario} · ${fmtD(jj.data).slice(0,5)}`):'sem jogo',W-P,y,'cas',fs,rw.j?INK:GOLDD,'right',W-2*P-fs-600);
+    T((dt.l||'')+(rw.obs?' *':''),P+fs+20,y,'osw',fs,INK,'left',420); T(fmtD(dt.d||''),P+fs+20+430,y,'mono',fs-5,CINZA,'left');
+    const jj=rw.j||rw.fut; T(jj?(rw.j?`${placar(rw.j)} ${rw.j.adversario}`:`${jj.fase?jj.fase[0].toUpperCase()+jj.fase.slice(1)+' · ':''}${jj.adversario} · ${fmtD(jj.data).slice(0,5)}`):'sem jogo',W-P,y,'cas',fs,rw.j?INK:GOLDD,'right',W-2*P-fs-600);
     y+=lh; });
+  const nObs=rows.filter(r=>r.obs).length; if(nObs) T(`* O Galo também jogou no próprio dia ${nObs===1?'desse lançamento':'desses lançamentos'}. Esses jogos não entram na conta.`,P,Math.min(y+10,A.BOT+4),'cas',19,CINZA,'left',W-2*P);
   return cv;
 }
+
+/* Easter egg: tema Vice City ao pesquisar GTA VI, só em 18 e 19/11/2026 */
+const TEMA_VI_DIAS=['2026-11-18','2026-11-19'];
+function temaVIAplica(on){ document.documentElement.classList.toggle('tema-vi',!!on); let b=document.getElementById('vi-faixa');
+  if(on&&!b){ b=document.createElement('div'); b.id='vi-faixa'; b.innerHTML=`<span>🌴 Tema Vice City desbloqueado · só até 19/11</span><button type="button" onclick="try{localStorage.setItem('gm-tema-vi','0')}catch(e){} temaVIAplica(false)">Desligar</button>`; document.body.prepend(b);
+    const pl=document.createElement('div'); pl.id='vi-palmas'; pl.setAttribute('aria-hidden','true'); pl.innerHTML=palmaSVG('e')+palmaSVG('d'); document.body.appendChild(pl); }
+  if(!on){ b&&b.remove(); const pl=document.getElementById('vi-palmas'); pl&&pl.remove(); } }
+function palmaSVG(lado){ return `<svg class="vi-p vi-${lado}" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg"><path d="M104 400 C100 300 96 220 108 150" stroke="currentColor" stroke-width="9" fill="none"/><g fill="currentColor"><path d="M108 150 C70 120 30 125 4 150 C40 132 76 138 108 152Z"/><path d="M108 150 C80 105 50 90 18 96 C56 104 86 122 108 152Z"/><path d="M108 150 C112 104 100 76 78 58 C100 86 106 116 106 152Z"/><path d="M108 150 C140 112 170 104 198 112 C164 118 136 132 110 154Z"/><path d="M108 150 C150 140 182 152 196 176 C170 158 140 152 110 154Z"/><path d="M108 150 C126 116 146 96 170 86 C148 104 128 126 110 152Z"/></g></svg>`; }
+function temaVICheca(q){ const hoje=hojeStr(); const ok=TEMA_VI_DIAS.includes(hoje);
+  if(q!=null){ if(ok&&/\bgta\s*(vi|6)\b|grand theft auto\s*(vi|6)\b/.test(nrm(q))&&!document.documentElement.classList.contains('tema-vi')){ try{ localStorage.setItem('gm-tema-vi','1'); }catch(e){} temaVIAplica(true); try{ trk('easter_gta6'); }catch(e){} toast('🌴 Bem-vindo a Vice City. Tema liberado até 19/11.'); } return; }
+  let on=false; try{ on=localStorage.getItem('gm-tema-vi')==='1'; }catch(e){} if(on&&!ok){ try{ localStorage.removeItem('gm-tema-vi'); }catch(e){} on=false; } if(on) temaVIAplica(true); }
+setTimeout(()=>{ try{ temaVICheca(); }catch(e){} },0);
 
 </script>
 </body>
