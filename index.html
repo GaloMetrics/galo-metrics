@@ -566,9 +566,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261117202311';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261117202311"></script>
-<script src="backend-firebase.js?v=20261117202311"></script>
+<script>window.GM_BUILD='20261117225942';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261117225942"></script>
+<script src="backend-firebase.js?v=20261117225942"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2931,12 +2931,13 @@ function listasParecidas(q){ try{ garantePaisesMM(); }catch(e){} const w=nrm(q).
 const liLista=(x,i)=>`<li><span class="rank-n">${i+1}</span>${x.href?`<a href="${x.href}">${esc(x.nome)}</a>`:esc(x.nome)}${x.txt?`<b class="rank-t ${x.cls||''}">${esc(x.txt)}</b>`:`<b>${N(x.v)}</b>`}</li>`;
 function vPergunte(params){
   try{ garantePaisesMM(); }catch(e){}
-  const P=new URLSearchParams(params||''), q=P.get('q')||'', lid=P.get('lista')||''; try{ if(!route.keep){ if(q) trk('busca'); if(lid) trk('lista'); } }catch(e){}
+  const P=new URLSearchParams(params||''), q=P.get('q')||'', lid=P.get('lista')||''; try{ if(!route.keep){ if(q) trk('busca'); if(lid){ trk('lista'); if(!DONO){ TRK.ls[lid]=(TRK.ls[lid]||0)+1; } } } }catch(e){}
   let corpo='';
   const L=LISTAS.find(x=>x[1]===lid);
   if(L){ const [,id,tit,unid,fn,tipo]=L; const todas=fn().filter(x=>x.v>0), linhas=tipo==='mm'?todas:todas.slice(0,30);
     corpo=`<h2>${esc(tit)}</h2>${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'))}</p>`:''}${linhas.length?`<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
   else if(q.trim()){ const ents=buscaEntidades(q), par=listasParecidas(q);
+    try{ if(!route.keep&&!DONO&&TRK.bq.length<20&&TRK.bq[TRK.bq.length-1]?.q!==q.slice(0,80)){ TRK.bq.push({q:q.trim().slice(0,80), r:par.length?par[0][1]:(ents?'@':'')}); TRK.n++; } }catch(e){}
     if(par.length){ const [,id,tit,unid,fn,tipo]=par[0]; const todas=fn().filter(x=>x.v>0), linhas=todas.slice(0,15);
       corpo+=`<h2>${esc(tit)}</h2>${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'))}</p>`:''}<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. <a href="#pergunte?lista=${id}">Ver a lista completa →</a></p>`;
       if(par.length>1) corpo+=`<h3>Talvez você procure</h3><div class="pq-ex">${par.slice(1,5).map(x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`).join('')}</div>`; }
@@ -3734,7 +3735,7 @@ function vDonoSecretas(){
 /* ---------- Registro de uso (anônimo) ----------
    Conta páginas abertas e ações (pacotinho, desafios, amigos, buscas…) por sessão. Não guarda nome, e-mail
    nem o que a pessoa escreveu: só um número aleatório do aparelho, se está logado e as contagens. */
-const TRK={pg:{}, ev:{}, n:0, ini:Date.now()};
+const TRK={pg:{}, ev:{}, bq:[], ls:{}, n:0, ini:Date.now()};
 const trkVid=(()=>{ try{ let v=localStorage.getItem('gm-vid'); if(!v){ v=Math.random().toString(36).slice(2,12); localStorage.setItem('gm-vid',v); } return v; }catch(e){ return 'x'+Math.random().toString(36).slice(2,8); } })();
 const trkSid=Math.random().toString(36).slice(2,10);
 let trkSeq=0, trkUlt=0;
@@ -3742,8 +3743,8 @@ function trk(nome, k=1){ if(DONO) return; TRK.ev[nome]=(TRK.ev[nome]||0)+k; TRK.
 function trkPagina(h){ if(DONO) return; const base=String(h||'inicio').split('?')[0].replace(/-.*$/,'')||'inicio'; TRK.pg[base]=(TRK.pg[base]||0)+1; TRK.n++; }
 function trkDesafios(){ try{ const jd=(G.jd||{})[hojeStr()]||{}; const o={}; Object.keys(jd).forEach(k=>{ const s=jd[k]; if(s&&typeof s==='object') o[k]=s.fim?2:1; }); return o; }catch(e){ return {}; } }
 async function trkEnvia(forca){ try{ if(DONO||!window.GM_EV_GRAVA) return; if(!TRK.n) return; if(!forca&&Date.now()-trkUlt<60000) return;
-  const o={d:hojeStr(), v:trkVid, s:trkSid, q:trkSeq, u:GUID?1:0, m:/Mobi|Android|iPhone/i.test(navigator.userAgent)?1:0, r:(document.referrer||'').replace(/^https?:\/\//,'').split('/')[0].slice(0,40), pg:TRK.pg, ev:TRK.ev, ds:trkDesafios(), t:Math.round((Date.now()-TRK.ini)/1000)};
-  TRK.pg={}; TRK.ev={}; TRK.n=0; trkUlt=Date.now(); const id=`${o.d}_${trkVid}_${trkSid}_${trkSeq++}`; await window.GM_EV_GRAVA(id,o); }catch(e){} }
+  const o={d:hojeStr(), v:trkVid, s:trkSid, q:trkSeq, u:GUID?1:0, m:/Mobi|Android|iPhone/i.test(navigator.userAgent)?1:0, r:(document.referrer||'').replace(/^https?:\/\//,'').split('/')[0].slice(0,40), pg:TRK.pg, ev:TRK.ev, ds:trkDesafios(), t:Math.round((Date.now()-TRK.ini)/1000)}; if(TRK.bq.length) o.bq=TRK.bq; if(Object.keys(TRK.ls).length) o.ls=TRK.ls;
+  TRK.pg={}; TRK.ev={}; TRK.bq=[]; TRK.ls={}; TRK.n=0; trkUlt=Date.now(); const id=`${o.d}_${trkVid}_${trkSid}_${trkSeq++}`; await window.GM_EV_GRAVA(id,o); }catch(e){} }
 setInterval(()=>trkEnvia(false),30000);
 document.addEventListener('visibilitychange',()=>{ if(document.hidden) trkEnvia(true); });
 window.addEventListener('pagehide',()=>trkEnvia(true));
@@ -3759,7 +3760,10 @@ function vDonoStats(params){
   const dias=+(new URLSearchParams(params||'').get('dias')||7);
   if(!STATS_CACHE||STATS_CACHE.dias!==dias){ carregaStats(dias).then(()=>{ if(location.hash.startsWith('#dono-uso')){ route.keep=true; route(); } }).catch(e=>{ STATS_CACHE={dias, erro:String(e.message||e), L:[]}; route.keep=true; route(); }); return `<a class="back" href="#dono">← Página do dono</a><h1>Uso do site</h1><p class="count">Carregando…</p>`; }
   if(STATS_CACHE.erro) return `<a class="back" href="#dono">← Página do dono</a><h1>Uso do site</h1><p class="empty">Não consegui ler os registros: ${esc(STATS_CACHE.erro)}. Confira se a regra "ev" está publicada no Firestore.</p>`;
-  const L=STATS_CACHE.L, vis={}, ses={}, porDia={}, pg={}, ev={}, refs={}, des={};
+  const L=STATS_CACHE.L, vis={}, ses={}, porDia={}, pg={}, ev={}, refs={}, des={}, lsT={}, bqT={}, bqL=[];
+  L.forEach(o=>{ Object.entries(o.ls||{}).forEach(([k,n])=>{ lsT[k]=(lsT[k]||0)+n; }); (o.bq||[]).forEach(b=>{ const k=nrm(b.q||'').trim(); if(!k) return; const x=(bqT[k] ||= {q:b.q, n:0, r:b.r, pes:new Set()}); x.n++; x.pes.add(o.v); bqL.push({...b, d:o.d}); }); });
+  try{ garantePaisesMM(); }catch(e){}
+  const nomeLista=id=>{ const l=LISTAS.find(x=>x[1]===id); return l?l[2]:id; }, resB=r=>r==='@'?'<span class="count">nomes (jogador, clube, cidade…)</span>':r?`<a href="#pergunte?lista=${esc(r)}">${esc(nomeLista(r))}</a>`:'<b style="color:#b3261e">nada encontrado</b>';
   L.forEach(o=>{ const sk=o.v+'|'+o.s; (vis[o.v] ||= {u:0,m:o.m,dias:new Set()}); if(o.u) vis[o.v].u=1; vis[o.v].dias.add(o.d);
     (ses[sk] ||= {t:0,u:0,d:o.d,v:o.v}); ses[sk].t=Math.max(ses[sk].t,o.t||0); if(o.u) ses[sk].u=1;
     const pd=(porDia[o.d] ||= {v:new Set(), vl:new Set(), pv:0}); pd.v.add(o.v); if(o.u) pd.vl.add(o.v);
@@ -3780,7 +3784,11 @@ function vDonoStats(params){
   <div class="grid2"><div><h2>Páginas mais abertas</h2><table><tbody>${top(pg,NOME_PG)}</tbody></table></div>
   <div><h2>O que fizeram</h2><table><tbody>${top(ev,NOME_EV,20)}</tbody></table></div></div>
   <div class="grid2"><div><h2>Desafios do dia</h2><table><thead><tr><th>Desafio</th><th class="n">Começaram</th><th class="n">Terminaram</th></tr></thead><tbody>${Object.entries(des).sort((a,b)=>b[1].ini.size-a[1].ini.size).map(([k,x])=>`<tr><td>${esc((DESAF.find(d=>d[0]===k)||[k,k])[1])}</td><td class="n">${N(x.ini.size)}</td><td class="n">${N(x.fim.size)}</td></tr>`).join('')||'<tr><td colspan="3" class="count">Nada ainda.</td></tr>'}</tbody></table><p class="count">Pessoas por dia (cada torcedor conta uma vez por dia em cada desafio).</p></div>
-  <div><h2>De onde vieram</h2><table><tbody>${top(refs,null,12)}</tbody></table><p class="count">Visitas que chegaram por link de outro site. Quem digitou o endereço ou abriu pelo app não aparece aqui.</p></div></div>`;
+  <div><h2>De onde vieram</h2><table><tbody>${top(refs,null,12)}</tbody></table><p class="count">Visitas que chegaram por link de outro site. Quem digitou o endereço ou abriu pelo app não aparece aqui.</p></div></div>
+  <div class="grid2"><div><h2>Listas prontas mais abertas</h2><table><tbody>${Object.entries(lsT).sort((a,b)=>b[1]-a[1]).slice(0,25).map(([k,v])=>`<tr><td><a href="#pergunte?lista=${esc(k)}">${esc(nomeLista(k))}</a></td><td class="n">${N(v)}</td></tr>`).join('')||'<tr><td colspan="2" class="count">Nada ainda.</td></tr>'}</tbody></table><p class="count">Vezes que alguém abriu a lista completa.</p></div>
+  <div><h2>Pesquisas mais feitas</h2><table><thead><tr><th>Pesquisa</th><th class="n">Vezes</th><th>A busca mostrou</th></tr></thead><tbody>${Object.values(bqT).sort((a,b)=>b.n-a.n).slice(0,30).map(x=>`<tr><td><a href="#pergunte?q=${encodeURIComponent(x.q)}">${esc(x.q)}</a></td><td class="n">${N(x.n)}</td><td>${resB(x.r)}</td></tr>`).join('')||'<tr><td colspan="3" class="count">Nada ainda.</td></tr>'}</tbody></table></div></div>
+  ${bqL.some(b=>!b.r)?`<h2>Pesquisas sem resposta</h2><p class="count">O que as pessoas procuraram e o site não achou. Bom para ver o que falta.</p><table><tbody>${[...new Map(bqL.filter(b=>!b.r).map(b=>[nrm(b.q),b])).values()].slice(-40).reverse().map(b=>`<tr><td>${esc(b.q)}</td><td class="n">${fmtD(b.d)}</td></tr>`).join('')}</tbody></table>`:''}
+  <h2>Últimas pesquisas</h2><table><tbody>${bqL.slice(-40).reverse().map(b=>`<tr><td><a href="#pergunte?q=${encodeURIComponent(b.q)}">${esc(b.q)}</a></td><td>${resB(b.r)}</td><td class="n">${fmtD(b.d)}</td></tr>`).join('')||'<tr><td colspan="3" class="count">Nada ainda.</td></tr>'}</tbody></table>`;
 }
 
 /* ---------- Adversários por estado/país: resumo e arte "Você sabia?" ---------- */
