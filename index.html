@@ -570,9 +570,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261118101207';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261118101207"></script>
-<script src="backend-firebase.js?v=20261118101207"></script>
+<script>window.GM_BUILD='20261118102025';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261118102025"></script>
+<script src="backend-firebase.js?v=20261118102025"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2680,6 +2680,7 @@ async function arteBase(caminho, aba){
 const artBtn=spec=>`<button type="button" class="ghost" data-arte="${esc(JSON.stringify(spec))}">Baixar arte</button>`;
 async function desenhaArte(s){
   if(s.t==='uf') return desenhaArteUF(s);
+  if(s.t==='datas') return desenhaArteDatas(s);
   const caminho = s.t==='jogo'?`/jogo-${s.id}`: s.t==='palpite'?'/palpites': s.t==='estadio'?'/diario':'/desafios';
   const A=await arteBase(caminho); const {cv,x,W,H,P,T,Tm,wrap,crest,galo,carimbo,INK,PAP,GOLD,GOLDD,V,R,CINZA}=A;
   if(s.t==='jogo'||s.t==='palpite'){
@@ -2960,7 +2961,7 @@ function vPergunte(params){
   const L=LISTAS.find(x=>x[1]===lid);
   const desde=+(P.get('desde')||0)||0;
   if(L){ const [,id,tit,unid,fn,tipo,res]=L; const todas=fn({desde}).filter(x=>x.v>0), linhas=(tipo==='mm'||tipo==='temp'||tipo==='datas')?todas:todas.slice(0,30);
-    corpo=`<h2>${esc(tit)}</h2>${tipo==='temp'?filtroDesde(id,desde):''}${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'||/^mf-/.test(id)))}</p>`:''}${res&&todas.length?`<p class="lede">${esc(res(todas))}</p>`:''}${linhas.length?`<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
+    corpo=`<h2>${esc(tit)}</h2>${tipo==='temp'?filtroDesde(id,desde):''}${tipo==='datas'?`<p>${artBtn({t:'datas',id})} <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:tit+'\n\n'+(res?res(todas):''), url:'https://galometrics.com.br/#pergunte?lista='+id})}">Pronto para tweet ↗</a></p>`:''}${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'||/^mf-/.test(id)))}</p>`:''}${res&&todas.length?`<p class="lede">${esc(res(todas))}</p>`:''}${linhas.length?`<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
   else if(q.trim()){ const ents=buscaEntidades(q), par=listasParecidas(q);
     try{ if(!route.keep&&!DONO&&TRK.bq.length<20&&TRK.bq[TRK.bq.length-1]?.q!==q.slice(0,80)){ TRK.bq.push({q:q.trim().slice(0,80), r:par.length?par[0][1]:(ents?'@':'')}); TRK.n++;  clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } }catch(e){}
     if(par.length){ const [,id,tit,unid,fn,tipo,res]=par[0]; const dq=tipo==='temp'?(+((q.match(/\b(19|20)\d{2}\b/)||[])[0])||0):0; const todas=fn({desde:dq}).filter(x=>x.v>0), linhas=todas.slice(0,15);
@@ -3949,9 +3950,29 @@ const linhaArt=o=>({nome:`${o.ano} · ${o.quem.map(nomeV).join(', ')}`, href:'#t
   Object.entries(fin).filter(([,n])=>n>=2).forEach(([p])=>{ const gent=(UFS[p]||[p,p])[1], nome=(UFS[p]||[p])[0], id='mf-'+p.toLowerCase();
     LISTAS.push(['Mata-matas',id,`Finais contra clubes ${gent}`,'finais',()=>linhasMM(m=>m.final&&m.uf===p),'mm']); LISTA_SIN[id]='final finais decisao decisoes titulo '+nrm(gent)+' '+nrm(gent).replace(/s$/,'')+' '+nrm(nome)+' '+p.toLowerCase(); }); };
   window.garantePaisesMM.ok=false; })();
+(function(){ const v=window.garantePaisesMM; window.garantePaisesMM=()=>{ v(); if(!window._dxOk&&J.length){ window._dxOk=true; try{ registraListasX(); }catch(e){} } }; window.garantePaisesMM.ok=false; })();
 
 /* ---------- Listas com datas, criadas pelo dono (ex.: jogos depois de cada GTA) ---------- */
 let LISTASX=[];
+const LISTAS_FIXAS=[{id:'gta', t:'Jogos do Galo depois de cada lançamento de GTA', kw:'gta grand theft auto rockstar game games jogo videogame lancamento lancamentos', modo:'prox', n:1, chamada:'GALO × GTA', datas:`GTA 28/11/1997
+GTA: London 1969 31/03/1999
+GTA: London 1961 01/06/1999
+GTA 2 22/10/1999
+GTA III 22/10/2001
+GTA: Vice City 29/10/2002
+GTA: San Andreas 26/10/2004
+GTA Advance 26/10/2004
+GTA: Liberty City Stories 24/10/2005
+GTA: Vice City Stories 31/10/2006
+GTA IV 29/04/2008
+GTA IV: The Lost and Damned 17/02/2009
+GTA: Chinatown Wars 17/03/2009
+GTA IV: The Ballad of Gay Tony 29/10/2009
+GTA V 17/09/2013
+GTA Online 01/10/2013
+GTA: The Trilogy (Definitive Edition) 11/11/2021
+GTA VI 19/11/2026`}];
+const listasTodas=()=>[...LISTAS_FIXAS.filter(f=>!LISTASX.some(x=>x.id===f.id)).map(f=>({...f, datas:typeof f.datas==='string'?lerDatas(f.datas):f.datas})), ...LISTASX];
 const MESES_PT={janeiro:1,fevereiro:2,marco:3,abril:4,maio:5,junho:6,julho:7,agosto:8,setembro:9,outubro:10,novembro:11,dezembro:12,jan:1,fev:2,mar:3,abr:4,mai:5,jun:6,jul:7,ago:8,set:9,out:10,nov:11,dez:12};
 function lerDatas(txt){ const out=[];
   String(txt||'').split(/\n+/).forEach(l0=>{ const l=l0.trim(); if(!l) return; let d=null, resto=l, m;
@@ -3966,14 +3987,16 @@ function jogosDasDatas(x){ const pl=J.filter(j=>j.resultado&&j.gp!=null); const 
     else if(x.modo==='dias'){ const fim=new Date(new Date(dt.d).getTime()+dias*864e5).toISOString().slice(0,10); l=pl.filter(j=>j.data>dt.d&&j.data<=fim); }
     else if(x.modo==='antes') l=pl.filter(j=>j.data<dt.d).slice(-n);
     else l=pl.filter(j=>x.mesmoDia?j.data>=dt.d:j.data>dt.d).slice(0,n);
-    return {dt, l}; }); }
-function linhasDatas(x){ const out=[]; jogosDasDatas(x).forEach(({dt,l})=>{ const rot=`${dt.l||'Data'} (${fmtD(dt.d)})`;
-    if(!l.length) out.push({nome:rot+' · sem jogo', v:1, txt:'–', cls:'e'});
-    l.forEach(j=>out.push({nome:`${rot} → ${fmtD(j.data)} · ${j.adversario}`, href:'#jogo-'+j.id, v:1, txt:`${j.resultado==='V'?'Vitória':j.resultado==='E'?'Empate':'Derrota'} · ${placar(j)}`, cls:j.resultado==='V'?'v':j.resultado==='D'?'d':'e', j})); });
+    let fut=null; if(!l.length&&x.modo!=='antes'){ fut=J.filter(j=>j.gp==null&&(x.mesmoDia?j.data>=dt.d:j.data>dt.d)&&(x.modo!=='dia'||j.data===dt.d)).sort((a,b)=>a.data.localeCompare(b.data))[0]||null; }
+    return {dt, l, fut}; }); }
+function linhasDatas(x){ const out=[]; jogosDasDatas(x).forEach(({dt,l,fut})=>{ const rot=`${dt.l||'Data'} (${fmtD(dt.d)})`;
+    if(!l.length&&fut) out.push({nome:`${rot} → ${fmtD(fut.data)} · ${fut.adversario}`, href:'#jogo-'+fut.id, v:1, txt:'A disputar', cls:'e', fut, dt});
+    else if(!l.length) out.push({nome:rot+' · sem jogo', v:1, txt:'–', cls:'e', dt});
+    l.forEach(j=>out.push({nome:`${rot} → ${fmtD(j.data)} · ${j.adversario}`, href:'#jogo-'+j.id, v:1, txt:`${j.resultado==='V'?'Vitória':j.resultado==='E'?'Empate':'Derrota'} · ${placar(j)}`, cls:j.resultado==='V'?'v':j.resultado==='D'?'d':'e', j, dt})); });
   return out; }
-const resumoDatas=L=>{ const js=L.filter(x=>x.j).map(x=>x.j), r=rec(js); return js.length?`${js.length} ${js.length===1?'jogo':'jogos'}: ${r.V} ${r.V===1?'vitória':'vitórias'}, ${r.E} ${r.E===1?'empate':'empates'} e ${r.D} ${r.D===1?'derrota':'derrotas'} (${aprov(r)} de aproveitamento), ${r.gp} gols marcados e ${r.gc} sofridos.`:'Nenhum jogo encontrado para essas datas.'; };
+const resumoDatas=L=>{ const js=[...new Map(L.filter(x=>x.j).map(x=>[x.j.id,x.j])).values()], r=rec(js); return js.length?`${js.length} ${js.length===1?'jogo':'jogos'}: ${r.V} ${r.V===1?'vitória':'vitórias'}, ${r.E} ${r.E===1?'empate':'empates'} e ${r.D} ${r.D===1?'derrota':'derrotas'} (${aprov(r)} de aproveitamento), ${r.gp} gols marcados e ${r.gc} sofridos.`:'Nenhum jogo encontrado para essas datas.'; };
 function registraListasX(){ for(let i=LISTAS.length-1;i>=0;i--) if(/^dx-/.test(LISTAS[i][1])) LISTAS.splice(i,1);
-  LISTASX.forEach(x=>{ LISTAS.push(['Listas especiais','dx-'+x.id,x.t,'jogos',()=>linhasDatas(x),'datas',resumoDatas]); LISTA_SIN['dx-'+x.id]=nrm((x.kw||'')+' '+x.t+' '+(x.datas||[]).map(d=>d.l).join(' ')+' '+({prox:'depois apos seguinte seguintes proximo proximos',dias:'depois apos seguintes semana',dia:'mesmo dia dia',antes:'antes anterior anteriores vespera'}[x.modo]||'')); }); }
+  listasTodas().forEach(x=>{ LISTAS.push(['Listas especiais','dx-'+x.id,x.t,'jogos',()=>linhasDatas(x),'datas',resumoDatas]); LISTA_SIN['dx-'+x.id]=nrm((x.kw||'')+' '+x.t+' '+(x.datas||[]).map(d=>d.l).join(' ')+' '+({prox:'depois apos seguinte seguintes proximo proximos',dias:'depois apos seguintes semana',dia:'mesmo dia dia',antes:'antes anterior anteriores vespera'}[x.modo]||'')); }); }
 async function carregaListasX(){ try{ const s=await GDB.doc('site/listasx').get(); if(s.exists){ LISTASX=s.data().L||[]; registraListasX(); } }catch(e){} }
 function vDonoListas(params){
   if(!DONO) return '<p class="empty">Só o dono abre esta página.</p>';
@@ -3999,6 +4022,29 @@ function vDonoListas(params){
    <div style="display:flex;gap:14px;flex-wrap:wrap"><label>Quantos jogos<input name="n" type="number" min="1" max="10" value="${e.n||1}" style="width:80px"></label><label>Quantos dias<input name="dias" type="number" min="1" max="365" value="${e.dias||7}" style="width:80px"></label><label class="chk"><input type="checkbox" name="mesmo" ${e.mesmoDia?'checked':''}> Contar jogo no próprio dia</label></div>
    <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="submit" class="more">Salvar lista</button>${ed?'<button type="button" class="ghost" id="dxdel">Apagar lista</button> <a class="ghost" href="#dono-listas">Nova lista</a>':''}</div>
   </form><h2>Prévia</h2><div id="dxprev"></div>`;
+}
+
+/* Arte das listas com datas */
+async function desenhaArteDatas(s){
+  const L0=LISTAS.find(x=>x[1]===s.id); if(!L0) throw new Error('lista');
+  const x0=listasTodas().find(x=>'dx-'+x.id===s.id)||{}; const rows=L0[4]({});
+  const js=[...new Map(rows.filter(r=>r.j).map(r=>[r.j.id,r.j])).values()], r=rec(js);
+  const A=await arteBase('/busca?lista='+s.id.replace(/^dx-/,'')); const {cv,x,W,H,P,T,wrap,galo,INK,GOLD,GOLDD,V,R,CINZA}=A;
+  galo(W-P-75,262,150);
+  T('★ '+(s.k||x0.chamada||'VOCÊ SABIA?'),P,232,'osw',36,GOLD,'left',W-2*P-190);
+  let y=wrap(s.f||L0[2],P,310,'abril',50,W-2*P-180,58,INK,'left',3);
+  y+=40; const cw=(W-2*P)/3;
+  x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+128,W-2*P,3);
+  [[r.V,r.V===1?'vitória':'vitórias',V],[r.E,r.E===1?'empate':'empates',GOLD],[r.D,r.D===1?'derrota':'derrotas',R]].forEach(([n,l,c],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+22,2,86); } T(String(n),P+i*cw+26,y+86,'abril',70,c); T(l.toUpperCase(),P+i*cw+26+x.measureText(String(n)).width+14,y+84,'osw',24,INK); });
+  T(`${aprov(r)} de aproveitamento · ${r.gp} gols marcados, ${r.gc} sofridos`,P,y+166,'cas',24,CINZA,'left',W-2*P);
+  y+=212; const n=rows.length, lh=Math.max(26,Math.min(48,Math.floor((A.BOT-10-y)/Math.max(1,n)))), fs=Math.min(24,lh-7);
+  rows.forEach(rw=>{ const dt=rw.dt||{}; const res=rw.j?rw.j.resultado:null;
+    const c=res==='V'?V:res==='D'?R:res==='E'?GOLD:'#9a9385';
+    x.fillStyle=c; A.rr(P,y-fs+1,fs+8,fs+4,4); x.fill(); T(res||'⏳',P+(fs+8)/2,y,'osw',fs-6,'#fff','center');
+    T(dt.l||'',P+fs+20,y,'osw',fs,INK,'left',420); T(fmtD(dt.d||''),P+fs+20+430,y,'mono',fs-5,CINZA,'left');
+    const jj=rw.j||rw.fut; T(jj?(rw.j?`${placar(rw.j)} ${rw.j.adversario}`:`${jj.fase?jj.fase+' · ':''}${jj.adversario} · ${fmtD(jj.data).slice(0,5)}`):'sem jogo',W-P,y,'cas',fs,rw.j?INK:GOLDD,'right',W-2*P-fs-600);
+    y+=lh; });
+  return cv;
 }
 
 </script>
