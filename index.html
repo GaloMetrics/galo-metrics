@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261118123500';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script>window.GM_BUILD='20261118124500';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
 <script src="firebase-config.js?v=20261118115302"></script>
 <script src="backend-firebase.js?v=20261118115302"></script>
 <script type="application/json" id="db"></script>
@@ -2828,7 +2828,6 @@ function route(){
   else if(h==='embreve') html=vEmBreve();
   else if(h==='comparar') {html=vComparar(params); sec='jogadores';}
   else if(h==='competicoes') html=vCompeticoes();
-  else if(h==='pergunte' && viceCityAtivo() && /\bvice\s*city\b/.test(nrm(new URLSearchParams(params||'').get('q')||''))) {html=vMiamiViceCity(); sec='cidades';}
   else if(h==='pergunte') html=vPergunte(params);
   else if(h==='cidades') html=vCidades();
   else if(h.startsWith('cidade-')) {html=vCidade(h.slice(7)); sec='cidades';}
@@ -2955,7 +2954,7 @@ function buscaEntidades(q){
   const tem = s => nrm(s).includes(k);
   const jog = D.jogadores.filter(p=>tem(p.nome)).sort((a,b)=>golsBest(b)+b.jogos-(golsBest(a)+a.jogos)).slice(0,12);
   const adv = advRows().filter(a=>tem(a.nome)).sort((a,b)=>b.J-a.J).slice(0,10);
-  const cid = Object.entries(cidadesAll()).filter(([c])=>tem(c)).sort((a,b)=>b[1].l.length-a[1].l.length).slice(0,10);
+  const cid = Object.entries(cidadesAll()).filter(([c])=>tem(c) || (viceCityAtivo() && /vice\s*city/.test(k) && /miami/i.test(c))).sort((a,b)=>b[1].l.length-a[1].l.length).slice(0,10);
   const est = Object.entries(estadiosAll()).filter(([e])=>tem(e)).sort((a,b)=>b[1]-a[1]).slice(0,10);
   const tec = (D.tecnicos||[]).filter(t=>tem(t.nome)).slice(0,8);
   const temp = /^\d{4}$/.test(k) && J.some(j=>j.temporada===+k) ? [+k] : [];
@@ -3017,33 +3016,21 @@ function vCidades(){
   <p class="count">Cidade conforme as fichas; em ${N(J.filter(j=>j.cidade_inferida).length)} jogos ela veio do estádio. Jogos sem cidade nem estádio ficam de fora.</p>`;
 }
 function vCidade(s){
-  if(s==='miami' && viceCityAtivo()) return vMiamiViceCity();
-  const row = cidadeRows().find(r=>slug(r.c)===s); if(!row) return '<p class="empty">Cidade não encontrada.</p>';
+  const row = cidadeRows().find(r=>slug(r.c)===s || (s==='vice-city' && /miami/i.test(r.c))); if(!row) return '<p class="empty">Cidade não encontrada.</p>';
+  const nomeExibicao = viceCityAtivo() && /miami/i.test(row.c) ? 'Vice City' : row.nome;
   const l=row.l, r=rec(l), g=geoC(row.c);
   const est={}; l.forEach(j=>{ if(j.estadio && !/n[ãa]o identificado/i.test(j.estadio)) est[j.estadio]=(est[j.estadio]||0)+1; });
   const adv={}; l.forEach(j=>{ const a=(adv[j.adversario_id] ||= {n:j.adversario,id:j.adversario_id,l:[]}); a.l.push(j); });
   const pub=l.reduce((s,j)=>s+(j.publico||0),0);
   const gol={}; l.forEach(j=>j.gols.forEach(x=>{ if(isGoal(x)) gol[x.jogador]=(gol[x.jogador]||0)+1; }));
-  return `<a class="back" href="#cidades">← Cidades</a><div class="kicker">${esc(g&&g.pais!=='Brasil'?g.pais:(g&&g.estado)||row.reg)} · ${fmtD(l[0].data,l[0].data_aprox)} a ${fmtD(l[l.length-1].data)}</div><h1>${esc(row.nome)}</h1>
+  return `<a class="back" href="#cidades">← Cidades</a><div class="kicker">${esc(g&&g.pais!=='Brasil'?g.pais:(g&&g.estado)||row.reg)} · ${fmtD(l[0].data,l[0].data_aprox)} a ${fmtD(l[l.length-1].data)}</div><h1>${esc(nomeExibicao)}</h1>
   ${tiles(r)}${resultBar(r)}
   ${pub?`<p class="count">Público somado nas fichas: <b>${N(pub)}</b> pessoas.</p>`:''}
   <div class="grid2"><div><h2>Estádios</h2><table><tbody>${Object.entries(est).sort((a,b)=>b[1]-a[1]).map(([e,n])=>`<tr class="click" onclick="location.hash='${linkJogos({est:e})}'"><td>${esc(e)}</td><td class="n">${n}</td></tr>`).join('')||'<tr><td>Sem estádio registrado.</td></tr>'}</tbody></table>
   <h2>Artilheiros na cidade</h2><table><tbody>${Object.entries(gol).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([n,v])=>`<tr class="click" onclick="location.hash='jogador-${slug(n)}'"><td>${esc(nomeV(n))}</td><td class="n">${v}</td></tr>`).join('')||'<tr><td>Nenhum gol com autor.</td></tr>'}</tbody></table></div>
   <div><h2>Adversários</h2><table><tbody>${Object.values(adv).sort((a,b)=>b.l.length-a.l.length).slice(0,12).map(a=>{ const x=rec(a.l); return `<tr class="click" onclick="location.hash='adversario-${slug(a.id)}'"><td>${cr(a.id)}${esc(a.n)}</td><td class="n">${a.l.length}</td><td class="n mono">${x.V}V ${x.E}E ${x.D}D</td></tr>`; }).join('')}</tbody></table>
   ${g?miniMapa(g):''}</div></div>
-  <h2>Jogos em ${esc(row.nome)}</h2>${matchTable([...l].reverse())}`;
-}
-function vMiamiViceCity(){
-  try{ temaVICheca('Vice City'); }catch(e){}
-  const r=rec([]);
-  return `<a class="back" href="#cidades">← Cidades</a><div class="kicker">Flórida · Estados Unidos · Página especial</div><h1>Miami</h1>
-  <p class="lede">A busca por “Vice City” encontrou seu destino: Miami. Por uma semana, a cidade ganha uma página especial no Galo Metrics.</p>
-  ${tiles(r)}${resultBar(r)}
-  <div class="note"><b>Vice City → Miami.</b> Esta é uma página comemorativa, não um registro histórico. Miami não foi adicionada à base de jogos; por isso, os indicadores ficam zerados em vez de inventarmos partidas.</div>
-  <div class="grid2"><div><h2>Estádios</h2><p class="empty">Nenhum estádio cadastrado para esta página especial.</p><h2>Artilheiros na cidade</h2><p class="empty">Nenhum gol registrado.</p></div>
-  <div><h2>Adversários</h2><p class="empty">Nenhuma partida registrada.</p></div></div>
-  <h2>Jogos em Miami</h2><p class="empty">Não há jogos do Atlético registrados em Miami na base histórica do Galo Metrics.</p>
-  <p class="count">Página especial disponível pela busca “Vice City” até 24/11/2026.</p>`;
+  <h2>Jogos em ${esc(nomeExibicao)}</h2>${matchTable([...l].reverse())}`;
 }
 
 /* ---------- Mapa do Galo ---------- */
@@ -4095,7 +4082,7 @@ function temaVIAplica(on){ document.documentElement.classList.toggle('tema-vi',!
   if(!on){ b&&b.remove(); const pl=document.getElementById('vi-palmas'); pl&&pl.remove(); } }
 function palmaSVG(lado){ return `<svg class="vi-p vi-${lado}" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg"><path d="M104 400 C100 300 96 220 108 150" stroke="currentColor" stroke-width="9" fill="none"/><g fill="currentColor"><path d="M108 150 C70 120 30 125 4 150 C40 132 76 138 108 152Z"/><path d="M108 150 C80 105 50 90 18 96 C56 104 86 122 108 152Z"/><path d="M108 150 C112 104 100 76 78 58 C100 86 106 116 106 152Z"/><path d="M108 150 C140 112 170 104 198 112 C164 118 136 132 110 154Z"/><path d="M108 150 C150 140 182 152 196 176 C170 158 140 152 110 154Z"/><path d="M108 150 C126 116 146 96 170 86 C148 104 128 126 110 152Z"/></g></svg>`; }
 function temaVICheca(q){ const hoje=hojeStr(); const ok=TEMA_VI_DIAS.includes(hoje);
-  if(q!=null){ if(ok&&/\bvice\s*city\b|\bgta\s*(vi|6)\b|grand theft auto\s*(vi|6)\b/.test(nrm(q))&&!document.documentElement.classList.contains('tema-vi')){ try{ localStorage.setItem('gm-tema-vi','1'); }catch(e){} temaVIAplica(true); try{ trk('easter_gta6'); }catch(e){} toast('🌴 Bem-vindo a Vice City. Tema liberado até 24/11.'); } return; }
+  if(q!=null){ if(ok&&/\bvice\s*city\b|\bmiami\b|\bgta\s*(vi|6)\b|grand theft auto\s*(vi|6)\b/.test(nrm(q))&&!document.documentElement.classList.contains('tema-vi')){ try{ localStorage.setItem('gm-tema-vi','1'); }catch(e){} temaVIAplica(true); try{ trk('easter_gta6'); }catch(e){} toast('🌴 Bem-vindo a Vice City. Tema liberado até 24/11.'); } return; }
   let on=false; try{ on=localStorage.getItem('gm-tema-vi')==='1'; }catch(e){} if(on&&!ok){ try{ localStorage.removeItem('gm-tema-vi'); }catch(e){} on=false; } if(on) temaVIAplica(true); }
 setTimeout(()=>{ try{ temaVICheca(); }catch(e){} },0);
 
