@@ -579,9 +579,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261118114447';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261118114447"></script>
-<script src="backend-firebase.js?v=20261118114447"></script>
+<script>window.GM_BUILD='20261118115302';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261118115302"></script>
+<script src="backend-firebase.js?v=20261118115302"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1523,6 +1523,7 @@ function figuras(){
 }
 const ROT={comum:'Comum', brilhante:'Brilhante', lendaria:'Lendária', ultra:'Ultra rara'};
 const fotoJog=n=>{ const u=String((JOGX[slug(n)]||{}).foto||''); return u.startsWith('fb:')?u.slice(3):''; };
+try{ const c=JSON.parse(localStorage.getItem('gm-fotosx')||'null'); if(c){ setTimeout(()=>{ if(!Object.keys(JOGX).length&&c.f) Object.assign(JOGX,c.f); if(c.e&&!Object.keys(ESCX||{}).length) ESCX=c.e; },0); } }catch(e){}
 function figHTML(f, extra=''){
   if(f&&f.esp) return espHTML(f, extra);
   const n=G.owned[f.nome]||0;
@@ -1807,8 +1808,10 @@ async function carregaEdicoes(){
   if(!GDB) return;
   try{ const s=await GDB.collection('edicoes').limit(1000).get(); s.docs.forEach(d=>{ EDIC[d.id]=d.data(); }); }catch(e){}
   try{ const s=await GDB.collection('notas').limit(1000).get(); s.docs.forEach(d=>{ NOTAS[d.id]=d.data().texto||''; }); }catch(e){}
-  try{ const s=await GDB.collection('jogadoresx').limit(1000).get(); s.docs.forEach(d=>{ JOGX[d.id]=d.data(); }); }catch(e){}
+  const leJx=async()=>{ const s=await GDB.collection('jogadoresx').limit(1000).get(); const m={}; s.docs.forEach(d=>{ m[d.id]=d.data(); }); return m; };
+  try{ JOGX=await leJx(); }catch(e){ console.warn('jogadoresx',e); setTimeout(async()=>{ try{ JOGX=await leJx(); FIG=null; route.keep=true; route(); }catch(_){} },4000); }
   try{ const s=await GDB.doc('site/escudosx').get(); if(s.exists) ESCX=s.data().map||{}; }catch(e){}
+  try{ const fx={}; Object.entries(JOGX).forEach(([k,v])=>{ if(v&&v.foto) fx[k]={foto:v.foto}; }); lsSet('gm-fotosx',JSON.stringify({f:fx,e:ESCX})); }catch(e){}
   try{ const s=await GDB.doc('site/especiais').get(); if(s.exists) ESP=s.data().itens||[]; }catch(e){}
   try{ const s=await GDB.doc('site/clubesx').get(); if(s.exists) CLUBX=s.data().map||{}; }catch(e){}
   try{ if(typeof carregaListasX==='function') await carregaListasX(); }catch(e){}
@@ -3223,7 +3226,7 @@ function vViradas(params){
 /* ---------- Sugestões e correções ---------- */
 const upId = x => (x && String(x.url||'').startsWith('fb:')) ? String(x.url).slice(3) : '';
 const upSrc = x => upId(x) ? 'data:image/gif;base64,R0lGODlhAQABAAAAACw=' : '/_blob/'+(x&&x.asset||'');
-async function resolveUps(root){ if(!window.GM_UP_GET) return; (root||document).querySelectorAll('img[data-up]:not([data-up=""])').forEach(async im=>{ try{ const u=await window.GM_UP_GET(im.dataset.up); if(u){ im.src=u; const a=im.closest('a'); if(a) a.href=u; } }catch(e){} }); }
+async function resolveUps(root){ if(!window.GM_UP_GET) return; (root||document).querySelectorAll('img[data-up]:not([data-up=""])').forEach(async im=>{ let u=''; for(let t=0;t<3&&!u;t++){ try{ u=await window.GM_UP_GET(im.dataset.up); }catch(e){ await new Promise(r=>setTimeout(r,1500*(t+1))); } } if(u){ im.src=u; const a=im.closest('a'); if(a&&!a.classList.contains('fig')) a.href=u; } else if(im.classList.contains('fig-foto')){ im.className='fig-cr'; im.src=galoEsc(hojeStr()); } }); }
 // coloca a imagem aceita no site: foto vai para o jogador, escudo vai para o adversário
 function alvoImagem(x){ const pg=String(x&&x.pagina||''); let m=pg.match(/^jogador-(.+)/); if(m){ const p=D.jogadores.find(q=>slug(q.nome)===m[1]); if(p) return {t:'jogador', nome:p.nome, s:slug(p.nome)}; }
   m=pg.match(/^adversario-(.+)/); if(m){ const a=advRows().find(q=>slug(q.id)===m[1]); if(a) return {t:'adv', nome:a.nome, id:a.id}; }
