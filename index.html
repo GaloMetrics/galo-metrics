@@ -579,9 +579,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261118113951';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261118113951"></script>
-<script src="backend-firebase.js?v=20261118113951"></script>
+<script>window.GM_BUILD='20261118114447';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261118114447"></script>
+<script src="backend-firebase.js?v=20261118114447"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2817,7 +2817,7 @@ function route(){
   else if(h==='ranking') {html=vRanking(); sec='desafios';}
   else if(h==='novo-jogo') {html=vNovoJogo(); sec='jogos';}
   else if(h==='album') html=vAlbum();
-  else if(h==='dono') html=vDono()+blocoMoedas()+blocoAjuste();
+  else if(h==='dono') html=vDono()+(typeof blocoBuscaPerfisDono==='function'?blocoBuscaPerfisDono():'')+blocoMoedas()+blocoAjuste();
   else if(h==='dono-falta') html=vFalta();
   else if(h==='dono-secretas') html=vDonoSecretas();
   else if(h==='dono-uso') html=vDonoStats(params);
@@ -3677,7 +3677,7 @@ function vTorcedores(){
     const cp=$('#trcopia'); if(cp) cp.onclick=()=>{ const t=`Meu código no Galo Metrics: ${meu}\\nhttps://galometrics.com.br/#torcedor-${meu}`; try{ navigator.clipboard.writeText(t).then(()=>toast('Código copiado.'),()=>toast(meu)); }catch(err){ toast(meu); } };
     document.querySelectorAll('[data-tira]').forEach(b=>b.onclick=()=>{ G.amigos=G.amigos.filter(x=>x!==b.dataset.tira); gSave(); route.keep=true; route(); }); });
   const amigos=G.amigos.map(c=>({c,u:uidPorCodigo(c)})).filter(x=>x.u);
-  return `<div class="kicker">Galo Metrics · amigos</div><h1>Amigos</h1>
+  return `<div class="kicker">Galo Metrics · amigos</div><h1>Amigos</h1>${blocoBuscaPerfisDono()}
   <p class="lede">Os perfis não aparecem para qualquer um: só abre o perfil de quem tem o código. Mande o seu para os amigos e peça o deles.</p>
   ${meu?`<div class="cod-box"><span class="osw">Seu código de torcedor</span><b>${meu}</b><button type="button" class="ghost" id="trcopia">Copiar código e link</button></div>`:(window.GM_LOGIN?'<p class="count"><a href="javascript:GM_LOGIN()">Entre com sua conta Google</a> para ter seu código de torcedor.</p>':'')}
   <form id="trform" class="dono" style="max-width:520px"><label>Código do amigo<input id="trq" maxlength="6" placeholder="Ex.: 4K9Q2B" autocomplete="off" autocapitalize="characters" style="text-transform:uppercase;letter-spacing:.2em"></label><p id="trmsg" class="count" role="alert" style="color:var(--d)"></p><button type="submit" class="more">Abrir perfil</button></form>
@@ -3686,7 +3686,7 @@ function vTorcedores(){
 function vTorcedor(cod){
   const uid=uidPorCodigo(decodeURIComponent(cod)); const o=uid&&(RKU||{})[uid];
   if(!o) return `<a class="back" href="#torcedores">← Amigos</a><p class="empty">Torcedor não encontrado. Confira o código.</p>`;
-  if(o.oculto&&uid!==GUID) return `<a class="back" href="#torcedores">← Amigos</a><h1>${esc(o.ap)}</h1><p class="empty">Este perfil é privado.</p>`;
+  if(o.oculto&&uid!==GUID&&!DONO) return `<a class="back" href="#torcedores">← Amigos</a><h1>${esc(o.ap)}</h1><p class="empty">Este perfil é privado.</p>`;
   const p=o.pub||{}, fav=p.fav&&FIGN[p.fav];
   const av=Object.entries(o.aval||{}).filter(([id,a])=>byId[id]&&(a.n||a.t)).sort((a,b)=>String(b[1].d||'').localeCompare(String(a[1].d||'')));
   const avj=Object.entries(o.avj||{}).filter(([id,a])=>a.n||a.t).sort((a,b)=>(b[1].n||0)-(a[1].n||0));
@@ -4125,6 +4125,17 @@ function blocoAvalDono(avL){
   return `<div class="grid2">${tab('Jogos avaliados','jogo')}${tab('Jogadores avaliados','jogador')}</div>
   <h2>Últimas avaliações públicas</h2><table><tbody>${ult.map(a=>`<tr><td><a href="#${esc(a.k)}">${esc(nomeK(a.k))}</a></td><td>${a.n?starsHTML(a.n,'stx-xs'):''}</td><td>${esc(a.ap)}${a.t?`: <i>${esc(String(a.t).slice(0,140))}</i>`:''}</td><td class="n">${a.d?fmtD(a.d):''}</td></tr>`).join('')||'<tr><td colspan="4" class="count">Nada ainda.</td></tr>'}</tbody></table>
   <p class="count">"Notas" conta as avaliações públicas de quem tem conta. O número entre parênteses inclui quem avaliou sem login ou de forma privada no período escolhido (registrado a partir de agora).</p>`;
+}
+
+/* Dono: achar qualquer perfil pelo nome */
+function blocoBuscaPerfisDono(){
+  if(!DONO) return '';
+  const todos=Object.entries(RKU||{}).map(([uid,o])=>({uid, ap:o.ap||'Torcedor', nome:o.nome||'', cod:codTorcedor(uid), oc:!!o.oculto, foto:(o.pub||{}).foto||'', pts:o.pts||0}));
+  setTimeout(()=>{ const i=$('#dnq'), out=$('#dnres'); if(!i) return;
+    const mostra=()=>{ const q=nrm(i.value.trim()); const l=todos.filter(x=>!q||nrm(x.ap+' '+x.nome+' '+x.cod).includes(q)).sort((a,b)=>a.ap.localeCompare(b.ap,'pt')).slice(0,60);
+      out.innerHTML=l.length?l.map(x=>`<a class="trc-it" href="#torcedor-${x.cod}" style="display:flex;gap:12px;align-items:center;text-decoration:none;color:inherit">${x.foto?`<img src="${esc(x.foto)}" alt="" referrerpolicy="no-referrer" style="width:40px;height:40px;border-radius:50%;object-fit:cover">`:'<span class="torc-av" style="width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--soft)">★</span>'}<span><b>${esc(x.ap)}</b>${x.nome&&x.nome!==x.ap?` <small class="count">${esc(x.nome)}</small>`:''}<br><small class="count">${x.cod}${x.oc?' · perfil privado':''}</small></span></a>`).join(''):'<p class="count">Ninguém com esse nome.</p>'; };
+    i.oninput=mostra; mostra(); });
+  return `<details class="dono-ed" open><summary>✎ Buscar qualquer perfil pelo nome (só você vê, ${todos.length} torcedores)</summary><div class="dono"><input id="dnq" placeholder="Apelido, nome ou código" autocomplete="off" style="width:100%"><div id="dnres" class="trc-grid" style="margin-top:10px;max-height:420px;overflow:auto"></div></div></details>`;
 }
 
 </script>
