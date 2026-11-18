@@ -570,9 +570,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261118102025';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261118102025"></script>
-<script src="backend-firebase.js?v=20261118102025"></script>
+<script>window.GM_BUILD='20261118102259';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261118102259"></script>
+<script src="backend-firebase.js?v=20261118102259"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -3972,14 +3972,14 @@ GTA V 17/09/2013
 GTA Online 01/10/2013
 GTA: The Trilogy (Definitive Edition) 11/11/2021
 GTA VI 19/11/2026`}];
-const listasTodas=()=>[...LISTAS_FIXAS.filter(f=>!LISTASX.some(x=>x.id===f.id)).map(f=>({...f, datas:typeof f.datas==='string'?lerDatas(f.datas):f.datas})), ...LISTASX];
+const listasTodas=()=>[...LISTAS_FIXAS.filter(f=>!LISTASX.some(x=>x.id===f.id||nrm(x.t+' '+(x.kw||'')).includes(f.id))).map(f=>({...f, datas:typeof f.datas==='string'?lerDatas(f.datas):f.datas})), ...LISTASX];
 const MESES_PT={janeiro:1,fevereiro:2,marco:3,abril:4,maio:5,junho:6,julho:7,agosto:8,setembro:9,outubro:10,novembro:11,dezembro:12,jan:1,fev:2,mar:3,abr:4,mai:5,jun:6,jul:7,ago:8,set:9,out:10,nov:11,dez:12};
 function lerDatas(txt){ const out=[];
-  String(txt||'').split(/\n+/).forEach(l0=>{ const l=l0.trim(); if(!l) return; let d=null, resto=l, m;
+  String(txt||'').split(/\n+/).forEach(l0=>{ const l=l0.trim().replace(/^[•*·\-–—]+\s*/,''); if(!l) return; let d=null, resto=l, m;
     if((m=l.match(/(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})/))){ let y=+m[3]; if(y<100) y+=y>40?1900:2000; d=`${y}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`; resto=l.replace(m[0],''); }
     else if((m=l.match(/(\d{4})-(\d{2})-(\d{2})/))){ d=m[0]; resto=l.replace(m[0],''); }
     else if((m=nrm(l).match(/(\d{1,2})\s*(?:de\s+)?([a-z]+)\s*(?:de\s+)?(\d{4})/))&&MESES_PT[m[2]]){ d=`${m[3]}-${String(MESES_PT[m[2]]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`; resto=l.replace(/(\d{1,2})\s*(de\s+)?[A-Za-zçÇãõáéíóú]+\s*(de\s+)?(\d{4})/,''); }
-    if(d&&!isNaN(new Date(d))) out.push({d, l:resto.replace(/^[\s:–—\-|,;·]+|[\s:–—\-|,;·]+$/g,'').trim()}); });
+    if(d&&!isNaN(new Date(d))) out.push({d, l:resto.replace(/^[\s:–—\-|,;·•*]+|[\s:–—\-|,;·•*]+$/g,'').trim()}); });
   return out.sort((a,b)=>a.d.localeCompare(b.d)); }
 function jogosDasDatas(x){ const pl=J.filter(j=>j.resultado&&j.gp!=null); const n=Math.max(1,Math.min(10,+x.n||1)), dias=+x.dias||7;
   return (x.datas||[]).map(dt=>{ let l=[];
