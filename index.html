@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261118123000';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script>window.GM_BUILD='20261118123500';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
 <script src="firebase-config.js?v=20261118115302"></script>
 <script src="backend-firebase.js?v=20261118115302"></script>
 <script type="application/json" id="db"></script>
@@ -3043,7 +3043,7 @@ function vMiamiViceCity(){
   <div class="grid2"><div><h2>Estádios</h2><p class="empty">Nenhum estádio cadastrado para esta página especial.</p><h2>Artilheiros na cidade</h2><p class="empty">Nenhum gol registrado.</p></div>
   <div><h2>Adversários</h2><p class="empty">Nenhuma partida registrada.</p></div></div>
   <h2>Jogos em Miami</h2><p class="empty">Não há jogos do Atlético registrados em Miami na base histórica do Galo Metrics.</p>
-  <p class="count">Página especial disponível pela busca “Vice City” até 25/11/2026.</p>`;
+  <p class="count">Página especial disponível pela busca “Vice City” até 24/11/2026.</p>`;
 }
 
 /* ---------- Mapa do Galo ---------- */
@@ -4087,15 +4087,15 @@ async function desenhaArteDatas(s){
 }
 
 /* Easter egg: tema Vice City e página especial de Miami, de 18 a 25/11/2026 */
-const TEMA_VI_DIAS=['2026-11-18','2026-11-19','2026-11-20','2026-11-21','2026-11-22','2026-11-23','2026-11-24','2026-11-25'];
+const TEMA_VI_DIAS=['2026-11-18','2026-11-19','2026-11-20','2026-11-21','2026-11-22','2026-11-23','2026-11-24'];
 function viceCityAtivo(){ return TEMA_VI_DIAS.includes(hojeStr()); }
 function temaVIAplica(on){ document.documentElement.classList.toggle('tema-vi',!!on); let b=document.getElementById('vi-faixa');
-  if(on&&!b){ b=document.createElement('div'); b.id='vi-faixa'; b.innerHTML=`<span>🌴 Tema Vice City desbloqueado · até 25/11</span><button type="button" onclick="try{localStorage.setItem('gm-tema-vi','0')}catch(e){} temaVIAplica(false)">Desligar</button>`; document.body.prepend(b);
+  if(on&&!b){ b=document.createElement('div'); b.id='vi-faixa'; b.innerHTML=`<span>🌴 Tema Vice City desbloqueado · até 24/11</span><button type="button" onclick="try{localStorage.setItem('gm-tema-vi','0')}catch(e){} temaVIAplica(false)">Desligar</button>`; document.body.prepend(b);
     const pl=document.createElement('div'); pl.id='vi-palmas'; pl.setAttribute('aria-hidden','true'); pl.innerHTML=palmaSVG('e')+palmaSVG('d'); document.body.appendChild(pl); }
   if(!on){ b&&b.remove(); const pl=document.getElementById('vi-palmas'); pl&&pl.remove(); } }
 function palmaSVG(lado){ return `<svg class="vi-p vi-${lado}" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg"><path d="M104 400 C100 300 96 220 108 150" stroke="currentColor" stroke-width="9" fill="none"/><g fill="currentColor"><path d="M108 150 C70 120 30 125 4 150 C40 132 76 138 108 152Z"/><path d="M108 150 C80 105 50 90 18 96 C56 104 86 122 108 152Z"/><path d="M108 150 C112 104 100 76 78 58 C100 86 106 116 106 152Z"/><path d="M108 150 C140 112 170 104 198 112 C164 118 136 132 110 154Z"/><path d="M108 150 C150 140 182 152 196 176 C170 158 140 152 110 154Z"/><path d="M108 150 C126 116 146 96 170 86 C148 104 128 126 110 152Z"/></g></svg>`; }
 function temaVICheca(q){ const hoje=hojeStr(); const ok=TEMA_VI_DIAS.includes(hoje);
-  if(q!=null){ if(ok&&/\bvice\s*city\b|\bgta\s*(vi|6)\b|grand theft auto\s*(vi|6)\b/.test(nrm(q))&&!document.documentElement.classList.contains('tema-vi')){ try{ localStorage.setItem('gm-tema-vi','1'); }catch(e){} temaVIAplica(true); try{ trk('easter_gta6'); }catch(e){} toast('🌴 Bem-vindo a Vice City. Tema liberado até 25/11.'); } return; }
+  if(q!=null){ if(ok&&/\bvice\s*city\b|\bgta\s*(vi|6)\b|grand theft auto\s*(vi|6)\b/.test(nrm(q))&&!document.documentElement.classList.contains('tema-vi')){ try{ localStorage.setItem('gm-tema-vi','1'); }catch(e){} temaVIAplica(true); try{ trk('easter_gta6'); }catch(e){} toast('🌴 Bem-vindo a Vice City. Tema liberado até 24/11.'); } return; }
   let on=false; try{ on=localStorage.getItem('gm-tema-vi')==='1'; }catch(e){} if(on&&!ok){ try{ localStorage.removeItem('gm-tema-vi'); }catch(e){} on=false; } if(on) temaVIAplica(true); }
 setTimeout(()=>{ try{ temaVICheca(); }catch(e){} },0);
 
