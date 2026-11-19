@@ -2854,7 +2854,7 @@ function route(){
 const inline=document.getElementById('db');
 (inline&&inline.textContent.trim().length>2 ? Promise.resolve(JSON.parse(inline.textContent)) : fetch('data/galo.json'+(window.GM_BUILD?'?v='+window.GM_BUILD:'')).then(r=>r.json())).then(d=>{
   D=d; J=d.jogos; ESC=d.escudos||{}; J.forEach(j=>byId[j.id]=j); buildAcc();
-  const FONTES=[['O Canto do Galo','https://galopedia.blogspot.com'],['RSSSF Brasil','https://www.rsssfbrasil.com'],['Futebol80','https://www.futebol80.com.br'],['Galo Digital','https://www.galodigital.com.br'],['ogol','https://www.ogol.com.br'],['Transfermarkt','https://www.transfermarkt.com.br'],['Atletico.com.br','https://atletico.com.br'],['pesquisas pessoais',null]];
+  const FONTES=[['O Canto do Galo','https://galopedia.blogspot.com'],['RSSSF Brasil','https://www.rsssfbrasil.com'],['Futebol80','https://www.futebol80.com.br'],['ogol','https://www.ogol.com.br'],['Transfermarkt','https://www.transfermarkt.com.br'],['pesquisas pessoais',null]];
   $('#foot').innerHTML=`Galo Metrics · versão beta · ${N(J.length)} jogos · Atualizado em ${fmtD(d.meta.gerado_em)}<br>Fontes: ${FONTES.map(([n,u])=>u?`<a href="${u}" target="_blank" rel="noopener">${esc(n)}</a>`:esc(n)).join(' · ')}<br><a href="#sugestoes">Sugestões, correções, escudos e fotos</a> · <a href="#colaboradores">Colaboradores</a> · <a href="#apoie">♥ Apoie o Galo Metrics</a>`;
   gLoad(); window.addEventListener('hashchange',route); route(); gmInit();
 }).catch(e=>{console.error(e);$('#app').innerHTML='<p class="empty">Não foi possível carregar a base de dados.</p>';});
