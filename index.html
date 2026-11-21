@@ -601,9 +601,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121164705';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121164705"></script>
-<script src="backend-firebase.js?v=20261121164705"></script>
+<script>window.GM_BUILD='20261121164750';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121164750"></script>
+<script src="backend-firebase.js?v=20261121164750"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4323,7 +4323,7 @@ function finQuiz(){ const emb=(c,o)=>[c,...o].sort((a,b)=>hashDia('qz'+a)-hashDi
    {p:'Em que cidade foi a estreia do Galo na competição?', c:'Valencia, Venezuela', o:emb('Valencia, Venezuela',['Cusco, Peru','Montevidéu, Uruguai','Belo Horizonte'])},
    {p:'Em que estádio o Galo perdeu para o Cienciano?', c:'Garcilaso de la Vega', o:emb('Garcilaso de la Vega',['Centenário','Misael Delgado','Nacional de Lima'])},
    {p:'Quem fez o único gol da vitória em Bragança Paulista, contra o Bragantino?', c:'Tomás Cuello', o:emb('Tomás Cuello',['Maycon','Reinier','Bernard'])},
-   {p:'Na disputa de pênaltis contra o Santos, quantas cobranças Gabriel Delfim defendeu?', c:'3', o:emb('3',['1','2','4'])},
+   {p:'Na disputa de pênaltis contra o Santos, de quais jogadores Gabriel Delfim defendeu as cobranças?', c:'Gabriel Barbosa, João Schmidt e Arthur', o:emb('Gabriel Barbosa, João Schmidt e Arthur',['Gabriel Bontempo, João Schmidt e Arthur','Gabriel Barbosa, Gabriel Bontempo e Arthur','Gabriel Barbosa e João Schmidt'])},
    {p:'Quem marcou duas vezes na virada por 4 x 2 sobre o Santos?', c:'Reinier', o:emb('Reinier',['Bernard','Tomás Cuello','Maycon'])},
    {p:'Qual foi o placar da ida da semifinal contra o Torque, na Arena MRV?', c:'3 x 0', o:emb('3 x 0',['2 x 0','3 x 1','1 x 0'])},
    {p:'Quantas derrotas o Galo teve na campanha até a final?', c:'4', o:emb('4',['1','2','3'])},
