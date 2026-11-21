@@ -581,6 +581,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 .fin-rec textarea{width:100%;font:inherit}.fin-murais{display:grid;gap:10px;margin-top:10px}.fin-murais blockquote{margin:0;padding:10px 12px;border-left:4px solid #C9962B;background:var(--soft)}.fin-murais p{margin:0 0 4px}.fin-murais cite{font:600 12px Oswald,sans-serif;text-transform:uppercase;letter-spacing:.05em;color:var(--mute)}
 .fin-mod{scroll-margin-top:190px}.fin-share{margin:12px 0 0;font-size:13px;display:flex;gap:12px;flex-wrap:wrap}.fin-share a,.fin-share .linkbtn{font:600 12px Oswald,sans-serif;letter-spacing:.06em;text-transform:uppercase}.linkbtn{background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline}
 .fin-cartao .fin-share a,.fin-cartao .linkbtn{color:#C9962B}.fin-mod.fin-foco{box-shadow:0 0 0 4px #C9962B;transition:box-shadow .3s}.fin-quizcard{background:#fff8e6}
+.tacas.galeria .taca{flex:0 1 120px}.tacas.galeria .taca img{height:140px}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -601,9 +602,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121164750';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121164750"></script>
-<script src="backend-firebase.js?v=20261121164750"></script>
+<script>window.GM_BUILD='20261121165400';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121165400"></script>
+<script src="backend-firebase.js?v=20261121165400"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4220,7 +4221,7 @@ function vFinal(params){
   const caminho=`<div class="mm-caminho">${ties.map(m=>`<a class="mm-passo ${m.r==='C'?'v':m.r==='E'?'d':''}" href="#jogo-${m.j.id}"><small>${m.final?'Final':m.jogos.length>1?'Ida e volta':'Jogo único'}</small>${cr(m.id)}<b>${esc(m.adv)}</b><span>${m.gp} x ${m.gc}${m.pen?' (pên.)':''}</span></a>`).join('')}${e==='hoje'?`<a class="mm-passo agora" href="#jogo-${f.jogo}"><small>Final · hoje</small>${cr(f.advId)}<b>${esc(f.adv)}</b><span>?</span></a>`:''}</div>`;
   const kpis=`<div class="kpis"><div><b>${r.n}</b><span>jogos</span></div><div><b>${r.V}</b><span>vitórias</span></div><div><b>${r.E}</b><span>empates</span></div><div><b>${r.D}</b><span>derrotas</span></div><div><b>${r.gp}</b><span>gols marcados</span></div><div><b>${r.n?aprov(r):'–'}</b><span>aproveitamento</span></div></div>`;
   const artH=art.length?`<h2>Artilheiros da campanha</h2><ol class="rank">${art.map(([n,g],i)=>`<li><span class="rank-n">${i+1}</span><a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a><b>${g}</b></li>`).join('')}</ol>`:'';
-  const titH=`<h2>Títulos internacionais do Galo</h2><div class="pq-ex">${tit.map(t=>`<span class="chip">🏆 ${esc(t.comp)} ${t.ano}</span>`).join(' ')}</div>`;
+  const titH=`<h2>Títulos internacionais do Galo</h2>${galeriaTitulos(e==='campeao')}`;
   const tweet=e==='campeao'?`🏆 GALO CAMPEÃO DA SUL-AMERICANA ${f.ano}!\n\n${placarF}\nLibertadores, Recopa e Sul-Americana: só Inter, São Paulo e Galo têm as três entre os brasileiros.\n\nPegue a figurinha comemorativa:`:e==='vice'?`Obrigado, Galo. Sul-Americana ${f.ano}: ${r.n} jogos, ${r.V} vitórias, ${r.gp} gols.`:`É HOJE. Galo x Boca, final da Sul-Americana.\n\nContra o Boca: ${rb.V}V ${rb.E}E ${rb.D}D. Em 21/11 o Galo tem ${aprov(rd)} de aproveitamento na história.`;
   const tw=`<a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:tweet, url:'https://galometrics.com.br/#final'})}">Pronto para tweet ↗</a>`;
   if(e==='campeao') return `<div class="final-hero campeao"><div class="kicker">Copa Sul-Americana ${f.ano} · ${fmtD(f.data)} · ${esc(f.local)}</div>
@@ -4243,7 +4244,7 @@ function vFinal(params){
      <li>O Galo já tem <b>${tit.length} títulos internacionais</b>: ${tit.map(t=>t.comp.replace('Copa ','')+' '+t.ano).join(', ')}.</li>
      <li>O GTA VI saiu dois dias antes da final. Depois de lançamento de GTA, o Galo tem 71% de aproveitamento. <a href="#pergunte?lista=dx-gta">Ver a lista →</a></li>
      <li>Se for campeão, o Galo entra num clube fechado: <b>só Internacional e São Paulo</b>, entre os brasileiros, já ganharam <b>Libertadores, Sul-Americana e Recopa</b>. O Galo já tem a Libertadores 2013 e a Recopa 2014. Falta uma.</li></ul>
-    ${tacasHTML(false)}
+    ${galeriaTitulos(false)}
     <h2>A campanha em números</h2>${kpis}${artH}<h2>Todos os jogos</h2>${tabCamp}`;
 }
 async function desenhaArteTitulo(s){
@@ -4258,8 +4259,8 @@ async function desenhaArteTitulo(s){
     T(`${fmtD(f.data)} · ${f.estadio}, ${f.local.split(',')[0]}`,W/2,828,'cas',26,CINZA,'center');
     let y=890; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+150,W-2*P,3); const cw=(W-2*P)/4;
     [[r.n,'jogos'],[r.V,'vitórias'],[r.gp,'gols'],[tit.length+'º','título internacional']].forEach(([n,l],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+28,2,96); } T(String(n),P+i*cw+cw/2,y+92,'abril',64,i===3?GOLD:INK,'center'); T(l.toUpperCase(),P+i*cw+cw/2,y+128,'osw',19,INK,'center',cw-16); });
-    const tacas=[['libertadores','Libertadores 2013'],['recopa','Recopa 2014'],['sul-americana','Sul-Americana 2026']];
-    for(let i=0;i<3;i++){ const im=await loadImg('escudos/tacas/'+tacas[i][0]+'.webp'); const cx=W/2+(i-1)*290; if(im){ const h=120, w=im.width*h/im.height; x.drawImage(im,cx-w/2,1062,w,h); } T(tacas[i][1].toUpperCase(),cx,1204,'osw',20,INK,'center',260); }
+    const tacas=[['conmebol','Conmebol 1992'],['conmebol','Conmebol 1997'],['libertadores','Libertadores 2013'],['recopa','Recopa 2014'],['sul-americana','Sula 2026']];
+    for(let i=0;i<5;i++){ const im=await loadImg('escudos/tacas/'+tacas[i][0]+'.webp'); const cx=P+(W-2*P)*(i+.5)/5; if(im){ const h=118, w=im.width*h/im.height; x.drawImage(im,cx-w/2,1064,w,h); } T(tacas[i][1].toUpperCase(),cx,1204,'osw',18,i===4?GOLDD:INK,'center',180); }
     return cv; }
   T('★ '+(s.k||(e==='vice'?'OBRIGADO, GALO':'É HOJE')),P,232,'osw',36,GOLD);
   wrap(s.f||(e==='vice'?`Sul-Americana ${f.ano}: a campanha até a final`:`Final da Sul-Americana`),P,320,'abril',64,W-2*P,72,INK,'left',2);
@@ -4442,6 +4443,9 @@ async function desenhaArteChamada(s){
   T('galometrics.com.br/#final',W/2,y+76,'osw',28,GOLD,'center');
   return cv;
 }
+
+function galeriaTitulos(comSula){ const L=[['conmebol','Copa Conmebol','1992',true],['conmebol','Copa Conmebol','1997',true],['libertadores','Libertadores','2013',true],['recopa','Recopa','2014',true],['sul-americana','Sul-Americana','2026',comSula]];
+  return `<div class="tacas galeria">${L.map(([a,n,ano,tem])=>`<figure class="taca ${tem?'':'falta'}"><img src="escudos/tacas/${a}.webp" alt="Taça da ${n}" loading="lazy"><figcaption><b>${n}</b><span>${tem?ano:'hoje?'}</span></figcaption></figure>`).join('')}</div>`; }
 
 </script>
 </body>
