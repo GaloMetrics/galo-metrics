@@ -601,9 +601,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121163152';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121163152"></script>
-<script src="backend-firebase.js?v=20261121163152"></script>
+<script>window.GM_BUILD='20261121163512';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121163512"></script>
+<script src="backend-firebase.js?v=20261121163512"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4319,14 +4319,14 @@ const barras=(L,tot)=>L.map(([rot,n,dest])=>`<div class="fin-bar ${dest?'dest':'
 function finGolsFinal(){ const f=finalCfg(), j=byId[f.jogo]; return j&&j.gp!=null?j.gols.filter(g=>g.lado==='galo'&&isGoal(g)).map(g=>g.jogador):null; }
 function finQuiz(){ const emb=(c,o)=>[c,...o].sort((a,b)=>hashDia('qz'+a)-hashDia('qz'+b));
   return [
-   {p:'Quem fez o gol do Galo na estreia, contra o Puerto Cabello, na Venezuela?', c:'Dudu', o:emb('Dudu',['Bernard','Reinier','Alan Minda'])},
    {p:'Qual destes clubes NÃO enfrentou o Galo na fase de grupos?', c:'Racing', o:emb('Racing',['Juventud','Cienciano','Puerto Cabello'])},
-   {p:'Quem marcou o gol da vitória por 1 x 0 sobre o Puerto Cabello, na Arena MRV?', c:'Bernard', o:emb('Bernard',['Dudu','Renan Lodi','Mateo Cassierra'])},
-   {p:'Qual defensor marcou na vitória por 2 x 0 sobre o Cienciano, na Arena MRV?', c:'Renan Lodi', o:emb('Renan Lodi',['Natanael','Junior Alonso','Ruan Tressoldi'])},
-   {p:'Em Montevidéu, contra o Juventud, foi 2 x 2. Quem marcou o segundo gol do Galo?', c:'Vitor Hugo', o:emb('Vitor Hugo',['Alan Minda','Bernard','Mateo Cassierra'])},
-   {p:'Quem fez o gol da vitória em Bragança Paulista, contra o Bragantino?', c:'Tomás Cuello', o:emb('Tomás Cuello',['Maycon','Reinier','Bernard'])},
-   {p:'Na virada por 4 x 2 sobre o Santos, quem marcou duas vezes?', c:'Reinier', o:emb('Reinier',['Bernard','Tomás Cuello','Maycon'])},
-   {p:'Quem fechou os 3 x 0 sobre o Torque, na ida da semifinal?', c:'Thiago Borbas', o:emb('Thiago Borbas',['Reinier','Bernard','Dudu'])},
+   {p:'Em que cidade foi a estreia do Galo na competição?', c:'Valencia, Venezuela', o:emb('Valencia, Venezuela',['Cusco, Peru','Montevidéu, Uruguai','Belo Horizonte'])},
+   {p:'Em que estádio o Galo perdeu para o Cienciano?', c:'Garcilaso de la Vega', o:emb('Garcilaso de la Vega',['Centenário','Misael Delgado','Nacional de Lima'])},
+   {p:'Quem fez o único gol da vitória em Bragança Paulista, contra o Bragantino?', c:'Tomás Cuello', o:emb('Tomás Cuello',['Maycon','Reinier','Bernard'])},
+   {p:'Como o Galo eliminou o Santos nas quartas de final?', c:'Nos pênaltis, após 4 x 4 no agregado', o:emb('Nos pênaltis, após 4 x 4 no agregado',['Venceu os dois jogos','Empatou fora e venceu em casa','Pelo gol fora de casa'])},
+   {p:'Quem marcou duas vezes na virada por 4 x 2 sobre o Santos?', c:'Reinier', o:emb('Reinier',['Bernard','Tomás Cuello','Maycon'])},
+   {p:'Qual foi o placar da ida da semifinal contra o Torque, na Arena MRV?', c:'3 x 0', o:emb('3 x 0',['2 x 0','3 x 1','1 x 0'])},
+   {p:'Quantas derrotas o Galo teve na campanha até a final?', c:'4', o:emb('4',['1','2','3'])},
   ]; }
 function blocoFinInterativo(){
   const e=finalEstado()||'hoje', f=finalCfg(), m=finMeu(), T_=finTodos(), golsF=finGolsFinal(), j=byId[f.jogo];
@@ -4427,11 +4427,11 @@ async function desenhaArteChamada(s){
   T(`${fmtD(f.data)} · ${f.estadio}, ${f.local.split(',')[0]}`,W/2,cy+128,'cas',26,CINZA,'center',W-2*P);
   let y=690; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); y+=54;
   T('JOGUE COM A GENTE NO SITE',P,y,'osw',28,GOLDD); y+=56;
-  const itens=[['🗳','Quem decide o título?','vote no herói da final'],['🎯','Bolão da torcida','crave o placar'],['📍','De onde você vai ver?','veja onde a torcida está'],['🧠','Quiz da campanha','8 perguntas difíceis'],['🎫','Seu cartão da final','com o seu nome, para os Stories']];
-  itens.forEach(([ic,t,sub])=>{ T(ic,P+20,y,'osw',36,INK,'center'); T(t,P+70,y,'osw',36,INK,'left',520); T(sub,W-P,y,'cas',24,CINZA,'right',360); y+=60; });
+  const itens=[['🗳','Quem decide o título?','vote no herói da final'],['🎯','Bolão da torcida','crave o placar'],['📍','De onde você vai ver?','veja onde a torcida está'],['🧠','Quiz da campanha','8 perguntas difíceis']];
+  y+=8; itens.forEach(([ic,t,sub])=>{ T(ic,P+20,y,'osw',38,INK,'center'); T(t,P+70,y,'osw',38,INK,'left',520); T(sub,W-P,y,'cas',25,CINZA,'right',360); y+=72; });
   y=Math.min(y,A.BOT-118); x.fillStyle='#111'; A.rr(P,y,W-2*P,96,10); x.fill();
-  T('🏆 Se der Galo, quem entrar ganha uma figurinha comemorativa',W/2,y+40,'osw',26,'#F5F2EA','center',W-2*P-40);
-  T('galometrics.com.br/#final',W/2,y+76,'osw',26,GOLD,'center');
+  T('Entre e participe',W/2,y+40,'osw',26,'#F5F2EA','center',W-2*P-40);
+  T('galometrics.com.br/#final',W/2,y+76,'osw',28,GOLD,'center');
   return cv;
 }
 
