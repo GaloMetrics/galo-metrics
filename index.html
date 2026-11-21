@@ -584,6 +584,9 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 .tacas.galeria .taca{flex:0 1 120px}.tacas.galeria .taca img{height:140px}
 .fin-pos{margin:10px 0 2px;font:600 11px Oswald,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .fin-opc .chip.tit{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.campo-l.pontas-altas{justify-content:flex-start;padding:0 2%}.campo-l.pontas-altas>.campo-p:first-child,.campo-l.pontas-altas>.campo-p:last-child{transform:translateY(-38px)}.campo-l.pontas-altas>.campo-p:nth-child(2){margin-left:auto;margin-right:5%}.campo-l.pontas-altas>.campo-p:nth-child(3){margin-right:auto;margin-left:5%}
+.campo-l.dupla-centro{justify-content:center;gap:18%}
+@media(max-width:620px){.campo-l.pontas-altas{padding:0}.campo-l.pontas-altas>.campo-p{min-width:0;flex:0 1 23%}.campo-l.pontas-altas>.campo-p:first-child,.campo-l.pontas-altas>.campo-p:last-child{transform:translateY(-18px)}.campo-l.pontas-altas>.campo-p:nth-child(2){margin-right:2%}.campo-l.pontas-altas>.campo-p:nth-child(3){margin-left:2%}.campo-l.dupla-centro{gap:8%}}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -604,9 +607,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121191504';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121191504"></script>
-<script src="backend-firebase.js?v=20261121191504"></script>
+<script>window.GM_BUILD='20261121191808';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121191808"></script>
+<script src="backend-firebase.js?v=20261121191808"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2611,7 +2614,8 @@ function linhasCampo(tit, form){
 }
 function campoHTML(tit, extra={}){
   const ls=linhasCampo(tit, extra.form);
-  return `<div class="campo" role="img" aria-label="Escalação em campo: ${esc(tit.map(nomeV).join(', '))}">${ls.slice().reverse().map(l=>`<div class="campo-l">${l.filter(Boolean).map(n=>{ const g=(extra.gols||{})[n]||0, nt=(extra.notas||{})[n];
+  const nL=ls.length;
+  return `<div class="campo" role="img" aria-label="Escalação em campo: ${esc(tit.map(nomeV).join(', '))}">${ls.slice().reverse().map((l,ri)=>`<div class="campo-l${extra.form==='4-2-2-2'&&nL-1-ri===2?' pontas-altas':''}${extra.form==='4-2-2-2'&&nL-1-ri===3?' dupla-centro':''}">${l.filter(Boolean).map(n=>{ const g=(extra.gols||{})[n]||0, nt=(extra.notas||{})[n];
     return `<div class="campo-p${extra.craque===n?' craque':''}"><span class="campo-dot" aria-hidden="true">${extra.craque===n?'★':''}</span><a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>${g?`<span class="campo-g">${'⚽'.repeat(Math.min(g,4))}</span>`:''}${nt!=null?`<span class="campo-n">${String(nt).replace('.',',')}</span>`:''}</div>`; }).join('')}</div>`).join('')}</div>`;
 }
 
@@ -2622,7 +2626,7 @@ const palpAberto=j=>!j.resultado&&new Date()<kickoff(j);
 function candidatos(){ const ult=J.filter(j=>j.resultado&&j.escalacao_galo&&j.escalacao_galo.titulares.length).slice(-25); const c={};
   ult.forEach(j=>{ const e=j.escalacao_galo; [...e.titulares, ...e.substituicoes.map(s=>s.entrou)].forEach(n=>{ if(n) c[n]=(c[n]||0)+(e.titulares.includes(n)?2:1); }); });
   const L=Object.keys(c).sort((a,b)=>c[b]-c[a]); const por={}; POSS.forEach(p=>por[p]=[]); L.forEach(n=>{ const p=posTxt(n)||'Meia'; (por[p] ||= []).push(n); }); return {L, por}; }
-const FORMS={'2-3-5':[1,2,3,5],'4-3-3':[1,4,3,3],'4-4-2':[1,4,4,2],'4-2-2-2':[1,4,2,2,2],'4-2-3-1':[1,4,5,1],'3-5-2':[1,3,5,2],'5-3-2':[1,5,3,2]};
+const FORMS={'2-3-5':[1,2,3,5],'4-3-3':[1,4,3,3],'4-4-2':[1,4,4,2],'4-2-2-2':[1,4,4,2],'4-2-3-1':[1,4,5,1],'3-5-2':[1,3,5,2],'5-3-2':[1,5,3,2]};
 function pontuaPalpite(j,p){
   if(!j.resultado||j.gp==null||p.gp==null) return null;
   const r={placar:0, res:0, marc:0, esc:0, det:[]};
