@@ -601,9 +601,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121164032';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121164032"></script>
-<script src="backend-firebase.js?v=20261121164032"></script>
+<script>window.GM_BUILD='20261121164429';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121164429"></script>
+<script src="backend-firebase.js?v=20261121164429"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4327,6 +4327,14 @@ function finQuiz(){ const emb=(c,o)=>[c,...o].sort((a,b)=>hashDia('qz'+a)-hashDi
    {p:'Quem marcou duas vezes na virada por 4 x 2 sobre o Santos?', c:'Reinier', o:emb('Reinier',['Bernard','Tomás Cuello','Maycon'])},
    {p:'Qual foi o placar da ida da semifinal contra o Torque, na Arena MRV?', c:'3 x 0', o:emb('3 x 0',['2 x 0','3 x 1','1 x 0'])},
    {p:'Quantas derrotas o Galo teve na campanha até a final?', c:'4', o:emb('4',['1','2','3'])},
+   {p:'Quem fez o gol do Galo na estreia, contra o Puerto Cabello, na Venezuela?', c:'Dudu', o:emb('Dudu',['Bernard','Reinier','Alan Minda'])},
+   {p:'Na vitória por 2 x 1 sobre o Juventud, na Arena MRV, quem fez o gol da vitória aos 40 do segundo tempo?', c:'Mateo Cassierra', o:emb('Mateo Cassierra',['Bernard','Alan Minda','Dudu'])},
+   {p:'Em que estádio foi o 2 x 2 com o Juventud?', c:'Centenário', o:emb('Centenário',['Gran Parque Central','Garcilaso de la Vega','Misael Delgado'])},
+   {p:'Qual foi o placar da volta das oitavas contra o Bragantino, na Arena MRV?', c:'2 x 2', o:emb('2 x 2',['1 x 1','2 x 1','3 x 2'])},
+   {p:'Quem marcou nos dois jogos contra o Bragantino?', c:'Tomás Cuello', o:emb('Tomás Cuello',['Maycon','Bernard','Reinier'])},
+   {p:'Qual foi o placar da ida das quartas, contra o Santos, na Vila Belmiro?', c:'Santos 2 x 0', o:emb('Santos 2 x 0',['Santos 1 x 0','Santos 2 x 1','1 x 1'])},
+   {p:'Quem abriu o placar nos 3 x 0 sobre o Torque?', c:'Reinier', o:emb('Reinier',['Bernard','Thiago Borbas','Tomás Cuello'])},
+   {p:'Quantas vitórias o Galo teve fora de casa na campanha até a final?', c:'1', o:emb('1',['0','2','3'])},
   ]; }
 function blocoFinInterativo(){
   const e=finalEstado()||'hoje', f=finalCfg(), m=finMeu(), T_=finTodos(), golsF=finGolsFinal(), j=byId[f.jogo];
@@ -4361,7 +4369,7 @@ function blocoFinInterativo(){
     ${mur.length?`<div class="fin-murais">${mur.slice(0,40).map(x=>`<blockquote><p>“${esc(x.recado)}”</p><cite>${esc(x.ap)}</cite></blockquote>`).join('')}</div>`:''}${finChama('mural','Deixe seu recado para o Galo no mural da final:')}</section>`;
   // 6. Quiz
   const Q=finQuiz(); const qr=T_.filter(x=>x.quiz2!=null).sort((a,b)=>b.quiz2-a.quiz2||(a.quizT2||0)-(b.quizT2||0));
-  const quizH=`<section class="fin-mod fin-quizcard" id="fin-quiz"><h2>Quiz da campanha</h2>${m.quiz2!=null?`<p>Você acertou <b>${m.quiz2} de ${Q.length}</b>.</p>`:`<p>${Q.length} perguntas difíceis sobre a Sul-Americana ${f.ano}: quem fez cada gol, adversários da fase de grupos e mais. Uma tentativa só, e o tempo desempata.</p><a class="more" href="#final-quiz">Responder o quiz</a>`}
+  const quizH=`<section class="fin-mod fin-quizcard" id="fin-quiz"><h2>Quiz da campanha</h2>${m.quiz2!=null?`<p>Você acertou <b>${m.quiz2} de ${Q.length}</b>.</p>`:`<p>${Q.length} perguntas sobre a Sul-Americana ${f.ano}: gols, placares, estádios e adversários. Uma tentativa só, e o tempo desempata.</p><a class="more" href="#final-quiz">Responder o quiz</a>`}
     ${qr.length?`<h3 class="osw" style="margin-top:14px">Ranking do quiz</h3><ol class="rank">${qr.slice(0,10).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${esc(x.ap)}<b>${x.quiz2}/${Q.length}</b></li>`).join('')}</ol>`:''}${finChama('quiz',"'Você sabe tudo da campanha do Galo na Sul-Americana? Responda o quiz:'",'final-quiz')}</section>`;
   setTimeout(()=>finLiga(Q),0);
   return `<div class="fin-grid">${cartaoH}${heroiH}${bolaoH}${ondeH}${quizH}${muralH}</div>`;
@@ -4403,12 +4411,12 @@ function blocoMuralDono(){ const f=finalCfg(); const T_=finTodos().filter(x=>x.r
 function finChama(sec, txt, rota){ const url='https://galometrics.com.br/#'+(rota||('final?s='+sec)); return `<p class="fin-share"><a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:txt, url})}">Chamar no Twitter ↗</a> <button type="button" class="linkbtn" onclick="navigator.clipboard&&navigator.clipboard.writeText('${url}').then(()=>toast('Link copiado'))">Copiar link</button></p>`; }
 function vFinalQuiz(){ const f=finalCfg(), m=finMeu(), Q=finQuiz(); try{ trk('final_quiz_abre'); }catch(e){}
   setTimeout(()=>{ const qg=$('#finquizgo'); if(!qg) return; qg.onclick=()=>{ const ap=($('#quizap')||{}).value; if(ap&&ap.trim()){ G.perfil ||= {}; G.perfil.apelido=ap.trim().slice(0,24); gSave(); } qg.remove(); const qa=$('#quizap'); if(qa) qa.closest('p').remove(); let i=0, ok=0; const t0=Date.now(); const box=$('#finquiz');
-    const mostra=()=>{ if(i>=Q.length){ box.innerHTML=`<p class="final-h1" style="font-size:64px!important">${ok}/${Q.length}</p><p class="osw">${ok===Q.length?'Gabaritou! Você sabe tudo da campanha.':ok>=6?'Mandou muito bem!':ok>=4?'Bom, mas dá para melhorar.':'Essa foi difícil, hein?'}</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a> <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:'Acertei '+ok+' de '+Q.length+' no quiz da campanha do Galo na Sul-Americana. E você?', url:'https://galometrics.com.br/#final-quiz'})}">Desafiar no Twitter ↗</a></p>`; finSalva({quiz2:ok, quizT2:Date.now()-t0}); try{ trk('final_quiz'); }catch(e){} return; }
+    const mostra=()=>{ if(i>=Q.length){ box.innerHTML=`<p class="final-h1" style="font-size:64px!important">${ok}/${Q.length}</p><p class="osw">${ok===Q.length?'Gabaritou! Você sabe tudo da campanha.':ok>=12?'Mandou muito bem!':ok>=8?'Bom, mas dá para melhorar.':'Essa foi puxada, hein?'}</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a> <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:'Acertei '+ok+' de '+Q.length+' no quiz da campanha do Galo na Sul-Americana. E você?', url:'https://galometrics.com.br/#final-quiz'})}">Desafiar no Twitter ↗</a></p>`; finSalva({quiz2:ok, quizT2:Date.now()-t0}); try{ trk('final_quiz'); }catch(e){} return; }
       const q=Q[i]; box.innerHTML=`<p class="count">Pergunta ${i+1} de ${Q.length}</p><p style="font-size:22px"><b>${esc(q.p)}</b></p><div class="fin-opc">${q.o.map(o=>`<button type="button" class="chip" data-r="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
       box.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{ const certo=b.dataset.r===q.c; if(certo) ok++; b.classList.add(certo?'certo':'errado'); if(!certo) box.querySelector(`[data-r="${CSS.escape(q.c)}"]`)?.classList.add('certo'); box.querySelectorAll('[data-r]').forEach(x=>x.disabled=true); setTimeout(()=>{ i++; mostra(); },1000); }); };
     mostra(); }; });
   return `<a class="back" href="#final">← Final da Sul-Americana</a><div class="kicker">Quiz · Copa Sul-Americana ${f.ano}</div><h1>Você sabe tudo da campanha?</h1>
-  ${m.quiz2!=null?`<p class="lede">Você já respondeu: <b>${m.quiz2} de ${Q.length}</b>. Uma tentativa por pessoa.</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a></p>`:`<p class="lede">${Q.length} perguntas difíceis: quem fez cada gol, adversários da fase de grupos e mais. Uma tentativa só, e o tempo desempata no ranking.</p>${GUID||(G.perfil||{}).apelido?'':'<p class="dgrid"><label>Seu nome no ranking<input id="quizap" maxlength="24" placeholder="Como quer aparecer"></label></p>'}<button class="more" type="button" id="finquizgo">Começar</button><div id="finquiz" style="margin-top:16px"></div>`}`; }
+  ${m.quiz2!=null?`<p class="lede">Você já respondeu: <b>${m.quiz2} de ${Q.length}</b>. Uma tentativa por pessoa.</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a></p>`:`<p class="lede">${Q.length} perguntas sobre a campanha: gols, placares, estádios e adversários. Uma tentativa só, e o tempo desempata no ranking.</p>${GUID||(G.perfil||{}).apelido?'':'<p class="dgrid"><label>Seu nome no ranking<input id="quizap" maxlength="24" placeholder="Como quer aparecer"></label></p>'}<button class="more" type="button" id="finquizgo">Começar</button><div id="finquiz" style="margin-top:16px"></div>`}`; }
 
 /* ---------- Votos e avaliações sem conta (um documento por aparelho) ---------- */
 let VOTOS={};
@@ -4427,7 +4435,7 @@ async function desenhaArteChamada(s){
   T(`${fmtD(f.data)} · ${f.estadio}, ${f.local.split(',')[0]}`,W/2,cy+128,'cas',26,CINZA,'center',W-2*P);
   let y=690; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); y+=54;
   T('JOGUE COM A GENTE NO SITE',P,y,'osw',28,GOLDD); y+=56;
-  const itens=[['🗳','Quem vai decidir?','vote no seu palpite'],['🎯','Bolão da torcida','crave o placar'],['📍','De onde você vai ver?','veja onde a torcida está'],['🧠','Quiz da campanha','8 perguntas difíceis']];
+  const itens=[['🗳','Quem vai decidir?','vote no seu palpite'],['🎯','Bolão da torcida','crave o placar'],['📍','De onde você vai ver?','veja onde a torcida está'],['🧠','Quiz da campanha','16 perguntas']];
   y+=8; itens.forEach(([ic,t,sub])=>{ T(ic,P+20,y,'osw',38,INK,'center'); T(t,P+70,y,'osw',38,INK,'left',520); T(sub,W-P,y,'cas',25,CINZA,'right',360); y+=72; });
   y=Math.min(y,A.BOT-118); x.fillStyle='#111'; A.rr(P,y,W-2*P,96,10); x.fill();
   T('Entre e participe',W/2,y+40,'osw',26,'#F5F2EA','center',W-2*P-40);
