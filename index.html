@@ -583,6 +583,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 .fin-cartao .fin-share a,.fin-cartao .linkbtn{color:#C9962B}.fin-mod.fin-foco{box-shadow:0 0 0 4px #C9962B;transition:box-shadow .3s}.fin-quizcard{background:#fff8e6}
 .tacas.galeria .taca{flex:0 1 120px}.tacas.galeria .taca img{height:140px}
 .fin-pos{margin:10px 0 2px;font:600 11px Oswald,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.fin-opc .chip.tit{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -603,9 +604,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121173044';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121173044"></script>
-<script src="backend-firebase.js?v=20261121173044"></script>
+<script>window.GM_BUILD='20261121191337';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121191337"></script>
+<script src="backend-firebase.js?v=20261121191337"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -878,6 +879,7 @@ function vJogo(id){
       ${eg&&eg.titulares&&eg.titulares.length>=7?`<h2>O Galo em campo</h2>${campoHTML(eg.titulares,{form:j.data<'1960'&&eg.titulares.length===11?'2-3-5':null, gols:golsDe('galo'), notas:(diario()[j.id]||{}).nj, craque:(diario()[j.id]||{}).cr})}`:''}
       <div class="grid2"><div><h2>${esc(L.n)}</h2>${lineup(galoLeft?eg:ea, galoLeft?j.tecnico_galo:j.tecnico_adv, galoLeft)}</div>
       <div><h2>${esc(R.n)}</h2>${lineup(galoLeft?ea:eg, galoLeft?j.tecnico_adv:j.tecnico_galo, !galoLeft)}</div></div>
+      ${eg&&eg.reservas&&eg.reservas.length?`<p class="count"><b>Banco do Galo:</b> ${eg.reservas.map(n=>`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`).join(', ')}</p>`:''}
       ${j.obs?`<div class="note"><b>Obs.</b> ${esc(j.obs)}</div>`:''}`;
   } else {
     const mt=[j.cidade?`<div><span>Local</span>${esc(j.cidade)}</div>`:'', j.estadio?`<div><span>Estádio</span><a href="${linkJogos({est:j.estadio})}">${esc(j.estadio)}</a></div>`:'', j.publico!=null?`<div><span>Público</span>${N(j.publico)} ${esc(j.publico_tipo||'')}</div>`:''].join('');
@@ -4237,6 +4239,7 @@ function vFinal(params){
     <div class="final-vs">${cr('galo')}<b>Galo</b><span>×</span><b>${esc(f.adv)}</b>${cr(f.advId)}</div>
     <p class="lede">Jogo único. Vote em quem vai decidir, crave o placar e responda o quiz da campanha.</p>
     <p><a class="more" href="#jogo-${f.jogo}">Faça seu palpite</a> ${artBtn({t:'titulo'})} ${DONO?artBtn({t:'chamada'}).replace('Baixar arte','Arte de chamada'):''} ${tw}</p></div>
+    ${blocoEscFinal()}
     ${blocoFinInterativo()}
     <h2>O caminho até a final</h2>${caminho}
     <h2>Você sabia?</h2><ul class="final-sabia">
@@ -4346,7 +4349,7 @@ function blocoFinInterativo(){
   const cand=finCandidatos(); const votos={}; T_.forEach(x=>{ if(x.heroi) votos[x.heroi]=(votos[x.heroi]||0)+1; }); 
   const totV=Object.values(votos).reduce((a,b)=>a+b,0);
   const heroiH=`<section class="fin-mod" id="fin-heroi"><h2>${e==='hoje'?'Quem vai decidir a final?':'Quem decidiu a final?'}</h2>${m.heroi?`<p class="count">Seu voto: <b>${esc(nomeV(m.heroi))}</b>${golsF?(golsF.includes(m.heroi)?' · ✅ acertou, ele marcou!':' · não marcou dessa vez'):''}. <a href="#" data-fin="trocaheroi">trocar</a></p>`:''}
-    ${!m.heroi||m._trocaH?`<p class="count">Os ${cand.length} relacionados para a final:</p>${FIN_RELACIONADOS.map(([g,l])=>`<p class="fin-pos">${g}</p><div class="fin-opc">${l.map(n=>`<button type="button" class="chip" data-heroi="${esc(n)}">${esc(nomeV(n))}</button>`).join('')}</div>`).join('')}${finLogin()}`:''}
+    ${!m.heroi||m._trocaH?`<p class="count">Os ${cand.length} relacionados para a final${finTit().length?'. Em destaque, os titulares':''}:</p>${FIN_RELACIONADOS.map(([g,l])=>`<p class="fin-pos">${g}</p><div class="fin-opc">${l.map(n=>`<button type="button" class="chip ${finTit().includes(n)?'tit':''}" data-heroi="${esc(n)}">${esc(nomeV(n))}</button>`).join('')}</div>`).join('')}${finLogin()}`:''}
     ${totV?barras(Object.entries(votos).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([n,c])=>[nomeV(n),c,golsF&&golsF.includes(n)]),totV)+`<p class="count">${totV} ${totV===1?'voto':'votos'}${golsF?' · em destaque, quem marcou na final':''}</p>`:''}${finChama('heroi',e==='hoje'?'Quem decide o título hoje? 🐔🏆 Vote no Galo Metrics:':'Quem decidiu a final? Veja como a torcida votou:')}</section>`;
   // 3. Bolão
   const pl={}, res={V:0,E:0,D:0}; T_.forEach(x=>{ if(x.placar){ const k=x.placar.g+'x'+x.placar.b; pl[k]=(pl[k]||0)+1; res[x.placar.g>x.placar.b?'V':x.placar.g===x.placar.b?'E':'D']++; } });
@@ -4449,6 +4452,11 @@ async function desenhaArteChamada(s){
 
 function galeriaTitulos(comSula){ const L=[['conmebol','Copa Conmebol','1992',true],['conmebol','Copa Conmebol','1997',true],['libertadores','Libertadores','2013',true],['recopa','Recopa','2014',true],['sul-americana','Sul-Americana','2026',comSula]];
   return `<div class="tacas galeria">${L.map(([a,n,ano,tem])=>`<figure class="taca ${tem?'':'falta'}"><img src="escudos/tacas/${a}.webp" alt="Taça da ${n}" loading="lazy"><figcaption><b>${n}</b><span>${tem?ano:'hoje?'}</span></figcaption></figure>`).join('')}</div>`; }
+
+const finTit=()=>{ const j=byId[finalCfg().jogo]; return ((j&&j.escalacao_galo)||{}).titulares||[]; };
+function blocoEscFinal(){ const f=finalCfg(), j=byId[f.jogo]; if(!j) return ''; const eg=j.escalacao_galo||{}, ea=j.escalacao_adv||{}; if(!(eg.titulares||[]).length) return '';
+  return `<h2>Escalados</h2>${campoHTML(eg.titulares,{form:"4-3-3"})}<div class="grid2"><div><h3 class="osw">Galo</h3><p>${eg.titulares.map(n=>`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`).join(', ')}.</p>${(eg.reservas||[]).length?`<p class="count"><b>Banco:</b> ${eg.reservas.map(n=>esc(nomeV(n))).join(', ')}.</p>`:''}${j.tecnico_galo?`<p class="count">Técnico: ${esc(j.tecnico_galo)}</p>`:''}</div>
+  <div><h3 class="osw">${esc(f.adv)}</h3>${(ea.titulares||[]).length?`<p>${ea.titulares.map(esc).join(', ')}.</p>`:'<p class="count">A confirmar.</p>'}</div></div>`; }
 
 </script>
 </body>
