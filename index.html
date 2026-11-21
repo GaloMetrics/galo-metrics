@@ -601,9 +601,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121162501';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121162501"></script>
-<script src="backend-firebase.js?v=20261121162501"></script>
+<script>window.GM_BUILD='20261121162826';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121162826"></script>
+<script src="backend-firebase.js?v=20261121162826"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4273,6 +4273,14 @@ async function desenhaArteTitulo(s){
 }
 function blocoFinalDono(){
   if(!DONO) return ''; const f=finalCfg(), e=f.estado||'', j=byId[f.jogo];
+  setTimeout(()=>{ const zm=$('#finzeramim'); if(zm) zm.onclick=async()=>{ G.fin={}; if(G.votoPub) G.votoPub.fin={}; gSave(); try{ if(GUID){ const r=GDB.doc('rankuser/'+GUID); const x=await r.get(); if(x.exists){ const o=x.data(); delete o.fin; await r.set(o); RKU[GUID]=o; } } }catch(e){} toast('Sua participação foi zerada.'); route(); };
+    const zt=$('#finzeratudo'); if(zt) zt.onclick=async()=>{ if(!confirm('Apagar votos, palpites, quiz, cartões e recados da final de TODO MUNDO?')) return; zt.disabled=true; zt.textContent='Zerando…'; let n=0, err=0;
+      G.fin={}; if(G.votoPub) G.votoPub.fin={}; gSave();
+      for(const uid of Object.keys(RKU||{})){ if(!RKU[uid]||!RKU[uid].fin) continue; try{ const r=GDB.doc('rankuser/'+uid); const x=await r.get(); if(x.exists){ const o=x.data(); delete o.fin; await r.set(o); RKU[uid]=o; n++; } }catch(e){ err++; } }
+      for(const vid of Object.keys(VOTOS||{})){ const o=VOTOS[vid]; if(!o||!o.fin||!Object.keys(o.fin).length) continue; try{ const c={...o, fin:{}}; if(!Object.keys(c.aval||{}).length&&!Object.keys(c.avj||{}).length) await GDB.doc('votos/'+vid).delete(); else await GDB.doc('votos/'+vid).set(c); delete VOTOS[vid].fin; n++; }catch(e){ err++; } }
+      try{ const s=await GDB.doc('site/config').get(); const c=s.exists?JSON.parse(s.data().json||'{}'):{}; if(c.final){ c.final.aprov=[]; await GDB.doc('site/config').set({json:JSON.stringify(c), em:Date.now()}); aplicaCfg(c); } }catch(e){}
+      toast(`Final zerada: ${n} ${n===1?'pessoa':'pessoas'}${err?` (${err} não deu)`:''}.`); route(); };
+  },0);
   setTimeout(()=>{ const box=$('#finaldono'); if(!box) return;
     box.querySelectorAll('[data-fe]').forEach(b=>b.onclick=async()=>{ const est=b.dataset.fe; const pen=($('#finpen')||{}).value||''; try{ const s=await GDB.doc('site/config').get(); const c=s.exists?JSON.parse(s.data().json||'{}'):{};
       c.final={...(c.final||{}), estado:est, pen:pen.trim(), ate:est==='hoje'?f.data:(est?'2026-11-28':''), em:Date.now()}; await GDB.doc('site/config').set({json:JSON.stringify(c), em:Date.now()}); aplicaCfg(c); aplicaFinal(); toast(est==='campeao'?'🏆 Modo campeão ligado!':est?'Pronto.':'Modo final desligado.'); route(); }catch(err){ toast('Não deu: '+err.message); } }); });
@@ -4281,6 +4289,7 @@ function blocoFinalDono(){
    <label>Pênaltis, se houver<input id="finpen" value="${esc(f.pen||'')}" placeholder="ex.: 4 x 3 para o Galo"></label>
    <p style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="ghost" data-fe="hoje">É hoje</button><button type="button" class="more" data-fe="campeao">🏆 Galo campeão</button><button type="button" class="ghost" data-fe="vice">Vice</button><button type="button" class="ghost" data-fe="">Desligar</button> <a class="ghost" href="#final">Ver a página</a></p>
    ${blocoMuralDono()}
+   <p style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button type="button" class="ghost" id="finzeramim">Zerar minha participação</button><button type="button" class="ghost" id="finzeratudo">Zerar tudo da final (todos)</button></p>
    <p class="count">Campeão: faixa dourada no topo, confete, página da conquista, arte, figurinha comemorativa e conquista secreta para quem entrar até 28/11. Tudo some sozinho depois.</p></div></details>`;
 }
 /* Miami vira Vice City até 25/11/2026 */
