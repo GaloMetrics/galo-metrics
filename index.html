@@ -570,6 +570,9 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 .mm-passo small{font:600 11px Oswald,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}.mm-passo b{font-size:17px}.mm-passo span{font:700 22px "Courier Prime",monospace}.mm-passo.v{box-shadow:4px 4px 0 #1f7a43}.mm-passo.d{box-shadow:4px 4px 0 #b3261e}.mm-passo.agora{background:#111;color:#F5F2EA!important;box-shadow:4px 4px 0 #C9962B}.mm-passo.agora small{color:#C9962B}
 .final-sabia li{margin:8px 0;line-height:1.45}.final-fig{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:20px 0;padding:16px;border:2px dashed #C9962B}
 .fig-titulo .fig-ph{background:radial-gradient(circle at 50% 35%,#E8C46A,#8a6414)!important}.fig-taca{position:absolute;top:4px;right:6px;font-size:20px}
+.tacas{display:flex;gap:18px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:14px 0 22px;padding:20px 12px;background:radial-gradient(circle at 50% 70%,rgba(201,150,43,.22),transparent 70%)}
+.taca{margin:0;text-align:center;flex:0 1 150px;border:0!important;outline:0!important;background:none!important;box-shadow:none!important;padding:0!important}.taca img{height:170px;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}.taca figcaption{display:flex;flex-direction:column;font:600 13px Oswald,sans-serif;letter-spacing:.06em;text-transform:uppercase;margin-top:8px}.taca figcaption span{color:#8C6610}
+.taca.falta img{filter:grayscale(1) opacity(.35)}.taca.falta figcaption span{color:var(--mute)}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -590,9 +593,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121160447';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121160447"></script>
-<script src="backend-firebase.js?v=20261121160447"></script>
+<script>window.GM_BUILD='20261121161349';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121161349"></script>
+<script src="backend-firebase.js?v=20261121161349"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4205,12 +4208,13 @@ function vFinal(){
   const kpis=`<div class="kpis"><div><b>${r.n}</b><span>jogos</span></div><div><b>${r.V}</b><span>vitórias</span></div><div><b>${r.E}</b><span>empates</span></div><div><b>${r.D}</b><span>derrotas</span></div><div><b>${r.gp}</b><span>gols marcados</span></div><div><b>${r.n?aprov(r):'–'}</b><span>aproveitamento</span></div></div>`;
   const artH=art.length?`<h2>Artilheiros da campanha</h2><ol class="rank">${art.map(([n,g],i)=>`<li><span class="rank-n">${i+1}</span><a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a><b>${g}</b></li>`).join('')}</ol>`:'';
   const titH=`<h2>Títulos internacionais do Galo</h2><div class="pq-ex">${tit.map(t=>`<span class="chip">🏆 ${esc(t.comp)} ${t.ano}</span>`).join(' ')}</div>`;
-  const tweet=e==='campeao'?`🏆 GALO CAMPEÃO DA SUL-AMERICANA ${f.ano}!\n\n${placarF}\n${r.n} jogos, ${r.V} vitórias, ${r.gp} gols. ${tit.length}º título internacional da história.\n\nPegue a figurinha comemorativa:`:e==='vice'?`Obrigado, Galo. Sul-Americana ${f.ano}: ${r.n} jogos, ${r.V} vitórias, ${r.gp} gols.`:`É HOJE. Galo x Boca, final da Sul-Americana.\n\nContra o Boca: ${rb.V}V ${rb.E}E ${rb.D}D. Em 21/11 o Galo tem ${aprov(rd)} de aproveitamento na história.`;
+  const tweet=e==='campeao'?`🏆 GALO CAMPEÃO DA SUL-AMERICANA ${f.ano}!\n\n${placarF}\nLibertadores, Recopa e Sul-Americana: só Inter, São Paulo e Galo têm as três entre os brasileiros.\n\nPegue a figurinha comemorativa:`:e==='vice'?`Obrigado, Galo. Sul-Americana ${f.ano}: ${r.n} jogos, ${r.V} vitórias, ${r.gp} gols.`:`É HOJE. Galo x Boca, final da Sul-Americana.\n\nContra o Boca: ${rb.V}V ${rb.E}E ${rb.D}D. Em 21/11 o Galo tem ${aprov(rd)} de aproveitamento na história.`;
   const tw=`<a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:tweet, url:'https://galometrics.com.br/#final'})}">Pronto para tweet ↗</a>`;
   if(e==='campeao') return `<div class="final-hero campeao"><div class="kicker">Copa Sul-Americana ${f.ano} · ${fmtD(f.data)} · ${esc(f.local)}</div>
-    <h1 class="final-h1">CAMPEÃO.</h1><p class="lede">${placarF?esc(placarF)+'. ':''}O Galo é campeão da Copa Sul-Americana pela primeira vez. É o ${tit.length}º título internacional da história do clube, um ano depois do vice para o Lanús.</p>
+    <h1 class="final-h1">CAMPEÃO.</h1><p class="lede">${placarF?esc(placarF)+'. ':''}O Galo é campeão da Copa Sul-Americana pela primeira vez. É o ${tit.length}º título internacional da história do clube.</p>
     <p>${artBtn({t:'titulo'})} ${tw}</p></div>
     <div class="final-fig"><div>${figTituloHTML()}</div><div><h2>Sua figurinha comemorativa</h2><p>Quem entrar no Galo Metrics até ${fmtD(f.ate||'2026-11-28')} ganha esta figurinha ultra rara e a conquista secreta <b>Eu vivi o título</b>. Ela já está no seu <a href="#album">álbum</a>.</p><p class="count">Estava em Barranquilla? Abra o <a href="#jogo-${f.jogo}">jogo da final</a> e marque "Fui ao estádio" para ganhar a conquista do estádio também.</p></div></div>
+    <h2>Campeão de tudo na América do Sul</h2><p class="lede">Libertadores, Recopa e Sul-Americana. Entre os clubes brasileiros, só <b>Internacional</b>, <b>São Paulo</b> e agora o <b>Galo</b> têm as três.</p>${tacasHTML(true)}
     <h2>O caminho até a taça</h2>${caminho}<h2>A campanha em números</h2>${kpis}${artH}${titH}<h2>Todos os jogos</h2>${tabCamp}`;
   if(e==='vice') return `<div class="final-hero"><div class="kicker">Copa Sul-Americana ${f.ano}</div><h1>Obrigado, Galo.</h1><p class="lede">${placarF?esc(placarF)+'. ':''}Não veio a taça, mas a campanha fica na história.</p><p>${tw}</p></div><h2>O caminho até a final</h2>${caminho}<h2>A campanha em números</h2>${kpis}${artH}<h2>Todos os jogos</h2>${tabCamp}`;
   return `<div class="final-hero"><div class="kicker">Final da Copa Sul-Americana ${f.ano} · ${fmtD(f.data)} · ${esc(f.estadio)}, ${esc(f.local)}</div><h1 class="final-h1">É hoje.</h1>
@@ -4223,7 +4227,8 @@ function vFinal(){
      <li>Em 21 de novembro, o Galo tem <b>${aprov(rd)} de aproveitamento</b> na história: ${rd.V} vitórias em ${rd.n} jogos. <a href="#pergunte?q=21%2F11">Ver os jogos →</a></li>
      <li>O Galo já tem <b>${tit.length} títulos internacionais</b>: ${tit.map(t=>t.comp.replace('Copa ','')+' '+t.ano).join(', ')}.</li>
      <li>O GTA VI saiu dois dias antes da final. Depois de lançamento de GTA, o Galo tem 71% de aproveitamento. <a href="#pergunte?lista=dx-gta">Ver a lista →</a></li>
-     <li>Em 2025, o Galo perdeu a final da Sul-Americana para o Lanús nos pênaltis. <a href="#pergunte?lista=mf-arg">Finais contra argentinos →</a></li></ul>
+     <li>Se for campeão, o Galo entra num clube fechado: <b>só Internacional e São Paulo</b>, entre os brasileiros, já ganharam <b>Libertadores, Sul-Americana e Recopa</b>. O Galo já tem a Libertadores 2013 e a Recopa 2014. Falta uma.</li></ul>
+    ${tacasHTML(false)}
     <h2>A campanha em números</h2>${kpis}${artH}<h2>Todos os jogos</h2>${tabCamp}`;
 }
 async function desenhaArteTitulo(s){
@@ -4238,7 +4243,8 @@ async function desenhaArteTitulo(s){
     T(`${fmtD(f.data)} · ${f.estadio}, ${f.local.split(',')[0]}`,W/2,828,'cas',26,CINZA,'center');
     let y=890; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+150,W-2*P,3); const cw=(W-2*P)/4;
     [[r.n,'jogos'],[r.V,'vitórias'],[r.gp,'gols'],[tit.length+'º','título internacional']].forEach(([n,l],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+28,2,96); } T(String(n),P+i*cw+cw/2,y+92,'abril',64,i===3?GOLD:INK,'center'); T(l.toUpperCase(),P+i*cw+cw/2,y+128,'osw',19,INK,'center',cw-16); });
-    y+=200; T(tit.map(t=>`${t.comp.replace('Copa ','').replace('Recopa Sul-Americana','Recopa')} ${t.ano}`).join('  ·  '),W/2,y,'osw',22,GOLDD,'center',W-2*P);
+    const tacas=[['libertadores','Libertadores 2013'],['recopa','Recopa 2014'],['sul-americana','Sul-Americana 2026']];
+    for(let i=0;i<3;i++){ const im=await loadImg('escudos/tacas/'+tacas[i][0]+'.webp'); const cx=W/2+(i-1)*290; if(im){ const h=120, w=im.width*h/im.height; x.drawImage(im,cx-w/2,1062,w,h); } T(tacas[i][1].toUpperCase(),cx,1204,'osw',20,INK,'center',260); }
     return cv; }
   T('★ '+(s.k||(e==='vice'?'OBRIGADO, GALO':'É HOJE')),P,232,'osw',36,GOLD);
   wrap(s.f||(e==='vice'?`Sul-Americana ${f.ano}: a campanha até a final`:`Final da Sul-Americana`),P,320,'abril',64,W-2*P,72,INK,'left',2);
@@ -4247,7 +4253,8 @@ async function desenhaArteTitulo(s){
   T(`${fmtD(f.data)} · ${f.estadio}, ${f.local.split(',')[0]}`,W/2,cy+170,'cas',28,CINZA,'center',W-2*P);
   let y=800; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); y+=56; T('O CAMINHO',P,y,'osw',26,GOLDD); y+=50;
   mataMatas().filter(m=>m.grupo==='Sul-Americana'&&m.ano===f.ano&&!m.futuro&&!m.final).sort((a,b)=>a.j.data.localeCompare(b.j.data)).forEach(m=>{ x.fillStyle=m.r==='C'?V:R; A.rr(P,y-24,12,28,3); x.fill(); T(m.adv,P+30,y,'cas',32,INK,'left',560); T(`${m.gp} x ${m.gc}`,W-P,y,'osw',30,INK,'right'); y+=58; });
-  T(`Campanha: ${r.n} jogos · ${r.V} vitórias · ${r.gp} gols`,P,Math.min(y+20,A.BOT),'osw',26,INK,'left',W-2*P);
+  T(`Campanha: ${r.n} jogos · ${r.V} vitórias · ${r.gp} gols`,P,Math.min(y+20,A.BOT-50),'osw',26,INK,'left',W-2*P);
+  if(e!=='vice') wrap('Se vencer, o Galo se junta a Inter e São Paulo: os únicos brasileiros com Libertadores, Sul-Americana e Recopa.',P,Math.min(y+70,A.BOT),'cas',24,GOLDD,W-2*P,32,GOLDD,'left',2);
   return cv;
 }
 function blocoFinalDono(){
@@ -4269,6 +4276,9 @@ function capaFinal(){ const e=finalEstado(), f=finalCfg(); if(!e) return '';
   if(e==='campeao') return `<a class="capa-final campeao" href="#final"><span class="cf-k">🏆 Copa Sul-Americana ${f.ano}</span><b>GALO CAMPEÃO.</b><span>Veja a campanha, baixe a arte e pegue sua figurinha comemorativa ultra rara (só até ${fmtD(f.ate||'2026-11-28')}).</span></a>`;
   if(e==='vice') return `<a class="capa-final" href="#final"><span class="cf-k">Copa Sul-Americana ${f.ano}</span><b>Obrigado, Galo.</b><span>A campanha até a final, em números.</span></a>`;
   return `<a class="capa-final" href="#final"><span class="cf-k">★ Final da Sul-Americana · ${esc(f.local.split(',')[0])}</span><b>É hoje: Galo × Boca.</b><span>Retrospecto, caminho até a final, curiosidades e palpite. Se o Galo for campeão, quem entrar no site ganha uma figurinha comemorativa.</span></a>`; }
+
+function tacasHTML(completo){ const L=[['libertadores','Libertadores','2013',true],['recopa','Recopa','2014',true],['sul-americana','Sul-Americana','2026',completo]];
+  return `<div class="tacas">${L.map(([a,n,ano,tem])=>`<figure class="taca ${tem?'':'falta'}"><img src="escudos/tacas/${a}.webp" alt="Taça da ${n}" loading="lazy"><figcaption><b>${n}</b><span>${tem?ano:'hoje?'}</span></figcaption></figure>`).join('')}</div>`; }
 
 </script>
 </body>
