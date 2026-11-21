@@ -601,9 +601,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121163512';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121163512"></script>
-<script src="backend-firebase.js?v=20261121163512"></script>
+<script>window.GM_BUILD='20261121164032';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121164032"></script>
+<script src="backend-firebase.js?v=20261121164032"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4233,7 +4233,7 @@ function vFinal(params){
   if(e==='vice') return `<div class="final-hero"><div class="kicker">Copa Sul-Americana ${f.ano}</div><h1>Obrigado, Galo.</h1><p class="lede">${placarF?esc(placarF)+'. ':''}Não veio a taça, mas a campanha fica na história.</p><p>${tw}</p></div>${blocoFinInterativo()}<h2>O caminho até a final</h2>${caminho}<h2>A campanha em números</h2>${kpis}${artH}<h2>Todos os jogos</h2>${tabCamp}`;
   return `<div class="final-hero"><div class="kicker">Final da Copa Sul-Americana ${f.ano} · ${fmtD(f.data)} · ${esc(f.estadio)}, ${esc(f.local)}</div><h1 class="final-h1">É hoje.</h1>
     <div class="final-vs">${cr('galo')}<b>Galo</b><span>×</span><b>${esc(f.adv)}</b>${cr(f.advId)}</div>
-    <p class="lede">Jogo único. Se o Galo for campeão, quem entrar no Galo Metrics na semana do título ganha uma <b>figurinha comemorativa ultra rara</b>.</p>
+    <p class="lede">Jogo único. Vote em quem vai decidir, crave o placar e responda o quiz da campanha.</p>
     <p><a class="more" href="#jogo-${f.jogo}">Faça seu palpite</a> ${artBtn({t:'titulo'})} ${DONO?artBtn({t:'chamada'}).replace('Baixar arte','Arte de chamada'):''} ${tw}</p></div>
     ${blocoFinInterativo()}
     <h2>O caminho até a final</h2>${caminho}
@@ -4300,7 +4300,7 @@ function aplicaViceCity(){ if(hojeStr()>'2026-11-25') return; J.forEach(j=>{ if(
 function capaFinal(){ const e=finalEstado(), f=finalCfg(); if(!e) return '';
   if(e==='campeao') return `<a class="capa-final campeao" href="#final"><span class="cf-k">🏆 Copa Sul-Americana ${f.ano}</span><b>GALO CAMPEÃO.</b><span>Veja a campanha, baixe a arte e pegue sua figurinha comemorativa ultra rara (só até ${fmtD(f.ate||'2026-11-28')}).</span></a>`;
   if(e==='vice') return `<a class="capa-final" href="#final"><span class="cf-k">Copa Sul-Americana ${f.ano}</span><b>Obrigado, Galo.</b><span>A campanha até a final, em números.</span></a>`;
-  return `<a class="capa-final" href="#final"><span class="cf-k">★ Final da Sul-Americana · ${esc(f.local.split(',')[0])}</span><b>É hoje: Galo × Boca.</b><span>Retrospecto, caminho até a final, curiosidades e palpite. Se o Galo for campeão, quem entrar no site ganha uma figurinha comemorativa.</span></a>`; }
+  return `<a class="capa-final" href="#final"><span class="cf-k">★ Final da Sul-Americana · ${esc(f.local.split(',')[0])}</span><b>É hoje: Galo × Boca.</b><span>Quem vai decidir? Qual vai ser o placar? Vote, crave o placar e responda o quiz da campanha.</span></a>`; }
 
 function tacasHTML(completo){ const L=[['libertadores','Libertadores','2013',true],['recopa','Recopa','2014',true],['sul-americana','Sul-Americana','2026',completo]];
   return `<div class="tacas">${L.map(([a,n,ano,tem])=>`<figure class="taca ${tem?'':'falta'}"><img src="escudos/tacas/${a}.webp" alt="Taça da ${n}" loading="lazy"><figcaption><b>${n}</b><span>${tem?ano:'hoje?'}</span></figcaption></figure>`).join('')}</div>`; }
@@ -4333,7 +4333,7 @@ function blocoFinInterativo(){
   // 2. Quem decide
   const cand=finCandidatos(); const votos={}; T_.forEach(x=>{ if(x.heroi) votos[x.heroi]=(votos[x.heroi]||0)+1; }); 
   const totV=Object.values(votos).reduce((a,b)=>a+b,0);
-  const heroiH=`<section class="fin-mod" id="fin-heroi"><h2>Quem decide a final?</h2>${m.heroi?`<p class="count">Seu voto: <b>${esc(nomeV(m.heroi))}</b>${golsF?(golsF.includes(m.heroi)?' · ✅ acertou, ele marcou!':' · não marcou dessa vez'):''}. <a href="#" data-fin="trocaheroi">trocar</a></p>`:''}
+  const heroiH=`<section class="fin-mod" id="fin-heroi"><h2>${e==='hoje'?'Quem vai decidir a final?':'Quem decidiu a final?'}</h2>${m.heroi?`<p class="count">Seu voto: <b>${esc(nomeV(m.heroi))}</b>${golsF?(golsF.includes(m.heroi)?' · ✅ acertou, ele marcou!':' · não marcou dessa vez'):''}. <a href="#" data-fin="trocaheroi">trocar</a></p>`:''}
     ${!m.heroi||m._trocaH?`<div class="fin-opc">${cand.map(n=>`<button type="button" class="chip" data-heroi="${esc(n)}">${esc(nomeV(n))}</button>`).join('')}</div>${finLogin()}`:''}
     ${totV?barras(Object.entries(votos).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([n,c])=>[nomeV(n),c,golsF&&golsF.includes(n)]),totV)+`<p class="count">${totV} ${totV===1?'voto':'votos'}${golsF?' · em destaque, quem marcou na final':''}</p>`:''}${finChama('heroi',e==='hoje'?'Quem decide o título hoje? 🐔🏆 Vote no Galo Metrics:':'Quem decidiu a final? Veja como a torcida votou:')}</section>`;
   // 3. Bolão
@@ -4427,7 +4427,7 @@ async function desenhaArteChamada(s){
   T(`${fmtD(f.data)} · ${f.estadio}, ${f.local.split(',')[0]}`,W/2,cy+128,'cas',26,CINZA,'center',W-2*P);
   let y=690; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); y+=54;
   T('JOGUE COM A GENTE NO SITE',P,y,'osw',28,GOLDD); y+=56;
-  const itens=[['🗳','Quem decide o título?','vote no herói da final'],['🎯','Bolão da torcida','crave o placar'],['📍','De onde você vai ver?','veja onde a torcida está'],['🧠','Quiz da campanha','8 perguntas difíceis']];
+  const itens=[['🗳','Quem vai decidir?','vote no seu palpite'],['🎯','Bolão da torcida','crave o placar'],['📍','De onde você vai ver?','veja onde a torcida está'],['🧠','Quiz da campanha','8 perguntas difíceis']];
   y+=8; itens.forEach(([ic,t,sub])=>{ T(ic,P+20,y,'osw',38,INK,'center'); T(t,P+70,y,'osw',38,INK,'left',520); T(sub,W-P,y,'cas',25,CINZA,'right',360); y+=72; });
   y=Math.min(y,A.BOT-118); x.fillStyle='#111'; A.rr(P,y,W-2*P,96,10); x.fill();
   T('Entre e participe',W/2,y+40,'osw',26,'#F5F2EA','center',W-2*P-40);
