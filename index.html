@@ -579,6 +579,8 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 .fin-bar{display:grid;grid-template-columns:minmax(90px,38%) 1fr 44px 30px;align-items:center;gap:8px;margin:5px 0;font-size:14px}.fin-bar i{display:block;height:14px;background:#C9962B;min-width:2px}.fin-bar.dest i{background:#1f7a43}.fin-bar b{font:700 14px Oswald,sans-serif;text-align:right}.fin-bar small{color:var(--mute);font-size:12px}
 .fin-plac{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:600 18px Oswald,sans-serif;margin:8px 0}.fin-plac input{width:64px;font:700 22px "Courier Prime",monospace;text-align:center}
 .fin-rec textarea{width:100%;font:inherit}.fin-murais{display:grid;gap:10px;margin-top:10px}.fin-murais blockquote{margin:0;padding:10px 12px;border-left:4px solid #C9962B;background:var(--soft)}.fin-murais p{margin:0 0 4px}.fin-murais cite{font:600 12px Oswald,sans-serif;text-transform:uppercase;letter-spacing:.05em;color:var(--mute)}
+.fin-mod{scroll-margin-top:190px}.fin-share{margin:12px 0 0;font-size:13px;display:flex;gap:12px;flex-wrap:wrap}.fin-share a,.fin-share .linkbtn{font:600 12px Oswald,sans-serif;letter-spacing:.06em;text-transform:uppercase}.linkbtn{background:none;border:0;padding:0;cursor:pointer;color:inherit;text-decoration:underline}
+.fin-cartao .fin-share a,.fin-cartao .linkbtn{color:#C9962B}.fin-mod.fin-foco{box-shadow:0 0 0 4px #C9962B;transition:box-shadow .3s}.fin-quizcard{background:#fff8e6}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -599,9 +601,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121161734';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121161734"></script>
-<script src="backend-firebase.js?v=20261121161734"></script>
+<script>window.GM_BUILD='20261121162214';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121162214"></script>
+<script src="backend-firebase.js?v=20261121162214"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2845,7 +2847,8 @@ function route(){
   else if(h==='novo-jogo') {html=vNovoJogo(); sec='jogos';}
   else if(h==='album') html=vAlbum();
   else if(h==='dono') html=vDono()+(typeof blocoFinalDono==='function'?blocoFinalDono():'')+(typeof blocoBuscaPerfisDono==='function'?blocoBuscaPerfisDono():'')+blocoMoedas()+blocoAjuste();
-  else if(h==='final'||h==='campeao') html=vFinal();
+  else if(h==='final'||h==='campeao') html=vFinal(params);
+  else if(h==='final-quiz') html=vFinalQuiz();
   else if(h==='dono-falta') html=vFalta();
   else if(h==='dono-secretas') html=vDonoSecretas();
   else if(h==='dono-uso') html=vDonoStats(params);
@@ -4200,7 +4203,8 @@ function confete(){ if(sessionStorage.getItem('gm-confete')) return; try{ sessio
   const x=c.getContext('2d'), W=c.width=innerWidth, H=c.height=innerHeight, cores=['#111','#C9962B','#F5F2EA','#E8C46A','#ffffff'];
   const P=Array.from({length:180},()=>({x:Math.random()*W, y:-20-Math.random()*H*.6, vx:(Math.random()-.5)*3, vy:2+Math.random()*4, r:Math.random()*6.28, vr:(Math.random()-.5)*.3, w:6+Math.random()*8, h:8+Math.random()*10, c:cores[Math.floor(Math.random()*cores.length)]}));
   let t=0; const passo=()=>{ x.clearRect(0,0,W,H); P.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.r+=p.vr; p.vy+=.03; x.save(); x.translate(p.x,p.y); x.rotate(p.r); x.fillStyle=p.c; x.fillRect(-p.w/2,-p.h/2,p.w,p.h); x.restore(); }); if(++t<260) requestAnimationFrame(passo); else c.remove(); }; passo(); }
-function vFinal(){
+function vFinal(params){
+  const secP=new URLSearchParams(params||'').get('s'); if(secP) setTimeout(()=>{ const el=document.getElementById('fin-'+secP); if(el){ el.scrollIntoView({behavior:'smooth',block:'start'}); el.classList.add('fin-foco'); setTimeout(()=>el.classList.remove('fin-foco'),2500); } },350);
   const e=finalEstado()||'hoje', f=finalCfg(), j=byId[f.jogo]; try{ trk('final_'+e); }catch(_){}
   const camp=campanhaSula(), jog=camp.filter(x=>x.gp!=null), r=rec(jog);
   const vsBoca=J.filter(x=>x.adversario_id===f.advId&&x.gp!=null), rb=rec(vsBoca);
@@ -4317,36 +4321,36 @@ function blocoFinInterativo(){
   // 2. Quem decide
   const cand=finCandidatos(); const votos={}; T_.forEach(x=>{ if(x.heroi) votos[x.heroi]=(votos[x.heroi]||0)+1; }); if(!GUID&&m.heroi) votos[m.heroi]=(votos[m.heroi]||0)+1;
   const totV=Object.values(votos).reduce((a,b)=>a+b,0);
-  const heroiH=`<section class="fin-mod"><h2>Quem decide a final?</h2>${m.heroi?`<p class="count">Seu voto: <b>${esc(nomeV(m.heroi))}</b>${golsF?(golsF.includes(m.heroi)?' · ✅ acertou, ele marcou!':' · não marcou dessa vez'):''}. <a href="#" data-fin="trocaheroi">trocar</a></p>`:''}
+  const heroiH=`<section class="fin-mod" id="fin-heroi"><h2>Quem decide a final?</h2>${m.heroi?`<p class="count">Seu voto: <b>${esc(nomeV(m.heroi))}</b>${golsF?(golsF.includes(m.heroi)?' · ✅ acertou, ele marcou!':' · não marcou dessa vez'):''}. <a href="#" data-fin="trocaheroi">trocar</a></p>`:''}
     ${!m.heroi||m._trocaH?`<div class="fin-opc">${cand.map(n=>`<button type="button" class="chip" data-heroi="${esc(n)}">${esc(nomeV(n))}</button>`).join('')}</div>${finLogin()}`:''}
-    ${totV?barras(Object.entries(votos).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([n,c])=>[nomeV(n),c,golsF&&golsF.includes(n)]),totV)+`<p class="count">${totV} ${totV===1?'voto':'votos'}${golsF?' · em destaque, quem marcou na final':''}</p>`:''}</section>`;
+    ${totV?barras(Object.entries(votos).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([n,c])=>[nomeV(n),c,golsF&&golsF.includes(n)]),totV)+`<p class="count">${totV} ${totV===1?'voto':'votos'}${golsF?' · em destaque, quem marcou na final':''}</p>`:''}${finChama('heroi',e==='hoje'?'Quem decide o título hoje? 🐔🏆 Vote no Galo Metrics:':'Quem decidiu a final? Veja como a torcida votou:')}</section>`;
   // 3. Bolão
   const pl={}, res={V:0,E:0,D:0}; T_.forEach(x=>{ if(x.placar){ const k=x.placar.g+'x'+x.placar.b; pl[k]=(pl[k]||0)+1; res[x.placar.g>x.placar.b?'V':x.placar.g===x.placar.b?'E':'D']++; } });
   const totP=res.V+res.E+res.D; const acertaram=j&&j.gp!=null?T_.filter(x=>x.placar&&x.placar.g===j.gp&&x.placar.b===j.gc):[];
-  const bolaoH=`<section class="fin-mod"><h2>Bolão da torcida</h2>${m.placar?`<p class="count">Seu palpite: <b>Galo ${m.placar.g} x ${m.placar.b} Boca</b>${j&&j.gp!=null?(m.placar.g===j.gp&&m.placar.b===j.gc?' · 🎯 cravou!':''):''}</p>`:''}
+  const bolaoH=`<section class="fin-mod" id="fin-bolao"><h2>Bolão da torcida</h2>${m.placar?`<p class="count">Seu palpite: <b>Galo ${m.placar.g} x ${m.placar.b} Boca</b>${j&&j.gp!=null?(m.placar.g===j.gp&&m.placar.b===j.gc?' · 🎯 cravou!':''):''}</p>`:''}
     ${e==='hoje'?`<form id="finbolao" class="fin-plac"><span>Galo</span><input name="g" type="number" min="0" max="15" value="${m.placar?m.placar.g:''}" required><span>x</span><input name="b" type="number" min="0" max="15" value="${m.placar?m.placar.b:''}" required><span>Boca</span><button class="more" type="submit">${m.placar?'Mudar':'Apostar'}</button></form>${finLogin()}`:''}
     ${totP?barras([['Vitória do Galo',res.V],['Empate no tempo normal',res.E],['Vitória do Boca',res.D]],totP)+`<p class="count">Placares mais apostados: ${Object.entries(pl).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([k,n])=>`<b>${k.replace('x',' x ')}</b> (${n})`).join(' · ')}</p>`:'<p class="count">Ninguém apostou ainda.</p>'}
-    ${acertaram.length?`<p>🎯 Cravaram o placar: ${acertaram.map(x=>`<b>${esc(x.ap)}</b>`).join(', ')}</p>`:''}</section>`;
+    ${acertaram.length?`<p>🎯 Cravaram o placar: ${acertaram.map(x=>`<b>${esc(x.ap)}</b>`).join(', ')}</p>`:''}${finChama('bolao','Qual o seu palpite para Galo x Boca? Aposte no bolão da torcida:')}</section>`;
   // 4. Onde assistiu
   const onde={}, cid={}; T_.forEach(x=>{ if(x.onde) onde[x.onde]=(onde[x.onde]||0)+1; if(x.cidade){ const k=x.cidade.trim().replace(/\s+/g,' '); const kk=nrm(k); cid[kk] ||= {n:0,nome:k}; cid[kk].n++; } });
   const totO=Object.values(onde).reduce((a,b)=>a+b,0);
-  const ondeH=`<section class="fin-mod"><h2>Onde a torcida ${e==='hoje'?'vai assistir':'assistiu'}</h2>
+  const ondeH=`<section class="fin-mod" id="fin-onde"><h2>Onde a torcida ${e==='hoje'?'vai assistir':'assistiu'}</h2>
     <form id="finonde" class="dgrid"><label>Onde<select name="onde">${FIN_ONDE.map(([k,t])=>`<option value="${k}" ${m.onde===k?'selected':''}>${t}</option>`).join('')}</select></label><label>Cidade<input name="cidade" value="${esc(m.cidade||'')}" placeholder="Belo Horizonte" maxlength="40"></label><button class="ghost" type="submit">Marcar</button></form>
     ${totO?barras(Object.entries(onde).sort((a,b)=>b[1]-a[1]).map(([k,n])=>[(FIN_ONDE.find(x=>x[0]===k)||[k,k])[1],n]),totO):''}
-    ${Object.keys(cid).length?`<p class="count">Cidades: ${Object.values(cid).sort((a,b)=>b.n-a.n).slice(0,25).map(c=>`<b>${esc(c.nome)}</b> ${c.n}`).join(' · ')}</p>`:''}</section>`;
+    ${Object.keys(cid).length?`<p class="count">Cidades: ${Object.values(cid).sort((a,b)=>b.n-a.n).slice(0,25).map(c=>`<b>${esc(c.nome)}</b> ${c.n}`).join(' · ')}</p>`:''}${finChama('onde',e==='hoje'?'De onde você vai ver a final? Marque no Galo Metrics e veja de onde a torcida vai assistir:':'De onde você viu o título? Marque no Galo Metrics:')}</section>`;
   // 1. Cartão
-  const cartaoH=`<section class="fin-mod fin-cartao"><h2>${e==='campeao'?'Seu cartão "Eu vivi o título"':e==='vice'?'Seu cartão da final':'Seu cartão da final'}</h2>
+  const cartaoH=`<section class="fin-mod fin-cartao" id="fin-cartao"><h2>${e==='campeao'?'Seu cartão "Eu vivi o título"':e==='vice'?'Seu cartão da final':'Seu cartão da final'}</h2>
     <p class="count">Um cartão com o seu nome, onde você ${e==='hoje'?'vai ver':'viu'} o jogo e o placar, pronto para os Stories.</p>
-    <form id="fincartao" class="dgrid"><label>Seu nome no cartão<input name="nome" value="${esc(m.nome||(G.perfil||{}).apelido||'')}" maxlength="26" placeholder="Seu nome"></label><label>Onde<select name="onde">${FIN_ONDE.map(([k,t])=>`<option value="${k}" ${m.onde===k?'selected':''}>${t}</option>`).join('')}</select></label><button class="more" type="submit">Gerar meu cartão</button></form></section>`;
+    <form id="fincartao" class="dgrid"><label>Seu nome no cartão<input name="nome" value="${esc(m.nome||(G.perfil||{}).apelido||'')}" maxlength="26" placeholder="Seu nome"></label><label>Onde<select name="onde">${FIN_ONDE.map(([k,t])=>`<option value="${k}" ${m.onde===k?'selected':''}>${t}</option>`).join('')}</select></label><button class="more" type="submit">Gerar meu cartão</button></form>${finChama('cartao',e==='campeao'?'Gerei meu cartão "Eu vivi o título" 🏆 Faça o seu:':'Gere seu cartão da final da Sul-Americana:')}</section>`;
   // 5. Mural
   const aprov=new Set((f.aprov||[])), mur=T_.filter(x=>x.recado&&aprov.has(x.uid)).sort((a,b)=>(b.em||0)-(a.em||0));
-  const muralH=`<section class="fin-mod"><h2>Mural ${e==='campeao'?'do título':'da final'}</h2>
+  const muralH=`<section class="fin-mod" id="fin-mural"><h2>Mural ${e==='campeao'?'do título':'da final'}</h2>
     <form id="finmural" class="fin-rec"><textarea name="t" maxlength="140" rows="2" placeholder="Deixe seu recado para o time (até 140 caracteres)">${esc(m.recado||'')}</textarea><button class="ghost" type="submit">Enviar recado</button></form>${GUID?'<p class="count">Os recados aparecem depois de aprovados.</p>':finLogin('o seu recado ir para o mural')}
-    ${mur.length?`<div class="fin-murais">${mur.slice(0,40).map(x=>`<blockquote><p>“${esc(x.recado)}”</p><cite>${esc(x.ap)}</cite></blockquote>`).join('')}</div>`:''}</section>`;
+    ${mur.length?`<div class="fin-murais">${mur.slice(0,40).map(x=>`<blockquote><p>“${esc(x.recado)}”</p><cite>${esc(x.ap)}</cite></blockquote>`).join('')}</div>`:''}${finChama('mural','Deixe seu recado para o Galo no mural da final:')}</section>`;
   // 6. Quiz
   const Q=finQuiz(); const qr=T_.filter(x=>x.quiz!=null).sort((a,b)=>b.quiz-a.quiz||(a.quizT||0)-(b.quizT||0));
-  const quizH=`<section class="fin-mod"><h2>Quiz da campanha</h2>${m.quiz!=null?`<p>Você acertou <b>${m.quiz} de ${Q.length}</b>.</p>`:`<p class="count">${Q.length} perguntas sobre a Sul-Americana ${f.ano}. Uma tentativa só.</p><button class="more" type="button" id="finquizgo">Começar</button><div id="finquiz"></div>`}
-    ${qr.length?`<h3 class="osw" style="margin-top:14px">Ranking do quiz</h3><ol class="rank">${qr.slice(0,10).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${esc(x.ap)}<b>${x.quiz}/${Q.length}</b></li>`).join('')}</ol>`:''}</section>`;
+  const quizH=`<section class="fin-mod fin-quizcard" id="fin-quiz"><h2>Quiz da campanha</h2>${m.quiz!=null?`<p>Você acertou <b>${m.quiz} de ${Q.length}</b>.</p>`:`<p>${Q.length} perguntas sobre a Sul-Americana ${f.ano}. Uma tentativa só, e o tempo desempata. Responda antes de olhar os números da campanha!</p><a class="more" href="#final-quiz">Responder o quiz</a>`}
+    ${qr.length?`<h3 class="osw" style="margin-top:14px">Ranking do quiz</h3><ol class="rank">${qr.slice(0,10).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${esc(x.ap)}<b>${x.quiz}/${Q.length}</b></li>`).join('')}</ol>`:''}${finChama('quiz',"'Você sabe tudo da campanha do Galo na Sul-Americana? Responda o quiz:'",'final-quiz')}</section>`;
   setTimeout(()=>finLiga(Q),0);
   return `<div class="fin-grid">${cartaoH}${heroiH}${bolaoH}${ondeH}${quizH}${muralH}</div>`;
 }
@@ -4383,6 +4387,16 @@ async function desenhaArteCartao(s){
 function blocoMuralDono(){ const f=finalCfg(); const T_=finTodos().filter(x=>x.recado); if(!T_.length) return '<p class="count">Nenhum recado no mural ainda.</p>'; const ap=new Set(f.aprov||[]);
   setTimeout(()=>document.querySelectorAll('[data-aprov]').forEach(b=>b.onclick=async()=>{ try{ const s=await GDB.doc('site/config').get(); const c=s.exists?JSON.parse(s.data().json||'{}'):{}; c.final ||= {}; const L=new Set(c.final.aprov||[]); if(L.has(b.dataset.aprov)) L.delete(b.dataset.aprov); else L.add(b.dataset.aprov); c.final.aprov=[...L]; await GDB.doc('site/config').set({json:JSON.stringify(c), em:Date.now()}); aplicaCfg(c); route(); }catch(e){ toast(e.message); } }),0);
   return `<h3 class="osw">Recados do mural (${T_.length})</h3>${T_.map(x=>`<p style="display:flex;gap:10px;align-items:flex-start"><button type="button" class="${ap.has(x.uid)?'more':'ghost'}" data-aprov="${esc(x.uid)}">${ap.has(x.uid)?'✓ No mural':'Aprovar'}</button><span><b>${esc(x.ap)}:</b> ${esc(x.recado)}</span></p>`).join('')}`; }
+
+function finChama(sec, txt, rota){ const url='https://galometrics.com.br/#'+(rota||('final?s='+sec)); return `<p class="fin-share"><a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:txt, url})}">Chamar no Twitter ↗</a> <button type="button" class="linkbtn" onclick="navigator.clipboard&&navigator.clipboard.writeText('${url}').then(()=>toast('Link copiado'))">Copiar link</button></p>`; }
+function vFinalQuiz(){ const f=finalCfg(), m=finMeu(), Q=finQuiz(); try{ trk('final_quiz_abre'); }catch(e){}
+  setTimeout(()=>{ const qg=$('#finquizgo'); if(!qg) return; qg.onclick=()=>{ qg.remove(); let i=0, ok=0; const t0=Date.now(); const box=$('#finquiz');
+    const mostra=()=>{ if(i>=Q.length){ box.innerHTML=`<p class="final-h1" style="font-size:64px!important">${ok}/${Q.length}</p><p class="osw">${ok===Q.length?'Gabaritou! Você sabe tudo da campanha.':ok>=4?'Mandou bem!':'Dá para estudar mais a campanha.'}</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a> <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:'Acertei '+ok+' de '+Q.length+' no quiz da campanha do Galo na Sul-Americana. E você?', url:'https://galometrics.com.br/#final-quiz'})}">Desafiar no Twitter ↗</a></p>`; finSalva({quiz:ok, quizT:Date.now()-t0}); try{ trk('final_quiz'); }catch(e){} return; }
+      const q=Q[i]; box.innerHTML=`<p class="count">Pergunta ${i+1} de ${Q.length}</p><p style="font-size:22px"><b>${esc(q.p)}</b></p><div class="fin-opc">${q.o.map(o=>`<button type="button" class="chip" data-r="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
+      box.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{ const certo=b.dataset.r===q.c; if(certo) ok++; b.classList.add(certo?'certo':'errado'); if(!certo) box.querySelector(`[data-r="${CSS.escape(q.c)}"]`)?.classList.add('certo'); box.querySelectorAll('[data-r]').forEach(x=>x.disabled=true); setTimeout(()=>{ i++; mostra(); },1000); }); };
+    mostra(); }; });
+  return `<a class="back" href="#final">← Final da Sul-Americana</a><div class="kicker">Quiz · Copa Sul-Americana ${f.ano}</div><h1>Você sabe tudo da campanha?</h1>
+  ${m.quiz!=null?`<p class="lede">Você já respondeu: <b>${m.quiz} de ${Q.length}</b>. Uma tentativa por pessoa.</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a></p>`:`<p class="lede">${Q.length} perguntas. Uma tentativa só, e o tempo desempata no ranking.</p>${GUID?'':`<p class="count">${window.GM_LOGIN?'<a href="javascript:GM_LOGIN()">Entre com sua conta Google</a> para aparecer no ranking.':''}</p>`}<button class="more" type="button" id="finquizgo">Começar</button><div id="finquiz" style="margin-top:16px"></div>`}`; }
 
 </script>
 </body>
