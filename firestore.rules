@@ -15,6 +15,12 @@ service cloud.firestore {
       allow read: if publica(col);
       allow write: if publica(col) && dono();
     }
+    // Votos e avaliações de quem não entrou com o Google: um documento por aparelho
+    match /votos/{id} {
+      allow read: if true;
+      allow create, update: if jsonAte(60000);
+      allow delete: if dono();
+    }
     // Sugestões: cada pessoa lê e escreve só as suas; o dono vê todas
     match /sugestoes/{uid} {
       allow read: if eu(uid) || dono();

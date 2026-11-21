@@ -601,9 +601,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121162214';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121162214"></script>
-<script src="backend-firebase.js?v=20261121162214"></script>
+<script>window.GM_BUILD='20261121162501';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121162501"></script>
+<script src="backend-firebase.js?v=20261121162501"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1791,7 +1791,7 @@ async function gmInit(){
   contaBotao();
   if(GDB){ try{ const s=await GDB.doc('site/config').get(); if(s.exists){ aplicaCfg(JSON.parse(s.data().json||'{}')); } }catch(e){} }
   if(DONO&&GDB&&GUID&&CFG.criador!==GUID){ try{ const s=await GDB.doc('site/config').get(); const c=s.exists?JSON.parse(s.data().json||'{}'):{}; c.criador=GUID; await GDB.doc('site/config').set({json:JSON.stringify(c), em:Date.now()}); CFG.criador=GUID; }catch(e){} }
-  await carregaEdicoes(); await carregaRanking(); await carregaAval(); try{ await carregaColab(); }catch(e){} try{ await carregaPresentes(); }catch(e){} try{ registraPerfil(); }catch(e){} try{ checaPrimeiros(); }catch(e){} try{ if(GUID) trk('login'); }catch(e){} try{ publicaResumo(); }catch(e){}
+  await carregaEdicoes(); await carregaRanking(); try{ await carregaVotos(); }catch(e){} await carregaAval(); try{ await carregaColab(); }catch(e){} try{ await carregaPresentes(); }catch(e){} try{ registraPerfil(); }catch(e){} try{ checaPrimeiros(); }catch(e){} try{ if(GUID) trk('login'); }catch(e){} try{ publicaResumo(); }catch(e){}
   NUVEM = lsGet('gm-nuvem')!=='0' && !!GDB && !!GUID; if(NUVEM){ await nuvemCarrega(); gExtra(); gSave(); }
   try{ aplicaFinal(); }catch(e){}
   GM_PRONTO=true; atualizaChip(); route();
@@ -2449,7 +2449,7 @@ function blocoDiario(j){
     f.onsubmit=async(ev)=>{ ev.preventDefault(); const nota=+f.elements.nota.value||0, txt=f.elements.texto.value.trim().slice(0,1000), est=f.elements.est.checked&&(!!d.est||!motivoEstadio(j)), cr=f.elements.craque?f.elements.craque.value:'';
       const nj={}; lineup.forEach((n,i)=>{ const el=f.elements['nj'+i]; if(el&&el.value!=='') nj[n]=Math.max(0,Math.min(10,+el.value)); });
       if(!nota&&!txt&&!est&&!cr&&!Object.keys(nj).length){ delete diario()[j.id]; } else diario()[j.id]={n:nota, t:txt, est, cr, nj, d:hojeStr(), ...(est?{estEm:d.estEm||hojeStr()}:{}), ...(f.elements.torc&&!f.elements.torc.checked?{priv:1}:{})};
-      if(GUID) await publicaAval(j.id, {n:nota,t:txt,cr,est}, !!(f.elements.torc&&f.elements.torc.checked));
+      await publicaAval(j.id, {n:nota,t:txt,cr,est}, f.elements.torc?f.elements.torc.checked:true);
       if(DONO&&f.elements.pub&&f.elements.pub.checked&&GDB){ try{ await GDB.doc('avaliacoes/'+j.id).set({n:nota, t:txt, cr, nj, em:Date.now()}); AVAL[j.id]={n:nota,t:txt,cr,nj}; }catch(err){ toast('A avaliação pública não foi salva agora.'); } }
       else if(DONO&&f.elements.pub&&!f.elements.pub.checked&&AVAL[j.id]&&GDB){ try{ await GDB.doc('avaliacoes/'+j.id).delete(); delete AVAL[j.id]; }catch(err){} }
       gSave(); checaConquistas(); toast('Salvo no seu diário.'); route.keep=true; route(); };
@@ -2466,7 +2466,7 @@ function blocoDiario(j){
   <p class="count" style="margin-top:12px">Notas para os jogadores do Galo (0 a 10, deixe em branco para não avaliar):</p>
   <div class="nj-grid">${lineup.map((n,i)=>`<label>${esc(nomeV(n))}<input type="number" name="nj${i}" min="0" max="10" step="0.5" value="${d.nj&&d.nj[n]!=null?d.nj[n]:''}"></label>`).join('')}</div>`:''}
   <label>Sua resenha<textarea name="texto" rows="3" maxlength="1000" style="width:100%" placeholder="O que você achou do jogo?">${esc(d.t||'')}</textarea></label>
-  ${GUID?`<label class="chk"><input type="checkbox" name="torc" ${d.priv?'':'checked'}> Mostrar minha nota e resenha para a torcida</label>`:''}
+  <label class="chk"><input type="checkbox" name="torc" ${d.priv?'':'checked'}> Mostrar minha nota e resenha para a torcida</label>
   ${DONO?`<label class="chk"><input type="checkbox" name="pub" ${pub?'checked':''}> Publicar também como avaliação oficial do Galo Metrics</label>`:''}
   <button type="submit" class="more">Salvar no diário</button></form></details>${meu}`;
 }
@@ -3540,9 +3540,9 @@ function ligaStars(root){
     lim.onclick=()=>set(0); });
 }
 /* Avaliações da torcida: cada torcedor publica as suas em rankuser/{uid}.aval */
-function avalTorcida(id, campo='aval'){ return Object.entries(RKU||{}).map(([uid,o])=>{ const a=o&&o[campo]&&o[campo][id]; return a&&(a.n||a.t)?{uid, ap:o.ap||'Torcedor', ...a}:null; }).filter(Boolean).sort((a,b)=>String(b.d||'').localeCompare(String(a.d||''))); }
+function avalTorcida(id, campo='aval'){ return fontesVoto().map(([uid,o,anon])=>{ const a=o&&o[campo]&&o[campo][id]; return a&&(a.n||a.t)?{uid, ap:o.ap||(anon?'Torcedor sem conta':'Torcedor'), anon, ...a}:null; }).filter(Boolean).sort((a,b)=>String(b.d||'').localeCompare(String(a.d||''))); }
 async function publicaAval(id, a, publicar){ try{ trk("avaliacao"); if(!DONO&&a&&(a.n||a.t)){ TRK.av.push({k:'jogo-'+id, n:a.n||0, x:a.t?1:0}); clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } }catch(e){}
-  if(!GDB||!GUID) return;
+  if(!GDB) return; if(!GUID){ return votoAval('aval',id,(publicar&&(a.n||a.t))?{n:a.n||0, t:(a.t||'').slice(0,600), cr:a.cr||'', est:a.est?1:0, d:hojeStr()}:null); }
   try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.aval ||= {};
     if(publicar&&(a.n||a.t)) o.aval[id]={n:a.n||0, t:(a.t||'').slice(0,600), cr:a.cr||'', est:a.est?1:0, d:hojeStr()}; else delete o.aval[id];
     o.ap=apAtual(o); await ref.set(o); RKU[GUID]=o; }catch(e){ console.warn('publicaAval',e); }
@@ -3550,7 +3550,7 @@ async function publicaAval(id, a, publicar){ try{ trk("avaliacao"); if(!DONO&&a&
 function blocoTorcida(j, campo='aval', id=j&&j.id, titulo='Avaliações da torcida', vazio='Ninguém avaliou este jogo ainda.', dica='Seja o primeiro: use "Meu diário" acima.'){
   const L=avalTorcida(id, campo), notas=L.filter(x=>x.n);
   const head=`<h2>${titulo}</h2>`;
-  if(!L.length) return head+`<p class="count">${vazio} ${GUID?dica:(window.GM_LOGIN?'<a href="javascript:GM_LOGIN()">Entre com sua conta Google</a> e seja o primeiro a avaliar.':'')}</p>`;
+  if(!L.length) return head+`<p class="count">${vazio} ${dica}</p>`;
   const med=notas.length?notas.reduce((s,x)=>s+x.n,0)/notas.length:0;
   const hist=[...Array(10)].map((_,i)=>notas.filter(x=>x.n===(i+1)/2).length), mx=Math.max(1,...hist);
   return head+`<div class="torc">
@@ -3609,6 +3609,7 @@ function blocoAvalJogador(p){
     f.onsubmit=async ev=>{ ev.preventDefault(); const n=+f.elements.notaj.value||0, t=f.elements.textoj.value.trim().slice(0,600), pub=!f.elements.torcj||f.elements.torcj.checked;
       if(!n&&!t) delete G.avj[id]; else G.avj[id]={n,t,d:hojeStr(),...(pub?{}:{priv:1})}; gSave();
       try{ trk('avaliacao'); if(!DONO&&(n||t)){ TRK.av.push({k:'jogador-'+id, n, x:t?1:0}); clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } }catch(e){}
+      if(!GUID&&GDB){ await votoAval('avj',id,(pub&&(n||t))?{n,t,d:hojeStr()}:null); }
       if(GUID&&GDB){ try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.avj ||= {};
         if(pub&&(n||t)) o.avj[id]={n,t,d:hojeStr()}; else delete o.avj[id];
         o.ap=apAtual(o); await ref.set(o); RKU[GUID]=o; }catch(err){ console.warn(err); } }
@@ -3616,7 +3617,7 @@ function blocoAvalJogador(p){
   return `<details class="diario"${d.n||d.t?'':' open'}><summary>★ Avaliar ${esc(nomeV(p.nome))}${d.n?' (já avaliado)':''}</summary>
    <form id="avjform" class="dono"><div><span class="lblx">Sua nota para o jogador</span>${starsInput('notaj', d.n||0)}</div>
    <label>Comentário (opcional)<textarea name="textoj" rows="2" maxlength="600" style="width:100%" placeholder="O que ele representou para o Galo?">${esc(d.t||'')}</textarea></label>
-   ${GUID?`<label class="chk"><input type="checkbox" name="torcj" ${d.priv?'':'checked'}> Mostrar minha nota para a torcida</label>`:''}
+   <label class="chk"><input type="checkbox" name="torcj" ${d.priv?'':'checked'}> Mostrar minha nota para a torcida</label>
    <button type="submit" class="more">Salvar avaliação</button></form></details>
   ${blocoTorcida(null,'avj',id,'Nota da torcida','Ninguém avaliou este jogador ainda.','Seja o primeiro: use "Avaliar" acima.')}`;
 }
@@ -4148,7 +4149,7 @@ async function desenhaArteLista(s){
 /* Painel do dono: avaliações de jogos e jogadores */
 function blocoAvalDono(avL){
   const nomeK=k=>{ const [t,...r]=k.split('-'), v=r.join('-'); if(t==='jogo'){ const j=byId[+v]; return j?`${fmtD(j.data)} · ${j.adversario} ${placar(j)}`:k; } const p=D.jogadores.find(x=>slug(x.nome)===v); return p?p.nome:v; };
-  const pub=[]; Object.entries(RKU||{}).forEach(([uid,o])=>{ if(!o) return; Object.entries(o.aval||{}).forEach(([id,a])=>{ if(a&&(a.n||a.t)) pub.push({k:'jogo-'+id, ...a, ap:o.ap||'Torcedor'}); }); Object.entries(o.avj||{}).forEach(([id,a])=>{ if(a&&(a.n||a.t)) pub.push({k:'jogador-'+id, ...a, ap:o.ap||'Torcedor'}); }); });
+  const pub=[]; fontesVoto().forEach(([uid,o,anon])=>{ if(!o) return; o={...o, ap:o.ap||(anon?'Sem conta':'Torcedor')}; Object.entries(o.aval||{}).forEach(([id,a])=>{ if(a&&(a.n||a.t)) pub.push({k:'jogo-'+id, ...a, ap:o.ap||'Torcedor'}); }); Object.entries(o.avj||{}).forEach(([id,a])=>{ if(a&&(a.n||a.t)) pub.push({k:'jogador-'+id, ...a, ap:o.ap||'Torcedor'}); }); });
   const agr={}; pub.forEach(a=>{ const x=(agr[a.k] ||= {k:a.k, s:0, c:0, n:0}); x.n++; if(a.n){ x.s+=a.n; x.c++; } });
   avL.forEach(a=>{ const x=(agr[a.k] ||= {k:a.k, s:0, c:0, n:0, anon:0}); x.anon=(x.anon||0)+1; });
   const tab=(tit,t)=>{ const l=Object.values(agr).filter(x=>x.k.startsWith(t+'-')).sort((a,b)=>(b.n+(b.anon||0))-(a.n+(a.anon||0))).slice(0,20); return `<div><h2>${tit}</h2><table><thead><tr><th>${t==='jogo'?'Jogo':'Jogador'}</th><th class="n">Notas</th><th class="n">Média</th></tr></thead><tbody>${l.map(x=>`<tr><td><a href="#${esc(x.k)}">${esc(nomeK(x.k))}</a></td><td class="n">${x.n}${x.anon?` <small class="count">(+${x.anon} no período)</small>`:''}</td><td class="n">${x.c?fmtNota((x.s/x.c).toFixed(1)):'–'}</td></tr>`).join('')||'<tr><td colspan="3" class="count">Nada ainda.</td></tr>'}</tbody></table></div>`; };
@@ -4297,29 +4298,30 @@ function tacasHTML(completo){ const L=[['libertadores','Libertadores','2013',tru
 /* =================== FINAL: interativos =================== */
 const FIN_ONDE=[['estadio','No estádio, em Barranquilla'],['mrv','No telão da Arena MRV'],['casa','Em casa'],['bar','No bar'],['amigos','Com os amigos'],['trabalho','No trabalho'],['outro','Em outro lugar']];
 function finMeu(){ G.fin ||= {}; return G.fin; }
-function finTodos(){ return Object.entries(RKU||{}).map(([uid,o])=>({uid, ap:(o&&o.ap)||'Torcedor', ...(((o||{}).fin)||{})})).filter(x=>Object.keys(x).length>2); }
+function finTodos(){ return fontesVoto().map(([uid,o,anon])=>({uid, anon, ap:(o&&o.ap)||(anon?'Torcedor sem conta':'Torcedor'), ...(((o||{}).fin)||{})})).filter(x=>Object.keys(x).length>3); }
 async function finSalva(patch){ const m=finMeu(); Object.assign(m,patch,{em:Date.now()}); gSave();
-  if(!GDB||!GUID) return false;
+  if(!GDB) return false; if(!GUID){ G.votoPub ||= {}; const c={...m}; delete c._trocaH; G.votoPub.fin=c; gSave(); await votosGrava(); return true; }
   try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.fin={...(o.fin||{}), ...patch, em:Date.now()}; o.ap=apAtual(o); await ref.set(o); RKU[GUID]=o; return true; }catch(e){ console.warn(e); return false; } }
-const finLogin=(o='o seu voto contar para todo mundo')=>GUID?'':`<p class="count">${window.GM_LOGIN?`<a href="javascript:GM_LOGIN()">Entre com sua conta Google</a> para ${o}.`:'Fica só neste aparelho.'}</p>`;
+const finLogin=()=>'';
 function finCandidatos(){ const camp=campanhaSula(); const c={}; camp.forEach(j=>((j.escalacao_galo||{}).titulares||[]).forEach(n=>{ c[n]=(c[n]||0)+1; })); camp.forEach(j=>j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)&&g.jogador) c[g.jogador]=(c[g.jogador]||0)+2; }));
   return Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,14).map(x=>x[0]); }
 const barras=(L,tot)=>L.map(([rot,n,dest])=>`<div class="fin-bar ${dest?'dest':''}"><span>${rot}</span><i style="width:${tot?Math.round(100*n/tot):0}%"></i><b>${tot?Math.round(100*n/tot):0}%</b><small>${n}</small></div>`).join('');
 function finGolsFinal(){ const f=finalCfg(), j=byId[f.jogo]; return j&&j.gp!=null?j.gols.filter(g=>g.lado==='galo'&&isGoal(g)).map(g=>g.jogador):null; }
-function finQuiz(){ const camp=campanhaSula().filter(j=>j.gp!=null); const r=rec(camp); const gols={}; camp.forEach(j=>j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)&&g.jogador) gols[g.jogador]=(gols[g.jogador]||0)+1; }));
-  const art=Object.entries(gols).sort((a,b)=>b[1]-a[1]); const ties=mataMatas().filter(m=>m.grupo==='Sul-Americana'&&m.ano===finalCfg().ano&&!m.final&&!m.futuro).sort((a,b)=>a.j.data.localeCompare(b.j.data));
-  const emb=(c,o)=>{ const l=[...new Set([c,...o])].slice(0,4); return l.sort((a,b)=>hashDia('q'+a)-hashDia('q'+b)); };
-  const Q=[];
-  if(art.length>=4) Q.push({p:'Quem foi o artilheiro do Galo na campanha até a final?', c:nomeV(art[0][0]), o:emb(nomeV(art[0][0]),art.slice(1,4).map(x=>nomeV(x[0])))});
-  if(ties.length>=3){ const s=ties[ties.length-1].adv, q=ties[ties.length-2].adv, o=ties[0].adv; Q.push({p:'Quem o Galo eliminou na semifinal?', c:s, o:emb(s,[q,o,'Racing'])}); Q.push({p:'E nas quartas de final?', c:q, o:emb(q,[s,o,'Fortaleza'])}); }
-  Q.push({p:'Quantos gols o Galo marcou na campanha até a final?', c:String(r.gp), o:emb(String(r.gp),[String(r.gp-3),String(r.gp+2),String(r.gp+5)])});
-  Q.push({p:'Em que cidade foi a final?', c:'Barranquilla', o:emb('Barranquilla',['Montevidéu','Assunção','Lima'])});
-  Q.push({p:'Quantas vitórias o Galo teve na campanha até a final?', c:String(r.V), o:emb(String(r.V),[String(r.V-2),String(r.V+1),String(r.V+3)])});
-  return Q.slice(0,6); }
+function finQuiz(){ const emb=(c,o)=>[c,...o].sort((a,b)=>hashDia('qz'+a)-hashDia('qz'+b));
+  return [
+   {p:'Quem fez o gol do Galo na estreia, contra o Puerto Cabello, na Venezuela?', c:'Dudu', o:emb('Dudu',['Bernard','Reinier','Alan Minda'])},
+   {p:'Qual destes clubes NÃO enfrentou o Galo na fase de grupos?', c:'Racing', o:emb('Racing',['Juventud','Cienciano','Puerto Cabello'])},
+   {p:'Quem marcou o gol da vitória por 1 x 0 sobre o Puerto Cabello, na Arena MRV?', c:'Bernard', o:emb('Bernard',['Dudu','Renan Lodi','Mateo Cassierra'])},
+   {p:'Qual defensor marcou na vitória por 2 x 0 sobre o Cienciano, na Arena MRV?', c:'Renan Lodi', o:emb('Renan Lodi',['Natanael','Junior Alonso','Ruan Tressoldi'])},
+   {p:'Em Montevidéu, contra o Juventud, foi 2 x 2. Quem marcou o segundo gol do Galo?', c:'Vitor Hugo', o:emb('Vitor Hugo',['Alan Minda','Bernard','Mateo Cassierra'])},
+   {p:'Quem fez o gol da vitória em Bragança Paulista, contra o Bragantino?', c:'Tomás Cuello', o:emb('Tomás Cuello',['Maycon','Reinier','Bernard'])},
+   {p:'Na virada por 4 x 2 sobre o Santos, quem marcou duas vezes?', c:'Reinier', o:emb('Reinier',['Bernard','Tomás Cuello','Maycon'])},
+   {p:'Quem fechou os 3 x 0 sobre o Torque, na ida da semifinal?', c:'Thiago Borbas', o:emb('Thiago Borbas',['Reinier','Bernard','Dudu'])},
+  ]; }
 function blocoFinInterativo(){
   const e=finalEstado()||'hoje', f=finalCfg(), m=finMeu(), T_=finTodos(), golsF=finGolsFinal(), j=byId[f.jogo];
   // 2. Quem decide
-  const cand=finCandidatos(); const votos={}; T_.forEach(x=>{ if(x.heroi) votos[x.heroi]=(votos[x.heroi]||0)+1; }); if(!GUID&&m.heroi) votos[m.heroi]=(votos[m.heroi]||0)+1;
+  const cand=finCandidatos(); const votos={}; T_.forEach(x=>{ if(x.heroi) votos[x.heroi]=(votos[x.heroi]||0)+1; }); 
   const totV=Object.values(votos).reduce((a,b)=>a+b,0);
   const heroiH=`<section class="fin-mod" id="fin-heroi"><h2>Quem decide a final?</h2>${m.heroi?`<p class="count">Seu voto: <b>${esc(nomeV(m.heroi))}</b>${golsF?(golsF.includes(m.heroi)?' · ✅ acertou, ele marcou!':' · não marcou dessa vez'):''}. <a href="#" data-fin="trocaheroi">trocar</a></p>`:''}
     ${!m.heroi||m._trocaH?`<div class="fin-opc">${cand.map(n=>`<button type="button" class="chip" data-heroi="${esc(n)}">${esc(nomeV(n))}</button>`).join('')}</div>${finLogin()}`:''}
@@ -4345,12 +4347,12 @@ function blocoFinInterativo(){
   // 5. Mural
   const aprov=new Set((f.aprov||[])), mur=T_.filter(x=>x.recado&&aprov.has(x.uid)).sort((a,b)=>(b.em||0)-(a.em||0));
   const muralH=`<section class="fin-mod" id="fin-mural"><h2>Mural ${e==='campeao'?'do título':'da final'}</h2>
-    <form id="finmural" class="fin-rec"><textarea name="t" maxlength="140" rows="2" placeholder="Deixe seu recado para o time (até 140 caracteres)">${esc(m.recado||'')}</textarea><button class="ghost" type="submit">Enviar recado</button></form>${GUID?'<p class="count">Os recados aparecem depois de aprovados.</p>':finLogin('o seu recado ir para o mural')}
+    <form id="finmural" class="fin-rec"><textarea name="t" maxlength="140" rows="2" placeholder="Deixe seu recado para o time (até 140 caracteres)">${esc(m.recado||'')}</textarea><button class="ghost" type="submit">Enviar recado</button></form><p class="count">Os recados aparecem depois de aprovados.</p>
     ${mur.length?`<div class="fin-murais">${mur.slice(0,40).map(x=>`<blockquote><p>“${esc(x.recado)}”</p><cite>${esc(x.ap)}</cite></blockquote>`).join('')}</div>`:''}${finChama('mural','Deixe seu recado para o Galo no mural da final:')}</section>`;
   // 6. Quiz
-  const Q=finQuiz(); const qr=T_.filter(x=>x.quiz!=null).sort((a,b)=>b.quiz-a.quiz||(a.quizT||0)-(b.quizT||0));
-  const quizH=`<section class="fin-mod fin-quizcard" id="fin-quiz"><h2>Quiz da campanha</h2>${m.quiz!=null?`<p>Você acertou <b>${m.quiz} de ${Q.length}</b>.</p>`:`<p>${Q.length} perguntas sobre a Sul-Americana ${f.ano}. Uma tentativa só, e o tempo desempata. Responda antes de olhar os números da campanha!</p><a class="more" href="#final-quiz">Responder o quiz</a>`}
-    ${qr.length?`<h3 class="osw" style="margin-top:14px">Ranking do quiz</h3><ol class="rank">${qr.slice(0,10).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${esc(x.ap)}<b>${x.quiz}/${Q.length}</b></li>`).join('')}</ol>`:''}${finChama('quiz',"'Você sabe tudo da campanha do Galo na Sul-Americana? Responda o quiz:'",'final-quiz')}</section>`;
+  const Q=finQuiz(); const qr=T_.filter(x=>x.quiz2!=null).sort((a,b)=>b.quiz2-a.quiz2||(a.quizT2||0)-(b.quizT2||0));
+  const quizH=`<section class="fin-mod fin-quizcard" id="fin-quiz"><h2>Quiz da campanha</h2>${m.quiz2!=null?`<p>Você acertou <b>${m.quiz2} de ${Q.length}</b>.</p>`:`<p>${Q.length} perguntas difíceis sobre a Sul-Americana ${f.ano}: quem fez cada gol, adversários da fase de grupos e mais. Uma tentativa só, e o tempo desempata.</p><a class="more" href="#final-quiz">Responder o quiz</a>`}
+    ${qr.length?`<h3 class="osw" style="margin-top:14px">Ranking do quiz</h3><ol class="rank">${qr.slice(0,10).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${esc(x.ap)}<b>${x.quiz2}/${Q.length}</b></li>`).join('')}</ol>`:''}${finChama('quiz',"'Você sabe tudo da campanha do Galo na Sul-Americana? Responda o quiz:'",'final-quiz')}</section>`;
   setTimeout(()=>finLiga(Q),0);
   return `<div class="fin-grid">${cartaoH}${heroiH}${bolaoH}${ondeH}${quizH}${muralH}</div>`;
 }
@@ -4361,7 +4363,7 @@ function finLiga(Q){
   const fb=$('#finbolao'); if(fb) fb.onsubmit=async ev=>{ ev.preventDefault(); const g=+fb.elements.g.value, b=+fb.elements.b.value; await finSalva({placar:{g,b}}); try{ trk('final_bolao'); }catch(e){} toast(`Palpite: Galo ${g} x ${b} Boca`); re(); };
   const fo=$('#finonde'); if(fo) fo.onsubmit=async ev=>{ ev.preventDefault(); await finSalva({onde:fo.elements.onde.value, cidade:fo.elements.cidade.value.trim().slice(0,40)}); try{ trk('final_onde'); }catch(e){} toast('Marcado!'); re(); };
   const fc=$('#fincartao'); if(fc) fc.onsubmit=async ev=>{ ev.preventDefault(); const nome=fc.elements.nome.value.trim().slice(0,26)||'Torcedor do Galo', onde=fc.elements.onde.value; await finSalva({nome, onde}); try{ trk('final_cartao'); }catch(e){} abreArte({t:'cartao', nome, onde}); };
-  const fm=$('#finmural'); if(fm) fm.onsubmit=async ev=>{ ev.preventDefault(); const t=fm.elements.t.value.trim().slice(0,140); if(!t) return; const ok=await finSalva({recado:t}); try{ trk('final_recado'); }catch(e){} toast(ok?'Recado enviado! Aparece depois de aprovado.':'Entre com sua conta para o recado ir para o mural.'); };
+  const fm=$('#finmural'); if(fm) fm.onsubmit=async ev=>{ ev.preventDefault(); const t=fm.elements.t.value.trim().slice(0,140); if(!t) return; await finSalva({recado:t}); try{ trk('final_recado'); }catch(e){} toast('Recado enviado! Aparece depois de aprovado.'); };
   const qg=$('#finquizgo'); if(qg) qg.onclick=()=>{ qg.remove(); let i=0, ok=0; const t0=Date.now(); const box=$('#finquiz');
     const mostra=()=>{ if(i>=Q.length){ box.innerHTML=`<p class="osw">Você acertou ${ok} de ${Q.length}!</p>`; finSalva({quiz:ok, quizT:Date.now()-t0}).then(()=>setTimeout(re,1200)); try{ trk('final_quiz'); }catch(e){} return; }
       const q=Q[i]; box.innerHTML=`<p class="count">Pergunta ${i+1} de ${Q.length}</p><p><b>${esc(q.p)}</b></p><div class="fin-opc">${q.o.map(o=>`<button type="button" class="chip" data-r="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
@@ -4390,13 +4392,22 @@ function blocoMuralDono(){ const f=finalCfg(); const T_=finTodos().filter(x=>x.r
 
 function finChama(sec, txt, rota){ const url='https://galometrics.com.br/#'+(rota||('final?s='+sec)); return `<p class="fin-share"><a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:txt, url})}">Chamar no Twitter ↗</a> <button type="button" class="linkbtn" onclick="navigator.clipboard&&navigator.clipboard.writeText('${url}').then(()=>toast('Link copiado'))">Copiar link</button></p>`; }
 function vFinalQuiz(){ const f=finalCfg(), m=finMeu(), Q=finQuiz(); try{ trk('final_quiz_abre'); }catch(e){}
-  setTimeout(()=>{ const qg=$('#finquizgo'); if(!qg) return; qg.onclick=()=>{ qg.remove(); let i=0, ok=0; const t0=Date.now(); const box=$('#finquiz');
-    const mostra=()=>{ if(i>=Q.length){ box.innerHTML=`<p class="final-h1" style="font-size:64px!important">${ok}/${Q.length}</p><p class="osw">${ok===Q.length?'Gabaritou! Você sabe tudo da campanha.':ok>=4?'Mandou bem!':'Dá para estudar mais a campanha.'}</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a> <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:'Acertei '+ok+' de '+Q.length+' no quiz da campanha do Galo na Sul-Americana. E você?', url:'https://galometrics.com.br/#final-quiz'})}">Desafiar no Twitter ↗</a></p>`; finSalva({quiz:ok, quizT:Date.now()-t0}); try{ trk('final_quiz'); }catch(e){} return; }
+  setTimeout(()=>{ const qg=$('#finquizgo'); if(!qg) return; qg.onclick=()=>{ const ap=($('#quizap')||{}).value; if(ap&&ap.trim()){ G.perfil ||= {}; G.perfil.apelido=ap.trim().slice(0,24); gSave(); } qg.remove(); const qa=$('#quizap'); if(qa) qa.closest('p').remove(); let i=0, ok=0; const t0=Date.now(); const box=$('#finquiz');
+    const mostra=()=>{ if(i>=Q.length){ box.innerHTML=`<p class="final-h1" style="font-size:64px!important">${ok}/${Q.length}</p><p class="osw">${ok===Q.length?'Gabaritou! Você sabe tudo da campanha.':ok>=6?'Mandou muito bem!':ok>=4?'Bom, mas dá para melhorar.':'Essa foi difícil, hein?'}</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a> <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:'Acertei '+ok+' de '+Q.length+' no quiz da campanha do Galo na Sul-Americana. E você?', url:'https://galometrics.com.br/#final-quiz'})}">Desafiar no Twitter ↗</a></p>`; finSalva({quiz2:ok, quizT2:Date.now()-t0}); try{ trk('final_quiz'); }catch(e){} return; }
       const q=Q[i]; box.innerHTML=`<p class="count">Pergunta ${i+1} de ${Q.length}</p><p style="font-size:22px"><b>${esc(q.p)}</b></p><div class="fin-opc">${q.o.map(o=>`<button type="button" class="chip" data-r="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
       box.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{ const certo=b.dataset.r===q.c; if(certo) ok++; b.classList.add(certo?'certo':'errado'); if(!certo) box.querySelector(`[data-r="${CSS.escape(q.c)}"]`)?.classList.add('certo'); box.querySelectorAll('[data-r]').forEach(x=>x.disabled=true); setTimeout(()=>{ i++; mostra(); },1000); }); };
     mostra(); }; });
   return `<a class="back" href="#final">← Final da Sul-Americana</a><div class="kicker">Quiz · Copa Sul-Americana ${f.ano}</div><h1>Você sabe tudo da campanha?</h1>
-  ${m.quiz!=null?`<p class="lede">Você já respondeu: <b>${m.quiz} de ${Q.length}</b>. Uma tentativa por pessoa.</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a></p>`:`<p class="lede">${Q.length} perguntas. Uma tentativa só, e o tempo desempata no ranking.</p>${GUID?'':`<p class="count">${window.GM_LOGIN?'<a href="javascript:GM_LOGIN()">Entre com sua conta Google</a> para aparecer no ranking.':''}</p>`}<button class="more" type="button" id="finquizgo">Começar</button><div id="finquiz" style="margin-top:16px"></div>`}`; }
+  ${m.quiz2!=null?`<p class="lede">Você já respondeu: <b>${m.quiz2} de ${Q.length}</b>. Uma tentativa por pessoa.</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a></p>`:`<p class="lede">${Q.length} perguntas difíceis: quem fez cada gol, adversários da fase de grupos e mais. Uma tentativa só, e o tempo desempata no ranking.</p>${GUID||(G.perfil||{}).apelido?'':'<p class="dgrid"><label>Seu nome no ranking<input id="quizap" maxlength="24" placeholder="Como quer aparecer"></label></p>'}<button class="more" type="button" id="finquizgo">Começar</button><div id="finquiz" style="margin-top:16px"></div>`}`; }
+
+/* ---------- Votos e avaliações sem conta (um documento por aparelho) ---------- */
+let VOTOS={};
+async function carregaVotos(){ if(!GDB) return; try{ const s=await GDB.collection('votos').limit(5000).get(); const m={}; s.docs.forEach(d=>{ const o=d.data(); if(o&&!o.migrado) m[d.id]=o; }); VOTOS=m; }catch(e){ console.warn('votos',e); }
+  if(GUID&&VOTOS[trkVid]&&GDB){ try{ await GDB.doc('votos/'+trkVid).set({migrado:GUID, em:Date.now()}); delete VOTOS[trkVid]; }catch(e){} } }
+async function votosGrava(){ if(!GDB||GUID) return; G.votoPub ||= {}; const o={ap:((G.perfil||{}).apelido||'').slice(0,30), aval:G.votoPub.aval||{}, avj:G.votoPub.avj||{}, fin:G.votoPub.fin||{}, em:Date.now()};
+  try{ await GDB.doc('votos/'+trkVid).set(o); VOTOS[trkVid]=o; }catch(e){ console.warn('votosGrava',e); } }
+function votoAval(campo,id,a){ G.votoPub ||= {}; G.votoPub[campo] ||= {}; if(a&&(a.n||a.t)) G.votoPub[campo][id]=a; else delete G.votoPub[campo][id]; gSave(); return votosGrava(); }
+const fontesVoto=()=>[...Object.entries(RKU||{}).map(([uid,o])=>[uid,o||{},false]), ...Object.entries(VOTOS||{}).map(([vid,o])=>['v:'+vid,o||{},true])];
 
 </script>
 </body>
