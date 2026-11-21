@@ -602,9 +602,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121165400';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121165400"></script>
-<script src="backend-firebase.js?v=20261121165400"></script>
+<script>window.GM_BUILD='20261121172341';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121172341"></script>
+<script src="backend-firebase.js?v=20261121172341"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4315,7 +4315,7 @@ async function finSalva(patch){ const m=finMeu(); Object.assign(m,patch,{em:Date
   try{ const ref=GDB.doc('rankuser/'+GUID); const s=await ref.get(); const o=s.exists?s.data():{res:{}}; o.fin={...(o.fin||{}), ...patch, em:Date.now()}; o.ap=apAtual(o); await ref.set(o); RKU[GUID]=o; return true; }catch(e){ console.warn(e); return false; } }
 const finLogin=()=>'';
 function finCandidatos(){ const camp=campanhaSula(); const c={}; camp.forEach(j=>((j.escalacao_galo||{}).titulares||[]).forEach(n=>{ c[n]=(c[n]||0)+1; })); camp.forEach(j=>j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)&&g.jogador) c[g.jogador]=(c[g.jogador]||0)+2; }));
-  return Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,14).map(x=>x[0]); }
+  const l=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,14).map(x=>x[0]); ((typeof CFG!=='undefined'&&CFG.final&&CFG.final.extras)||['Dudu']).forEach(n=>{ if(!l.includes(n)) l.push(n); }); return l; }
 const barras=(L,tot)=>L.map(([rot,n,dest])=>`<div class="fin-bar ${dest?'dest':''}"><span>${rot}</span><i style="width:${tot?Math.round(100*n/tot):0}%"></i><b>${tot?Math.round(100*n/tot):0}%</b><small>${n}</small></div>`).join('');
 function finGolsFinal(){ const f=finalCfg(), j=byId[f.jogo]; return j&&j.gp!=null?j.gols.filter(g=>g.lado==='galo'&&isGoal(g)).map(g=>g.jogador):null; }
 function finQuiz(){ const emb=(c,o)=>[c,...o].sort((a,b)=>hashDia('qz'+a)-hashDia('qz'+b));
