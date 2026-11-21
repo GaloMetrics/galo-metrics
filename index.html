@@ -601,9 +601,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121162826';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121162826"></script>
-<script src="backend-firebase.js?v=20261121162826"></script>
+<script>window.GM_BUILD='20261121163152';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121163152"></script>
+<script src="backend-firebase.js?v=20261121163152"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2726,6 +2726,7 @@ async function desenhaArte(s){
   if(s.t==='lista') return desenhaArteLista(s);
   if(s.t==='titulo') return desenhaArteTitulo(s);
   if(s.t==='cartao') return desenhaArteCartao(s);
+  if(s.t==='chamada') return desenhaArteChamada(s);
   const caminho = s.t==='jogo'?`/jogo-${s.id}`: s.t==='palpite'?'/palpites': s.t==='estadio'?'/diario':'/desafios';
   const A=await arteBase(caminho); const {cv,x,W,H,P,T,Tm,wrap,crest,galo,carimbo,INK,PAP,GOLD,GOLDD,V,R,CINZA}=A;
   if(s.t==='jogo'||s.t==='palpite'){
@@ -4233,7 +4234,7 @@ function vFinal(params){
   return `<div class="final-hero"><div class="kicker">Final da Copa Sul-Americana ${f.ano} · ${fmtD(f.data)} · ${esc(f.estadio)}, ${esc(f.local)}</div><h1 class="final-h1">É hoje.</h1>
     <div class="final-vs">${cr('galo')}<b>Galo</b><span>×</span><b>${esc(f.adv)}</b>${cr(f.advId)}</div>
     <p class="lede">Jogo único. Se o Galo for campeão, quem entrar no Galo Metrics na semana do título ganha uma <b>figurinha comemorativa ultra rara</b>.</p>
-    <p><a class="more" href="#jogo-${f.jogo}">Faça seu palpite</a> ${artBtn({t:'titulo'})} ${tw}</p></div>
+    <p><a class="more" href="#jogo-${f.jogo}">Faça seu palpite</a> ${artBtn({t:'titulo'})} ${DONO?artBtn({t:'chamada'}).replace('Baixar arte','Arte de chamada'):''} ${tw}</p></div>
     ${blocoFinInterativo()}
     <h2>O caminho até a final</h2>${caminho}
     <h2>Você sabia?</h2><ul class="final-sabia">
@@ -4417,6 +4418,22 @@ async function votosGrava(){ if(!GDB||GUID) return; G.votoPub ||= {}; const o={a
   try{ await GDB.doc('votos/'+trkVid).set(o); VOTOS[trkVid]=o; }catch(e){ console.warn('votosGrava',e); } }
 function votoAval(campo,id,a){ G.votoPub ||= {}; G.votoPub[campo] ||= {}; if(a&&(a.n||a.t)) G.votoPub[campo][id]=a; else delete G.votoPub[campo][id]; gSave(); return votosGrava(); }
 const fontesVoto=()=>[...Object.entries(RKU||{}).map(([uid,o])=>[uid,o||{},false]), ...Object.entries(VOTOS||{}).map(([vid,o])=>['v:'+vid,o||{},true])];
+async function desenhaArteChamada(s){
+  const f=finalCfg(); const A=await arteBase('/final', null, ''); const {cv,x,W,H,P,T,wrap,galo,crest,INK,GOLD,GOLDD,CINZA,V}=A;
+  const g=x.createRadialGradient(W/2,360,30,W/2,360,520); g.addColorStop(0,'rgba(201,150,43,.28)'); g.addColorStop(1,'rgba(201,150,43,0)'); x.fillStyle=g; x.fillRect(0,156,W,700);
+  T('★ '+(s.k||'FINAL DA COPA SUL-AMERICANA'),W/2,236,'osw',34,GOLD,'center');
+  x.font='400 132px "Abril Fatface", Georgia, serif'; x.textAlign='center'; x.fillStyle='rgba(201,150,43,.9)'; x.fillText(s.f||'É HOJE.',W/2+6,376); x.fillStyle=INK; x.fillText(s.f||'É HOJE.',W/2,370);
+  const cy=500; galo(W/2-200,cy,170); await crest(f.advId,W/2+200,cy,140); T('×',W/2,cy+36,'abril',100,INK,'center');
+  T(`${fmtD(f.data)} · ${f.estadio}, ${f.local.split(',')[0]}`,W/2,cy+128,'cas',26,CINZA,'center',W-2*P);
+  let y=690; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); y+=54;
+  T('JOGUE COM A GENTE NO SITE',P,y,'osw',28,GOLDD); y+=56;
+  const itens=[['🗳','Quem decide o título?','vote no herói da final'],['🎯','Bolão da torcida','crave o placar'],['📍','De onde você vai ver?','veja onde a torcida está'],['🧠','Quiz da campanha','8 perguntas difíceis'],['🎫','Seu cartão da final','com o seu nome, para os Stories']];
+  itens.forEach(([ic,t,sub])=>{ T(ic,P+20,y,'osw',36,INK,'center'); T(t,P+70,y,'osw',36,INK,'left',520); T(sub,W-P,y,'cas',24,CINZA,'right',360); y+=60; });
+  y=Math.min(y,A.BOT-118); x.fillStyle='#111'; A.rr(P,y,W-2*P,96,10); x.fill();
+  T('🏆 Se der Galo, quem entrar ganha uma figurinha comemorativa',W/2,y+40,'osw',26,'#F5F2EA','center',W-2*P-40);
+  T('galometrics.com.br/#final',W/2,y+76,'osw',26,GOLD,'center');
+  return cv;
+}
 
 </script>
 </body>
