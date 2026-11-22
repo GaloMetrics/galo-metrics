@@ -607,9 +607,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121231342';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121231342"></script>
-<script src="backend-firebase.js?v=20261121231342"></script>
+<script>window.GM_BUILD='20261121231711';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121231711"></script>
+<script src="backend-firebase.js?v=20261121231711"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4028,13 +4028,13 @@ let _ARTT=null;
 function artTemporadas(){ if(_ARTT) return _ARTT; const m={}, nj={};
   J.forEach(j=>{ if(j.resultado) nj[j.temporada]=(nj[j.temporada]||0)+1; j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)&&g.jogador){ const t=(m[j.temporada] ||= {}); t[g.jogador]=(t[g.jogador]||0)+1; } }); });
   return _ARTT=Object.entries(m).map(([a,t])=>{ const mx=Math.max(...Object.values(t)); const quem=Object.keys(t).filter(k=>t[k]===mx); return {ano:+a, g:mx, quem, nj:nj[a]||0}; }); }
-const linhaArt=o=>({nome:`${o.ano} · ${o.quem.map(nomeV).join(', ')}`, href:'#temporada-'+o.ano, v:o.g});
+const linhaArt=o=>({nome:`${o.ano}${o.ano===+hojeStr().slice(0,4)?' (em andamento)':''} · ${o.quem.map(nomeV).join(', ')}`, href:'#temporada-'+o.ano, v:o.g});
 (function(){
   const add=(g,id,t,u,fn,sin,tipo,res)=>{ LISTAS.push([g,id,t,u,fn,tipo,res]); if(sin) LISTA_SIN[id]=sin; };
   const AT='artilheiro artilheiros artilharia temporada temporadas ano anos cada goleador';
   add('Gols','art-temp','Artilheiros por temporada','gols do artilheiro',o=>artTemporadas().filter(x=>inPer({data:x.ano+'-07-01'})&&(!o.desde||x.ano>=o.desde)).sort((a,b)=>b.ano-a.ano).map(linhaArt),AT+' por temporada do ano','temp');
   add('Gols','art-temp-mais','Artilheiros de temporada com mais gols','gols do artilheiro',o=>artTemporadas().filter(x=>inPer({data:x.ano+'-07-01'})&&(!o.desde||x.ano>=o.desde)).sort((a,b)=>b.g-a.g||b.ano-a.ano).map(linhaArt),AT+' mais gols maior melhor','temp');
-  add('Gols','art-temp-menos','Artilheiros de temporada com menos gols','gols do artilheiro',o=>artTemporadas().filter(x=>inPer({data:x.ano+'-07-01'})&&x.nj>=20&&x.ano<+hojeStr().slice(0,4)&&(!o.desde||x.ano>=o.desde)).sort((a,b)=>a.g-b.g||b.ano-a.ano).map(linhaArt),AT+' menos gols menor pior pouco poucos desde','temp');
+  add('Gols','art-temp-menos','Artilheiros de temporada com menos gols','gols do artilheiro',o=>artTemporadas().filter(x=>inPer({data:x.ano+'-07-01'})&&x.nj>=20&&(!o.desde||x.ano>=o.desde)).sort((a,b)=>a.g-b.g||b.ano-a.ano).map(linhaArt),AT+' menos gols menor pior pouco poucos desde','temp');
 })();
 (function(){ const velho=window.garantePaisesMM; window.garantePaisesMM=()=>{ const ja=velho&&velho.ok; velho&&velho(); if(ja||garantePaisesMM.ok2||!J.length) return; garantePaisesMM.ok2=true;
   const fin={}; mataMatas().filter(m=>m.final&&m.uf.length===3).forEach(m=>{ fin[m.uf]=(fin[m.uf]||0)+1; });
@@ -4522,23 +4522,23 @@ function tempStats(grupo){ const m={}; JP().filter(j=>j.resultado&&j.gp!=null&&(
 function advPerD(){ const m={}; JP().filter(j=>j.resultado).forEach(j=>{ const o=(m[j.adversario_id] ||= {nome:j.adversario, _href:'adversario-'+slug(j.adversario_id), D:0}); if(j.resultado==='D') o.D++; }); return Object.values(m); }
 (function(){
   const T='temporada temporadas ano anos time clube galo equipe elenco campanha';
-  const lin=(o,v,txt)=>({nome:`${o.ano} (${o.n} jogos)`, href:'#temporada-'+o.ano, v, ...(txt?{txt}:{})});
-  const ok=(o,min=20)=>o.n>=min&&!o.atual;
+  const lin=(o,v,txt)=>({nome:`${o.ano} (${o.n} jogos${o.atual?', em andamento':''})`, href:'#temporada-'+o.ano, v, ...(txt?{txt}:{})});
+  const ok=(o,min=20)=>o.n>=min;
   const add=(id,t,u,fn,sin,grupo='Temporadas')=>{ LISTAS.push([grupo,id,t,u,fn,'tclube']); LISTA_SIN[id]=T+' '+sin; };
-  add('t-gp-mais','Temporadas com mais gols marcados','gols',()=>tempStats().sort((a,b)=>b.gp-a.gp).map(o=>lin(o,o.gp)),'mais gols marcados marcou fez ataque');
-  add('t-gp-menos','Temporadas com menos gols marcados (20+ jogos)','gols',()=>tempStats().filter(o=>ok(o)).sort((a,b)=>a.gp-b.gp).map(o=>lin(o,o.gp)),'menos gols marcados marcou fez ataque');
-  add('t-gc-mais','Temporadas com mais gols sofridos','gols sofridos',()=>tempStats().sort((a,b)=>b.gc-a.gc).map(o=>lin(o,o.gc)),'mais gols sofridos sofreu levou tomou defesa vazada');
-  add('t-gc-menos','Temporadas com menos gols sofridos (20+ jogos)','gols sofridos',()=>tempStats().filter(o=>ok(o)).sort((a,b)=>a.gc-b.gc).map(o=>lin(o,o.gc)),'menos gols sofridos sofreu levou tomou defesa');
-  add('t-media','Melhor média de gols por jogo numa temporada (20+ jogos)','gols por jogo',()=>tempStats().filter(o=>o.n>=20).sort((a,b)=>b.gp/b.n-a.gp/a.n).map(o=>lin(o,1,(o.gp/o.n).toFixed(2).replace('.',',')+' por jogo')),'media gols por jogo melhor media');
+  add('t-gp-mais','Temporadas com mais gols marcados','gols',()=>tempStats().sort((a,b)=>(b.gp-a.gp)||b.ano-a.ano).map(o=>lin(o,o.gp)),'mais gols marcados marcou fez ataque');
+  add('t-gp-menos','Temporadas com menos gols marcados (20+ jogos)','gols',()=>tempStats().filter(o=>ok(o)).sort((a,b)=>(a.gp-b.gp)||b.ano-a.ano).map(o=>lin(o,o.gp)),'menos gols marcados marcou fez ataque');
+  add('t-gc-mais','Temporadas com mais gols sofridos','gols sofridos',()=>tempStats().sort((a,b)=>(b.gc-a.gc)||b.ano-a.ano).map(o=>lin(o,o.gc)),'mais gols sofridos sofreu levou tomou defesa vazada');
+  add('t-gc-menos','Temporadas com menos gols sofridos (20+ jogos)','gols sofridos',()=>tempStats().filter(o=>ok(o)).sort((a,b)=>(a.gc-b.gc)||b.ano-a.ano).map(o=>lin(o,o.gc)),'menos gols sofridos sofreu levou tomou defesa');
+  add('t-media','Melhor média de gols por jogo numa temporada (20+ jogos)','gols por jogo',()=>tempStats().filter(o=>o.n>=20).sort((a,b)=>(b.gp/b.n-a.gp/a.n)||b.ano-a.ano).map(o=>lin(o,1,(o.gp/o.n).toFixed(2).replace('.',',')+' por jogo')),'media gols por jogo melhor media');
   add('t-saldo','Maior saldo de gols numa temporada','de saldo',()=>tempStats().sort((a,b)=>(b.gp-b.gc)-(a.gp-a.gc)).map(o=>lin(o,o.gp-o.gc)),'saldo saldo de gols maior saldo');
-  add('t-v-mais','Temporadas com mais vitórias','vitórias',()=>tempStats().sort((a,b)=>b.V-a.V).map(o=>lin(o,o.V)),'mais vitorias venceu ganhou');
-  add('t-d-mais','Temporadas com mais derrotas','derrotas',()=>tempStats().sort((a,b)=>b.D-a.D).map(o=>lin(o,o.D)),'mais derrotas perdeu');
-  add('t-d-menos','Temporadas com menos derrotas (20+ jogos)','derrotas',()=>tempStats().filter(o=>ok(o)).sort((a,b)=>a.D-b.D).map(o=>lin(o,o.D||0.0001,`${o.D} ${o.D===1?'derrota':'derrotas'}`)),'menos derrotas perdeu menos');
-  add('t-n-mais','Temporadas com mais jogos','jogos',()=>tempStats().sort((a,b)=>b.n-a.n).map(o=>lin(o,o.n)),'mais jogos jogou partidas calendario');
-  add('t-ap-mais','Melhores temporadas em aproveitamento (20+ jogos)','% de aproveitamento',()=>tempStats().filter(o=>o.n>=20).sort((a,b)=>b.ap-a.ap).map(o=>lin(o,o.ap)),'melhor melhores aproveitamento desempenho melhor temporada');
-  add('t-ap-menos','Piores temporadas em aproveitamento (20+ jogos)','% de aproveitamento',()=>tempStats().filter(o=>ok(o)).sort((a,b)=>a.ap-b.ap).map(o=>lin(o,o.ap)),'pior piores aproveitamento desempenho ruim pior temporada');
-  add('b-gp-mais','Brasileirões com mais gols marcados','gols',()=>tempStats('Campeonato Brasileiro').sort((a,b)=>b.gp-a.gp).map(o=>lin(o,o.gp)),'brasileiro brasileirao mais gols marcados melhor ataque','Temporadas');
-  add('b-gc-menos','Brasileirões com menos gols sofridos (10+ jogos)','gols sofridos',()=>tempStats('Campeonato Brasileiro').filter(o=>ok(o,10)).sort((a,b)=>a.gc/a.n-b.gc/b.n).map(o=>lin(o,o.gc,`${o.gc} em ${o.n} jogos`)),'brasileiro brasileirao menos gols sofridos melhor defesa','Temporadas');
+  add('t-v-mais','Temporadas com mais vitórias','vitórias',()=>tempStats().sort((a,b)=>(b.V-a.V)||b.ano-a.ano).map(o=>lin(o,o.V)),'mais vitorias venceu ganhou');
+  add('t-d-mais','Temporadas com mais derrotas','derrotas',()=>tempStats().sort((a,b)=>(b.D-a.D)||b.ano-a.ano).map(o=>lin(o,o.D)),'mais derrotas perdeu');
+  add('t-d-menos','Temporadas com menos derrotas (20+ jogos)','derrotas',()=>tempStats().filter(o=>ok(o)).sort((a,b)=>(a.D-b.D)||b.ano-a.ano).map(o=>lin(o,o.D||0.0001,`${o.D} ${o.D===1?'derrota':'derrotas'}`)),'menos derrotas perdeu menos');
+  add('t-n-mais','Temporadas com mais jogos','jogos',()=>tempStats().sort((a,b)=>(b.n-a.n)||b.ano-a.ano).map(o=>lin(o,o.n)),'mais jogos jogou partidas calendario');
+  add('t-ap-mais','Melhores temporadas em aproveitamento (20+ jogos)','% de aproveitamento',()=>tempStats().filter(o=>o.n>=20).sort((a,b)=>(b.ap-a.ap)||b.ano-a.ano).map(o=>lin(o,o.ap)),'melhor melhores aproveitamento desempenho melhor temporada');
+  add('t-ap-menos','Piores temporadas em aproveitamento (20+ jogos)','% de aproveitamento',()=>tempStats().filter(o=>ok(o)).sort((a,b)=>(a.ap-b.ap)||b.ano-a.ano).map(o=>lin(o,o.ap)),'pior piores aproveitamento desempenho ruim pior temporada');
+  add('b-gp-mais','Brasileirões com mais gols marcados','gols',()=>tempStats('Campeonato Brasileiro').sort((a,b)=>(b.gp-a.gp)||b.ano-a.ano).map(o=>lin(o,o.gp)),'brasileiro brasileirao mais gols marcados melhor ataque','Temporadas');
+  add('b-gc-menos','Brasileirões com menos gols sofridos (10+ jogos)','gols sofridos',()=>tempStats('Campeonato Brasileiro').filter(o=>ok(o,10)).sort((a,b)=>(a.gc/a.n-b.gc/b.n)||b.ano-a.ano).map(o=>lin(o,o.gc,`${o.gc} em ${o.n} jogos`)),'brasileiro brasileirao menos gols sofridos melhor defesa','Temporadas');
 })();
 
 </script>
