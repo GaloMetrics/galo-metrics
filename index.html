@@ -607,9 +607,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121231711';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121231711"></script>
-<script src="backend-firebase.js?v=20261121231711"></script>
+<script>window.GM_BUILD='20261121232113';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121232113"></script>
+<script src="backend-firebase.js?v=20261121232113"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -653,7 +653,7 @@ function matchTable(list, limit=200, opts={}){
 function sortable(id, cols, rows, initial, max=300){
   let st = {k: initial, dir: -1};
   const draw = () => {
-    const r = [...rows].sort((a,b)=>{ const x=a[st.k], y=b[st.k]; return (typeof x==='string' ? x.localeCompare(y) : (x-y)) * st.dir; }).slice(0,max);
+    const r = [...rows].sort((a,b)=>{ const x=a[st.k], y=b[st.k]; return ((typeof x==='string' ? x.localeCompare(y) : (x-y)) * st.dir) || ((b._tb||0)-(a._tb||0)); }).slice(0,max);
     $('#'+id).innerHTML = `<table><thead><tr>${cols.map(c=>`<th class="s ${c.n?'n':''}" data-k="${c.k}">${c.t}${st.k===c.k?(st.dir<0?' ↓':' ↑'):''}</th>`).join('')}</tr></thead><tbody>${
       r.map(o=>`<tr class="${o._href?'click':''}" ${o._href?`onclick="location.hash='${o._href}'"`:''}>${cols.map(c=>`<td class="${c.n?'n':''}">${c.f?c.f(o):esc(o[c.k])}</td>`).join('')}</tr>`).join('')}</tbody></table>
       ${rows.length>max?`<p class="count">Mostrando os ${max} primeiros de ${N(rows.length)}. Use a busca para achar os demais.</p>`:''}`;
@@ -1013,10 +1013,14 @@ function vAdversario(s){
 /* ---------- Temporadas ---------- */
 function scorersOf(list){ const sc={}; list.forEach(j=>j.gols.forEach(g=>{ if(isGoal(g)) sc[g.jogador]=(sc[g.jogador]||0)+1; })); return Object.entries(sc).sort((a,b)=>b[1]-a[1]); }
 function vTemporadas(){
-  const t={}; J.forEach(j=>(t[j.temporada] ||= []).push(j));
-  return `<div class="kicker">Ano a ano</div><h1>Temporadas</h1><table style="margin-top:20px"><thead><tr><th>Ano</th><th class="n">J</th><th class="n">V</th><th class="n">E</th><th class="n">D</th><th class="n hide-s">GP</th><th class="n hide-s">GC</th><th class="n">Aprov.</th><th>Artilheiro</th></tr></thead><tbody>${
-   Object.entries(t).sort((a,b)=>b[0]-a[0]).map(([y,l])=>{const r=rec(l); const top=scorersOf(l)[0];
-    return `<tr class="click" onclick="location.hash='temporada-${y}'"><td class="mono"><b>${y}</b></td><td class="n">${r.n}</td><td class="n">${r.V}</td><td class="n">${r.E}</td><td class="n">${r.D}</td><td class="n hide-s">${r.gp}</td><td class="n hide-s">${r.gc}</td><td class="n">${aprov(r)}</td><td>${top?esc(top[0])+' ('+top[1]+')':'–'}</td></tr>`;}).join('')}</tbody></table>`;
+  const t={}; J.forEach(j=>(t[j.temporada] ||= []).push(j)); const atual=+hojeStr().slice(0,4);
+  const rows=Object.entries(t).map(([y,l])=>{ const r=rec(l), top=scorersOf(l)[0]; return {ano:+y, _tb:+y, _href:'temporada-'+y, n:r.n, V:r.V, E:r.E, D:r.D, gp:r.gp, gc:r.gc, sg:r.gp-r.gc, ap:r.n?Math.round(1000*(3*r.V+r.E)/(3*r.n))/10:0, apT:aprov(r), art:top?top[1]:0, artN:top?top[0]:'', media:r.n?r.gp/r.n:0}; });
+  setTimeout(()=>sortable('ttab',[
+    {k:'ano',t:'Ano',f:o=>`<b class="mono">${o.ano}</b>${o.ano===atual?' <small class="count">em andamento</small>':''}`},
+    {k:'n',t:'J',n:1},{k:'V',t:'V',n:1},{k:'E',t:'E',n:1},{k:'D',t:'D',n:1},{k:'gp',t:'GP',n:1},{k:'gc',t:'GC',n:1},
+    {k:'sg',t:'SG',n:1,f:o=>(o.sg>0?'+':'')+o.sg},{k:'media',t:'Gols/jogo',n:1,f:o=>o.media.toFixed(2).replace('.',',')},
+    {k:'ap',t:'Aprov.',n:1,f:o=>o.apT},{k:'art',t:'Artilheiro',f:o=>o.artN?`${esc(nomeV(o.artN))} (${o.art})`:'–'}],rows,'ano',500),0);
+  return `<div class="kicker">Ano a ano</div><h1>Temporadas</h1><p class="count">Clique no título de uma coluna para ordenar. Em empate, a temporada mais recente vem primeiro.</p><div id="ttab" class="tscroll" style="margin-top:12px"></div>`;
 }
 function vTemporada(y){
   const l=J.filter(j=>String(j.temporada)===y); const r=rec(l);
