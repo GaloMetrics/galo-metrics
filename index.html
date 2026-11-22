@@ -607,9 +607,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121233425';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121233425"></script>
-<script src="backend-firebase.js?v=20261121233425"></script>
+<script>window.GM_BUILD='20261121233829';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121233829"></script>
+<script src="backend-firebase.js?v=20261121233829"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -1012,20 +1012,21 @@ function vAdversario(s){
 
 /* ---------- Temporadas ---------- */
 function scorersOf(list){ const sc={}; list.forEach(j=>j.gols.forEach(g=>{ if(isGoal(g)) sc[g.jogador]=(sc[g.jogador]||0)+1; })); return Object.entries(sc).sort((a,b)=>b[1]-a[1]); }
-function vTemporadas(){
-  const t={}; J.forEach(j=>(t[j.temporada] ||= []).push(j)); const atual=+hojeStr().slice(0,4);
-  const rows=Object.entries(t).map(([y,l])=>{ const r=rec(l), top=scorersOf(l)[0]; return {ano:+y, _tb:+y, _href:'temporada-'+y, n:r.n, V:r.V, E:r.E, D:r.D, gp:r.gp, gc:r.gc, sg:r.gp-r.gc, ap:r.n?Math.round(1000*(3*r.V+r.E)/(3*r.n))/10:0, apT:aprov(r), art:top?top[1]:0, artN:top?top[0]:'', media:r.n?r.gp/r.n:0}; });
+function vTemporadas(params){
+  const modo=new URLSearchParams(params||'').get('modo')==='ano'?'ano':'temp';
+  const t={}; J.forEach(j=>(t[modo==='ano'?+j.data.slice(0,4):j.temporada] ||= []).push(j)); const atual=+hojeStr().slice(0,4);
+  const rows=Object.entries(t).map(([y,l])=>{ const r=rec(l), top=scorersOf(l)[0]; const ult=l.reduce((m,j)=>j.data>m?j.data:m,''); const fim=modo==='temp'&&ult.slice(0,4)>y?ult.slice(5,7)+'/'+ult.slice(0,4):''; return {ano:+y, fim, _tb:+y, _href:'temporada-'+y, n:r.n, V:r.V, E:r.E, D:r.D, gp:r.gp, gc:r.gc, sg:r.gp-r.gc, ap:r.n?Math.round(1000*(3*r.V+r.E)/(3*r.n))/10:0, apT:aprov(r), art:top?top[1]:0, artN:top?top[0]:'', media:r.n?r.gp/r.n:0}; });
   setTimeout(()=>sortable('ttab',[
-    {k:'ano',t:'Ano',f:o=>`<b class="mono">${o.ano}</b>${o.ano===atual?' <small class="count">em andamento</small>':''}`},
+    {k:'ano',t:modo==='ano'?'Ano':'Temporada',f:o=>`<b class="mono">${o.ano}</b>${o.ano===atual?' <small class="count">em andamento</small>':''}${o.fim?` <small class="count">até ${o.fim}</small>`:''}`},
     {k:'n',t:'J',n:1},{k:'V',t:'V',n:1},{k:'E',t:'E',n:1},{k:'D',t:'D',n:1},{k:'gp',t:'GP',n:1},{k:'gc',t:'GC',n:1},
     {k:'sg',t:'SG',n:1,f:o=>(o.sg>0?'+':'')+o.sg},{k:'media',t:'Gols/jogo',n:1,f:o=>o.media.toFixed(2).replace('.',',')},
     {k:'ap',t:'Aprov.',n:1,f:o=>o.apT},{k:'art',t:'Artilheiro',f:o=>o.artN?`${esc(nomeV(o.artN))} (${o.art})`:'–'}],rows,'ano',500),0);
-  return `<div class="kicker">Ano a ano</div><h1>Temporadas</h1><p class="count">Clique no título de uma coluna para ordenar. Em empate, a temporada mais recente vem primeiro.</p><div id="ttab" class="tscroll" style="margin-top:12px"></div>`;
+  return `<div class="kicker">Ano a ano</div><h1>Temporadas</h1><p class="seg"><a class="${modo==='temp'?'more':'ghost'}" href="#temporadas">Por temporada</a> <a class="${modo==='ano'?'more':'ghost'}" href="#temporadas?modo=ano">Por ano (calendário)</a></p><p class="count">${modo==='temp'?'Temporada esportiva: quando uma competição termina no ano seguinte, como o Brasileiro 2020 (até fevereiro de 2021) ou Mineiros antigos, os jogos contam na temporada em que ela começou.':'Ano do calendário: cada jogo conta no ano em que foi disputado.'} Clique no título de uma coluna para ordenar. Em empate, o ano mais recente vem primeiro.</p><div id="ttab" class="tscroll" style="margin-top:12px"></div>`;
 }
 function vTemporada(y){
-  const l=J.filter(j=>String(j.temporada)===y); const r=rec(l);
+  const l=J.filter(j=>String(j.temporada)===y); const r=rec(l); const ult=l.reduce((m,j)=>j.data>m?j.data:m,''), pri=l.reduce((m,j)=>!m||j.data<m?j.data:m,''); const notaT=ult.slice(0,4)>y?`<p class="note">A temporada ${y} foi até ${fmtD(ult)}: ${l.filter(j=>j.data.slice(0,4)>y).length} jogos dela foram disputados em ${ult.slice(0,4)}.</p>`:''; const empr=J.filter(j=>j.data.slice(0,4)===y&&String(j.temporada)!==y).length; const notaA=empr?`<p class="count">${empr} jogos disputados em ${y} contam na temporada ${+y-1}. <a href="#temporadas?modo=ano">Ver por ano do calendário →</a></p>`:'';
   const byC={}; l.forEach(j=>(byC[j.competicao] ||= []).push(j));
-  return `<a class="back" href="#temporadas">← Temporadas</a><div class="kicker">Temporada</div><h1>${y}</h1>${tiles(r)}${resultBar(r)}
+  return `<a class="back" href="#temporadas">← Temporadas</a><div class="kicker">Temporada</div><h1>${y}</h1>${notaT}${notaA}${tiles(r)}${resultBar(r)}
   <p class="count pager">${byId && J.some(j=>j.temporada==y-1)?`<a href="#temporada-${y-1}">← ${y-1}</a>`:''}${J.some(j=>j.temporada==+y+1)?`<a href="#temporada-${+y+1}">${+y+1} →</a>`:''}</p>
   <div class="grid2"><div><h2>Por competição</h2><table><thead><tr><th>Competição</th><th class="n">J</th><th class="n">V</th><th class="n">E</th><th class="n">D</th><th class="n">Aprov.</th></tr></thead><tbody>${Object.entries(byC).map(([c,x])=>{const q=rec(x);return `<tr><td>${esc(c)}</td><td class="n">${q.n}</td><td class="n">${q.V}</td><td class="n">${q.E}</td><td class="n">${q.D}</td><td class="n">${aprov(q)}</td></tr>`}).join('')}</tbody></table></div>
   <div><h2>Artilharia</h2><table><thead><tr><th>Jogador</th><th class="n">Gols</th></tr></thead><tbody>${scorersOf(l).slice(0,12).map(([n,g])=>`<tr class="click" onclick="location.hash='jogador-${slug(n)}'"><td>${esc(n)}</td><td class="n">${g}</td></tr>`).join('')}</tbody></table></div></div>
@@ -2837,7 +2838,7 @@ function route(){
   else if(h.startsWith('jogador-')) {html=vJogador(h.slice(8)); sec='jogadores';}
   else if(h==='adversarios') html=vAdversarios(params);
   else if(h.startsWith('adversario-')) {html=vAdversario(h.slice(11)); sec='adversarios';}
-  else if(h==='temporadas') html=vTemporadas();
+  else if(h==='temporadas') html=vTemporadas(params);
   else if(h.startsWith('temporada-')) {html=vTemporada(h.slice(10)); sec='temporadas';}
   else if(h==='tecnicos') html=vTecnicos();
   else if(h==='recordes') html=vRecordes();
