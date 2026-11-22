@@ -587,6 +587,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 .campo-l.pontas-altas{justify-content:flex-start;padding:0 2%}.campo-l.pontas-altas>.campo-p:first-child,.campo-l.pontas-altas>.campo-p:last-child{transform:translateY(-38px)}.campo-l.pontas-altas>.campo-p:nth-child(2){margin-left:auto;margin-right:5%}.campo-l.pontas-altas>.campo-p:nth-child(3){margin-right:auto;margin-left:5%}
 .campo-l.dupla-centro{justify-content:center;gap:18%}
 @media(max-width:620px){.campo-l.pontas-altas{padding:0}.campo-l.pontas-altas>.campo-p{min-width:0;flex:0 1 23%}.campo-l.pontas-altas>.campo-p:first-child,.campo-l.pontas-altas>.campo-p:last-child{transform:translateY(-18px)}.campo-l.pontas-altas>.campo-p:nth-child(2){margin-right:2%}.campo-l.pontas-altas>.campo-p:nth-child(3){margin-left:2%}.campo-l.dupla-centro{gap:8%}}
+.seg{position:relative;z-index:5;margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}main h1{pointer-events:none}main h1 a{pointer-events:auto}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -607,9 +608,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121233829';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121233829"></script>
-<script src="backend-firebase.js?v=20261121233829"></script>
+<script>window.GM_BUILD='20261121234116';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121234116"></script>
+<script src="backend-firebase.js?v=20261121234116"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
