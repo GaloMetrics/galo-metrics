@@ -607,9 +607,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121213042';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121213042"></script>
-<script src="backend-firebase.js?v=20261121213042"></script>
+<script>window.GM_BUILD='20261121230047';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261121230047"></script>
+<script src="backend-firebase.js?v=20261121230047"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -3981,8 +3981,8 @@ function porCompeticao(){ const m={}; J.filter(j=>j.resultado&&j.grupo!=='Amisto
   add('Sequências','seq-inv','Maiores sequências invictas','jogos sem perder',()=>todasSequencias(j=>j.resultado!=='D',8),SQ+' sem perder invicto invicta invencibilidade invictos','seq');
   add('Sequências','seq-gol','Mais jogos seguidos marcando','jogos marcando',()=>todasSequencias(j=>j.gp>0,10),SQ+' marcando fazendo gol balancou','seq');
   add('Sequências','seq-zero','Mais jogos seguidos sem sofrer gol','jogos sem sofrer',()=>todasSequencias(j=>j.gc===0,4),SQ+' sem sofrer gol defesa zerado','seq');
-  add('Sequências','seq-sv','Maiores jejuns sem vencer','jogos sem vencer',()=>todasSequencias(j=>j.resultado!=='V',5),SQ+' sem vencer jejum','seq');
-  add('Sequências','seq-d','Maiores sequências de derrotas','derrotas seguidas',()=>todasSequencias(j=>j.resultado==='D',3),SQ+' derrotas perdendo','seq');
+  add('Sequências','seq-sv','Maiores jejuns sem vencer','jogos sem vencer',()=>todasSequencias(j=>j.resultado!=='V',5),SQ+' sem vencer jejum jejuns sem vitoria sem vitorias piores pior seca crise ruim ruins','seq');
+  add('Sequências','seq-d','Maiores sequências de derrotas','derrotas seguidas',()=>todasSequencias(j=>j.resultado==='D',3),SQ+' derrotas perdendo derrota piores pior perdeu','seq');
   const CP='competicao competicoes campeonato campeonatos torneio torneios disputou';
   add('Competições','comp-j','Competições com mais jogos do Galo','jogos',()=>porCompeticao().sort((a,b)=>b.l.length-a.l.length).map(o=>({nome:o.c, href:linkJogos({comp:o.c}), v:o.l.length})),CP+' mais jogos');
   add('Competições','comp-ap','Melhor aproveitamento por competição (20+ jogos)','% de aproveitamento',()=>porCompeticao().filter(o=>o.l.length>=20).sort((a,b)=>b.ap-a.ap).map(o=>({nome:`${o.c} (${o.l.length} jogos)`, href:linkJogos({comp:o.c}), v:o.ap})),CP+' aproveitamento melhor desempenho');
