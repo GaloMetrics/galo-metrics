@@ -610,9 +610,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261123205000';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261123205000"></script>
-<script src="backend-firebase.js?v=20261123205000"></script>
+<script>window.GM_BUILD='20261123205729';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261123205729"></script>
+<script src="backend-firebase.js?v=20261123205729"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4589,7 +4589,7 @@ function vDuplas(params){
   ${DONO?`<p>${artBtn({t:'anuncio-duplas'}).replace('Baixar arte','Arte de anúncio')}</p>`:''}
   <p class="lede">Quem jogou mais junto pelo Galo, as duplas que mais marcaram no mesmo jogo e os trios que mais venceram. Contamos titulares e quem entrou durante o jogo, nos ${N(J.filter(j=>j._quem).length)} jogos que têm a escalação registrada (dos ${N(J.filter(j=>j.resultado).length)} jogos da base, ${N(J.filter(j=>j.resultado&&!j._quem).length)} só têm placar e gols, quase todos dos primeiros anos).</p>
   <form id="dupform" class="pq-form"><input name="j" list="dupjog" value="${esc(q)}" placeholder="Um jogador (Reinaldo) ou uma dupla (Hulk + Paulinho)" autocomplete="off"><datalist id="dupjog"><option value="Hulk + Paulinho"><option value="Reinaldo + Éder Aleixo"><option value="Diego Tardelli + Jô"><option value="Trio Maldito">${nomesJog.map(n=>`<option value="${esc(nomeV(n))}">`).join('')}</datalist><button class="more" type="submit">Ver parceiros</button></form>
-  ${parc}${maldito}
+  ${parc}
   <h2>Duplas que mais jogaram juntas</h2>${tabDup(maisJ,[DUP_COLS.J,DUP_COLS.VED,DUP_COLS.AP])}
   <h2>Duplas de ataque: os dois marcaram no mesmo jogo</h2>${tabDup(ataque,[DUP_COLS.AMB,DUP_COLS.G,DUP_COLS.J])}
   <h2>Duplas com mais gols nos jogos juntos</h2>${tabDup(golsJ,[DUP_COLS.G,DUP_COLS.J,DUP_COLS.AP])}
