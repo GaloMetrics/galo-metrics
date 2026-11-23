@@ -588,6 +588,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 .campo-l.dupla-centro{justify-content:center;gap:18%}
 @media(max-width:620px){.campo-l.pontas-altas{padding:0}.campo-l.pontas-altas>.campo-p{min-width:0;flex:0 1 23%}.campo-l.pontas-altas>.campo-p:first-child,.campo-l.pontas-altas>.campo-p:last-child{transform:translateY(-18px)}.campo-l.pontas-altas>.campo-p:nth-child(2){margin-right:2%}.campo-l.pontas-altas>.campo-p:nth-child(3){margin-left:2%}.campo-l.dupla-centro{gap:8%}}
 .seg{position:relative;z-index:5;margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}main h1{pointer-events:none}main h1 a{pointer-events:auto}
+.dup-e{color:#C9962B;font-weight:700}.novo{font:600 9px Oswald,sans-serif;background:#C9962B;color:#111;padding:1px 4px;margin-left:4px;letter-spacing:.06em;text-transform:uppercase}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -600,7 +601,7 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
   <span class="topbtns"><form id="hq" class="hq" role="search"><input type="search" id="hqi" placeholder="Buscar jogador, clube, cidade…" aria-label="Buscar no Galo Metrics"></form><a id="gmchip" href="#perfil" class="gmchip">★ Perfil</a><span id="gmconta" class="gmconta" hidden><button id="gmlogin" type="button" aria-haspopup="true"></button><span id="gmmenu" class="gmmenu" hidden></span></span><button id="tema" type="button" onclick="trocaTema()">Modo escuro</button><button id="navbtn" type="button" aria-label="Abrir menu" aria-expanded="false" onclick="var o=document.body.classList.toggle('navopen');this.setAttribute('aria-expanded',o)"><span class="hb"></span>Menu</button></span></div>
   <nav id="nav" aria-label="Principal">
     <a href="#inicio">Início</a><a href="#jogos">Jogos</a><a href="#jogadores">Jogadores</a><a href="#adversarios">Adversários</a><a href="#competicoes">Competições</a><a href="#mapa">Mapa</a><a href="#pergunte">Busca</a><a href="#embreve" class="nav-breve">Em breve</a>
-    <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
+    <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#duplas">Duplas e trios <b class="novo">novo</b></a><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
     <span class="nav-sep" aria-hidden="true"></span>
     <details class="menu jogar"><summary>★ Jogar</summary><div class="menu-p"><a href="#desafios">Desafios do dia</a><a href="#palpites">Palpites</a><a href="#album">Álbum de figurinhas</a><a href="#ranking">Ranking da semana</a></div></details>
     <details class="menu area"><summary>Meu perfil</summary><div class="menu-p"><a href="#perfil">Perfil e conquistas</a><a href="#torcedores">Amigos</a><a href="#diario">Meu diário</a><a href="#sugestoes">Sugestões e correções</a><a href="#colaboradores">Colaboradores</a><a href="#apoie">♥ Apoie</a><a href="#dono" id="navdono" hidden>Página do dono</a></div></details>
@@ -608,9 +609,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261121234116';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261121234116"></script>
-<script src="backend-firebase.js?v=20261121234116"></script>
+<script>window.GM_BUILD='20261123204314';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261123204314"></script>
+<script src="backend-firebase.js?v=20261123204314"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -934,6 +935,7 @@ function vJogador(s){
   ${cartaArquivo(p)}${notaAcc}${p.jogos&&antes30(p)?`<p class="count">*Na base, a partir de ${fmtD(D.meta.escalacoes_desde)}, período com escalações.</p>`:''}
   ${perfilJogador(p,list,gpj,comps,GK)}
   ${typeof blocoAvalJogador==='function'?blocoAvalJogador(p):''}
+  ${typeof blocoParceiros==='function'?blocoParceiros(p):''}
   ${(()=>{ const pr=penResumo(p.nome); if(!pr.l.length) return '';
     return `<h2>Pênaltis defendidos</h2><div class="grid2"><div><p class="classico-num"><b>${pr.jogo}</b> durante os jogos</p></div><div><p class="classico-num"><b>${pr.disputa}</b> em disputas de pênaltis</p></div></div>
     <table><thead><tr><th>Data</th><th>Partida</th><th>Situação</th><th class="hide-s">Cobrador</th></tr></thead><tbody>${(()=>{ const g=[]; pr.l.forEach(o=>{ const k=o.j.id+o.x.tipo; const last=g[g.length-1]; if(last&&last.k===k){ last.n++; if(o.x.cobrador) last.c.push(o.x.cobrador); } else g.push({k,j:o.j,t:o.x.tipo,n:1,c:o.x.cobrador?[o.x.cobrador]:[]}); }); return g.reverse(); })().map(o=>`<tr class="click" onclick="location.hash='jogo-${o.j.id}'"><td class="mono">${fmtD(o.j.data)}</td><td>${linha(o.j)}</td><td>${o.t==='jogo'?'No jogo':'Disputa de pênaltis'}${o.n>1?` · <b>${o.n} defesas</b>`:''}</td><td class="hide-s">${esc(o.c.join(', ')||'–')}</td></tr>`).join('')}</tbody></table>
@@ -2840,6 +2842,7 @@ function route(){
   else if(h==='adversarios') html=vAdversarios(params);
   else if(h.startsWith('adversario-')) {html=vAdversario(h.slice(11)); sec='adversarios';}
   else if(h==='temporadas') html=vTemporadas(params);
+  else if(h==='duplas') html=vDuplas(params);
   else if(h.startsWith('temporada-')) {html=vTemporada(h.slice(10)); sec='temporadas';}
   else if(h==='tecnicos') html=vTecnicos();
   else if(h==='recordes') html=vRecordes();
@@ -3462,7 +3465,6 @@ function vApoie(){
 const BREVE=[
  ['Tabelas das competições','Todas as tabelas que o Galo disputou','A classificação final de cada campeonato que o Galo jogou, do Mineiro de 1915 ao Brasileirão de hoje: pontos, vitórias, saldo e a colocação do Galo.',['Todas as competições e temporadas','Tabela final de cada campeonato','Grupos e fases de mata-mata','Campanha do Galo em cada edição']],
  ['Jogadores adversários','Quem enfrentou o Galo','A ficha de cada jogador que enfrentou o Galo: jogos, gols, vitórias e derrotas contra o Galo. Os maiores carrascos da história, por clube e por época.',['Quem mais enfrentou o Galo','Quem mais marcou contra o Galo','O carrasco de cada adversário','Ficha de cada jogador contra o Galo']],
- ['Duplas e trios','Quem jogou mais junto pelo Galo','As parcerias da história em números: as duplas que mais entraram em campo juntas, as duplas de ataque com mais gols no mesmo jogo, os trios que mais venceram e o aproveitamento de cada parceria.',['Quem mais jogou ao lado do seu ídolo','Duplas de ataque com mais gols juntos','Trios com melhor aproveitamento']],
  ['Monte seu Galo da história','Seu time dos sonhos, de 1908 até hoje','Escolha o esquema, coloque os craques de todas as épocas em campo e compartilhe a arte do seu Galo ideal. Dá para comparar com o time dos sonhos dos amigos e da torcida.',['Escalação em campo com qualquer esquema','Arte pronta para Instagram e X','Ranking do time mais votado pela torcida']],
  ['Monte seu Galo com figurinhas','Seu álbum vira time','Só entra em campo quem você já colou. Lendárias e brilhantes valem mais, e quem você viu ao vivo no estádio ganha bônus.',['Força do time pela raridade das figurinhas','Bônus para quem você viu no estádio','Troca de figurinhas repetidas com os amigos']],
  ['Linha do tempo','Coloque a história em ordem','Jogos, títulos e estreias aparecem um por vez: arraste cada um para o lugar certo na linha do tempo, do mais antigo ao mais recente.',['Quem chegou primeiro ao Galo?','Qual final veio antes?','Uma carta nova a cada acerto']],
@@ -3476,7 +3478,7 @@ function vEmBreve(){
   <div class="breve-grid">${BREVE.map(([t,s,p,l])=>`<article class="breve"><span class="sel">Em breve</span><div class="kicker" style="margin:0">${esc(s)}</div><h3>${esc(t)}</h3><p>${esc(p)}</p><ul>${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></article>`).join('')}</div>`;
 }
 function blocoBreve(){
-  return `<a class="capa-breve" href="#embreve" style="text-decoration:none;color:inherit"><span class="kk">★ Em breve</span><span><b>Duplas e trios</b>, <b>Monte seu Galo da história</b>, <b>time com figurinhas</b> e <b>campeonato com os amigos</b>. Veja o que vem por aí →</span></a>`;
+  return `<a class="capa-breve" href="#embreve" style="text-decoration:none;color:inherit"><span class="kk">★ Em breve</span><span><b>Monte seu Galo da história</b>, <b>time com figurinhas</b> e <b>campeonato com os amigos</b>. Veja o que vem por aí →</span></a>`;
 }
 
 /* ---------- Metricoins: presentes do dono para os amigos ---------- */
@@ -4545,6 +4547,55 @@ function advPerD(){ const m={}; JP().filter(j=>j.resultado).forEach(j=>{ const o
   add('t-ap-menos','Piores temporadas em aproveitamento (20+ jogos)','% de aproveitamento',()=>tempStats().filter(o=>ok(o)).sort((a,b)=>(a.ap-b.ap)||b.ano-a.ano).map(o=>lin(o,o.ap)),'pior piores aproveitamento desempenho ruim pior temporada');
   add('b-gp-mais','Brasileirões com mais gols marcados','gols',()=>tempStats('Campeonato Brasileiro').sort((a,b)=>(b.gp-a.gp)||b.ano-a.ano).map(o=>lin(o,o.gp)),'brasileiro brasileirao mais gols marcados melhor ataque','Temporadas');
   add('b-gc-menos','Brasileirões com menos gols sofridos (10+ jogos)','gols sofridos',()=>tempStats('Campeonato Brasileiro').filter(o=>ok(o,10)).sort((a,b)=>(a.gc/a.n-b.gc/b.n)||b.ano-a.ano).map(o=>lin(o,o.gc,`${o.gc} em ${o.n} jogos`)),'brasileiro brasileirao menos gols sofridos melhor defesa','Temporadas');
+})();
+
+/* =================== DUPLAS E TRIOS =================== */
+let _DUP=null;
+function duplasBase(){ if(_DUP) return _DUP;
+  const pl=J.filter(j=>j.resultado&&j.escalacao_galo&&(j.escalacao_galo.titulares||[]).length>=9);
+  const tot={}, gamesOf={}; pl.forEach(j=>{ const e=j.escalacao_galo; const s=[...new Set([...(e.titulares||[]),...(e.substituicoes||[]).map(x=>x.entrou)].filter(Boolean))]; j._quem=s; s.forEach(n=>{ tot[n]=(tot[n]||0)+1; }); });
+  const forte=new Set(Object.keys(tot).filter(n=>tot[n]>=25));
+  const P=new Map(), T=new Map(); const add=(M,k,j,extra)=>{ let o=M.get(k); if(!o){ o={n:0,V:0,E:0,D:0,ambos:0,gols:0}; M.set(k,o); } o.n++; o[j.resultado]++; if(extra){ o.ambos+=extra.ambos; o.gols+=extra.gols; } };
+  pl.forEach(j=>{ const s=j._quem.filter(n=>forte.has(n)).sort(); const gj={}; j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)&&g.jogador) gj[g.jogador]=(gj[g.jogador]||0)+1; });
+    for(let a=0;a<s.length;a++) for(let b=a+1;b<s.length;b++){ const ga=gj[s[a]]||0, gb=gj[s[b]]||0; add(P,s[a]+'|'+s[b],j,{ambos:ga&&gb?1:0, gols:ga+gb}); }
+    const tt=(j.escalacao_galo.titulares||[]).filter(n=>forte.has(n)&&tot[n]>=60).sort();
+    for(let a=0;a<tt.length;a++) for(let b=a+1;b<tt.length;b++) for(let c=b+1;c<tt.length;c++) add(T,tt[a]+'|'+tt[b]+'|'+tt[c],j); });
+  const L=M=>[...M.entries()].map(([k,o])=>({k, nomes:k.split('|'), ...o, ap:Math.round(100*(3*o.V+o.E)/(3*o.n))}));
+  return _DUP={pares:L(P), trios:L(T), tot}; }
+const nomesDup=o=>o.nomes.map(n=>`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`).join(' <span class="dup-e">+</span> ');
+function tabDup(L,cols){ return `<table><thead><tr><th>#</th><th>${L[0]&&L[0].nomes.length===3?'Trio':'Dupla'}</th>${cols.map(c=>`<th class="n">${c[0]}</th>`).join('')}</tr></thead><tbody>${L.map((o,i)=>`<tr><td class="n">${i+1}</td><td>${nomesDup(o)}</td>${cols.map(c=>`<td class="n">${c[1](o)}</td>`).join('')}</tr>`).join('')}</tbody></table>`; }
+const DUP_COLS={J:['Jogos',o=>N(o.n)],VED:['V-E-D',o=>`${o.V}-${o.E}-${o.D}`],AP:['Aprov.',o=>o.ap+'%'],AMB:['Jogos em que os dois marcaram',o=>o.ambos],G:['Gols juntos',o=>o.gols]};
+function vDuplas(params){
+  const P=new URLSearchParams(params||''), q=P.get('j')||''; try{ trk('duplas'); }catch(e){}
+  const B=duplasBase(); const pares=B.pares, trios=B.trios;
+  const maisJ=pares.slice().sort((a,b)=>b.n-a.n).slice(0,20);
+  const ataque=pares.filter(o=>o.ambos>0).sort((a,b)=>b.ambos-a.ambos||b.gols-a.gols).slice(0,20);
+  const golsJ=pares.slice().sort((a,b)=>b.gols-a.gols).slice(0,20);
+  const apD=pares.filter(o=>o.n>=80).sort((a,b)=>b.ap-a.ap||b.n-a.n).slice(0,20);
+  const triosV=trios.slice().sort((a,b)=>b.V-a.V).slice(0,15);
+  const triosAp=trios.filter(o=>o.n>=50).sort((a,b)=>b.ap-a.ap||b.n-a.n).slice(0,15);
+  const nomesJog=Object.keys(B.tot).filter(n=>B.tot[n]>=25).sort((a,b)=>nomeV(a).localeCompare(nomeV(b),'pt'));
+  let parc=''; if(q){ const alvo=nomesJog.find(n=>nrm(nomeV(n))===nrm(q)||nrm(n)===nrm(q)); if(alvo){ const L=pares.filter(o=>o.nomes.includes(alvo)).map(o=>({...o, outro:o.nomes.find(n=>n!==alvo)})).sort((a,b)=>b.n-a.n).slice(0,25);
+      parc=`<h2>Quem mais jogou ao lado de ${esc(nomeV(alvo))}</h2><table><thead><tr><th>#</th><th>Parceiro</th><th class="n">Jogos juntos</th><th class="n">V-E-D</th><th class="n">Aprov.</th><th class="n">Gols juntos</th></tr></thead><tbody>${L.map((o,i)=>`<tr><td class="n">${i+1}</td><td><a href="#jogador-${slug(o.outro)}">${esc(nomeV(o.outro))}</a></td><td class="n">${o.n}</td><td class="n">${o.V}-${o.E}-${o.D}</td><td class="n">${o.ap}%</td><td class="n">${o.gols}</td></tr>`).join('')}</tbody></table>`; } else parc=`<p class="empty">Não achei "${esc(q)}". Escolha um nome da lista.</p>`; }
+  setTimeout(()=>{ const f=$('#dupform'); if(f) f.onsubmit=ev=>{ ev.preventDefault(); location.hash='duplas?j='+encodeURIComponent(f.elements.j.value.trim()); }; },0);
+  return `<div class="kicker">Galo Metrics · parcerias</div><h1>Duplas e trios</h1>
+  <p class="lede">Quem jogou mais junto pelo Galo, as duplas que mais marcaram no mesmo jogo e os trios que mais venceram. Contamos titulares e quem entrou durante o jogo, nos ${N(J.filter(j=>j._quem).length)} jogos com escalação na base.</p>
+  <form id="dupform" class="pq-form"><input name="j" list="dupjog" value="${esc(q)}" placeholder="Digite um jogador para ver os parceiros dele" autocomplete="off"><datalist id="dupjog">${nomesJog.map(n=>`<option value="${esc(nomeV(n))}">`).join('')}</datalist><button class="more" type="submit">Ver parceiros</button></form>
+  ${parc}
+  <h2>Duplas que mais jogaram juntas</h2>${tabDup(maisJ,[DUP_COLS.J,DUP_COLS.VED,DUP_COLS.AP])}
+  <h2>Duplas de ataque: os dois marcaram no mesmo jogo</h2>${tabDup(ataque,[DUP_COLS.AMB,DUP_COLS.G,DUP_COLS.J])}
+  <h2>Duplas com mais gols nos jogos juntos</h2>${tabDup(golsJ,[DUP_COLS.G,DUP_COLS.J,DUP_COLS.AP])}
+  <h2>Duplas com melhor aproveitamento (80+ jogos juntos)</h2>${tabDup(apD,[DUP_COLS.AP,DUP_COLS.J,DUP_COLS.VED])}
+  <h2>Trios que mais venceram</h2><p class="count">Trios de titulares.</p>${tabDup(triosV,[['Vitórias',o=>o.V],DUP_COLS.J,DUP_COLS.AP])}
+  <h2>Trios com melhor aproveitamento (50+ jogos juntos)</h2>${tabDup(triosAp,[DUP_COLS.AP,DUP_COLS.J,DUP_COLS.VED])}
+  <p class="count">Só entram jogadores com 25 jogos ou mais pelo Galo (trios: 60 ou mais).</p>`;
+}
+function blocoParceiros(p){ try{ const B=duplasBase(); const L=B.pares.filter(o=>o.nomes.includes(p.nome)).map(o=>({...o,outro:o.nomes.find(n=>n!==p.nome)})).sort((a,b)=>b.n-a.n).slice(0,6); if(!L.length) return '';
+  return `<h2>Quem mais jogou com ele</h2><div class="pq-ex">${L.map(o=>`<a class="chip" href="#jogador-${slug(o.outro)}">${esc(nomeV(o.outro))} · ${o.n} jogos</a>`).join(' ')}</div><p class="count"><a href="#duplas?j=${encodeURIComponent(nomeV(p.nome))}">Ver todos os parceiros →</a></p>`; }catch(e){ return ''; } }
+(function(){ const add=(id,t,u,fn,sin)=>{ LISTAS.push(['Jogadores',id,t,u,fn]); LISTA_SIN[id]=sin; };
+  add('duplas','Duplas que mais jogaram juntas','jogos juntos',()=>duplasBase().pares.slice().sort((a,b)=>b.n-a.n).map(o=>({nome:o.nomes.map(nomeV).join(' + '), href:'#duplas', v:o.n})),'dupla duplas parceria parcerias juntos junto jogaram ao lado parceiro parceiros');
+  add('duplas-gols','Duplas em que os dois marcaram no mesmo jogo','jogos',()=>duplasBase().pares.filter(o=>o.ambos).sort((a,b)=>b.ambos-a.ambos||b.gols-a.gols).map(o=>({nome:o.nomes.map(nomeV).join(' + '), href:'#duplas', v:o.ambos})),'dupla duplas ataque gols marcaram juntos mesmo jogo parceria');
+  add('trios','Trios que mais venceram juntos','vitórias',()=>duplasBase().trios.slice().sort((a,b)=>b.V-a.V).map(o=>({nome:o.nomes.map(nomeV).join(' + '), href:'#duplas', v:o.V})),'trio trios juntos venceram vitorias');
 })();
 
 </script>
