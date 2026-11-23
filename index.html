@@ -589,6 +589,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 @media(max-width:620px){.campo-l.pontas-altas{padding:0}.campo-l.pontas-altas>.campo-p{min-width:0;flex:0 1 23%}.campo-l.pontas-altas>.campo-p:first-child,.campo-l.pontas-altas>.campo-p:last-child{transform:translateY(-18px)}.campo-l.pontas-altas>.campo-p:nth-child(2){margin-right:2%}.campo-l.pontas-altas>.campo-p:nth-child(3){margin-left:2%}.campo-l.dupla-centro{gap:8%}}
 .seg{position:relative;z-index:5;margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}main h1{pointer-events:none}main h1 a{pointer-events:auto}
 .dup-e{color:#C9962B;font-weight:700}.novo{font:600 9px Oswald,sans-serif;background:#C9962B;color:#111;padding:1px 4px;margin-left:4px;letter-spacing:.06em;text-transform:uppercase}
+.capa-novo{background:#fff8e6;color:var(--ink)!important}.capa-novo .cf-k{color:#8C6610}.dupla-card{border:3px solid var(--ink);padding:16px 18px;margin:10px 0 24px;box-shadow:6px 6px 0 #C9962B;background:var(--paper)}.dupla-tit{margin-top:4px!important;font-size:30px!important}.dupla-tit::before{display:none!important}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -609,9 +610,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261123204314';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261123204314"></script>
-<script src="backend-firebase.js?v=20261123204314"></script>
+<script>window.GM_BUILD='20261123205000';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261123205000"></script>
+<script src="backend-firebase.js?v=20261123205000"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -741,7 +742,7 @@ function vInicio(){
   const big = [...played].filter(j=>j.gp!=null).sort((a,b)=>(b.gp-b.gc)-(a.gp-a.gc)||b.gp-a.gp)[0];
   const cz = rec(J.filter(j=>j.adversario_id==='cruzeiro mg'));
   const vs=(CFG.vocesabia||[]); const vsx=vs.length?vs[Math.floor(Math.random()*vs.length)]:'';
-  return `${typeof capaFinal==='function'?capaFinal():''}${CFG.manchete?`<div class="manchete">★ ${CFG.mancheteLink?`<a href="${esc(CFG.mancheteLink)}">${esc(CFG.manchete)}</a>`:esc(CFG.manchete)}</div>`:''}${capa()}<p class="capa-sub">Todos os jogos, todos os gols, todos os números do Galo desde 1908.</p>${blocoBreve()}
+  return `${typeof capaFinal==='function'?capaFinal():''}${typeof capaDuplas==='function'?capaDuplas():''}${CFG.manchete?`<div class="manchete">★ ${CFG.mancheteLink?`<a href="${esc(CFG.mancheteLink)}">${esc(CFG.manchete)}</a>`:esc(CFG.manchete)}</div>`:''}${capa()}<p class="capa-sub">Todos os jogos, todos os gols, todos os números do Galo desde 1908.</p>${blocoBreve()}
   <p class="lede">${N(m.total)} partidas, de ${fmtD(m.primeiro)} a ${fmtD(m.ultimo)}. Placar e goleadores de toda a história; ficha completa (escalação, estádio, público, minuto dos gols) em ${N(m.fichas)} jogos.</p>
   ${tiles(r)}${resultBar(r)}
   ${next?proxJogo(next,hoje):''}
@@ -2742,6 +2743,8 @@ async function desenhaArte(s){
   if(s.t==='lista') return desenhaArteLista(s);
   if(s.t==='titulo') return desenhaArteTitulo(s);
   if(s.t==='cartao') return desenhaArteCartao(s);
+  if(s.t==='dupla') return desenhaArteDupla(s);
+  if(s.t==='anuncio-duplas') return desenhaArteAnuncioDuplas(s);
   if(s.t==='chamada') return desenhaArteChamada(s);
   const caminho = s.t==='jogo'?`/jogo-${s.id}`: s.t==='palpite'?'/palpites': s.t==='estadio'?'/diario':'/desafios';
   const A=await arteBase(caminho); const {cv,x,W,H,P,T,Tm,wrap,crest,galo,carimbo,INK,PAP,GOLD,GOLDD,V,R,CINZA}=A;
@@ -2970,8 +2973,8 @@ function avisoFases(){ return 'Finais e semifinais vêm da fase anotada na ficha
    Busca simples por nome (jogador, clube, cidade, estádio, técnico, temporada) e um catálogo de listas prontas,
    cada uma com um único critério. Não interpreta frases nem combina filtros. */
 const ehCruz=j=>j.adversario_id==='cruzeiro mg';
-const LISTA_REQ={'cruzeiro':/cruzeiro|classico|clasico|raposa/,'t-media':/media/,'t-saldo':/saldo/,'t-ap-mais':/aproveit|melhor|desempenho/,'jogos':/jogador|jogou|atleta|vestiu|camisa|partidas|atuou|presenc/,'t-ap-menos':/aproveit|pior|desempenho|ruim/,'art-temp':/artilh|goleador|quem|jogador/,'art-temp-mais':/artilh|goleador|quem|jogador/,'art-temp-menos':/artilh|goleador|quem|jogador/,'b-gp-mais':/brasileir/,'b-gc-menos':/brasileir/};
-let PER=null; const inPer=j=>!PER||(j&&j.data&&(!PER.de||j.data>=PER.de)&&(!PER.ate||j.data<=PER.ate)); const JP=()=>PER?J.filter(inPer):J;
+const LISTA_REQ={'trios-gols':/trio/,'duplas-gj':/dupla|parceria|parceiro/,'trios':/venc|vitori|ganh/,'duplas':/jog|junt|partida/,'duplas-gols':/mesmo jogo|os dois|ambos|marcaram juntos|os 2/,'cruzeiro':/cruzeiro|classico|clasico|raposa/,'t-media':/media/,'t-saldo':/saldo/,'t-ap-mais':/aproveit|melhor|desempenho/,'jogos':/jogador|jogou|atleta|vestiu|camisa|partidas|atuou|presenc/,'t-ap-menos':/aproveit|pior|desempenho|ruim/,'art-temp':/artilh|goleador|quem|jogador/,'art-temp-mais':/artilh|goleador|quem|jogador/,'art-temp-menos':/artilh|goleador|quem|jogador/,'b-gp-mais':/brasileir/,'b-gc-menos':/brasileir/};
+let PER=null; const inPer=j=>!PER||(j&&j.data&&(!PER.de||j.data>=PER.de)&&(!PER.ate||j.data<=PER.ate)&&(!PER.grupo||!j.grupo||j.grupo===PER.grupo)); const JP=()=>PER?J.filter(inPer):J;
 const MES_N={janeiro:1,fevereiro:2,marco:3,abril:4,maio:5,junho:6,julho:7,agosto:8,setembro:9,outubro:10,novembro:11,dezembro:12};
 function parsePer(q0){ let q=nrm(q0||''), de=null, ate=null, txt=''; const Y=new Date().getFullYear(); let m; const tira=r=>{ q=q.replace(r,' '); };
   if((m=q.match(/\b(?:entre|de)\s+((?:19|20)\d{2})\s+(?:e|a|ate)\s+((?:19|20)\d{2})\b/))){ de=m[1]+'-01-01'; ate=m[2]+'-12-31'; txt=`de ${m[1]} a ${m[2]}`; tira(m[0]); }
@@ -2983,8 +2986,10 @@ function parsePer(q0){ let q=nrm(q0||''), de=null, ate=null, txt=''; const Y=new
   else if((m=q.match(/\bseculo\s+(?:20|xx|passado)\b/))){ ate='2000-12-31'; txt='no século 20'; tira(m[0]); }
   else if((m=q.match(/\bpontos corridos\b/))){ de='2003-01-01'; txt='na era dos pontos corridos'; }
   else if((m=q.match(/\b(?:em|no ano de|na temporada|temporada)\s+((?:19|20)\d{2})\b/))){ de=m[1]+'-01-01'; ate=m[1]+'-12-31'; txt=`em ${m[1]}`; tira(m[0]); }
-  return {per:(de||ate)?{de,ate,txt}:null, limpo:q.replace(/\s+/g,' ').trim()}; }
-const perTxt=pr=>pr?(pr.txt||[(pr.de?'desde '+pr.de.slice(0,4):''),(pr.ate?'até '+pr.ate.slice(0,4):'')].filter(Boolean).join(' ')):'';
+  const CP=[[/\bbrasileir(ao|oes|o|os)\b|serie a\b/,'Campeonato Brasileiro','no Brasileirão'],[/\blibertadores\b|\bliberta\b/,'Libertadores','na Libertadores'],[/\bcopa do brasil\b/,'Copa do Brasil','na Copa do Brasil'],[/(?<!america |atletico |galo )\bmineiro(s)?\b|\bestadual\b/,'Campeonato Mineiro','no Mineiro'],[/\bsul[ -]?americana\b|\bsula\b/,'Sul-Americana','na Sul-Americana']];
+  let grupo=null; for(const [r,g,t] of CP){ if(r.test(q)){ grupo=g; txt=(txt?txt+' ':'')+t; q=q.replace(r,' ').replace(/\b(no|na|nos|nas|do|da)\s*$/,' '); break; } }
+  return {per:(de||ate||grupo)?{de,ate,grupo,txt}:null, limpo:q.replace(/\s+/g,' ').trim()}; }
+const perTxtB=pr=>pr?(pr.txt||[(pr.de?'desde '+pr.de.slice(0,4):''),(pr.ate?'até '+pr.ate.slice(0,4):''),(pr.grupo?'em '+pr.grupo:'')].filter(Boolean).join(' ')):'';
 function comPer(pr,f){ const bak=PER; PER=pr||null; try{ return f(); } finally{ PER=bak; } }
 const contaEv=f=>{ const m={}; eventos().forEach(e=>{ if(!inPer(e.j)) return; if(f(e)) m[e.nome]=(m[e.nome]||0)+1; }); return Object.entries(m).filter(([n])=>n&&!/^n[aã]o identificado/i.test(n)).sort((a,b)=>b[1]-a[1]).map(([n,v])=>({nome:nomeV(n), href:'#jogador-'+slug(n), v})); };
 const contaJ=(f,chave,href)=>{ const m={}; J.forEach(j=>{ if(!j.resultado||!f(j)) return; const k=chave(j); if(!k) return; (m[k] ||= {v:0, j}).v++; }); return Object.entries(m).sort((a,b)=>b[1].v-a[1].v).map(([k,o])=>({nome:k, href:href?href(o.j,k):'', v:o.v})); };
@@ -3055,16 +3060,17 @@ function vPergunte(params){
   let corpo='';
   const L=LISTAS.find(x=>x[1]===lid);
   const desde=+(P.get('desde')||0)||0; const prL=(P.get('de')||P.get('ate'))?{de:P.get('de')||null, ate:P.get('ate')||null}:(desde?{de:desde+'-01-01',ate:null}:null);
-  if(L){ const [,id,tit0,unid,fn0,tipo,res]=L; const fn=o=>comPer(prL,()=>fn0(o)); const diaP=P.get('dia')||null, entP=P.get('ent')||null; const tit=tituloLista(id,tit0,{dia:diaP,ent:entP})+(prL?' '+perTxt(prL):''); const todas=fn({desde,dia:diaP,ent:entP}).filter(x=>x.v>0), linhas=(tipo==='mm'||tipo==='temp'||tipo==='datas'||id==='dia')?todas:todas.slice(0,30);
+  if(L){ const [,id,tit0,unid,fn0,tipo,res]=L; const fn=o=>comPer(prL,()=>fn0(o)); const diaP=P.get('dia')||null, entP=P.get('ent')||null; const tit=prL?comSufixo(tituloLista(id,tit0,{dia:diaP,ent:entP}),prL):tituloLista(id,tit0,{dia:diaP,ent:entP}); const todas=fn({desde,dia:diaP,ent:entP}).filter(x=>x.v>0), linhas=(tipo==='mm'||tipo==='temp'||tipo==='datas'||id==='dia')?todas:todas.slice(0,30);
     corpo=`<h2>${esc(tit)}</h2>${tipo!=='datas'?filtroPer(id,prL,diaP,entP):''}${tipo!=='datas'&&todas.length?`<p>${artBtn({t:'lista',id,...(prL&&prL.de?{de:prL.de}:{}),...(prL&&prL.ate?{ate:prL.ate}:{}),...(diaP?{dia:diaP}:{}),...(entP?{ent:entP}:{})})}</p>`:''}${tipo==='datas'?`<p>${artBtn({t:'datas',id})} <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:tit+'\n\n'+(res?res(todas):''), url:'https://galometrics.com.br/#pergunte?lista='+id})}">Pronto para tweet ↗</a></p>`:''}${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'||/^mf-/.test(id)))}</p>`:''}${res&&todas.length?`<p class="lede">${esc(res(todas))}</p>`:''}${linhas.length?`<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
   else if(q.trim()){ const PQ=parsePer(q), prQ=PQ.per, qL=prQ?PQ.limpo:q; const ents=buscaEntidades(qL), par=listasParecidas(qL);
     try{ if(!route.keep&&!DONO&&TRK.bq.length<20&&TRK.bq[TRK.bq.length-1]?.q!==q.slice(0,80)){ TRK.bq.push({q:q.trim().slice(0,80), r:par.length?par[0][1]:(ents?'@':'')}); TRK.n++;  clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } }catch(e){}
     const dq0=diaDaBusca(qL); if(dq0&&!/\b(19|20)\d{2}\b/.test(qL)) par.unshift(LISTAS.find(x=>x[1]===(/artilh|gol|marc|fez|fizer/.test(nrm(q))?'dia-art':'dia')));
+    const parQ=parDaBusca(qL); if(parQ){ corpo+=comPer(prQ,()=>blocoDupla(parQ)); }
     const golQ=/artilh|\bgols?\b|marc|\bfez\b|fizer|goleador/.test(nrm(qL)); let entQ=null;
     if(golQ&&!dq0&&!/gols? olimpic|cruzeiro|classico/.test(nrm(qL))){ const E=entDaBusca(qL); if(E.adv&&E.adv!=='galo'&&!/cruzeiro/.test(nrm(qL))){ entQ=E.adv; par.unshift(LISTAS.find(x=>x[1]==='adv-art')); } else if(E.est){ entQ=E.est; par.unshift(LISTAS.find(x=>x[1]==='est-art')); } }
     const avisoTipo=/cabeca|cabecada/.test(nrm(qL))?'<p class="note">A base quase não registra o jeito de cada gol de cabeça (só 2 estão marcados), então não dá para montar essa lista ainda. Ela registra pênaltis, faltas, gols olímpicos e de bicicleta.</p>':'';
     if(par.length){ const [,id,tit,unid,fn0,tipo,res]=par[0]; const dq=0; const dia=(id==='dia'||id==='dia-art')?(dq0||null):null; const ent=(id==='adv-art'||id==='est-art')?entQ:null; const todas=comPer(prQ,()=>fn0({desde:0,dia,ent})).filter(x=>x.v>0), linhas=todas.slice(0,15);
-      corpo+=`${avisoTipo}<h2>${esc(tituloLista(id,tit,{dia,ent}))}${prQ?' '+esc(perTxt(prQ)):''}</h2>${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'||/^mf-/.test(id)))}</p>`:''}${res&&todas.length?`<p class="lede">${esc(res(todas))}</p>`:''}<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">${artBtn(tipo==='datas'?{t:'datas',id}:{t:'lista',id,...(prQ&&prQ.de?{de:prQ.de}:{}),...(prQ&&prQ.ate?{ate:prQ.ate}:{}),txt:prQ?perTxt(prQ):undefined,...(dia?{dia}:{}),...(ent?{ent}:{})})} Em ${esc(unid)}. <a href="#pergunte?lista=${id}${prQ&&prQ.de?'&de='+prQ.de:''}${prQ&&prQ.ate?'&ate='+prQ.ate:''}${dia?'&dia='+dia:''}${ent?'&ent='+encodeURIComponent(ent):''}">Ver a lista completa →</a></p>`;
+      corpo+=`${avisoTipo}<h2>${esc(prQ?comSufixo(tituloLista(id,tit,{dia,ent}),prQ):tituloLista(id,tit,{dia,ent}))}</h2>${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'||/^mf-/.test(id)))}</p>`:''}${res&&todas.length?`<p class="lede">${esc(res(todas))}</p>`:''}<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">${artBtn(tipo==='datas'?{t:'datas',id}:{t:'lista',id,...(prQ&&prQ.de?{de:prQ.de}:{}),...(prQ&&prQ.ate?{ate:prQ.ate}:{}),txt:prQ?perTxt(prQ):undefined,...(dia?{dia}:{}),...(ent?{ent}:{})})} Em ${esc(unid)}. <a href="#pergunte?lista=${id}${prQ&&prQ.de?'&de='+prQ.de:''}${prQ&&prQ.ate?'&ate='+prQ.ate:''}${dia?'&dia='+dia:''}${ent?'&ent='+encodeURIComponent(ent):''}">Ver a lista completa →</a></p>`;
       if(par.length>1) corpo+=`<h3>Talvez você procure</h3><div class="pq-ex">${par.slice(1,5).map(x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`).join('')}</div>`; }
     if(ents) corpo+=`<h2>${par.length?'Na base':'Resultados para "'+esc(q)+'"'}</h2><div class="busca-grid">${ents}</div>`;
     if(!corpo&&avisoTipo) corpo=avisoTipo;
@@ -4178,7 +4184,7 @@ async function desenhaArteLista(s){
   const L0=LISTAS.find(x=>x[1]===s.id); if(!L0) throw new Error('lista'); const [grupo,id,tit0,unid,fn,tipo,res]=L0;
   const prA=(s.de||s.ate)?{de:s.de||null,ate:s.ate||null,txt:s.txt}:(s.desde?{de:s.desde+'-01-01',ate:null}:null);
   const rows=comPer(prA,()=>fn({desde:0, dia:s.dia||null, ent:s.ent||null})).filter(x=>x.v>0);
-  const tit=tituloLista(id,tit0,{dia:s.dia,ent:s.ent})+(prA?' '+perTxt(prA):'');
+  const tit=prA?comSufixo(tituloLista(id,tit0,{dia:s.dia,ent:s.ent}),prA):tituloLista(id,tit0,{dia:s.dia,ent:s.ent});
   const A=await arteBase('/busca?lista='+id); const {cv,x,W,H,P,T,wrap,galo,INK,GOLD,GOLDD,V,R,CINZA}=A;
   galo(W-P-75,262,150);
   T('★ '+(s.k||'VOCÊ SABIA?'),P,232,'osw',36,GOLD,'left',W-2*P-190);
@@ -4550,18 +4556,18 @@ function advPerD(){ const m={}; JP().filter(j=>j.resultado).forEach(j=>{ const o
 })();
 
 /* =================== DUPLAS E TRIOS =================== */
-let _DUP=null;
-function duplasBase(){ if(_DUP) return _DUP;
-  const pl=J.filter(j=>j.resultado&&j.escalacao_galo&&(j.escalacao_galo.titulares||[]).length>=9);
+let _DUP={};
+function duplasBase(){ const key=PER?JSON.stringify(PER):'_'; if(_DUP[key]) return _DUP[key];
+  const pl=JP().filter(j=>j.resultado&&j.escalacao_galo&&(j.escalacao_galo.titulares||[]).length>=1);
   const tot={}, gamesOf={}; pl.forEach(j=>{ const e=j.escalacao_galo; const s=[...new Set([...(e.titulares||[]),...(e.substituicoes||[]).map(x=>x.entrou)].filter(Boolean))]; j._quem=s; s.forEach(n=>{ tot[n]=(tot[n]||0)+1; }); });
   const forte=new Set(Object.keys(tot).filter(n=>tot[n]>=25));
   const P=new Map(), T=new Map(); const add=(M,k,j,extra)=>{ let o=M.get(k); if(!o){ o={n:0,V:0,E:0,D:0,ambos:0,gols:0}; M.set(k,o); } o.n++; o[j.resultado]++; if(extra){ o.ambos+=extra.ambos; o.gols+=extra.gols; } };
   pl.forEach(j=>{ const s=j._quem.filter(n=>forte.has(n)).sort(); const gj={}; j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)&&g.jogador) gj[g.jogador]=(gj[g.jogador]||0)+1; });
     for(let a=0;a<s.length;a++) for(let b=a+1;b<s.length;b++){ const ga=gj[s[a]]||0, gb=gj[s[b]]||0; add(P,s[a]+'|'+s[b],j,{ambos:ga&&gb?1:0, gols:ga+gb}); }
     const tt=(j.escalacao_galo.titulares||[]).filter(n=>forte.has(n)&&tot[n]>=60).sort();
-    for(let a=0;a<tt.length;a++) for(let b=a+1;b<tt.length;b++) for(let c=b+1;c<tt.length;c++) add(T,tt[a]+'|'+tt[b]+'|'+tt[c],j); });
+    for(let a=0;a<tt.length;a++) for(let b=a+1;b<tt.length;b++) for(let c=b+1;c<tt.length;c++) { const g1=gj[tt[a]]||0,g2=gj[tt[b]]||0,g3=gj[tt[c]]||0; add(T,tt[a]+'|'+tt[b]+'|'+tt[c],j,{ambos:g1&&g2&&g3?1:0,gols:g1+g2+g3}); } });
   const L=M=>[...M.entries()].map(([k,o])=>({k, nomes:k.split('|'), ...o, ap:Math.round(100*(3*o.V+o.E)/(3*o.n))}));
-  return _DUP={pares:L(P), trios:L(T), tot}; }
+  return _DUP[key]={pares:L(P), trios:L(T), tot}; }
 const nomesDup=o=>o.nomes.map(n=>`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`).join(' <span class="dup-e">+</span> ');
 function tabDup(L,cols){ return `<table><thead><tr><th>#</th><th>${L[0]&&L[0].nomes.length===3?'Trio':'Dupla'}</th>${cols.map(c=>`<th class="n">${c[0]}</th>`).join('')}</tr></thead><tbody>${L.map((o,i)=>`<tr><td class="n">${i+1}</td><td>${nomesDup(o)}</td>${cols.map(c=>`<td class="n">${c[1](o)}</td>`).join('')}</tr>`).join('')}</tbody></table>`; }
 const DUP_COLS={J:['Jogos',o=>N(o.n)],VED:['V-E-D',o=>`${o.V}-${o.E}-${o.D}`],AP:['Aprov.',o=>o.ap+'%'],AMB:['Jogos em que os dois marcaram',o=>o.ambos],G:['Gols juntos',o=>o.gols]};
@@ -4572,21 +4578,24 @@ function vDuplas(params){
   const ataque=pares.filter(o=>o.ambos>0).sort((a,b)=>b.ambos-a.ambos||b.gols-a.gols).slice(0,20);
   const golsJ=pares.slice().sort((a,b)=>b.gols-a.gols).slice(0,20);
   const apD=pares.filter(o=>o.n>=80).sort((a,b)=>b.ap-a.ap||b.n-a.n).slice(0,20);
+  const maldito=!q?`<div class="dupla-card"><div class="kicker">O Trio Maldito</div><p>Said, Jairo e Mário de Castro, o ataque do Galo nos anos 1920 e 1930. <a href="#duplas?j=trio%20maldito">Ver os números do trio →</a></p></div>`:'';
   const triosV=trios.slice().sort((a,b)=>b.V-a.V).slice(0,15);
   const triosAp=trios.filter(o=>o.n>=50).sort((a,b)=>b.ap-a.ap||b.n-a.n).slice(0,15);
   const nomesJog=Object.keys(B.tot).filter(n=>B.tot[n]>=25).sort((a,b)=>nomeV(a).localeCompare(nomeV(b),'pt'));
-  let parc=''; if(q){ const alvo=nomesJog.find(n=>nrm(nomeV(n))===nrm(q)||nrm(n)===nrm(q)); if(alvo){ const L=pares.filter(o=>o.nomes.includes(alvo)).map(o=>({...o, outro:o.nomes.find(n=>n!==alvo)})).sort((a,b)=>b.n-a.n).slice(0,25);
+  let parc=''; const parP=q?parDaBusca(q):null; if(parP){ parc=blocoDupla(parP); } else if(q){ const alvo=nomesJog.find(n=>nrm(nomeV(n))===nrm(q)||nrm(n)===nrm(q)); if(alvo){ const L=pares.filter(o=>o.nomes.includes(alvo)).map(o=>({...o, outro:o.nomes.find(n=>n!==alvo)})).sort((a,b)=>b.n-a.n).slice(0,25);
       parc=`<h2>Quem mais jogou ao lado de ${esc(nomeV(alvo))}</h2><table><thead><tr><th>#</th><th>Parceiro</th><th class="n">Jogos juntos</th><th class="n">V-E-D</th><th class="n">Aprov.</th><th class="n">Gols juntos</th></tr></thead><tbody>${L.map((o,i)=>`<tr><td class="n">${i+1}</td><td><a href="#jogador-${slug(o.outro)}">${esc(nomeV(o.outro))}</a></td><td class="n">${o.n}</td><td class="n">${o.V}-${o.E}-${o.D}</td><td class="n">${o.ap}%</td><td class="n">${o.gols}</td></tr>`).join('')}</tbody></table>`; } else parc=`<p class="empty">Não achei "${esc(q)}". Escolha um nome da lista.</p>`; }
   setTimeout(()=>{ const f=$('#dupform'); if(f) f.onsubmit=ev=>{ ev.preventDefault(); location.hash='duplas?j='+encodeURIComponent(f.elements.j.value.trim()); }; },0);
   return `<div class="kicker">Galo Metrics · parcerias</div><h1>Duplas e trios</h1>
-  <p class="lede">Quem jogou mais junto pelo Galo, as duplas que mais marcaram no mesmo jogo e os trios que mais venceram. Contamos titulares e quem entrou durante o jogo, nos ${N(J.filter(j=>j._quem).length)} jogos com escalação na base.</p>
-  <form id="dupform" class="pq-form"><input name="j" list="dupjog" value="${esc(q)}" placeholder="Digite um jogador para ver os parceiros dele" autocomplete="off"><datalist id="dupjog">${nomesJog.map(n=>`<option value="${esc(nomeV(n))}">`).join('')}</datalist><button class="more" type="submit">Ver parceiros</button></form>
-  ${parc}
+  ${DONO?`<p>${artBtn({t:'anuncio-duplas'}).replace('Baixar arte','Arte de anúncio')}</p>`:''}
+  <p class="lede">Quem jogou mais junto pelo Galo, as duplas que mais marcaram no mesmo jogo e os trios que mais venceram. Contamos titulares e quem entrou durante o jogo, nos ${N(J.filter(j=>j._quem).length)} jogos que têm a escalação registrada (dos ${N(J.filter(j=>j.resultado).length)} jogos da base, ${N(J.filter(j=>j.resultado&&!j._quem).length)} só têm placar e gols, quase todos dos primeiros anos).</p>
+  <form id="dupform" class="pq-form"><input name="j" list="dupjog" value="${esc(q)}" placeholder="Um jogador (Reinaldo) ou uma dupla (Hulk + Paulinho)" autocomplete="off"><datalist id="dupjog"><option value="Hulk + Paulinho"><option value="Reinaldo + Éder Aleixo"><option value="Diego Tardelli + Jô"><option value="Trio Maldito">${nomesJog.map(n=>`<option value="${esc(nomeV(n))}">`).join('')}</datalist><button class="more" type="submit">Ver parceiros</button></form>
+  ${parc}${maldito}
   <h2>Duplas que mais jogaram juntas</h2>${tabDup(maisJ,[DUP_COLS.J,DUP_COLS.VED,DUP_COLS.AP])}
   <h2>Duplas de ataque: os dois marcaram no mesmo jogo</h2>${tabDup(ataque,[DUP_COLS.AMB,DUP_COLS.G,DUP_COLS.J])}
   <h2>Duplas com mais gols nos jogos juntos</h2>${tabDup(golsJ,[DUP_COLS.G,DUP_COLS.J,DUP_COLS.AP])}
   <h2>Duplas com melhor aproveitamento (80+ jogos juntos)</h2>${tabDup(apD,[DUP_COLS.AP,DUP_COLS.J,DUP_COLS.VED])}
   <h2>Trios que mais venceram</h2><p class="count">Trios de titulares.</p>${tabDup(triosV,[['Vitórias',o=>o.V],DUP_COLS.J,DUP_COLS.AP])}
+  <h2>Trios com mais gols nos jogos juntos</h2><p class="count">Soma dos gols dos três nos jogos em que foram titulares juntos.</p>${tabDup(trios.slice().sort((a,b)=>b.gols-a.gols).slice(0,15),[['Gols juntos',o=>o.gols],['Jogos em que os três marcaram',o=>o.ambos],DUP_COLS.J])}
   <h2>Trios com melhor aproveitamento (50+ jogos juntos)</h2>${tabDup(triosAp,[DUP_COLS.AP,DUP_COLS.J,DUP_COLS.VED])}
   <p class="count">Só entram jogadores com 25 jogos ou mais pelo Galo (trios: 60 ou mais).</p>`;
 }
@@ -4595,8 +4604,65 @@ function blocoParceiros(p){ try{ const B=duplasBase(); const L=B.pares.filter(o=
 (function(){ const add=(id,t,u,fn,sin)=>{ LISTAS.push(['Jogadores',id,t,u,fn]); LISTA_SIN[id]=sin; };
   add('duplas','Duplas que mais jogaram juntas','jogos juntos',()=>duplasBase().pares.slice().sort((a,b)=>b.n-a.n).map(o=>({nome:o.nomes.map(nomeV).join(' + '), href:'#duplas', v:o.n})),'dupla duplas parceria parcerias juntos junto jogaram ao lado parceiro parceiros');
   add('duplas-gols','Duplas em que os dois marcaram no mesmo jogo','jogos',()=>duplasBase().pares.filter(o=>o.ambos).sort((a,b)=>b.ambos-a.ambos||b.gols-a.gols).map(o=>({nome:o.nomes.map(nomeV).join(' + '), href:'#duplas', v:o.ambos})),'dupla duplas ataque gols marcaram juntos mesmo jogo parceria');
+  add('duplas-gj','Duplas com mais gols nos jogos juntos','gols',()=>duplasBase().pares.slice().sort((a,b)=>b.gols-a.gols).map(o=>({nome:o.nomes.map(nomeV).join(' + '), href:'#duplas', v:o.gols})),'dupla duplas gols mais gols juntos parceria ataque');
+  add('trios-gols','Trios com mais gols nos jogos juntos','gols',()=>duplasBase().trios.slice().sort((a,b)=>b.gols-a.gols).map(o=>({nome:o.nomes.map(nomeV).join(' + '), href:'#duplas', v:o.gols})),'trio trios gols mais gols juntos ataque');
   add('trios','Trios que mais venceram juntos','vitórias',()=>duplasBase().trios.slice().sort((a,b)=>b.V-a.V).map(o=>({nome:o.nomes.map(nomeV).join(' + '), href:'#duplas', v:o.V})),'trio trios juntos venceram vitorias');
 })();
+
+/* Dupla específica: "Hulk + Paulinho" */
+function jogadoresTodos(){ return D.jogadores.map(p=>p.nome); }
+function achaJogador(t){ const x=nrm(t).replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim(); if(x.length<3) return null; const L=D.jogadores.filter(p=>p.jogos); 
+  const ex=L.filter(p=>nrm(nomeV(p.nome)).replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim()===x||nrm(p.nome).replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim()===x).sort((a,b)=>b.jogos-a.jogos)[0]; return ex?ex.nome:null; }
+function candJog(t){ const nz=v=>nrm(v).replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim(); const x=nz(t); if(x.length<2) return []; return D.jogadores.filter(p=>p.jogos&&(nz(nomeV(p.nome))===x||nz(p.nome)===x||nz(p.nome).startsWith(x+' '))).map(p=>p.nome); }
+const APELIDOS_DUP=[[/trio maldito/,['Said','Jairo','Mário de Castro']],[/trio de ferro/,null]];
+function parDaBusca(q){ const qa=nrm(q); for(const [r,n] of APELIDOS_DUP) if(n&&r.test(qa)) return n; const partes=String(q).split(/\s*(?:\+|&|\be\b|\bcom\b|\bx\b|\/)\s*/i).map(x=>x.trim()).filter(Boolean); if(partes.length<2||partes.length>3) return null;
+  const C=partes.map(candJog); if(C.some(c=>!c.length)) return null;
+  const quem=j=>{ const e=j.escalacao_galo||{}; return [...(e.titulares||[]),...(e.substituicoes||[]).map(x=>x.entrou)]; };
+  let best=null, bn=-1; const combos=C.reduce((acc,c)=>acc.flatMap(a=>c.map(n=>[...a,n])),[[]]).filter(cb=>new Set(cb).size===cb.length).slice(0,60);
+  combos.forEach(cb=>{ const n=J.filter(j=>{ const s=quem(j); return cb.every(x=>s.includes(x)); }).length; const peso=n*1e6+cb.reduce((t,x)=>t+((D.jogadores.find(p=>p.nome===x)||{}).jogos||0),0); if(peso>bn){ bn=peso; best=cb; } });
+  return best; }
+function statsDupla(nomes){ const quem=j=>{ const e=j.escalacao_galo||{}; return new Set([...(e.titulares||[]),...(e.substituicoes||[]).map(x=>x.entrou)].filter(Boolean)); };
+  const L=JP().filter(j=>j.resultado&&j.escalacao_galo&&nomes.every(n=>quem(j).has(n))).sort((a,b)=>a.data.localeCompare(b.data));
+  const r=rec(L); const g={}; nomes.forEach(n=>g[n]=0); let ambos=0; L.forEach(j=>{ const c={}; j.gols.forEach(x=>{ if(x.lado==='galo'&&isGoal(x)&&nomes.includes(x.jogador)) c[x.jogador]=(c[x.jogador]||0)+1; }); nomes.forEach(n=>g[n]+=c[n]||0); if(nomes.every(n=>c[n])) ambos++; });
+  const comp={}; L.forEach(j=>{ (comp[j.grupo] ||= []).push(j); });
+  const big=L.filter(j=>j.resultado==='V').sort((a,b)=>(b.gp-b.gc)-(a.gp-a.gc)||b.gp-a.gp)[0];
+  return {L,r,g,ambos,comp,big}; }
+function blocoDupla(nomes){ const S=statsDupla(nomes); const t=nomes.map(nomeV).join(' + ');
+  if(!S.L.length) return `<h2>${esc(t)}</h2><p class="empty">Na base, ${esc(nomes.map(nomeV).join(' e '))} nunca estiveram em campo juntos${PER?' '+esc(perTxt(PER)):''}.</p>`;
+  const {L,r,g,ambos,comp,big}=S;
+  return `<div class="dupla-card"><div class="kicker">${nomes.join('|')==='Said|Jairo|Mário de Castro'?'O Trio Maldito':(nomes.length===3?'Trio':'Dupla')}${PER?' · '+esc(perTxt(PER)):''}</div><h2 class="dupla-tit">${nomes.map(n=>`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`).join(' <span class="dup-e">+</span> ')}</h2>
+   <div class="kpis"><div><b>${N(r.n)}</b><span>jogos juntos</span></div><div><b>${r.V}</b><span>vitórias</span></div><div><b>${r.E}</b><span>empates</span></div><div><b>${r.D}</b><span>derrotas</span></div><div><b>${aprov(r)}</b><span>aproveitamento</span></div><div><b>${ambos}</b><span>jogos em que ${nomes.length===3?'os três':'os dois'} marcaram</span></div></div>
+   <p>${nomes.map(n=>`<b>${esc(nomeV(n))}</b>: ${g[n]} ${g[n]===1?'gol':'gols'}`).join(' · ')} nos jogos juntos. O Galo fez ${r.gp} gols e sofreu ${r.gc} nesses jogos.</p>
+   <p class="count">Primeiro jogo juntos: <a href="#jogo-${L[0].id}">${fmtD(L[0].data)} · ${esc(L[0].adversario)} ${placar(L[0])}</a>. Último: <a href="#jogo-${L[L.length-1].id}">${fmtD(L[L.length-1].data)} · ${esc(L[L.length-1].adversario)} ${placar(L[L.length-1])}</a>.${big?` Maior vitória: <a href="#jogo-${big.id}">${esc(big.adversario)} ${placar(big)} (${fmtD(big.data)})</a>.`:''}</p>
+   <table><thead><tr><th>Competição</th><th class="n">Jogos</th><th class="n">V-E-D</th><th class="n">Aprov.</th></tr></thead><tbody>${Object.entries(comp).sort((a,b)=>b[1].length-a[1].length).map(([c,l])=>{ const x=rec(l); return `<tr><td>${esc(c)}</td><td class="n">${x.n}</td><td class="n">${x.V}-${x.E}-${x.D}</td><td class="n">${aprov(x)}</td></tr>`; }).join('')}</tbody></table>
+   <p>${artBtn({t:'dupla',n:nomes.join('|'),...(PER&&PER.de?{de:PER.de}:{}),...(PER&&PER.ate?{ate:PER.ate}:{}),...(PER&&PER.grupo?{grupo:PER.grupo}:{})})}</p></div>`; }
+async function desenhaArteDupla(s){ const nomes=s.n.split('|'); const pr=(s.de||s.ate||s.grupo)?{de:s.de||null,ate:s.ate||null,grupo:s.grupo||null}:null; const S=comPer(pr,()=>statsDupla(nomes)); const {r,g,ambos}=S;
+  const A=await arteBase('/duplas'); const {cv,x,W,H,P,T,wrap,galo,INK,GOLD,GOLDD,CINZA,V,R}=A; galo(W-P-75,262,150);
+  T('★ '+(s.k||'DUPLA DA HISTÓRIA'),P,232,'osw',36,GOLD,'left',W-2*P-190);
+  let y=wrap(s.f||nomes.map(nomeV).join(' + '),P,330,'abril',72,W-2*P-180,80,INK,'left',3)+20; if(pr) { T(perTxt(pr),P,y+10,'osw',28,GOLDD); y+=40; }
+  y+=30; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+180,W-2*P,3); const cw=(W-2*P)/3;
+  [[N(r.n),'jogos juntos',INK],[r.V,'vitórias',V],[aprov(r),'aproveitamento',GOLD]].forEach(([n,l,c],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+30,2,120); } T(String(n),P+i*cw+cw/2,y+108,'abril',84,c,'center',cw-20); T(l.toUpperCase(),P+i*cw+cw/2,y+150,'osw',22,INK,'center',cw-20); });
+  y+=250; T(`${r.E} empates · ${r.D} derrotas · ${r.gp} gols do Galo`,P,y,'osw',30,INK,'left',W-2*P); y+=60;
+  nomes.forEach(n=>{ T(`${nomeV(n)}: ${g[n]} ${g[n]===1?'gol':'gols'} nos jogos juntos`,P,y,'cas',32,INK,'left',W-2*P); y+=52; });
+  if(ambos) T(`Em ${ambos} ${ambos===1?'jogo':'jogos'}, ${nomes.length===3?'os três':'os dois'} marcaram.`,P,y+6,'cas',30,GOLDD,'left',W-2*P);
+  return cv; }
+function capaDuplas(){ return `<a class="capa-final capa-novo" href="#duplas"><span class="cf-k">★ Novidade</span><b>Duplas e trios</b><span>Quem mais jogou junto pelo Galo, as duplas que mais marcaram e os trios que mais venceram. Pesquise qualquer dupla, como <u>Hulk + Paulinho</u>, e veja os números dela.</span></a>`; }
+
+const perTxt=pr=>perTxtB(pr);
+const comSufixo=(t,pr)=>{ const sx=perTxt(pr); return sx&&!nrm(t).includes(nrm(sx).replace(/^(no|na|em) /,''))?t+' '+sx:(pr&&pr.de||pr&&pr.ate?t+' '+perTxt({...pr,grupo:null,txt:null}):t); };
+
+async function desenhaArteAnuncioDuplas(s){ const B=duplasBase(); const d1=B.pares.slice().sort((a,b)=>b.n-a.n)[0], d2=B.pares.filter(o=>o.ambos).sort((a,b)=>b.ambos-a.ambos||b.gols-a.gols)[0], t1=B.trios.slice().sort((a,b)=>b.gols-a.gols)[0];
+  const A=await arteBase('/duplas'); const {cv,x,W,H,P,T,wrap,galo,INK,GOLD,GOLDD,CINZA}=A; galo(W-P-75,262,150);
+  T('★ '+(s.k||'NOVIDADE NO SITE'),P,232,'osw',36,GOLD,'left',W-2*P-190);
+  let y=wrap(s.f||'Qual a melhor dupla da história do Galo? E o melhor trio?',P,320,'abril',62,W-2*P-180,72,INK,'left',4)+40;
+  x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); y+=60;
+  const item=(k,n,v)=>{ T(k.toUpperCase(),P,y,'osw',24,GOLDD); y+=48; T(n,P,y,'abril',40,INK,'left',W-2*P-200); T(v,W-P,y,'osw',34,INK,'right'); y+=72; };
+  item('Mais jogos juntos',d1.nomes.map(nomeV).join(' + '),`${d1.n} jogos`);
+  item('Os dois marcaram no mesmo jogo',d2.nomes.map(nomeV).join(' + '),`${d2.ambos} vezes`);
+  item(t1.nomes.slice().sort().join('|')==='Jairo|Mário de Castro|Said'?'Trio com mais gols: o Trio Maldito':'Trio com mais gols',t1.nomes.slice().sort().join('|')==='Jairo|Mário de Castro|Said'?'Said + Jairo + Mário de Castro':t1.nomes.map(nomeV).join(' + '),`${t1.gols} gols`);
+  y=Math.min(y+6,A.BOT-118); x.fillStyle='#111'; A.rr(P,y,W-2*P,96,10); x.fill();
+  T('Pesquise qualquer dupla, como Hulk + Paulinho',W/2,y+40,'osw',26,'#F5F2EA','center',W-2*P-40); T('galometrics.com.br/#duplas',W/2,y+76,'osw',28,GOLD,'center');
+  return cv; }
 
 </script>
 </body>
