@@ -591,6 +591,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 .dup-e{color:#C9962B;font-weight:700}.novo{font:600 9px Oswald,sans-serif;background:#C9962B;color:#111;padding:1px 4px;margin-left:4px;letter-spacing:.06em;text-transform:uppercase}
 .capa-novo{background:#fff8e6;color:var(--ink)!important}.capa-novo .cf-k{color:#8C6610}.dupla-card{border:3px solid var(--ink);padding:16px 18px;margin:10px 0 24px;box-shadow:6px 6px 0 #C9962B;background:var(--paper)}.dupla-tit{margin-top:4px!important;font-size:30px!important}.dupla-tit::before{display:none!important}
 .arte-fmt{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:6px 0 10px}.arte-img.arte-reels{max-height:70vh;width:auto;max-width:100%}
+.esc-zona{border:2px dashed var(--ink);padding:14px 16px;margin:8px 0;background:rgba(201,150,43,.06)}.esc-zona.esc-drag,tr.esc-drag{background:rgba(201,150,43,.22)!important}tr.esc-ativo{outline:3px solid #C9962B}tr.esc-ok{background:rgba(31,122,67,.10)}tr.esc-ok .esc-acoes{opacity:.4}.esc-th{width:40px}.esc-th img{width:32px;height:32px;object-fit:contain}.esc-acoes{white-space:nowrap}.esc-acoes .ghost{padding:5px 9px;font-size:11px;cursor:pointer}.esc-acoes label.ghost{display:inline-block;border:1px solid var(--ink);font-family:Oswald,sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -611,9 +612,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261124131228';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261124131228"></script>
-<script src="backend-firebase.js?v=20261124131228"></script>
+<script>window.GM_BUILD='20261124131726';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261124131726"></script>
+<script src="backend-firebase.js?v=20261124131726"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -3829,7 +3830,7 @@ function vFalta(){
   const ser=(t,id,n,txt,cab,linhas,total)=>`<details class="falta" id="f-${id}" ${n?'':''}><summary><b>${esc(t)}</b> <span class="tag${n?'':' light'}">${N(n)}</span></summary><p class="count">${txt}</p>${n?`<button type="button" class="ghost" data-copia="${id}">Copiar lista</button><div class="tw"><table><thead><tr>${cab.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${linhas.slice(0,150).join('')}</tbody></table></div>${linhas.length>150?`<p class="count">Mostrando 150 de ${N(linhas.length)}. A lista copiada vem completa.</p>`:''}`:'<p class="count">Nada faltando aqui. ★</p>'}</details>`;
   const listas={};
   // escudos
-  const advSem=advRows().filter(a=>!ESC[a.id]).sort((x,y)=>y.J-x.J);
+  const advSem=advRows().filter(a=>!ESC[a.id]&&!(ESCX||{})[a.id]).sort((x,y)=>y.J-x.J);
   listas.esc=advSem.map(a=>`${a.nome}${a.uf?' ('+a.uf+')':''};${a.J} jogos;último ${a.jogos[a.jogos.length-1].data.slice(0,4)}`);
   const lEsc=advSem.map(a=>`<tr><td><a href="#${a._href}">${esc(a.nome)}</a> <small class="uf">${esc(a.uf)}</small></td><td class="n">${N(a.J)}</td><td class="mono">${esc(a.jogos[a.jogos.length-1].data.slice(0,4))}</td></tr>`);
   // fotos
@@ -3857,7 +3858,7 @@ function vFalta(){
   return `<a class="back" href="#dono">← Página do dono</a><div class="kicker">Só você vê esta página</div><h1>O que falta</h1>
   <p class="lede">O que ainda falta na base, do mais importante para o menos. Cada lista tem o botão "Copiar lista" (separada por ponto e vírgula, cola direto numa planilha). Quando um torcedor manda escudo, foto ou correção pela aba de sugestões, é aqui que dá para ver o que ainda falta.</p>
   <div class="kpis" style="margin:18px 0 26px"><div><b>${N(advSem.length)}</b><span>escudos</span></div><div><b>${N(fx.length)}</b><span>fotos de jogadores</span></div><div><b>${N(sf.length)}</b><span>jogos sem ficha</span></div><div><b>${N(sg.length)}</b><span>jogos com gols sem autor</span></div></div>
-  ${ser('Escudos de adversários','esc',advSem.length,'Clubes sem escudo, dos que o Galo mais enfrentou para os que menos enfrentou.',['Clube','Jogos','Último'],lEsc)}
+  ${blocoEscudosRapido(advSem)}
   ${ser('Fotos de jogadores','foto',fx.length,'Figurinhas sem foto: primeiro as lendárias, depois as brilhantes, cada grupo pelos que mais jogaram. Enquanto não tem foto, a figurinha mostra o escudo do Galo da época do jogador.',['Jogador','Raridade','Período','Jogos'],lFoto)}
   ${ser('Jogos sem ficha (escalação)','ficha',sf.length,`Jogos sem escalação do Galo. Finais primeiro, depois dos mais recentes para os mais antigos. Por década: ${Object.keys(porDec).sort().map(d=>`${d}: ${N(porDec[d])}`).join(' · ')}.`,['Data','Jogo','Competição'],sf.map(jl))}
   ${ser('Gols sem autor','gols',sg.length,'Jogos em que o Galo marcou mais gols do que os que têm autor registrado.',['Data','Jogo','Gols sem autor'],lGols)}
@@ -4793,6 +4794,45 @@ async function desenhaArteListaReels(s,rows,tit,unid,tipo,res,id){
   // rodapé
   x.fillStyle=INK; x.fillRect(P,H-112,W-2*P,3); T('GALO METRICS',P,H-50,'abril',46,INK); T('galometrics.com.br',W-P,H-52,'osw6',36,GOLDD,'right');
   return cv; }
+
+/* Dono: escudos rápidos (vários de uma vez, colar, arrastar) */
+const nzEsc=t=>nrm(String(t).replace(/\.[a-z0-9]{2,4}$/i,'')).replace(/\((?:[a-z]{2,3})\)/g,' ').replace(/[^a-z0-9]+/g,' ').trim();
+async function reduzEscudo(f){ try{ const url=URL.createObjectURL(f); const im=await new Promise((ok,er)=>{ const i=new Image(); i.onload=()=>ok(i); i.onerror=er; i.src=url; }); const M=320, r=Math.min(1,M/Math.max(im.width,im.height)); const c=document.createElement('canvas'); c.width=Math.round(im.width*r); c.height=Math.round(im.height*r); c.getContext('2d').drawImage(im,0,0,c.width,c.height); URL.revokeObjectURL(url); const b=await new Promise(ok=>c.toBlob(ok,'image/png')); return new File([b],(f.name||'escudo').replace(/\.[^.]+$/,'')+'.png',{type:'image/png'}); }catch(e){ return f; } }
+async function sobeEscudos(pares,msg){ const A=await window.claude.use('assets'); if(!A) throw new Error('upload indisponível'); const novos={}; let i=0;
+  for(const [id,f] of pares){ i++; if(msg) msg.textContent=`Enviando ${i} de ${pares.length}…`; const up=await A.upload(await reduzEscudo(f)); novos[id]=up.url; }
+  const r=GDB.doc('site/escudosx'); const s=await r.get(); const m={...((s.exists?s.data().map:{})||{}), ...novos}; await r.set({map:m, em:Date.now()}); ESCX=m; return novos; }
+function blocoEscudosRapido(advSem){
+  const lista=advSem.slice(0,300);
+  setTimeout(()=>{ const box=$('#escr'); if(!box) return; const msg=$('#escrmsg'); let ativo=null;
+    const marcaOk=(id,url)=>{ const tr=box.querySelector(`tr[data-id="${CSS.escape(id)}"]`); if(tr){ tr.classList.add('esc-ok'); const im=tr.querySelector('.esc-th'); if(im) im.innerHTML=`<img src="${esc(url)}" alt="">`; } const n=$('#escrn'); if(n) n.textContent=N(box.querySelectorAll('tr[data-id]:not(.esc-ok)').length+Math.max(0,advSem.length-lista.length)); };
+    const envia=async(pares)=>{ if(!pares.length) return; try{ const nv=await sobeEscudos(pares,msg); Object.entries(nv).forEach(([id,u])=>marcaOk(id,u)); msg.textContent=`${pares.length} ${pares.length===1?'escudo colocado':'escudos colocados'}. Já aparecem no site.`; toast('Escudos salvos.'); }catch(e){ console.error(e); msg.textContent='Não consegui enviar: '+(e.message||'tente de novo.'); } };
+    box.querySelectorAll('tr[data-id]').forEach(tr=>{ const id=tr.dataset.id;
+      tr.querySelector('input[type=file]').onchange=ev=>{ const f=ev.target.files[0]; if(f) envia([[id,f]]); };
+      tr.querySelector('.esc-colar').onclick=()=>{ box.querySelectorAll('tr.esc-ativo').forEach(x=>x.classList.remove('esc-ativo')); tr.classList.add('esc-ativo'); ativo=id; msg.textContent=`Agora cole a imagem (Ctrl+V) para ${tr.dataset.nome}.`; };
+      tr.ondragover=e=>{ e.preventDefault(); tr.classList.add('esc-drag'); }; tr.ondragleave=()=>tr.classList.remove('esc-drag');
+      tr.ondrop=e=>{ e.preventDefault(); tr.classList.remove('esc-drag'); const f=[...e.dataTransfer.files].find(x=>/^image\//.test(x.type)); if(f) envia([[id,f]]); }; });
+    if(window._escPaste) document.removeEventListener('paste',window._escPaste);
+    window._escPaste=e=>{ if(!ativo||!document.body.contains(box)) return; const it=[...(e.clipboardData||{}).items||[]].find(x=>/^image\//.test(x.type)); if(!it) { msg.textContent='A área de transferência não tem imagem. Copie a imagem (botão direito → Copiar imagem) e cole de novo.'; return; } e.preventDefault(); const id=ativo; ativo=null; box.querySelectorAll('tr.esc-ativo').forEach(x=>x.classList.remove('esc-ativo')); envia([[id,it.getAsFile()]]); };
+    document.addEventListener('paste',window._escPaste);
+    // vários de uma vez
+    const zona=$('#escz'), inpV=$('#escv'), prev=$('#escprev');
+    const casa=files=>{ const cand=advSem.map(a=>({a,k:nzEsc(a.nome),k2:nzEsc(a.nome+' '+(a.uf||''))}));
+      const rows=[...files].filter(f=>/^image\//.test(f.type)).map(f=>{ const k=nzEsc(f.name); let m=cand.find(c=>c.k2===k)||cand.find(c=>c.k===k); if(!m){ const v=cand.filter(c=>c.k.startsWith(k)||k.startsWith(c.k)); if(v.length) m=v.sort((x,y)=>y.a.J-x.a.J)[0]; } return {f,id:m?m.a.id:''}; });
+      prev.innerHTML=rows.length?`<table><thead><tr><th>Arquivo</th><th>Clube</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${esc(r.f.name)}</td><td><select data-i="${i}"><option value="">— escolha o clube —</option>${advSem.map(a=>`<option value="${esc(a.id)}"${a.id===r.id?' selected':''}>${esc(a.nome)}${a.uf?' ('+esc(a.uf)+')':''}</option>`).join('')}</select></td></tr>`).join('')}</tbody></table><button type="button" class="more" id="escvsalva">Salvar ${rows.length} ${rows.length===1?'escudo':'escudos'}</button> <span class="count">${rows.filter(r=>r.id).length} reconhecidos pelo nome do arquivo.</span>`:'';
+      const b=$('#escvsalva'); if(b) b.onclick=()=>{ const pares=rows.map((r,i)=>[prev.querySelector(`select[data-i="${i}"]`).value,r.f]).filter(([id])=>id); prev.innerHTML=''; envia(pares); }; };
+    inpV.onchange=()=>casa(inpV.files);
+    zona.ondragover=e=>{ e.preventDefault(); zona.classList.add('esc-drag'); }; zona.ondragleave=()=>zona.classList.remove('esc-drag');
+    zona.ondrop=e=>{ e.preventDefault(); zona.classList.remove('esc-drag'); casa(e.dataTransfer.files); }; });
+  return `<details class="falta" id="f-esc" open><summary><b>Escudos de adversários</b> <span class="tag" id="escrn">${N(advSem.length)}</span></summary>
+  <p class="count">Três jeitos de colocar escudo, sem abrir a página do clube:</p>
+  <div id="escz" class="esc-zona"><b>Vários de uma vez:</b> arraste as imagens para cá ou <label class="ghost" style="cursor:pointer;display:inline-block">escolha os arquivos<input type="file" id="escv" accept="image/*" multiple hidden></label>. Se o nome do arquivo for o nome do clube (ex.: <i>Sete de Setembro.png</i>), ele já vem casado; confira e salve.</div>
+  <div id="escprev"></div>
+  <p class="count"><b>Um por um:</b> arraste a imagem em cima da linha do clube, use <i>Arquivo</i> ou clique em <i>Colar</i> e aperte Ctrl+V depois de copiar a imagem na internet (botão direito → Copiar imagem).</p>
+  <p id="escrmsg" class="count" role="status"></p>
+  <button type="button" class="ghost" data-copia="esc">Copiar lista</button>
+  <div class="tw" id="escr"><table><thead><tr><th></th><th>Clube</th><th class="n">Jogos</th><th>Último</th><th></th></tr></thead><tbody>${lista.map(a=>`<tr data-id="${esc(a.id)}" data-nome="${esc(a.nome)}"><td class="esc-th"></td><td><a href="#${a._href}">${esc(a.nome)}</a> <small class="uf">${esc(a.uf||'')}</small></td><td class="n">${N(a.J)}</td><td class="mono">${esc(a.jogos[a.jogos.length-1].data.slice(0,4))}</td><td class="esc-acoes"><label class="ghost">Arquivo<input type="file" accept="image/*" hidden></label> <button type="button" class="ghost esc-colar">Colar</button></td></tr>`).join('')}</tbody></table></div>
+  ${advSem.length>lista.length?`<p class="count">Mostrando ${lista.length} de ${N(advSem.length)}. A lista copiada vem completa.</p>`:''}</details>`;
+}
 
 </script>
 </body>
