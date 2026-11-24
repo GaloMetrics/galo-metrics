@@ -610,9 +610,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261123205729';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261123205729"></script>
-<script src="backend-firebase.js?v=20261123205729"></script>
+<script>window.GM_BUILD='20261123210833';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261123210833"></script>
+<script src="backend-firebase.js?v=20261123210833"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4630,21 +4630,26 @@ function statsDupla(nomes){ const quem=j=>{ const e=j.escalacao_galo||{}; return
 function blocoDupla(nomes){ const S=statsDupla(nomes); const t=nomes.map(nomeV).join(' + ');
   if(!S.L.length) return `<h2>${esc(t)}</h2><p class="empty">Na base, ${esc(nomes.map(nomeV).join(' e '))} nunca estiveram em campo juntos${PER?' '+esc(perTxt(PER)):''}.</p>`;
   const {L,r,g,ambos,comp,big}=S;
+  const semFicha=JP().filter(j=>j.resultado&&!(j.escalacao_galo&&(j.escalacao_galo.titulares||[]).length)&&j.data>=L[0].data&&j.data<=L[L.length-1].data).length;
+  const nota=semFicha?`<p class="count dup-nota">* Não temos a escalação de ${semFicha} ${semFicha===1?'jogo':'jogos'} do Galo nesse período, então os números ${nomes.length===3?'do trio':'da dupla'} podem ser ainda maiores.</p>`:'';
   return `<div class="dupla-card"><div class="kicker">${nomes.join('|')==='Said|Jairo|Mário de Castro'?'O Trio Maldito':(nomes.length===3?'Trio':'Dupla')}${PER?' · '+esc(perTxt(PER)):''}</div><h2 class="dupla-tit">${nomes.map(n=>`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`).join(' <span class="dup-e">+</span> ')}</h2>
-   <div class="kpis"><div><b>${N(r.n)}</b><span>jogos juntos</span></div><div><b>${r.V}</b><span>vitórias</span></div><div><b>${r.E}</b><span>empates</span></div><div><b>${r.D}</b><span>derrotas</span></div><div><b>${aprov(r)}</b><span>aproveitamento</span></div><div><b>${ambos}</b><span>jogos em que ${nomes.length===3?'os três':'os dois'} marcaram</span></div></div>
+   <div class="kpis"><div><b>${N(r.n)}${semFicha?'*':''}</b><span>jogos juntos</span></div><div><b>${r.V}</b><span>vitórias</span></div><div><b>${r.E}</b><span>empates</span></div><div><b>${r.D}</b><span>derrotas</span></div><div><b>${aprov(r)}</b><span>aproveitamento</span></div><div><b>${ambos}</b><span>jogos em que ${nomes.length===3?'os três':'os dois'} marcaram</span></div></div>
    <p>${nomes.map(n=>`<b>${esc(nomeV(n))}</b>: ${g[n]} ${g[n]===1?'gol':'gols'}`).join(' · ')} nos jogos juntos. O Galo fez ${r.gp} gols e sofreu ${r.gc} nesses jogos.</p>
    <p class="count">Primeiro jogo juntos: <a href="#jogo-${L[0].id}">${fmtD(L[0].data)} · ${esc(L[0].adversario)} ${placar(L[0])}</a>. Último: <a href="#jogo-${L[L.length-1].id}">${fmtD(L[L.length-1].data)} · ${esc(L[L.length-1].adversario)} ${placar(L[L.length-1])}</a>.${big?` Maior vitória: <a href="#jogo-${big.id}">${esc(big.adversario)} ${placar(big)} (${fmtD(big.data)})</a>.`:''}</p>
    <table><thead><tr><th>Competição</th><th class="n">Jogos</th><th class="n">V-E-D</th><th class="n">Aprov.</th></tr></thead><tbody>${Object.entries(comp).sort((a,b)=>b[1].length-a[1].length).map(([c,l])=>{ const x=rec(l); return `<tr><td>${esc(c)}</td><td class="n">${x.n}</td><td class="n">${x.V}-${x.E}-${x.D}</td><td class="n">${aprov(x)}</td></tr>`; }).join('')}</tbody></table>
+   ${nota}
    <p>${artBtn({t:'dupla',n:nomes.join('|'),...(PER&&PER.de?{de:PER.de}:{}),...(PER&&PER.ate?{ate:PER.ate}:{}),...(PER&&PER.grupo?{grupo:PER.grupo}:{})})}</p></div>`; }
-async function desenhaArteDupla(s){ const nomes=s.n.split('|'); const pr=(s.de||s.ate||s.grupo)?{de:s.de||null,ate:s.ate||null,grupo:s.grupo||null}:null; const S=comPer(pr,()=>statsDupla(nomes)); const {r,g,ambos}=S;
+async function desenhaArteDupla(s){ const nomes=s.n.split('|'); const pr=(s.de||s.ate||s.grupo)?{de:s.de||null,ate:s.ate||null,grupo:s.grupo||null}:null; const S=comPer(pr,()=>statsDupla(nomes)); const {r,g,ambos}=S; const L=S.L; const _semF=L.length?comPer(pr,()=>JP().filter(j=>j.resultado&&!(j.escalacao_galo&&(j.escalacao_galo.titulares||[]).length)&&j.data>=L[0].data&&j.data<=L[L.length-1].data).length):0;
   const A=await arteBase('/duplas'); const {cv,x,W,H,P,T,wrap,galo,INK,GOLD,GOLDD,CINZA,V,R}=A; galo(W-P-75,262,150);
   T('★ '+(s.k||'DUPLA DA HISTÓRIA'),P,232,'osw',36,GOLD,'left',W-2*P-190);
   let y=wrap(s.f||nomes.map(nomeV).join(' + '),P,330,'abril',72,W-2*P-180,80,INK,'left',3)+20; if(pr) { T(perTxt(pr),P,y+10,'osw',28,GOLDD); y+=40; }
   y+=30; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+180,W-2*P,3); const cw=(W-2*P)/3;
-  [[N(r.n),'jogos juntos',INK],[r.V,'vitórias',V],[aprov(r),'aproveitamento',GOLD]].forEach(([n,l,c],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+30,2,120); } T(String(n),P+i*cw+cw/2,y+108,'abril',84,c,'center',cw-20); T(l.toUpperCase(),P+i*cw+cw/2,y+150,'osw',22,INK,'center',cw-20); });
+  [[N(r.n)+(_semF?'*':''),'jogos juntos',INK],[r.V,'vitórias',V],[aprov(r),'aproveitamento',GOLD]].forEach(([n,l,c],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+30,2,120); } T(String(n),P+i*cw+cw/2,y+108,'abril',84,c,'center',cw-20); T(l.toUpperCase(),P+i*cw+cw/2,y+150,'osw',22,INK,'center',cw-20); });
   y+=250; T(`${r.E} empates · ${r.D} derrotas · ${r.gp} gols do Galo`,P,y,'osw',30,INK,'left',W-2*P); y+=60;
   nomes.forEach(n=>{ T(`${nomeV(n)}: ${g[n]} ${g[n]===1?'gol':'gols'} nos jogos juntos`,P,y,'cas',32,INK,'left',W-2*P); y+=52; });
-  if(ambos) T(`Em ${ambos} ${ambos===1?'jogo':'jogos'}, ${nomes.length===3?'os três':'os dois'} marcaram.`,P,y+6,'cas',30,GOLDD,'left',W-2*P);
+  if(ambos){ T(`Em ${ambos} ${ambos===1?'jogo':'jogos'}, ${nomes.length===3?'os três':'os dois'} marcaram.`,P,y+6,'cas',30,GOLDD,'left',W-2*P); y+=60; }
+  const semF=_semF;
+  if(semF) T(`* Faltam as escalações de ${semF} jogos dessa época: os números podem ser ainda maiores.`,P,Math.min(y+20,A.BOT-30),'cas',24,INK,'left',W-2*P);
   return cv; }
 function capaDuplas(){ return `<a class="capa-final capa-novo" href="#duplas"><span class="cf-k">★ Novidade</span><b>Duplas e trios</b><span>Quem mais jogou junto pelo Galo, as duplas que mais marcaram e os trios que mais venceram. Pesquise qualquer dupla, como <u>Hulk + Paulinho</u>, e veja os números dela.</span></a>`; }
 
