@@ -612,9 +612,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261124161320';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261124161320"></script>
-<script src="backend-firebase.js?v=20261124161320"></script>
+<script>window.GM_BUILD='20261124161601';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261124161601"></script>
+<script src="backend-firebase.js?v=20261124161601"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4271,6 +4271,7 @@ async function desenhaArteLista(s){
   let resumo=''; try{ resumo=tipo==='mm'?resumoMM(rows,id==='mm-fin'||/^mf-/.test(id)):res?res(rows):''; }catch(e){}
   if(resumo){ y=wrap(resumo,P,y+24,'cas',26,W-2*P-180,36,CINZA,'left',4)+14; }
   y=Math.max(y+10,370); x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); y+=56;
+  if(/^des-(mes|tri|sem)$/.test(id)&&rows.length&&rows.every(r=>r.r)){ desenhaGradeCal(A,rows,id,y-30); return cv; }
   const max=Math.min(rows.length, 14), lh=Math.max(40,Math.min(62,Math.floor((A.BOT-20-y)/Math.max(1,max))));
   rows.slice(0,max).forEach((r,i)=>{ const fs=Math.min(30,lh-14);
     if(!r.txt) T(String(i+1),P,y,'abril',fs+6,i<3?GOLD:INK);
@@ -4843,6 +4844,28 @@ function blocoEscudosRapido(advSem){
   <button type="button" class="ghost" data-copia="esc">Copiar lista</button>
   <div class="tw" id="escr"><table><thead><tr><th></th><th>Clube</th><th class="n">Jogos</th><th>Último</th><th></th></tr></thead><tbody>${lista.map(a=>`<tr data-id="${esc(a.id)}" data-nome="${esc(a.nome)}"><td class="esc-th"></td><td><a href="#${a._href}">${esc(a.nome)}</a> <small class="uf">${esc(a.uf||'')}</small></td><td class="n">${N(a.J)}</td><td class="mono">${esc(a.jogos[a.jogos.length-1].data.slice(0,4))}</td><td class="esc-acoes"><label class="ghost">Arquivo<input type="file" accept="image/*" hidden></label> <button type="button" class="ghost esc-colar">Colar</button></td></tr>`).join('')}</tbody></table></div>
   ${advSem.length>lista.length?`<p class="count">Mostrando ${lista.length} de ${N(advSem.length)}. A lista copiada vem completa.</p>`:''}</details>`;
+}
+
+/* Arte em formato calendário (por mês, trimestre ou dia da semana) */
+function desenhaGradeCal(A,rows,id,y0){ const {x,W,P,T,INK,GOLD,GOLDD,V,R,CINZA}=A;
+  const cols=id==='des-mes'?3:id==='des-tri'?2:4, nl=Math.ceil(rows.length/cols), gap=16;
+  const cw=(W-2*P-gap*(cols-1))/cols, ch=Math.min(id==='des-tri'?300:230,(A.BOT-14-y0-gap*(nl-1))/nl);
+  const com=rows.filter(r=>r.r.n>=5); const best=com.length?com.reduce((a,b)=>pct(b.r)>pct(a.r)?b:a):null, worst=com.length?com.reduce((a,b)=>pct(b.r)<pct(a.r)?b:a):null;
+  const curto=n=>id==='des-mes'?n.slice(0,3).toUpperCase():id==='des-sem'?n.replace('-feira','').toUpperCase():n.replace(/ \(.*\)/,'').toUpperCase();
+  const sub=n=>id==='des-tri'?(n.match(/\((.*)\)/)||[,''])[1]:'';
+  rows.forEach((r,i)=>{ const cx=P+(i%cols)*(cw+gap), cy=y0+Math.floor(i/cols)*(ch+gap); const c=!r.r.n?CINZA:r.cls==='v'?V:r.cls==='d'?R:GOLD;
+    x.fillStyle='#FBF9F3'; A.rr(cx,cy,cw,ch,10); x.fill(); x.lineWidth=r===best?5:2; x.strokeStyle=r===best?GOLD:INK; A.rr(cx,cy,cw,ch,10); x.stroke();
+    const bh=Math.round(ch*0.22); x.save(); A.rr(cx,cy,cw,ch,10); x.clip(); x.fillStyle=c; x.fillRect(cx,cy,cw,bh); x.restore();
+    x.fillStyle=INK; x.fillRect(cx,cy+bh,cw,2);
+    T(curto(r.nome),cx+cw/2,cy+bh*0.7,'osw',Math.round(bh*0.55),'#fff','center',cw-20);
+    if(r===best) T('★',cx+cw-18,cy+bh*0.72,'osw',Math.round(bh*0.5),'#fff','right');
+    const body=ch-bh; const ps=Math.round(Math.min(body*0.42, cw*0.36));
+    T(r.r.n?aprov(r.r):'—',cx+cw/2,cy+bh+body*0.46+ps*0.3,'abril',ps,r.r.n?(r.cls==='d'?R:r.cls==='v'?V:INK):CINZA,'center',cw-20);
+    const ls=Math.round(Math.min(28,body*0.16));
+    T(r.r.n?`${r.r.V}V ${r.r.E}E ${r.r.D}D`:'sem jogos',cx+cw/2,cy+bh+body*0.46+ps*0.3+ls*1.4,'osw',ls,INK,'center',cw-16);
+    T(sub(r.nome)?sub(r.nome)+' · '+N(r.r.n)+' jogos':N(r.r.n)+(r.r.n===1?' jogo':' jogos'),cx+cw/2,cy+ch-Math.max(10,body*0.06),'osw',Math.round(ls*0.8),GOLDD,'center',cw-16);
+  });
+  const yl=y0+nl*(ch+gap)-gap+30; if(yl<A.BOT+10){ const lg=[[V,'60% ou mais'],[GOLD,'entre 45% e 59%'],[R,'abaixo de 45%']]; let lx=P; lg.forEach(([c,t])=>{ x.fillStyle=c; A.rr(lx,yl-14,16,16,3); x.fill(); lx+=24+T(t,lx+24,yl,'osw',18,INK)+24; }); if(best) T('★ melhor aproveitamento',W-P,yl,'osw',18,GOLDD,'right'); }
 }
 
 </script>
