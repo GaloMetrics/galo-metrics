@@ -592,6 +592,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 .capa-novo{background:#fff8e6;color:var(--ink)!important}.capa-novo .cf-k{color:#8C6610}.dupla-card{border:3px solid var(--ink);padding:16px 18px;margin:10px 0 24px;box-shadow:6px 6px 0 #C9962B;background:var(--paper)}.dupla-tit{margin-top:4px!important;font-size:30px!important}.dupla-tit::before{display:none!important}
 .arte-fmt{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:6px 0 10px}.arte-img.arte-reels{max-height:70vh;width:auto;max-width:100%}
 .esc-zona{border:2px dashed var(--ink);padding:14px 16px;margin:8px 0;background:rgba(201,150,43,.06)}.esc-zona.esc-drag,tr.esc-drag{background:rgba(201,150,43,.22)!important}tr.esc-ativo{outline:3px solid #C9962B}tr.esc-ok{background:rgba(31,122,67,.10)}tr.esc-ok .esc-acoes{opacity:.4}.esc-th{width:40px}.esc-busca{width:100%;min-width:260px;padding:6px 8px;border:1px solid var(--ink);background:var(--paper);font:inherit}.esc-th img{width:32px;height:32px;object-fit:contain}.esc-acoes{white-space:nowrap}.esc-acoes .ghost{padding:5px 9px;font-size:11px;cursor:pointer}.esc-acoes label.ghost{display:inline-block;border:1px solid var(--ink);font-family:Oswald,sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.cat-g{margin:6px 0 14px}.cat-g h3 small{font-weight:400;margin-left:4px}.cat-mais{margin-top:6px}.cat-mais summary{cursor:pointer;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8C6610;padding:4px 0}.cat-mais[open] summary{margin-bottom:6px}.chip-novo{background:#fff8e6}.chip-novo b{color:#8C6610;text-transform:uppercase;font-size:10px;letter-spacing:1px;margin-right:4px}
 </style>
 <script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
 function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
@@ -612,9 +613,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261124161618';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261124161618"></script>
-<script src="backend-firebase.js?v=20261124161618"></script>
+<script>window.GM_BUILD='20261124163415';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261124163415"></script>
+<script src="backend-firebase.js?v=20261124163415"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -3116,7 +3117,7 @@ function vPergunte(params){
   <form id="pqform" class="pq"><input id="pq" type="search" value="${esc(q)}" placeholder="Ex.: Reinaldo, 1971, quem mais marcou no clássico" aria-label="Buscar"><button class="more" type="submit">Buscar</button></form>
   ${corpo}
   ${DONO?'<p class="count"><a href="#dono-listas">✎ Criar lista com datas (só você vê)</a></p>':''}
-  ${L?'':`<h2>Listas prontas</h2>${grupos.map(g=>`<h3>${esc(g)}</h3><div class="pq-ex">${LISTAS.filter(x=>x[0]===g&&!['adv-art','est-art','dia-art'].includes(x[1])).map(x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`).join('')}</div>`).join('')}`}`;
+  ${L?'':catalogoListas(grupos)}`;
 }
 
 let _CID=null, _EST=null;
@@ -4867,6 +4868,19 @@ function desenhaGradeCal(A,rows,id,y0){ const {x,W,P,T,INK,GOLD,GOLDD,V,R,CINZA}
   });
   const yl=y0+nl*(ch+gap)-gap+30; if(yl<A.BOT+10){ const lg=[[V,'60% ou mais'],[GOLD,'entre 45% e 59%'],[R,'abaixo de 45%']]; let lx=P; lg.forEach(([c,t])=>{ x.fillStyle=c; A.rr(lx,yl-14,16,16,3); x.fill(); lx+=24+T(t,lx+24,yl,'osw',18,INK)+24; }); if(best) T('★ melhor aproveitamento',W-P,yl,'osw',18,GOLDD,'right'); }
 }
+
+/* Catálogo da busca: novidades + poucos exemplos por grupo, o resto recolhido */
+function catalogoListas(grupos){
+  const NOVAS=[['Hulk + Paulinho','dupla'],['Trio Maldito','trio'],['duplas com mais gols no Brasileirão','duplas'],['desempenho por mês na era SAF','mês'],['desempenho por trimestre desde 2020','trimestre'],['desempenho por dia da semana','semana'],['artilheiros na era 4Rs','era'],['gols jogando na Bahia','local'],['artilheiros fora de casa','mando'],['vitórias na Argentina','país'],['jogos contra europeus','continente'],['jogos em Brasília','cidade']];
+  const ESCONDE=['adv-art','est-art','dia-art','jogos-loc','res-v','res-e','res-d'];
+  const especifica=id=>/^(art|jog|ret|mm|mf)-(uf-[a-z]{2}|[a-z]{3})$/.test(id)&&!/-(est|eur|sul|cen|afr|asi)$/.test(id);
+  const chip=x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`;
+  const blocos=grupos.map(g=>{ const ls=LISTAS.filter(x=>x[0]===g&&!ESCONDE.includes(x[1])); if(!ls.length) return '';
+    const ord=[...ls.filter(x=>!especifica(x[1])),...ls.filter(x=>especifica(x[1]))]; const vis=ord.slice(0,6), resto=ord.slice(6);
+    return `<div class="cat-g"><h3>${esc(g)} <small class="count">${ls.length}</small></h3><div class="pq-ex">${vis.map(chip).join('')}</div>${resto.length?`<details class="cat-mais"><summary>Ver mais ${resto.length} ${resto.length===1?'lista':'listas'}</summary><div class="pq-ex">${resto.map(chip).join('')}</div></details>`:''}</div>`; }).join('');
+  return `<h2>Novidades: experimente</h2><p class="count">Dá para misturar: período ou era, competição, local, casa ou fora. Ex.: "artilheiros fora de casa no Brasileirão desde 2020".</p>
+  <div class="pq-ex cat-novas">${NOVAS.map(([q,t])=>`<a class="chip chip-novo" href="#pergunte?${new URLSearchParams({q})}"><b>${esc(t)}</b> ${esc(q)}</a>`).join('')}</div>
+  <h2>Listas prontas</h2>${blocos}`; }
 
 </script>
 </body>
