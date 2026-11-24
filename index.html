@@ -611,9 +611,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261124105724';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261124105724"></script>
-<script src="backend-firebase.js?v=20261124105724"></script>
+<script>window.GM_BUILD='20261124105907';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261124105907"></script>
+<script src="backend-firebase.js?v=20261124105907"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4686,6 +4686,7 @@ async function desenhaArteListaReels(s,rows,tit,unid,tipo,res,id){
   // texto com "(n)" em dourado; encolhe para caber
   const rich=(t,px,py,f,sz,c,cg,max)=>{ const partes=String(t).split(/(\(\d+\))/).filter(Boolean); const med=z=>partes.reduce((w,pt)=>{ x.font=F(/^\(\d+\)$/.test(pt)?(f==='casb'?'cas':f):f,z); return w+x.measureText(pt).width; },0);
     while(sz>16&&med(sz)>max) sz-=2; let cx=px; x.textAlign='left'; x.textBaseline='alphabetic'; partes.forEach(pt=>{ const g=/^\(\d+\)$/.test(pt); x.font=F(g&&f==='casb'?'cas':f,sz); x.fillStyle=g?cg:c; x.fillText(pt,cx,py); cx+=x.measureText(pt).width; }); return sz; };
+  const fitRich=(t,f,sz,max)=>{ const partes=String(t).split(/(\(\d+\))/).filter(Boolean); const med=z=>partes.reduce((w,pt)=>{ x.font=F(/^\(\d+\)$/.test(pt)&&f==='casb'?'cas':f,z); return w+x.measureText(pt).width; },0); while(sz>16&&med(sz)>max) sz-=2; return sz; };
   const wrapW=(t,f,sz,max)=>{ x.font=F(f,sz); const ws=String(t).split(/\s+/); const ls=[]; let ln=''; for(const w of ws){ const tt=ln?ln+' '+w:w; if(x.measureText(tt).width>max&&ln){ ls.push(ln); ln=w; } else ln=tt; } if(ln) ls.push(ln); return ls; };
   x.fillStyle=PAP; x.fillRect(0,0,W,H);
   const galoIm=await loadImg(galoEsc(hojeStr()));
@@ -4705,28 +4706,25 @@ async function desenhaArteListaReels(s,rows,tit,unid,tipo,res,id){
   y+=34; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+8,W-2*P,2); y+=10;
   const BOT=H-150; const top=Math.min(s.top===5?5:3, rows.length);
   const valTxt=r=>r.txt?r.txt:N(r.v);
-  // destaques
-  const hd=top===5?132:166;
+  // destaques (só o top 3 ou top 5, ocupando a arte toda)
+  const hd=Math.min(top===5?230:330, Math.floor((BOT-70-y)/Math.max(1,top))); const k=hd/(top===5?150:200);
   rows.slice(0,top).forEach((r,i)=>{ const y0=y; const h=hd; const neg=i===0;
     if(neg){ x.fillStyle=INK; x.fillRect(0,y0,W,h); }
     const cN=neg?PAP:INK, cG=neg?GOLDL:GOLDD;
-    T((i+1)+'º',P,y0+h/2+ (top===5?22:28),'abril',top===5?56:66,GOLD);
-    const nx=P+(top===5?100:115), vw=r.txt?300:230, nmax=W-P-nx-vw-20;
+    const psz=Math.round(72*k); T((i+1)+'º',P,y0+h/2+psz*0.36,'abril',psz,GOLD);
+    x.font=F('abril',psz); const nx=P+Math.round(x.measureText((i+1)+'º').width)+Math.round(34*k);
+    const vs=Math.round(100*k), tsz=Math.round(36*k); let vw; if(r.txt){ x.font=F('osw',tsz); vw=Math.min(380,x.measureText(r.txt).width); } else { x.font=F('abril',vs); vw=x.measureText(valTxt(r)).width; } vw=Math.ceil(vw)+10;
+    const nmax=W-P-nx-vw-30;
     const pts=String(r.nome).split(' + ');
-    if(pts.length>1&&pts.length<=3&&!r.txt){ const fz=top===5?(pts.length===3?26:32):(pts.length===3?30:38); const lh=fz*1.12+ (pts.length===3?14:18); const tot=pts.length*lh-(lh-fz); let yy=y0+(h-tot)/2+fz*0.85;
-      pts.forEach((pt,k)=>{ rich(pt,nx,yy,'casb',fz,cN,cG,nmax); if(k<pts.length-1) T('+',nx+2,yy+(lh-fz)/2+fz*0.32,'osw',20,GOLD); yy+=lh; }); }
-    else { const L=wrapW(r.nome,'casb',top===5?32:38,nmax).slice(0,2); const fz=top===5?32:38; let yy=y0+h/2-(L.length-1)*fz*0.6+fz*0.35; L.forEach(l=>{ rich(l,nx,yy,'casb',fz,cN,cG,nmax); yy+=fz*1.2; }); }
-    if(r.txt){ const c=r.cls==='v'?(neg?'#6fd39b':V):r.cls==='d'?(neg?'#ff8a80':R):GOLD; T(r.txt,W-P,y0+h/2+14,'osw',34,c,'right',vw); }
-    else { T(valTxt(r),W-P,y0+h/2+(top===5?20:26),'abril',top===5?74:92,GOLD,'right',vw); T(String(unid||'').toUpperCase(),W-P,y0+h/2+(top===5?50:62),'osw4',20,neg?PAP:INK,'right',vw,4); }
+    if(pts.length>1&&pts.length<=3&&!r.txt){ const fz=Math.round((pts.length===3?32:40)*k); const lh=fz*1.12+Math.round(18*k); const tot=pts.length*lh-(lh-fz); let yy=y0+(h-tot)/2+fz*0.85;
+      const fzc=Math.min(...pts.map(pt=>fitRich(pt,'casb',fz,nmax)));
+      pts.forEach((pt,q)=>{ rich(pt,nx,yy,'casb',fzc,cN,cG,nmax); if(q<pts.length-1) T('+',nx+2,yy+(lh-fz)/2+fz*0.32,'osw',Math.round(22*k),GOLD); yy+=lh; }); }
+    else { let fz=Math.round(42*k); let L=wrapW(r.nome,'casb',fz,nmax); while(L.length>3&&fz>20){ fz-=2; L=wrapW(r.nome,'casb',fz,nmax); } while(fz*1.2*L.length>h-20&&fz>20){ fz-=2; L=wrapW(r.nome,'casb',fz,nmax); } L=L.slice(0,3); let yy=y0+h/2-(L.length-1)*fz*0.6+fz*0.35; L.forEach(l=>{ rich(l,nx,yy,'casb',fz,cN,cG,nmax); yy+=fz*1.2; }); }
+    if(r.txt){ const c=r.cls==='v'?(neg?'#6fd39b':V):r.cls==='d'?(neg?'#ff8a80':R):GOLD; T(r.txt,W-P,y0+h/2+14,'osw',tsz,c,'right',vw); }
+    else { T(valTxt(r),W-P,y0+h/2+vs*0.28,'abril',vs,GOLD,'right',vw); T(String(unid||'').toUpperCase(),W-P,y0+h/2+vs*0.28+Math.round(34*k),'osw4',Math.round(22*k),neg?PAP:INK,'right',vw,4); }
     if(!neg){ x.fillStyle=INK; x.fillRect(P,y0+h-2,W-2*P,2); }
     y+=h; });
-  // demais
-  y+=6; const falta=Math.max(0,Math.min(rows.length,14)-top); const lh=Math.max(54,Math.min(66,Math.floor((BOT-50-y)/Math.max(1,falta)))); const cabe=Math.max(0,Math.floor((BOT-50-y)/lh)); const resto=rows.slice(top, Math.min(rows.length, top+cabe, 14));
-  resto.forEach((r,i)=>{ const yy=y+lh*0.68; T(String(top+i+1),P,yy,'abril',32,INK);
-    rich(r.nome,P+72,yy,'cas',30,INK,GOLDD,W-2*P-72-(r.txt?300:120));
-    if(r.txt){ T(r.txt,W-P,yy,'osw',26,r.cls==='v'?V:r.cls==='d'?R:GOLDD,'right',290); } else T(valTxt(r),W-P,yy,'abril',38,INK,'right',120);
-    x.fillStyle='rgba(17,17,17,.22)'; x.fillRect(P,y+lh-1,W-2*P,1); y+=lh; });
-  const mostrados=top+resto.length; if(rows.length>mostrados) T(`E mais ${N(rows.length-mostrados)} na lista completa em galometrics.com.br`,P,y+38,'casi',24,CINZA,'left',W-2*P);
+  if(rows.length>top) T('Veja a lista completa em galometrics.com.br',P,y+50,'casi',26,CINZA,'left',W-2*P);
   // rodapé
   x.fillStyle=INK; x.fillRect(P,H-112,W-2*P,3); T('GALO METRICS',P,H-50,'abril',46,INK); T('galometrics.com.br',W-P,H-52,'osw6',36,GOLDD,'right');
   return cv; }
