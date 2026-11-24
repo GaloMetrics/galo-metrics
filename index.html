@@ -2196,9 +2196,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261124192837';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261124192837"></script>
-<script src="backend-firebase.js?v=20261124192837"></script>
+<script>window.GM_BUILD='20261124205414';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261124205414"></script>
+<script src="backend-firebase.js?v=20261124205414"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -3824,7 +3824,7 @@ function fRecente(f){ if(!f||/\(/.test(f.nome)) return false; const p=pjDe(f.nom
 function fFamoso(f){ if(fRecente(f)) return true; if(!fConhecido(f)) return false; const p=pjDe(f.nome); const a=+(String(p.primeiro||'').slice(0,4))||0, b=+(String(p.ultimo||'').slice(0,4))||0;
   if(/\(/.test(f.nome)||(a&&b&&b-a>18)) return false; if(f.r==='lendaria') return true; return b>=1990&&((p.jogos||0)>=150||golsBest(p)>=30); }
 function categorias(){
-  if(CATS) return CATS;
+  const NOVOS_TEMAS=diaDesafio()>='2026-11-25'; if(CATS&&CATS._novos===NOVOS_TEMAS) return CATS;
   const L=figuras().filter(fFamoso), byN={}; L.forEach(f=>byN[f.nome]=f);
   const pj=n=>pjDe(n);
   const C=[];
@@ -3869,7 +3869,32 @@ function categorias(){
   POSS.forEach(p=>add('pos-'+p,{Goleiro:'Goleiros',Defensor:'Defensores',Meia:'Meias',Atacante:'Atacantes'}[p], L.filter(f=>posTxt(f.nome)===p).map(f=>f.nome)));
   const estreia=n=>+(String((pj(n)||{}).primeiro||'').slice(0,4))||0; const anosE={}; L.forEach(f=>{ const y=estreia(f.nome); if(y>=1970) (anosE[y] ||= []).push(f.nome); });
   Object.keys(anosE).forEach(y=>{ y=+y; add('est'+y,`Estrearam pelo Galo em ${y}`, anosE[y], [...conh].filter(n=>{ const e=estreia(n); return e&&e!==y&&Math.abs(e-y)<=2; }), {fam:'est'}); });
-  CATS=C; return C;
+  // novidades do site: eras, local do jogo, estrangeiros, mando, dia da semana, duplas e trios (a partir de 25/11/2026, para não mudar desafios já publicados)
+  if(NOVOS_TEMAS){
+  const golsQ=f=>{ const c={}; J.filter(f).forEach(j=>j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)) c[g.jogador]=(c[g.jogador]||0)+1; })); return c; };
+  const sem=(f,min,max)=>{ const c=golsQ(f); return Object.keys(c).filter(n=>c[n]>=min&&(max==null||c[n]<=max)); };
+  const lc=j=>{ try{ locDe(j); }catch(e){} return j; };
+  const EUR=['POR','ESP','ITA','FRA','GER','FRG','ENG','SCO','NED','BEL','SUI','AUT','HUN','URS','TCH','ROU','POL','SWE','BUL','YUG','DEN','UKR','GRE','TUR','IRL','RUS','CRO','SRB'];
+  const ehExt=j=>{ lc(j); return !!(j._lu&&j._lu.length>2); };
+  const ehEst=j=>(j.adversario_uf||'').length===3;
+  add('era-saf','Jogaram na era SAF (desde nov/2023)', freq(j=>j.data>='2023-11-01',5), freq(j=>j.data>='2021-01-01'&&j.data<'2023-11-01',5), {fam:'era'});
+  add('era-4rs','Jogaram na era 4Rs (desde 2020)', freq(j=>j.data>='2020-01-01',10), freq(j=>j.temporada>=2016&&j.temporada<=2019,10), {fam:'era'});
+  add('gol-ext','Marcaram gol jogando no exterior', marcou(ehExt), freq(ehExt,1), {fam:'intl'});
+  add('gol-est','Marcaram gol contra clube estrangeiro', marcou(ehEst), freq(ehEst,3), {fam:'intl'});
+  add('gol-eur','Marcaram gol contra clube europeu', marcou(j=>EUR.includes(j.adversario_uf)), freq(j=>EUR.includes(j.adversario_uf),1), {fam:'intl'});
+  add('gol-arg','Marcaram gol contra clube argentino', marcou(j=>j.adversario_uf==='ARG'), freq(j=>j.adversario_uf==='ARG',1), {fam:'intl'});
+  add('gol-sp','Marcaram gol jogando na cidade de São Paulo', marcou(j=>lc(j)._lc==='São Paulo'), freq(j=>lc(j)._lc==='São Paulo',2), {fam:'loc'});
+  add('gol-rio','Marcaram gol jogando no Rio de Janeiro', marcou(j=>lc(j)._lc==='Rio de Janeiro'), freq(j=>lc(j)._lc==='Rio de Janeiro',2), {fam:'loc'});
+  add('gol-ba','Marcaram gol jogando na Bahia', marcou(j=>lc(j)._lu==='BA'), freq(j=>lc(j)._lu==='BA',1), {fam:'loc'});
+  add('gol-fora20','Fizeram 20 gols ou mais fora de casa', sem(j=>j.mando==='F',20), sem(j=>j.mando==='F',10,19), {fam:'mando'});
+  add('gol-seg','Marcaram gol numa segunda-feira', marcou(j=>!j.data_aprox&&new Date(j.data+'T12:00:00Z').getUTCDay()===1), [...conh].filter(n=>golsP(n)>=20), {fam:'sem'});
+  try{ const B=duplasBase(); const por=(l,k)=>l.slice().sort((a,b)=>b[k]-a[k]); const nm=l=>[...new Set(l.flatMap(o=>o.nomes))];
+    const pn=por(B.pares,'n'); add('dup-top','Formaram uma das 40 duplas que mais jogaram juntas', nm(pn.slice(0,40)), nm(pn.slice(40,120)), {fam:'dup'});
+    add('dup-gol','Fizeram dupla em que os dois marcaram no mesmo jogo 5 vezes ou mais', nm(B.pares.filter(o=>o.ambos>=5)), nm(B.pares.filter(o=>o.ambos>=2&&o.ambos<5)), {fam:'dup'});
+    const tv=por(B.trios,'V'); add('trio-v','Fizeram parte de um dos 15 trios que mais venceram juntos', nm(tv.slice(0,15)), nm(tv.slice(15,60)), {fam:'dup'});
+  }catch(e){ console.warn('duplas nas brincadeiras',e); }
+  }
+  C._novos=NOVOS_TEMAS; CATS=C; return C;
 }
 function embaralha(a,r){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const k=Math.floor(r()*(i+1)); [a[i],a[k]]=[a[k],a[i]]; } return a; }
 
