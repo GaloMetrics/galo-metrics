@@ -1085,7 +1085,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
  box-shadow:3px 3px 0 #171714!important;text-transform:uppercase!important;
  font:900 12px Oswald!important;letter-spacing:1.2px!important;transition:transform .15s,box-shadow .15s
 }
-.gm-cover-links a:after{content:"↗";font:700 13px 'IBM Plex Mono';opacity:.8}
+.gm-cover-links a:after{content:"\2197\FE0E";font:700 13px 'IBM Plex Mono';opacity:.8}
 .gm-cover-links a:hover{transform:translate(2px,2px)!important;box-shadow:1px 1px 0 #171714!important}
 .gm-cover-links a:nth-child(2){background:#171714!important;color:#f5edda!important;border-color:#e5b52f!important}
 .gm-cover-links a:nth-child(3){background:#f5edda!important;color:#171714!important}
@@ -2107,6 +2107,76 @@ header input,header .search input{
  border-color:#827b69!important;
 }
 header #tema{display:none!important}
+/* ===== Celular: leitura e navegação ===== */
+@media (max-width:700px){
+  header .toprow{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:8px!important;padding:8px 14px 10px!important;min-height:0!important}
+  header .logo{order:1!important;margin-right:auto!important}
+  header .logoimg{height:34px!important;width:auto!important}
+  header .gm-brand-note,header .gm-brand-date{display:none!important}
+  header .topbtns{display:contents!important}
+  header #gmchip{order:2!important;margin:0!important;padding:6px 10px!important;font-size:12px!important;box-shadow:none!important}
+  header #gmconta{order:3!important}header #gmconta[hidden]{display:none!important}
+  header #gmconta button{padding:4px 6px!important;box-shadow:none!important;min-height:36px}
+  header #navbtn{order:4!important;display:inline-flex!important;align-items:center;gap:6px;margin:0!important;padding:8px 12px!important;font-size:12px!important;box-shadow:none!important;min-height:38px}
+  header #hq{order:10!important;flex:1 1 100%!important;width:100%!important;margin:0!important}
+  header #hqi{width:100%!important;height:40px!important;font-size:16px!important;padding:6px 12px!important}
+  header .top{padding:0!important}
+  body:not(.navopen) header nav#nav{display:none}
+  /* capa */
+  .gm-cover{padding:18px 16px!important}
+  .gm-cover-top,.gm-cover-bottom{font-size:9px!important;letter-spacing:1.5px!important;gap:8px!important}
+  .gm-cover-top span:last-child,.gm-cover-bottom span:last-child{display:none}
+  .gm-cover-title{font-size:clamp(40px,12.5vw,58px)!important;line-height:.95!important}
+  .gm-cover-deck{font-size:16px!important;line-height:1.45!important}
+  .gm-cover-links{display:grid!important;grid-template-columns:1fr 1fr;gap:8px!important}
+  .gm-cover-links a{text-align:center;justify-content:center;padding:12px 8px!important;font-size:12px!important;margin:0!important}
+  .gm-cover-links a:first-child{grid-column:1 / -1}
+  .gm-cover-side{display:grid!important;grid-template-columns:1fr 1fr;gap:10px!important}
+  .gm-stamp{grid-column:1 / -1;padding:10px!important}
+  .gm-stamp b{font-size:28px!important}
+  .gm-cover-note b{font-size:30px!important}
+  .gm-cover-note span{font-size:10px!important;letter-spacing:1px!important}
+  .gm-edition-strip{padding:10px 14px!important}
+  .gm-edition-strip span{display:none!important}
+  .gm-duplas-teaser{grid-template-columns:96px 1fr!important}
+  .gm-duplas-teaser img{width:96px!important;height:100%!important;object-fit:cover}
+  .gm-duplas-copy{padding:10px 12px!important}
+  .gm-duplas-copy small{white-space:normal!important;font-size:9px!important;line-height:1.6}
+  .gm-duplas-copy strong{font-size:24px!important}
+  .gm-player-number{font-size:120px!important}
+  .gm-player-copy strong{font-size:34px!important}
+  .gm-results{flex-wrap:wrap;gap:8px 14px!important}
+  .gm-results span{font-size:11px!important}
+  .gm-results b{font-size:22px!important}
+  .gm-record b{font-size:52px!important}
+  .gm-section-head{flex-wrap:wrap;row-gap:4px}
+  .gm-section-head h2{font-size:28px!important;line-height:1.05!important;width:100%}
+  .gm-section-head h2::before{display:none!important}
+  table.gm-ranking,.gm-columns table{width:100%!important;max-width:none!important;min-width:0!important;display:table!important;table-layout:auto!important}
+  .gm-ranking td,.gm-ranking th{padding:9px 8px!important}
+  .gm-ranking td:nth-child(2){font-size:16px!important}
+  .gm-hoje,.gm-ultimos{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .gm-hoje table,.gm-ultimos table{font-size:13px}
+  .gm-hoje td.mono,.gm-ultimos td.mono{font-size:12px;white-space:nowrap}
+  .gm-footnote{font-size:12px!important;line-height:1.5}
+  /* páginas internas */
+  .gm-page-ribbon{padding:8px 12px!important;justify-content:center!important}
+  .gm-page-ribbon span{display:none!important}
+  .gm-page-ribbon b{font-size:12px!important}
+  .gm-duplas-overline span{display:none}
+  h1{font-size:clamp(34px,11vw,52px)!important;line-height:1.02!important;word-break:break-word}
+  .lede{font-size:16px!important;line-height:1.55!important}
+  .tw,.tablewrap{overflow-x:auto}
+  .jog-tit{flex-wrap:wrap!important}
+  a.nota-topo{max-width:100%!important;width:100%!important;box-sizing:border-box!important;padding:12px 14px!important;gap:10px!important}
+  a.nota-topo span{font-size:13px!important;line-height:1.35!important}
+  a.nota-topo b,a.nota-topo strong{font-size:28px!important;line-height:1.05!important}
+  header #navbtn{width:auto!important;text-indent:0!important;color:#F2EEE3!important;-webkit-text-fill-color:#F2EEE3!important;border:2px solid rgba(242,238,227,.8)!important;background:transparent!important;font-family:Oswald,sans-serif!important;font-weight:700!important;letter-spacing:1px;text-transform:uppercase}
+  header #navbtn .hb{display:none!important}
+  header #navbtn::before{content:"\2630\FE0E";font-size:16px;margin-right:6px;line-height:1}
+  #app{overflow-x:hidden}
+}
+
 /* Cabeçalho escuro permanente, sem escurecer o conteúdo das páginas */
 header{--ink:#F2EEE3;--ink2:#d6d1c4;--paper:#121212;--mute:#9a958a;--line:#2f2c27;--soft:#1c1b18;--goldt:#D9AE52;color-scheme:dark}
 header .lclaro{display:none!important}header .lescuro{display:inline-block!important}
@@ -2126,9 +2196,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261124192016';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261124192016"></script>
-<script src="backend-firebase.js?v=20261124192016"></script>
+<script>window.GM_BUILD='20261124192837';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261124192837"></script>
+<script src="backend-firebase.js?v=20261124192837"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2268,7 +2338,7 @@ function vInicio(){
         <div class="gm-eyebrow">O arquivo estatístico do Atlético</div>
         <div class="gm-cover-title">A HISTÓRIA<br><i>EM CAMPO.</i></div>
         <p class="gm-cover-deck">Jogos, jogadores, gols e temporadas. Uma memória construída lance a lance, número a número.</p>
-        <div class="gm-cover-links"><a href="#jogos">TODOS OS JOGOS ↗</a><a href="#jogadores">JOGADORES ↗</a><a href="#recordes">RECORDES ↗</a></div>
+        <div class="gm-cover-links"><a href="#jogos">TODOS OS JOGOS</a><a href="#jogadores">JOGADORES</a><a href="#recordes">RECORDES</a></div>
       </div>
       <div class="gm-cover-side">
         <div class="gm-stamp">GALO<br><b>METRICS</b><small>1908—2026</small></div>
@@ -2282,7 +2352,7 @@ function vInicio(){
   <div class="gm-front-grid">
     <section class="gm-feature">
       <div class="gm-label">PERSONAGEM · MAIOR ARTILHEIRO</div>
-      ${hero?`<a class="gm-player-cover" href="${heroLink}"><div class="gm-player-number">${String(heroGoals).padStart(3,'0')}</div><div class="gm-player-copy"><span>O NOME DA HISTÓRIA</span><strong>${esc(hero.nome)}</strong><em>${N(heroGoals)} GOLS REGISTRADOS ↗</em></div></a>`:''}
+      ${hero?`<a class="gm-player-cover" href="${heroLink}"><div class="gm-player-number">${String(heroGoals).padStart(3,'0')}</div><div class="gm-player-copy"><span>O NOME DA HISTÓRIA</span><strong>${esc(hero.nome)}</strong><em>${N(heroGoals)} GOLS REGISTRADOS ↗︎</em></div></a>`:''}
       <div class="gm-feature-foot">PERFIS, TRAJETÓRIAS E ESTATÍSTICAS INDIVIDUAIS</div>
     </section>
     <section class="gm-scoreboard">
@@ -2295,23 +2365,23 @@ function vInicio(){
   </div>
   ${next?`<section class="gm-next"><div class="gm-label">A PRÓXIMA PÁGINA · PRÓXIMO JOGO</div>${proxJogo(next,hoje)}</section>`:''}
   <div class="gm-columns">
-    <section><div class="gm-section-head"><span>02 / RANKING</span><h2>OS ARTILHEIROS</h2><a href="#jogadores">VER TODOS ↗</a></div>
+    <section><div class="gm-section-head"><span>02 / RANKING</span><h2>OS ARTILHEIROS</h2><a href="#jogadores">VER TODOS ↗︎</a></div>
       <table class="gm-ranking"><thead><tr><th>#</th><th>JOGADOR</th><th>GOLS</th></tr></thead><tbody>${top.map((p,i)=>{const g=accG(ACC.p[p.nome]?.gols,p.nome);return `<tr class="click" onclick="location.hash='jogador-${slug(p.nome)}'"><td>${String(i+1).padStart(2,'0')}</td><td>${esc(p.nome)}</td><td>${N(g?g.atual:p.gols)}</td></tr>`;}).join('')}</tbody></table>
     </section>
-    <section><div class="gm-section-head"><span>03 / PARTICIPAÇÃO</span><h2>QUEM MAIS JOGOU</h2><a href="#jogadores">VER TODOS ↗</a></div>
+    <section><div class="gm-section-head"><span>03 / PARTICIPAÇÃO</span><h2>QUEM MAIS JOGOU</h2><a href="#jogadores">VER TODOS ↗︎</a></div>
       <table class="gm-ranking"><thead><tr><th>#</th><th>JOGADOR</th><th>JOGOS</th></tr></thead><tbody>${most.slice(0,6).map((p,i)=>`<tr class="click" onclick="location.hash='jogador-${slug(p.nome)}'"><td>${String(i+1).padStart(2,'0')}</td><td>${esc(p.nome)}</td><td>${N(p.jogos)}</td></tr>`).join('')}</tbody></table>
     </section>
   </div>
-  <section class="gm-season"><div class="gm-section-head"><span>04 / LINHA DO TEMPO</span><h2>TEMPORADAS EM CAMPO</h2><a href="#temporadas">EXPLORAR ↗</a></div>
+  <section class="gm-season"><div class="gm-section-head"><span>04 / LINHA DO TEMPO</span><h2>TEMPORADAS EM CAMPO</h2><a href="#temporadas">EXPLORAR ↗︎</a></div>
     <div class="gm-season-viz">${Object.entries(years).map(([y,v])=>{const total=Math.max(1,v.V+v.E+v.D);const h=Math.max(4,Math.round(118*total/maxY));const win=Math.round(h*v.V/total);const draw=Math.round(h*v.E/total);const loss=Math.max(0,h-win-draw);return `<a class="gm-season-year" href="#temporada-${y}" title="${y}: ${v.V} vitórias, ${v.E} empates e ${v.D} derrotas"><span class="gm-season-bar" style="height:${h}px"><i class="gm-win" style="height:${win}px"></i><i class="gm-draw" style="height:${draw}px"></i><i class="gm-loss" style="height:${loss}px"></i></span></a>`;}).join('')}</div><div class="gm-season-legend"><span><i class="win"></i> Vitórias</span><span><i class="draw"></i> Empates</span><span><i class="loss"></i> Derrotas</span></div>
     <div class="gm-year-foot">1909–2026</div>
   </section>
   ${blocoBreve()}
   ${(()=>{const t=new Date(), md=String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); const l=played.filter(j=>!j.data_aprox&&j.data.slice(5)===md);
-    return l.length?`<section class="gm-hoje"><div class="gm-section-head"><span>05 / NESTE DIA</span><h2>${t.getDate()}/${t.getMonth()+1} NA HISTÓRIA</h2><a href="#pergunte?lista=dia">VER TODOS ↗</a></div>${matchTable([...l].reverse(),6)}</section>`:'';})()}
-  <section class="gm-ultimos"><div class="gm-section-head"><span>06 / RESULTADOS</span><h2>ÚLTIMOS JOGOS</h2><a href="#jogos">VER TODOS ↗</a></div>${matchTable([...played].reverse().slice(0,10),10)}</section>
+    return l.length?`<section class="gm-hoje"><div class="gm-section-head"><span>05 / NESTE DIA</span><h2>${t.getDate()}/${t.getMonth()+1} NA HISTÓRIA</h2><a href="#pergunte?lista=dia">VER TODOS ↗︎</a></div>${matchTable([...l].reverse(),6)}</section>`:'';})()}
+  <section class="gm-ultimos"><div class="gm-section-head"><span>06 / RESULTADOS</span><h2>ÚLTIMOS JOGOS</h2><a href="#jogos">VER TODOS ↗︎</a></div>${matchTable([...played].reverse().slice(0,10),10)}</section>
   ${(()=>{const H=ACC.h2h['cruzeiro mg']; const cz=rec(J.filter(j=>j.adversario_id==='cruzeiro mg')); const ac=H?(()=>{const pos=rec(J.filter(j=>j.adversario_id==='cruzeiro mg'&&j.data>H.ate)); return {n:H.jogos+pos.n,V:H.V+pos.V,E:H.E+pos.E,D:H.D+pos.D};})():cz;
-    return `<section class="gm-classico"><div class="gm-section-head"><span>07 / CLÁSSICO</span><h2>GALO ${cr('cruzeiro mg','cr2')} CRUZEIRO</h2><a href="#adversario-${slug('cruzeiro mg')}">RETROSPECTO ↗</a></div><p class="classico-num"><b>${N(ac.n)}</b> jogos contra o Cruzeiro · ${aprov(ac)} de aproveitamento</p>${resultBar(ac)}</section>`;})()}
+    return `<section class="gm-classico"><div class="gm-section-head"><span>07 / CLÁSSICO</span><h2>GALO ${cr('cruzeiro mg','cr2')} CRUZEIRO</h2><a href="#adversario-${slug('cruzeiro mg')}">RETROSPECTO ↗︎</a></div><p class="classico-num"><b>${N(ac.n)}</b> jogos contra o Cruzeiro · ${aprov(ac)} de aproveitamento</p>${resultBar(ac)}</section>`;})()}
   ${blocoPublico(false)}
   <div class="capa-grid"><div>${tambemNesta()}</div></div>
   <div class="alb-cta"><a href="#album" class="more">★ Álbum dos imortais: ${N(G?Object.keys(G.owned).length:0)} de ${N(D.jogadores.length)} figurinhas coladas →</a> <a href="#desafios" class="more">★ Desafios do dia →</a></div>
@@ -3677,7 +3747,7 @@ function vGalodle(){
   setTimeout(()=>{ const s=$('#gdshare'); if(s) { const _t=()=>textoRank('Galodle', (st.ok?st.t.length:'X')+'/'+GD_TENT+'\n'+grade(), st.ok?7-st.t.length:0); s.onclick=()=>compartilha(_t()); autoRank(_t()); const w=document.getElementById(s.id.replace('share','tw')); if(w) w.href=twHref(_t()); } });
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Galodle</h1><p class="count">Descubra o jogador do Galo em ${GD_TENT} chutes. O nome pode ter qualquer tamanho: escreva o nome sem espaço (ex.: DIEGOTARDELLI). Verde: letra no lugar certo. Amarelo: a letra existe em outra posição. Quando o chute tem o tamanho certo, a última letra ganha a bandeirinha de fim.</p>
   <div class="gd-board lt" role="grid" aria-label="Tentativas">${st.t.map(linha).join('')}${st.fim?'':`<div class="gd-row lt cur" role="row"></div>`}<p class="count" style="text-align:center">${st.fim?'':`${GD_TENT-st.t.length} ${GD_TENT-st.t.length===1?'chute restante':'chutes restantes'}`}</p></div>
-  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} O jogador era:</p>${figHTML(f,'a-flip')}<button type="button" class="more" id="gdshare">Copiar resultado</button><a class="ghost tw" id="gdtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a></div>`
+  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} O jogador era:</p>${figHTML(f,'a-flip')}<button type="button" class="more" id="gdshare">Copiar resultado</button><a class="ghost tw" id="gdtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗︎</a></div>`
    :`<div class="gd-kb">${kb.map((r,i)=>`<div>${i===2?'<button type="button" class="gd-k wide" data-k="ENTER">Enviar</button>':''}${[...r].map(c=>`<button type="button" class="gd-k ${usadas[c]||''}" data-k="${c}">${c}</button>`).join('')}${i===2?'<button type="button" class="gd-k wide" data-k="DEL" aria-label="Apagar">⌫</button>':''}</div>`).join('')}</div>`}`;
 }
 
@@ -3698,7 +3768,7 @@ function vQuem(){
   <table class="qm"><thead><tr><th>Jogador</th><th>Estreia</th><th class="n">Gols</th><th class="n">Jogos</th><th>Posição</th><th>Inicial</th></tr></thead><tbody>${st.t.slice().reverse().map(n=>{ const B=infoJ(n); const ya=+(FIGN[alvo.nome].a1)||0, yb=+(FIGN[n].a1)||0; const e=ya===yb?['v','=']:[Math.abs(ya-yb)<=3?'a':'x', yb<ya?'↑':'↓'], g=seta(B.gols,A.gols), jj=seta(B.jogos,A.jogos);
     return `<tr class="a-flip"><td><b>${esc(nomeV(n))}</b></td><td class="qc ${e[0]}">${yb||'?'} ${e[1]}</td><td class="qc n ${g[0]}">${B.gols} ${g[1]}</td><td class="qc n ${jj[0]}">${B.jogos} ${jj[1]}</td><td class="qc ${B.pos===A.pos?'v':'x'}">${esc(B.pos||'?')}</td><td class="qc ${B.ini===A.ini?'v':'x'}">${B.ini}</td></tr>`; }).join('')}</tbody></table>
   <p class="count">${st.t.length} de 8 chutes.</p>
-  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} O jogador era:</p>${figHTML(alvo,'a-flip')}<button type="button" class="more" id="qmshare">Copiar resultado</button><a class="ghost tw" id="qmtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a>${artBtn({t:'desafio',nome:'Quem é?',res:(st.ok?st.t.length:'X')+'/8',ok:st.ok})}</div>`:''}`;
+  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} O jogador era:</p>${figHTML(alvo,'a-flip')}<button type="button" class="more" id="qmshare">Copiar resultado</button><a class="ghost tw" id="qmtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗︎</a>${artBtn({t:'desafio',nome:'Quem é?',res:(st.ok?st.t.length:'X')+'/8',ok:st.ok})}</div>`:''}`;
 }
 
 /* Placar do dia */
@@ -3712,7 +3782,7 @@ function vPlacar(){
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Placar do dia</h1>
   <div class="pl-card a-up"><span class="osw">${esc(j.competicao||'')}${j.fase?' · '+esc(j.fase):''}</span><div class="pl-vs">${cr('galo','crb',j.data)}<b>Atlético</b><span class="vs">?  ×  ?</span><b>${esc(j.adversario)}</b>${cr(j.adversario_id,'crb crb2')}</div><span class="cou">${DIAS[new Date(j.data+'T12:00').getDay()]}, ${fmtD(j.data)}${j.estadio?' · '+esc(j.estadio):''}${j.cidade?' · '+esc(j.cidade):''}</span></div>
   <table><tbody>${st.t.map(g=>`<tr><td class="mono">${g[0]} x ${g[1]}</td><td>Galo: ${dica(g[0],j.gp)}</td><td>${esc(j.adversario)}: ${dica(g[1],j.gc)}</td></tr>`).join('')}</tbody></table>
-  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} O placar foi <a href="#jogo-${j.id}">Atlético ${j.gp} x ${j.gc} ${esc(j.adversario)}</a>.</p><button type="button" class="more" id="plshare">Copiar resultado</button><a class="ghost tw" id="pltw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a>${artBtn({t:'desafio',nome:'Placar do dia',res:(st.ok?st.t.length:'X')+'/3',ok:st.ok})}</div>`
+  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} O placar foi <a href="#jogo-${j.id}">Atlético ${j.gp} x ${j.gc} ${esc(j.adversario)}</a>.</p><button type="button" class="more" id="plshare">Copiar resultado</button><a class="ghost tw" id="pltw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗︎</a>${artBtn({t:'desafio',nome:'Placar do dia',res:(st.ok?st.t.length:'X')+'/3',ok:st.ok})}</div>`
   :`<div class="filters"><label>Gols do Galo<input id="plg" type="number" min="0" max="20" inputmode="numeric"></label><label>Gols do ${esc(j.adversario)}<input id="pla" type="number" min="0" max="20" inputmode="numeric"></label><button type="button" class="more" id="plenv" style="align-self:flex-end">Chutar (${3-st.t.length} restantes)</button></div><p id="plerr" class="count" role="alert" style="color:var(--d)"></p>`}`;
 }
 
@@ -3729,7 +3799,7 @@ function vMaisMenos(){
   const lado=(x,k)=>`<button type="button" class="mm-op" data-mm="${k}">${figHTML({...x.f, r:'comum', stat:'? gols'}).replace(/^<a /,'<span ').replace(/<\/a>$/,'</span>').replace(/ href="[^"]*"/,'')}<span class="osw">${k==='a'?'Este fez mais':'Este fez mais'}</span></button>`;
   return `<a class="back" href="#desafios">← Desafios</a><div class="kicker">Desafio do dia</div><h1>Mais ou menos</h1><p class="count">Quem fez mais gols pelo Galo? Cada acerto aumenta a sequência; o primeiro erro encerra o jogo do dia. Com 5 acertos ou mais, conta como vitória. Gols pelo número aceito, quando existe.</p>
   <p class="classico-num"><b>${st.seq}</b> acertos seguidos${st.ult?` · último: ${esc(st.ult)}`:''}</p>
-  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?'★ Boa sequência!':'Fim de jogo.'} Você fez ${st.seq} ${st.seq===1?'acerto':'acertos'}.</p><button type="button" class="more" id="mmshare">Copiar resultado</button><a class="ghost tw" id="mmtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a>${artBtn({t:'desafio',nome:'Mais ou menos',res:st.seq+' acertos',ok:st.ok})}</div>`
+  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?'★ Boa sequência!':'Fim de jogo.'} Você fez ${st.seq} ${st.seq===1?'acerto':'acertos'}.</p><button type="button" class="more" id="mmshare">Copiar resultado</button><a class="ghost tw" id="mmtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗︎</a>${artBtn({t:'desafio',nome:'Mais ou menos',res:st.seq+' acertos',ok:st.ok})}</div>`
    :`<div class="mm">${lado(a,'a')}<span class="mm-x">×</span>${lado(b,'b')}</div>`}`;
 }
 
@@ -3841,7 +3911,7 @@ function vConexoes(){
   <p class="count">Separe os 16 jogadores em 4 grupos de 4 que têm algo em comum. Você pode errar 3 vezes.</p>
   <div class="cx">${resolvidos.map((g,i)=>`<div class="cx-ok a-flip" style="background:${CORES[G4.indexOf(g)]};color:${G4.indexOf(g)===3?'#F5F2EA':'#111'}"><b>${esc(g.nome)}</b><span>${g.m.map(n=>esc(nomeV(n))).join(' · ')}</span></div>`).join('')}
   ${st.fim?'':`<div class="cx-grid">${resta.map(n=>`<button type="button" class="cx-t ${st.sel.includes(n)?'on':''}" data-cx="${esc(n)}" aria-pressed="${st.sel.includes(n)}">${esc(nomeV(n))}</button>`).join('')}</div>`}</div>
-  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Fechou os 4 grupos com ${st.erros} ${st.erros===1?'erro':'erros'}!`:'Não foi hoje. Os grupos estão acima.'}</p><button type="button" class="more" id="cxshare">Copiar resultado</button><a class="ghost tw" id="cxtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a>${artBtn({t:'desafio',nome:'Conexões',res:st.ok?st.erros+' erros':'X',ok:st.ok})}</div>`
+  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Fechou os 4 grupos com ${st.erros} ${st.erros===1?'erro':'erros'}!`:'Não foi hoje. Os grupos estão acima.'}</p><button type="button" class="more" id="cxshare">Copiar resultado</button><a class="ghost tw" id="cxtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗︎</a>${artBtn({t:'desafio',nome:'Conexões',res:st.ok?st.erros+' erros':'X',ok:st.ok})}</div>`
   :`<p class="count">Erros restantes: ${'● '.repeat(4-st.erros)}${'○ '.repeat(st.erros)}</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="more" id="cxenv">Enviar grupo</button><button type="button" class="ghost" id="cxmix">Embaralhar</button><button type="button" class="ghost" id="cxlimpa">Limpar seleção</button></div>`}`;
 }
 
@@ -3939,7 +4009,7 @@ function vCarreira(){
   <p class="count">Uma pista nova a cada chute errado. Você tem 6 chutes.</p>
   <div class="cr-pistas">${pistas.slice(0,ab).map(([t,v],i)=>`<div class="cr-p a-up" style="animation-delay:${i===ab-1?0:0}s"><span class="osw">Pista ${i+1} · ${t}</span><div>${v}</div></div>`).join('')}${pistas.slice(ab).map((x,i)=>`<div class="cr-p fechada"><span class="osw">Pista ${ab+i+1}</span><div>?</div></div>`).join('')}</div>
   ${st.t.length?`<p class="count">Chutes: ${st.t.map(n=>`<s>${esc(nomeV(n))}</s>`).join(', ').replace(`<s>${esc(nomeV(nome))}</s>`,`<b>${esc(nomeV(nome))}</b>`)}</p>`:''}
-  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} Era:</p>${figHTML(alvo,'a-flip')}<button type="button" class="more" id="crshare">Copiar resultado</button><a class="ghost tw" id="crtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗</a>${artBtn({t:'desafio',nome:'Carreira',res:(st.ok?st.t.length:'X')+'/6',ok:st.ok})}</div>`
+  ${st.fim?`<div class="desaf-fim"><p class="osw">${st.ok?`★ Acertou em ${st.t.length}!`:'Não foi hoje.'} Era:</p>${figHTML(alvo,'a-flip')}<button type="button" class="more" id="crshare">Copiar resultado</button><a class="ghost tw" id="crtw" href="#" target="_blank" rel="noopener">Pronto para tweet ↗︎</a>${artBtn({t:'desafio',nome:'Carreira',res:(st.ok?st.t.length:'X')+'/6',ok:st.ok})}</div>`
   :`<div class="filters"><label>Seu chute<input id="crin" list="crl" placeholder="nome do jogador" autocomplete="off"></label><button type="button" class="more" id="crenv" style="align-self:flex-end">Chutar (${6-st.t.length} ${6-st.t.length===1?'restante':'restantes'})</button></div><datalist id="crl">${figuras().map(f=>`<option value="${esc(f.nome)}">`).join('')}</datalist><p id="crerr" class="count" role="alert" style="color:var(--d)"></p>`}`;
 }
 
@@ -4002,7 +4072,7 @@ function vRanking(){
 const SITE_URL='https://galometrics.com.br/';
 const linkPagina=()=>SITE_URL+(location.hash&&location.hash!=='#inicio'?location.hash:'');
 function twHref(texto, link=linkPagina()){ const fim='\n#GaloMetrics', max=280-23-1-fim.length; let t=String(texto).replace(/\n?Galo Metrics · galometrics\.com\.br$/,''); if(t.length>max) t=t.slice(0,max-1)+'…'; return 'https://twitter.com/intent/tweet?text='+encodeURIComponent(t+'\n'+link+fim); }
-function tw(texto, rotulo='Pronto para tweet'){ return `<a class="ghost tw" href="${twHref(texto)}" target="_blank" rel="noopener">${rotulo} ↗</a>`; }
+function tw(texto, rotulo='Pronto para tweet'){ return `<a class="ghost tw" href="${twHref(texto)}" target="_blank" rel="noopener">${rotulo} ↗︎</a>`; }
 const estrelas=n=>n?('★'.repeat(Math.floor(n))+(n%1?'½':'')):'';
 const resumoJogo=j=>{ const gg=(j.gols||[]).filter(g=>g.lado==='galo').map(g=>`${nomeV(g.jogador)}${g.minuto!=null?' '+g.minuto+"'":''}`);
   return `Atlético ${placar(j)} ${j.adversario}${j.fase?', '+j.fase:''}${j.competicao?' ('+j.competicao+')':''}, ${fmtD(j.data,j.data_aprox)}.${gg.length?' Gols do Galo: '+gg.join(', ')+'.':''}`; };
@@ -4654,7 +4724,7 @@ function vPergunte(params){
   const L=LISTAS.find(x=>x[1]===lid);
   const desde=+(P.get('desde')||0)||0; const prL=(P.get('de')||P.get('ate')||P.get('grupo')||P.get('loc')||P.get('mando'))?{de:P.get('de')||null, ate:P.get('ate')||null, grupo:P.get('grupo')||null, loc:P.get('loc')||null, mando:P.get('mando')||null}:(desde?{de:desde+'-01-01',ate:null}:null);
   if(L){ const [,id,tit0,unid,fn0,tipo,res]=L; const fn=o=>comPer(prL,()=>fn0(o)); const diaP=P.get('dia')||null, entP=P.get('ent')||null; const tit=prL?comSufixo(tituloLista(id,tit0,{dia:diaP,ent:entP}),prL):tituloLista(id,tit0,{dia:diaP,ent:entP}); const todas=fn({desde,dia:diaP,ent:entP}).filter(x=>x.v>0), linhas=(tipo==='mm'||tipo==='temp'||tipo==='datas'||id==='dia')?todas:todas.slice(0,30);
-    corpo=`<h2>${esc(tit)}</h2>${tipo!=='datas'?filtroPer(id,prL,diaP,entP):''}${tipo!=='datas'&&todas.length?`<p>${artBtn({t:'lista',id,...perSpec(prL),...(diaP?{dia:diaP}:{}),...(entP?{ent:entP}:{})})}</p>`:''}${tipo==='datas'?`<p>${artBtn({t:'datas',id})} <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:tit+'\n\n'+(res?res(todas):''), url:'https://galometrics.com.br/#pergunte?lista='+id})}">Pronto para tweet ↗</a></p>`:''}${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'||/^mf-/.test(id)))}</p>`:''}${res&&todas.length?`<p class="lede">${esc(res(todas))}</p>`:''}${linhas.length?`<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
+    corpo=`<h2>${esc(tit)}</h2>${tipo!=='datas'?filtroPer(id,prL,diaP,entP):''}${tipo!=='datas'&&todas.length?`<p>${artBtn({t:'lista',id,...perSpec(prL),...(diaP?{dia:diaP}:{}),...(entP?{ent:entP}:{})})}</p>`:''}${tipo==='datas'?`<p>${artBtn({t:'datas',id})} <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:tit+'\n\n'+(res?res(todas):''), url:'https://galometrics.com.br/#pergunte?lista='+id})}">Pronto para tweet ↗︎</a></p>`:''}${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'||/^mf-/.test(id)))}</p>`:''}${res&&todas.length?`<p class="lede">${esc(res(todas))}</p>`:''}${linhas.length?`<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
   else if(q.trim()){ const PQ=parsePer(q), prQ=PQ.per, qL=prQ?PQ.limpo:q; const ents=buscaEntidades(qL); let par=listasParecidas(qL); if(prQ&&/^(jogos?|partidas?|retrospecto|resultados?|desempenho|campanha|historico|)$/.test(nrm(qL).replace(/\b(do|o|galo|atletico|de|todos|os)\b/g,'').trim())) par=[LISTAS.find(l=>l[1]==='jogos-loc')]; if(prQ){ const qv=nrm(qL).replace(/\b(do|o|a|as|os|galo|atletico|de|todas|todos|lista|quais|foram)\b/g,'').trim(); const mR={vitoria:'res-v',vitorias:'res-v',venceu:'res-v',empate:'res-e',empates:'res-e',empatou:'res-e',derrota:'res-d',derrotas:'res-d',perdeu:'res-d'}[qv]; if(mR) par=[LISTAS.find(l=>l[1]===mR)]; }
     try{ if(!route.keep&&!DONO&&TRK.bq.length<20&&TRK.bq[TRK.bq.length-1]?.q!==q.slice(0,80)){ TRK.bq.push({q:q.trim().slice(0,80), r:par.length?par[0][1]:(ents?'@':'')}); TRK.n++;  clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } }catch(e){}
     const dq0=diaDaBusca(qL); if(dq0&&!/\b(19|20)\d{2}\b/.test(qL)) par.unshift(LISTAS.find(x=>x[1]===(/artilh|gol|marc|fez|fizer/.test(nrm(q))?'dia-art':'dia')));
@@ -5917,7 +5987,7 @@ function vFinal(params){
   const artH=art.length?`<h2>Artilheiros da campanha</h2><ol class="rank">${art.map(([n,g],i)=>`<li><span class="rank-n">${i+1}</span><a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a><b>${g}</b></li>`).join('')}</ol>`:'';
   const titH=`<h2>Títulos internacionais do Galo</h2>${galeriaTitulos(e==='campeao')}`;
   const tweet=e==='campeao'?`🏆 GALO CAMPEÃO DA SUL-AMERICANA ${f.ano}!\n\n${placarF}\nLibertadores, Recopa e Sul-Americana: só Inter, São Paulo e Galo têm as três entre os brasileiros.\n\nPegue a figurinha comemorativa:`:e==='vice'?`Obrigado, Galo. Sul-Americana ${f.ano}: ${r.n} jogos, ${r.V} vitórias, ${r.gp} gols.`:`É HOJE. Galo x Boca, final da Sul-Americana.\n\nContra o Boca: ${rb.V}V ${rb.E}E ${rb.D}D. Em 21/11 o Galo tem ${aprov(rd)} de aproveitamento na história.`;
-  const tw=`<a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:tweet, url:'https://galometrics.com.br/#final'})}">Pronto para tweet ↗</a>`;
+  const tw=`<a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:tweet, url:'https://galometrics.com.br/#final'})}">Pronto para tweet ↗︎</a>`;
   if(e==='campeao') return `<div class="final-hero campeao"><div class="kicker">Copa Sul-Americana ${f.ano} · ${fmtD(f.data)} · ${esc(f.local)}</div>
     <h1 class="final-h1">CAMPEÃO.</h1><p class="lede">${placarF?esc(placarF)+'. ':''}O Galo é campeão da Copa Sul-Americana pela primeira vez. É o ${tit.length}º título internacional da história do clube.</p>
     <p>${artBtn({t:'titulo'})} ${tw}</p></div>
@@ -6106,10 +6176,10 @@ function blocoMuralDono(){ const f=finalCfg(); const T_=finTodos().filter(x=>x.r
   setTimeout(()=>document.querySelectorAll('[data-aprov]').forEach(b=>b.onclick=async()=>{ try{ const s=await GDB.doc('site/config').get(); const c=s.exists?JSON.parse(s.data().json||'{}'):{}; c.final ||= {}; const L=new Set(c.final.aprov||[]); if(L.has(b.dataset.aprov)) L.delete(b.dataset.aprov); else L.add(b.dataset.aprov); c.final.aprov=[...L]; await GDB.doc('site/config').set({json:JSON.stringify(c), em:Date.now()}); aplicaCfg(c); route(); }catch(e){ toast(e.message); } }),0);
   return `<h3 class="osw">Recados do mural (${T_.length})</h3>${T_.map(x=>`<p style="display:flex;gap:10px;align-items:flex-start"><button type="button" class="${ap.has(x.uid)?'more':'ghost'}" data-aprov="${esc(x.uid)}">${ap.has(x.uid)?'✓ No mural':'Aprovar'}</button><span><b>${esc(x.ap)}:</b> ${esc(x.recado)}</span></p>`).join('')}`; }
 
-function finChama(sec, txt, rota){ const url='https://galometrics.com.br/#'+(rota||('final?s='+sec)); return `<p class="fin-share"><a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:txt, url})}">Chamar no Twitter ↗</a> <button type="button" class="linkbtn" onclick="navigator.clipboard&&navigator.clipboard.writeText('${url}').then(()=>toast('Link copiado'))">Copiar link</button></p>`; }
+function finChama(sec, txt, rota){ const url='https://galometrics.com.br/#'+(rota||('final?s='+sec)); return `<p class="fin-share"><a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:txt, url})}">Chamar no Twitter ↗︎</a> <button type="button" class="linkbtn" onclick="navigator.clipboard&&navigator.clipboard.writeText('${url}').then(()=>toast('Link copiado'))">Copiar link</button></p>`; }
 function vFinalQuiz(){ const f=finalCfg(), m=finMeu(), Q=finQuiz(); try{ trk('final_quiz_abre'); }catch(e){}
   setTimeout(()=>{ const qg=$('#finquizgo'); if(!qg) return; qg.onclick=()=>{ const ap=($('#quizap')||{}).value; if(ap&&ap.trim()){ G.perfil ||= {}; G.perfil.apelido=ap.trim().slice(0,24); gSave(); } qg.remove(); const qa=$('#quizap'); if(qa) qa.closest('p').remove(); let i=0, ok=0; const t0=Date.now(); const box=$('#finquiz');
-    const mostra=()=>{ if(i>=Q.length){ box.innerHTML=`<p class="final-h1" style="font-size:64px!important">${ok}/${Q.length}</p><p class="osw">${ok===Q.length?'Gabaritou! Você sabe tudo da campanha.':ok>=12?'Mandou muito bem!':ok>=8?'Bom, mas dá para melhorar.':'Essa foi puxada, hein?'}</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a> <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:'Acertei '+ok+' de '+Q.length+' no quiz da campanha do Galo na Sul-Americana. E você?', url:'https://galometrics.com.br/#final-quiz'})}">Desafiar no Twitter ↗</a></p>`; finSalva({quiz2:ok, quizT2:Date.now()-t0}); try{ trk('final_quiz'); }catch(e){} return; }
+    const mostra=()=>{ if(i>=Q.length){ box.innerHTML=`<p class="final-h1" style="font-size:64px!important">${ok}/${Q.length}</p><p class="osw">${ok===Q.length?'Gabaritou! Você sabe tudo da campanha.':ok>=12?'Mandou muito bem!':ok>=8?'Bom, mas dá para melhorar.':'Essa foi puxada, hein?'}</p><p><a class="more" href="#final?s=quiz">Ver o ranking</a> <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:'Acertei '+ok+' de '+Q.length+' no quiz da campanha do Galo na Sul-Americana. E você?', url:'https://galometrics.com.br/#final-quiz'})}">Desafiar no Twitter ↗︎</a></p>`; finSalva({quiz2:ok, quizT2:Date.now()-t0}); try{ trk('final_quiz'); }catch(e){} return; }
       const q=Q[i]; box.innerHTML=`<p class="count">Pergunta ${i+1} de ${Q.length}</p><p style="font-size:22px"><b>${esc(q.p)}</b></p><div class="fin-opc">${q.o.map(o=>`<button type="button" class="chip" data-r="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
       box.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{ const certo=b.dataset.r===q.c; if(certo) ok++; b.classList.add(certo?'certo':'errado'); if(!certo) box.querySelector(`[data-r="${CSS.escape(q.c)}"]`)?.classList.add('certo'); box.querySelectorAll('[data-r]').forEach(x=>x.disabled=true); setTimeout(()=>{ i++; mostra(); },1000); }); };
     mostra(); }; });
@@ -6290,7 +6360,7 @@ async function desenhaArteDupla(s){ const nomes=s.n.split('|'); const pr=(s.de||
   const semF=_semF;
   if(semF) T(`* Faltam as escalações de ${semF} jogos dessa época: os números podem ser ainda maiores.`,P,Math.min(y+20,A.BOT-30),'cas',24,INK,'left',W-2*P);
   return cv; }
-function capaDuplas(){ return `<a class="gm-duplas-teaser" href="#duplas" aria-label="Abrir Duplas e Trios"><img src="assets/duplas-trios-foto.jpg" alt="Dois jogadores do Atlético Mineiro lado a lado"><span class="gm-duplas-copy"><small>★ NOVIDADE <i>01 · ESPECIAL</i></small><strong>Duplas e trios</strong><span>Quem mais jogou junto pelo Galo? Descubra as parcerias que marcaram época.</span><b>EXPLORAR A SEÇÃO ↗</b></span></a>`; }
+function capaDuplas(){ return `<a class="gm-duplas-teaser" href="#duplas" aria-label="Abrir Duplas e Trios"><img src="assets/duplas-trios-foto.jpg" alt="Dois jogadores do Atlético Mineiro lado a lado"><span class="gm-duplas-copy"><small>★ NOVIDADE <i>01 · ESPECIAL</i></small><strong>Duplas e trios</strong><span>Quem mais jogou junto pelo Galo? Descubra as parcerias que marcaram época.</span><b>EXPLORAR A SEÇÃO ↗︎</b></span></a>`; }
 
 const perTxt=pr=>perTxtB(pr);
 const comSufixo=(t,pr)=>{ const sx=perTxt(pr); return sx&&!nrm(t).includes(nrm(sx).replace(/^(no|na|em) /,''))?t+' '+sx:(pr&&pr.de||pr&&pr.ate?t+' '+perTxt({...pr,grupo:null,txt:null}):t); };
