@@ -596,16 +596,1526 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 .arte-fmt{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:6px 0 10px}.arte-img.arte-reels{max-height:70vh;width:auto;max-width:100%}
 .esc-zona{border:2px dashed var(--ink);padding:14px 16px;margin:8px 0;background:rgba(201,150,43,.06)}.esc-zona.esc-drag,tr.esc-drag{background:rgba(201,150,43,.22)!important}tr.esc-ativo{outline:3px solid #C9962B}tr.esc-ok{background:rgba(31,122,67,.10)}tr.esc-ok .esc-acoes{opacity:.4}.esc-th{width:40px}.esc-busca{width:100%;min-width:260px;padding:6px 8px;border:1px solid var(--ink);background:var(--paper);font:inherit}.esc-th img{width:32px;height:32px;object-fit:contain}.esc-acoes{white-space:nowrap}.esc-acoes .ghost{padding:5px 9px;font-size:11px;cursor:pointer}.esc-acoes label.ghost{display:inline-block;border:1px solid var(--ink);font-family:Oswald,sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px}
 .cat-semideia{margin:26px 0 10px;border-top:3px solid var(--ink);padding-top:14px}.cat-semideia>summary{cursor:pointer;font-family:Oswald,sans-serif;font-weight:700;font-size:20px;letter-spacing:1px;text-transform:uppercase;padding:6px 0}.cat-semideia>summary:hover{color:#8C6610}.cat-g{margin:6px 0 14px}.cat-g h3 small{font-weight:400;margin-left:4px}.cat-mais{margin-top:6px}.cat-mais summary{cursor:pointer;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8C6610;padding:4px 0}.cat-mais[open] summary{margin-bottom:6px}.chip-novo{background:#fff8e6}.chip-novo b{color:#8C6610;text-transform:uppercase;font-size:10px;letter-spacing:1px;margin-right:4px}
+/* GALO METRICS — direção de arte de revista esportiva, versão 09 */
+.gm-cover{background:#171714 url('https://midias.diariodepernambuco.com.br/static/app/noticia_157970175445/2020/08/18/3859067/20200817232700539511u.jpg') center 38%/cover no-repeat;color:#f5edda;padding:18px 24px 14px;margin:0 0 24px;position:relative;overflow:hidden;border-bottom:9px solid #e5b52f}
+.gm-cover:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.28;background:repeating-linear-gradient(0deg,transparent 0 3px,#fff 4px,transparent 5px),radial-gradient(circle at 80% 20%,#d7b85b 0 1px,transparent 1.5px);background-size:auto,7px 7px}
+.gm-cover-top,.gm-cover-bottom{display:flex;justify-content:space-between;gap:12px;font:700 10px 'IBM Plex Mono',monospace;letter-spacing:1.5px;border-bottom:1px solid #77715f;padding-bottom:9px;position:relative;z-index:1}
+.gm-cover-grid{display:grid;grid-template-columns:1fr 210px;gap:20px;position:relative;z-index:1;padding:30px 0 24px}.gm-cover{box-shadow:inset 0 0 0 1000px rgba(15,14,12,.36)}
+.gm-eyebrow,.gm-label{font:800 11px Oswald,Archivo,sans-serif;letter-spacing:2px;text-transform:uppercase}
+.gm-eyebrow{color:#e9b92f}.gm-cover-title{font:900 clamp(54px,9vw,112px)/.78 'Galo Metrics Display',Oswald,sans-serif;letter-spacing:-.055em;margin:17px 0 20px;transform:scaleX(.91);transform-origin:left}
+.gm-cover-title i{font-style:normal;color:#efbd32;text-shadow:4px 4px 0 #a52f25}
+.gm-cover-deck{font:16px/1.45 'Libre Caslon Text',Georgia,serif;max-width:510px;color:#e5dcc8}
+.gm-cover-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:23px}
+.gm-cover-links a{background:#e7b72f;color:#171714;text-decoration:none;font:800 11px Oswald,sans-serif;letter-spacing:1px;padding:9px 12px}
+.gm-cover-links a:nth-child(2){background:#a63227;color:white}.gm-cover-links a:nth-child(3){background:#f5edda;color:#171714}
+.gm-cover-side{display:flex;flex-direction:column;gap:12px;justify-content:space-between}
+.gm-stamp{border:3px solid #e5b52f;color:#e5b52f;text-align:center;padding:15px 8px;font:800 24px/.9 Oswald,sans-serif;transform:rotate(2deg)}
+.gm-stamp b{font-size:34px}.gm-stamp small{display:block;font:10px 'IBM Plex Mono';margin-top:8px}
+.gm-cover-note{display:flex;align-items:center;gap:10px;border-top:1px solid #77715f;padding-top:10px}
+.gm-cover-note b{font:900 40px/.9 'Galo Metrics Display',Oswald,sans-serif;color:#f5edda}
+.gm-cover-note span{font:800 10px/1.2 Oswald,sans-serif;letter-spacing:1px}
+.gm-note-yellow b{color:#e5b52f}
+.gm-cover-bottom{border:0;border-top:1px solid #77715f;padding:10px 0 0;color:#c9bea6}
+.gm-edition-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#171714;color:#f5edda;border-left:7px solid #e5b52f;padding:10px 14px;margin-bottom:18px;font:800 11px Oswald,sans-serif;letter-spacing:1.4px}
+.gm-front-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;margin-bottom:24px}
+.gm-feature,.gm-scoreboard{border:2px solid #171714;padding:14px;background:#f2ead8}
+.gm-label{border-bottom:2px solid #171714;padding-bottom:8px;margin-bottom:12px;color:#a63227}
+.gm-player-cover{display:flex;min-height:190px;align-items:end;text-decoration:none;color:#171714;position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(20,19,16,.78),rgba(20,19,16,.12) 78%),url('https://www.pagina12.com.ar/resizer/v2/LUEB3F7DTNGW5LKIMLTRG7YLLQ.jpg?auth=b671b7bf676c1b8420ee9708af00fafc468cfbacaa39fd51ab92ecbac5e90b1b') center 30%/cover no-repeat;padding:15px}
+.gm-player-cover:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 4px,#17171425 5px),linear-gradient(90deg,#171714aa,transparent 75%)}
+.gm-player-number{position:absolute;right:8px;top:-18px;color:#f0c43e;font:900 140px/.95 'Galo Metrics Display',Oswald,sans-serif;opacity:.9;letter-spacing:-8px}
+.gm-player-copy{position:relative;color:#fff;text-shadow:1px 2px #171714;display:flex;flex-direction:column;gap:5px}
+.gm-player-copy span{font:800 10px Oswald;letter-spacing:2px}.gm-player-copy strong{font:900 clamp(35px,5vw,57px)/.9 'Galo Metrics Display',Oswald,sans-serif;text-transform:uppercase;letter-spacing:-2px}.gm-player-copy em{font:800 11px Oswald;letter-spacing:1.5px;font-style:normal;color:#f4c63d}
+.gm-feature-foot{font:700 9px 'IBM Plex Mono';letter-spacing:1px;margin-top:9px}
+.gm-record{display:flex;align-items:baseline;gap:10px;padding:12px 0;border-bottom:1px solid #aaa087}
+.gm-record b{font:900 clamp(55px,7vw,80px)/.9 'Galo Metrics Display',Oswald,sans-serif;letter-spacing:-3px}
+.gm-record span{font:800 11px Oswald;letter-spacing:1.2px}
+.gm-results{display:flex;justify-content:space-between;gap:5px;padding:13px 0;font:700 10px Oswald;letter-spacing:.5px}.gm-results b{font:800 20px 'Galo Metrics Display'}
+.gm-scoreboard>p{font:10px 'IBM Plex Mono';color:#6b6252;margin-top:9px}
+.gm-next{margin:24px 0}.gm-next .prox{margin-top:0}
+.gm-columns{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin:25px 0}
+.gm-section-head{border-top:5px solid #171714;border-bottom:1px solid #171714;padding:8px 0 10px;position:relative;margin-bottom:9px}
+.gm-section-head>span{font:700 9px 'IBM Plex Mono';color:#9b7410;letter-spacing:1.5px}
+.gm-section-head h2{border:0;margin:4px 0 0;padding:0;font:900 clamp(25px,3.2vw,38px)/.9 'Galo Metrics Display',Oswald,sans-serif;letter-spacing:-1px}
+.gm-section-head>a{position:absolute;right:0;bottom:11px;font:800 10px Oswald;color:#9b7410;text-decoration:none}
+.gm-didyou{display:flex;gap:18px;align-items:center;background:#e5b52f;color:#171714;padding:16px;margin:22px 0}.gm-didyou b{font:900 20px Oswald;white-space:nowrap}.gm-didyou span{font:14px 'Libre Caslon Text';line-height:1.4}
+.gm-footnote{border-top:3px double #171714;padding-top:10px;font:11px 'IBM Plex Mono';margin-top:24px}
+@media(max-width:700px){.gm-cover-grid{grid-template-columns:1fr}.gm-cover-side{display:grid;grid-template-columns:1fr 1fr}.gm-stamp{grid-row:span 2}.gm-front-grid,.gm-columns{grid-template-columns:1fr}.gm-edition-strip{flex-wrap:wrap}.gm-cover-title{font-size:clamp(52px,15vw,88px)}.gm-player-cover{min-height:160px}.gm-section-head>a{position:static;display:block;margin-top:7px}}
+
+
+/* ALMANAQUE 14 — coesão editorial e paleta */
+:root{--gm-ink:#171714;--gm-paper:#f2ecdc;--gm-yellow:#e5b52f;--gm-red:#a63227}
+.gm-cover{background-position:center 40%;border-bottom-width:8px}
+.gm-cover:after{opacity:.12}
+.gm-cover-grid{align-items:stretch;gap:24px;padding:28px 0 22px}
+.gm-cover-main{min-width:0}
+.gm-cover-title{letter-spacing:-.045em;line-height:.86;margin:16px 0 17px}
+.gm-cover-deck{max-width:490px;font-size:15px;line-height:1.38}
+.gm-cover-links{gap:7px;margin-top:19px}
+.gm-cover-links a{min-height:34px;display:inline-flex;align-items:center}
+.gm-cover-side{min-width:0}
+.gm-stamp{transform:none;border-width:2px}
+.gm-cover-note{min-height:72px;gap:8px}
+.gm-cover-note b{font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.gm-edition-strip{min-height:34px;align-items:center;padding:8px 14px;margin-bottom:18px}
+.gm-feature-grid{align-items:stretch;gap:18px}
+.gm-feature,.gm-panorama{min-width:0}
+.gm-feature-head,.gm-panorama-head{border-bottom:2px solid var(--gm-ink);padding-bottom:8px}
+.gm-player-cover{min-height:190px;background-position:center 30%;padding:16px}
+.gm-player-number{font-variant-numeric:tabular-nums;letter-spacing:-6px}
+.gm-player-copy strong{letter-spacing:-1.5px}
+.gm-panorama .gm-big-number{font-variant-numeric:tabular-nums;letter-spacing:-2px}
+.gm-next{margin:24px 0 26px}
+.gm-next .prox{border:1.5px solid var(--gm-ink);background:#eee7d7}
+.gm-next .prox-top{border-bottom:1px solid #a89d85}
+.gm-next .prox-vs{align-items:center;gap:12px}
+.gm-next .meta{border-color:#bdb39f}
+.gm-next .meta>div{min-width:0}
+.gm-next .prox-grid{gap:16px}
+.gm-next .prox-grid>div+div{border-left:1px solid #c3b99f;padding-left:16px}
+.gm-columns{gap:24px;margin:24px 0 28px}
+.gm-section-head{border-top-width:4px;padding:8px 0 9px;margin-bottom:8px}
+.gm-section-head h2{line-height:1;letter-spacing:-.7px}
+.gm-ranking{table-layout:fixed}
+.gm-ranking th,.gm-ranking td{vertical-align:middle}
+.gm-ranking td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.gm-ranking tr:last-child td{border-bottom:2px solid var(--gm-ink)}
+.gm-season{margin-top:25px}
+.gm-season .gm-section-head{margin-bottom:8px}
+.gm-yearbars{border-bottom:2px solid var(--gm-ink)}
+.gm-index{border-top:2px solid var(--gm-ink);padding-top:12px;margin-top:22px}
+.gm-index a{border-bottom:1px dotted #938873}
+.gm-index a strong{color:#9b7410}
+.gm-index a:hover{background:#e5b52f;color:var(--gm-ink)}
+/* Vermelho fica reservado às derrotas e a pequenos sinais auxiliares. */
+.gm-loss,.gm-defeat,.gm-result-loss{color:#a63227!important}
+@media(max-width:700px){
+ .gm-cover-grid{grid-template-columns:minmax(0,1fr) 150px;gap:14px;padding:22px 0 18px}
+ .gm-cover-title{font-size:clamp(42px,10vw,70px);line-height:.9}
+ .gm-cover-deck{font-size:13px}
+ .gm-cover-side{gap:8px}
+ .gm-stamp{padding:10px 5px;font-size:18px}
+ .gm-stamp b{font-size:26px}
+ .gm-cover-note{min-height:58px}
+ .gm-cover-note b{font-size:32px}
+ .gm-feature-grid{gap:12px}
+ .gm-player-cover{min-height:155px}
+ .gm-columns{gap:14px}
+}
+@media(max-width:480px){
+ .gm-cover-grid{grid-template-columns:1fr}
+ .gm-cover-side{display:grid;grid-template-columns:1fr 1fr;align-items:center}
+ .gm-stamp{grid-row:span 2}
+ .gm-cover-note{min-height:48px}
+ .gm-feature-grid,.gm-columns{grid-template-columns:1fr}
+ .gm-next .prox-grid{grid-template-columns:1fr}
+ .gm-next .prox-grid>div+div{border-left:0;border-top:1px solid #c3b99f;padding:12px 0 0}
+}
+
+/* ALMANAQUE 15 — contraste da capa e identidade editorial no fechamento */
+.gm-cover-title{
+  -webkit-text-stroke:.65px rgba(18,17,14,.72);
+  text-shadow:2px 3px 0 rgba(18,17,14,.52),0 0 13px rgba(18,17,14,.24);
+}
+.gm-cover-title i{
+  -webkit-text-stroke:.8px rgba(18,17,14,.65);
+  text-shadow:3px 4px 0 rgba(166,50,39,.82),0 0 12px rgba(18,17,14,.28);
+}
+.gm-cover-deck{
+  text-shadow:1px 2px 3px rgba(0,0,0,.92),0 0 8px rgba(0,0,0,.72);
+}
+.gm-eyebrow,.gm-cover-top,.gm-cover-foot{
+  text-shadow:1px 1px 3px rgba(0,0,0,.9);
+}
+
+/* Rankings com cara de páginas de almanaque, não de tabela de dashboard */
+.gm-columns{gap:22px;margin:30px 0 32px}
+.gm-columns>section{
+  position:relative;
+  padding:0 12px 12px;
+  background:linear-gradient(180deg,#eee6d4 0%,#f4efdf 100%);
+  border:1px solid #171714;
+  border-top:7px solid #171714;
+  box-shadow:4px 4px 0 #d6ad36;
+}
+.gm-columns>section:before{
+  content:"ARQUIVO HISTÓRICO  /  GALO METRICS";
+  display:block;
+  margin:0 -12px 10px;
+  padding:6px 10px;
+  background:#171714;
+  color:#f2ecdc;
+  font:800 8px 'IBM Plex Mono';
+  letter-spacing:1.5px;
+}
+.gm-columns .gm-section-head{
+  border:0;
+  padding:0 0 9px;
+  margin:0 0 6px;
+}
+.gm-columns .gm-section-head>span{
+  display:block;
+  color:#9b7410;
+  font:800 9px 'IBM Plex Mono';
+  letter-spacing:1.7px;
+}
+.gm-columns .gm-section-head h2{
+  font:900 clamp(24px,2.7vw,34px)/.92 'Galo Metrics Display',Oswald,sans-serif;
+  letter-spacing:-.8px;
+  margin:5px 0 0;
+  padding-right:65px;
+}
+.gm-columns .gm-section-head>a{
+  bottom:12px;
+  color:#171714;
+  border-bottom:2px solid #e5b52f;
+  font-size:9px;
+}
+.gm-ranking{border-collapse:separate;border-spacing:0}
+.gm-ranking th{
+  background:#171714;
+  color:#f2ecdc;
+  border:0;
+  padding:8px 7px;
+  font:800 8px Oswald;
+  letter-spacing:1.5px;
+}
+.gm-ranking td{
+  padding:8px 7px;
+  border-bottom:1px solid #c4b99f;
+  font:700 13px Oswald;
+}
+.gm-ranking tr:nth-child(odd) td{background:rgba(255,255,255,.42)}
+.gm-ranking td:first-child{
+  width:36px;
+  color:#171714;
+  font:900 10px 'IBM Plex Mono';
+}
+.gm-ranking tr:first-child td:first-child{
+  background:#e5b52f;
+  color:#171714;
+}
+.gm-ranking td:last-child{
+  color:#171714;
+  font:900 21px 'Galo Metrics Display';
+  font-variant-numeric:tabular-nums;
+}
+
+/* Linha do tempo como uma faixa histórica, com amarelo como cor de destaque */
+.gm-season{
+  position:relative;
+  margin:30px 0 28px;
+  padding:14px 16px 12px;
+  background:#eae2d0;
+  border:1px solid #171714;
+  border-top:8px solid #171714;
+  box-shadow:5px 5px 0 #d6ad36;
+}
+.gm-season:before{
+  content:"LINHA DO TEMPO  /  1908—HOJE";
+  display:block;
+  margin:-4px 0 8px;
+  color:#9b7410;
+  font:800 9px 'IBM Plex Mono';
+  letter-spacing:1.7px;
+}
+.gm-season .gm-section-head{
+  border:0;
+  padding:0 0 9px;
+  margin:0 0 12px;
+}
+.gm-season .gm-section-head h2{
+  font-size:clamp(26px,3vw,38px);
+}
+.gm-yearbars{
+  height:128px;
+  padding:0 5px;
+  gap:3px;
+  border-bottom:3px solid #171714;
+  background:repeating-linear-gradient(to top,transparent 0,transparent 30px,rgba(23,23,20,.12) 31px,transparent 32px);
+}
+.gm-yearbars a{gap:4px}
+.gm-yearbars i{
+  max-width:15px;
+  background:#171714!important;
+  border-top:2px solid #e5b52f;
+}
+.gm-yearbars a:nth-child(3n) i{background:#e5b52f!important;border-top-color:#171714}
+.gm-yearbars b{font:800 8px 'IBM Plex Mono';color:#514a3d}
+.gm-year-foot{
+  padding:9px 2px 0;
+  font:800 8px 'IBM Plex Mono';
+  letter-spacing:1px;
+}
+
+/* Índice final em formato de sumário de revista */
+.idx-h{
+  position:relative;
+  margin:30px 0 8px!important;
+  padding:10px 12px 9px!important;
+  border-top:7px solid #171714!important;
+  border-bottom:1px solid #171714!important;
+  background:#e5b52f;
+  color:#171714;
+  font:900 24px 'Galo Metrics Display',Oswald,sans-serif!important;
+  letter-spacing:-.4px;
+  text-transform:uppercase;
+}
+.indice{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:0 18px;
+  padding:0 12px 12px;
+  background:#eee6d4;
+  border:1px solid #171714;
+  border-top:0;
+  box-shadow:5px 5px 0 #171714;
+}
+.indice a{
+  position:relative;
+  min-width:0;
+  gap:10px;
+  align-items:center;
+  padding:11px 2px 10px;
+  border-bottom:1px solid #b9ad93;
+  color:#171714;
+  text-decoration:none;
+}
+.indice .idx-n{
+  display:grid;
+  place-items:center;
+  flex:0 0 34px;
+  height:34px;
+  background:#171714;
+  color:#e5b52f;
+  font:900 19px 'Galo Metrics Display',Georgia,serif;
+}
+.indice .osw{
+  font:900 13px Oswald,sans-serif;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+}
+.indice em{
+  margin-left:auto;
+  color:#776b55;
+  font:italic 11px 'Libre Caslon Text',Georgia,serif;
+  white-space:normal;
+  text-align:right;
+}
+.indice a:hover{background:#e5b52f;padding-left:7px;padding-right:7px}
+.gm-footnote{
+  margin-top:18px;
+  padding:9px 12px;
+  border-top:2px solid #171714;
+  border-bottom:2px solid #171714;
+  background:#eae2d0;
+  font:9px 'IBM Plex Mono';
+}
+@media(max-width:700px){
+  .gm-columns{gap:18px}
+  .gm-columns>section{padding:0 9px 10px}
+  .gm-columns>section:before{margin-left:-9px;margin-right:-9px}
+  .indice{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px;padding:0 8px 8px}
+  .indice .osw{font-size:12px}
+  .indice em{font-size:10px}
+}
+@media(max-width:460px){
+  .indice{grid-template-columns:1fr}
+  .gm-cover-title{-webkit-text-stroke:.4px rgba(18,17,14,.8)}
+}
+
+/* ALMANAQUE 16 — contraste lateral da capa */
+.gm-cover-side{
+  text-shadow:1px 2px 3px rgba(0,0,0,.92),0 0 9px rgba(0,0,0,.78);
+}
+.gm-stamp{
+  text-shadow:1px 2px 3px rgba(0,0,0,.95),0 0 8px rgba(0,0,0,.65);
+  box-shadow:2px 3px 0 rgba(0,0,0,.48),0 0 0 1px rgba(229,181,47,.22);
+}
+.gm-cover-note{
+  border-top:2px solid rgba(245,237,218,.78);
+  text-shadow:1px 2px 3px rgba(0,0,0,.98),0 0 8px rgba(0,0,0,.85);
+  box-shadow:0 -2px 0 rgba(0,0,0,.4);
+}
+.gm-cover-note b{
+  -webkit-text-stroke:.6px rgba(20,18,13,.82);
+  text-shadow:2px 3px 0 rgba(20,18,13,.9),0 0 8px rgba(0,0,0,.8);
+}
+.gm-cover-note span{
+  text-shadow:1px 2px 3px rgba(0,0,0,1),0 0 7px rgba(0,0,0,.9);
+}
+.gm-cover-foot{
+  text-shadow:1px 2px 3px rgba(0,0,0,1),0 0 8px rgba(0,0,0,.9);
+  border-top:2px solid rgba(245,237,218,.72);
+  box-shadow:0 -2px 0 rgba(0,0,0,.42);
+}
+
+/* Rankings: player names and totals sit closer, with controlled column widths */
+.gm-ranking{table-layout:fixed}
+.gm-ranking th:first-child,.gm-ranking td:first-child{width:42px}
+.gm-ranking th:nth-child(2),.gm-ranking td:nth-child(2){width:auto;padding-left:8px;padding-right:4px}
+.gm-ranking th:last-child,.gm-ranking td:last-child{width:76px;text-align:right;padding-left:4px;padding-right:9px}
+.gm-ranking td:nth-child(2){white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gm-ranking td:last-child{font-size:19px}
+
+/* Temporadas: stacked bars with a permanent, readable legend */
+.gm-yearbars{
+  align-items:stretch;
+  height:142px;
+  gap:2px;
+  padding:5px 2px 0;
+  overflow:hidden;
+}
+.gm-yearbars a{
+  height:100%;
+  min-width:0;
+  gap:4px;
+}
+.gm-yearbars i{
+  display:flex;
+  flex-direction:column-reverse;
+  justify-content:flex-start;
+  width:100%;
+  height:calc(100% - 15px)!important;
+  max-width:14px;
+  min-height:0;
+  background:transparent!important;
+  border:0;
+  box-shadow:none;
+  overflow:hidden;
+}
+.gm-yearbars i span{
+  display:block;
+  width:100%;
+  min-height:0;
+  flex:0 0 auto;
+}
+.gm-yearbars i .gm-y-win{background:#e5b52f}
+.gm-yearbars i .gm-y-draw{background:#171714}
+.gm-yearbars i .gm-y-loss{background:#a63227}
+.gm-yearbars b{
+  font:800 8px 'IBM Plex Mono';
+  line-height:10px;
+  color:#514a3d;
+}
+.gm-season-legend{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:16px;
+  padding:10px 2px 0;
+  border-top:1px solid #b9ad93;
+  margin-top:8px;
+  color:#302c24;
+  font:800 10px Oswald;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.gm-season-legend span{display:inline-flex;align-items:center;gap:6px}
+.gm-season-legend i{width:12px;height:12px;display:inline-block;border:1px solid rgba(0,0,0,.35)}
+.gm-season-legend .win{background:#e5b52f}
+.gm-season-legend .draw{background:#171714}
+.gm-season-legend .loss{background:#a63227}
+.gm-year-foot{font-size:8px;letter-spacing:.7px}
+@media(max-width:700px){
+ .gm-yearbars{height:112px;gap:1px}
+ .gm-yearbars i{max-width:9px}
+ .gm-yearbars b{font-size:7px}
+ .gm-season-legend{gap:10px;font-size:9px}
+}
+
+/* ALMANAQUE 17 — gráfico proporcional por resultado */
+.gm-season .gm-yearbars{display:flex!important;align-items:flex-end!important;height:142px!important;gap:2px!important;overflow:hidden;background:repeating-linear-gradient(to top,transparent 0,transparent 30px,rgba(23,23,20,.11) 31px,transparent 32px)}
+.gm-season .gm-yearbars>a{height:100%;min-width:0;display:flex;flex:1;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px}
+.gm-season .gm-yearbars>a>i{display:flex!important;flex-direction:column-reverse!important;justify-content:flex-start;width:100%;max-width:13px;min-height:2px;height:auto;flex-shrink:0;overflow:hidden;background:transparent!important;border:0!important;box-shadow:none!important}
+.gm-season .gm-yearbars>a>i>span{display:block;width:100%;min-height:0;flex-shrink:0}
+.gm-season .gm-yearbars>a>i>.gm-y-win{background:#e5b52f!important}
+.gm-season .gm-yearbars>a>i>.gm-y-draw{background:#171714!important}
+.gm-season .gm-yearbars>a>i>.gm-y-loss{background:#a63227!important}
+.gm-season .gm-yearbars b{font:8px 'IBM Plex Mono';line-height:10px;white-space:nowrap;color:#514a3d}
+.gm-season-legend{display:flex;flex-wrap:wrap;gap:18px;align-items:center;padding:10px 2px 0;margin-top:8px;border-top:1px solid #b9ad93;color:#302c24;font:800 10px Oswald;letter-spacing:1px;text-transform:uppercase}
+.gm-season-legend span{display:inline-flex;align-items:center;gap:6px}
+.gm-season-legend i{display:inline-block;width:12px;height:12px;border:1px solid rgba(0,0,0,.4)}
+.gm-season-legend .win{background:#e5b52f}.gm-season-legend .draw{background:#171714}.gm-season-legend .loss{background:#a63227}
+.gm-cover-side,.gm-cover-foot{text-shadow:1px 2px 3px rgba(0,0,0,.98),0 0 8px rgba(0,0,0,.9)}
+.gm-stamp{box-shadow:2px 3px 0 rgba(0,0,0,.5),0 0 0 1px rgba(229,181,47,.25);text-shadow:1px 2px 3px rgba(0,0,0,.9)}
+.gm-cover-note{border-top:2px solid rgba(245,237,218,.78);box-shadow:0 -2px 0 rgba(0,0,0,.4);text-shadow:1px 2px 3px rgba(0,0,0,.98)}
+.gm-cover-note b{-webkit-text-stroke:.5px rgba(20,18,13,.85);text-shadow:2px 3px 0 rgba(20,18,13,.9)}
+@media(max-width:700px){.gm-season .gm-yearbars{height:112px!important;gap:1px!important}.gm-season .gm-yearbars>a>i{max-width:9px}.gm-season .gm-yearbars b{font-size:7px}.gm-season-legend{gap:10px;font-size:9px}}
+
+/* ALMANAQUE 18 — timeline limpa e identidade editorial */
+.gm-season .gm-yearbars{
+ display:flex!important;align-items:flex-end!important;justify-content:space-between;
+ height:142px!important;gap:2px!important;padding:6px 2px 0!important;
+ border-bottom:2px solid #171714!important;overflow:hidden;
+ background:repeating-linear-gradient(to top,transparent 0,transparent 30px,rgba(23,23,20,.10) 31px,transparent 32px)!important
+}
+.gm-season .gm-yearbars>a{
+ display:flex!important;flex:1 1 0!important;min-width:0!important;height:100%!important;
+ align-items:flex-end!important;justify-content:center!important;text-decoration:none
+}
+.gm-season .gm-yearbars>a>i{
+ display:flex!important;flex-direction:column-reverse!important;justify-content:flex-start!important;
+ width:100%!important;max-width:12px!important;min-width:2px!important;
+ height:var(--bar-height)!important;max-height:120px!important;min-height:3px!important;
+ flex:0 0 auto!important;overflow:hidden!important;background:transparent!important;
+ border:0!important;box-shadow:none!important
+}
+.gm-season .gm-yearbars>a>i>span{display:block!important;width:100%!important;min-height:0!important;flex:0 0 auto!important}
+.gm-season .gm-yearbars>a>i>.gm-y-win{background:#e5b52f!important}
+.gm-season .gm-yearbars>a>i>.gm-y-draw{background:#171714!important}
+.gm-season .gm-yearbars>a>i>.gm-y-loss{background:#a63227!important}
+.gm-season-legend{display:flex!important;gap:18px!important;align-items:center!important;flex-wrap:wrap!important;padding:10px 2px 0!important;margin-top:8px!important;border-top:1px solid #b9ad93!important}
+.gm-season-legend span{display:inline-flex;align-items:center;gap:6px}
+.gm-season-legend i{width:12px;height:12px;display:inline-block;border:1px solid rgba(0,0,0,.4)}
+.gm-season-legend .win{background:#e5b52f}.gm-season-legend .draw{background:#171714}.gm-season-legend .loss{background:#a63227}
+.gm-year-foot{display:flex!important;justify-content:flex-start!important;align-items:center!important;padding:10px 2px 0!important;font:900 11px 'IBM Plex Mono'!important;letter-spacing:1.5px!important;color:#514a3d!important}
+.gm-year-foot span{display:block!important}
+.gm-cover-bottom{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ min-height:36px!important;padding:9px 12px!important;margin-top:4px!important;
+ background:rgba(13,13,12,.82)!important;border-top:1px solid rgba(245,237,218,.55)!important;
+ color:#f5edda!important;text-shadow:1px 2px 3px #000!important;
+ font:800 10px 'IBM Plex Mono'!important;letter-spacing:1.4px!important
+}
+.gm-cover-bottom span{color:#f5edda!important}
+.gm-cover-links{gap:10px!important;margin-top:24px!important}
+.gm-cover-links a{
+ position:relative!important;display:inline-flex!important;align-items:center!important;gap:9px!important;
+ min-height:43px!important;padding:10px 15px!important;border:1px solid #171714!important;
+ box-shadow:3px 3px 0 #171714!important;text-transform:uppercase!important;
+ font:900 12px Oswald!important;letter-spacing:1.2px!important;transition:transform .15s,box-shadow .15s
+}
+.gm-cover-links a:after{content:"↗";font:700 13px 'IBM Plex Mono';opacity:.8}
+.gm-cover-links a:hover{transform:translate(2px,2px)!important;box-shadow:1px 1px 0 #171714!important}
+.gm-cover-links a:nth-child(2){background:#171714!important;color:#f5edda!important;border-color:#e5b52f!important}
+.gm-cover-links a:nth-child(3){background:#f5edda!important;color:#171714!important}
+.gm-cover-links a:first-child{background:#e5b52f!important;color:#171714!important}
+
+/* Faixa de chamada das páginas: cabeçalho editorial, não caixa genérica */
+.page-intro,.pagina-intro,.page-header,.cabecalho-pagina,.titulo-pagina,.page-title{
+ border:0!important;border-top:5px solid #171714!important;border-bottom:1px solid #171714!important;
+ background:linear-gradient(90deg,#e5b52f 0 9px,#f5edda 9px 100%)!important;
+ box-shadow:5px 5px 0 #171714!important
+}
+.novo,.badge-novo,.tag-novidade{
+ background:#171714!important;color:#e5b52f!important;border:1px solid #e5b52f!important;
+ border-radius:0!important;padding:3px 7px!important;letter-spacing:1px!important
+}
+@media(max-width:700px){
+ .gm-season .gm-yearbars{height:112px!important;gap:1px!important}
+ .gm-season .gm-yearbars>a>i{max-width:8px!important}
+ .gm-cover-bottom{font-size:8px!important;letter-spacing:.7px!important}
+ .gm-cover-links a{min-height:38px!important;padding:8px 10px!important;font-size:10px!important}
+}
+
+/* ALMANAQUE 19 — correção estrutural do gráfico */
+.gm-season .gm-yearbars{
+ display:flex!important;align-items:flex-end!important;justify-content:space-between!important;
+ height:142px!important;gap:2px!important;padding:6px 2px 0!important;
+ overflow:hidden!important;border-bottom:2px solid #171714!important;
+ background:repeating-linear-gradient(to top,transparent 0,transparent 30px,rgba(23,23,20,.10) 31px,transparent 32px)!important
+}
+.gm-season .gm-yearbars>a{
+ display:flex!important;flex:1 1 0!important;min-width:0!important;height:100%!important;
+ align-items:flex-end!important;justify-content:center!important;text-decoration:none!important
+}
+.gm-season .gm-yearbars>a>i{
+ display:flex!important;flex-direction:column-reverse!important;justify-content:flex-start!important;
+ width:100%!important;max-width:12px!important;min-width:2px!important;
+ height:var(--bar-height)!important;max-height:120px!important;min-height:3px!important;
+ flex:0 0 auto!important;overflow:hidden!important;background:transparent!important;
+ border:0!important;box-shadow:none!important
+}
+.gm-season .gm-yearbars>a>i>span{
+ display:block!important;width:100%!important;min-height:0!important;flex-shrink:0!important
+}
+.gm-season .gm-yearbars>a>i>.gm-y-win{background:#e5b52f!important}
+.gm-season .gm-yearbars>a>i>.gm-y-draw{background:#171714!important}
+.gm-season .gm-yearbars>a>i>.gm-y-loss{background:#a63227!important}
+.gm-season-legend{
+ display:flex!important;gap:18px!important;align-items:center!important;flex-wrap:wrap!important;
+ padding:10px 2px 0!important;margin-top:8px!important;border-top:1px solid #b9ad93!important;
+ color:#302c24!important;font:800 10px Oswald!important;letter-spacing:1px!important;text-transform:uppercase!important
+}
+.gm-season-legend span{display:inline-flex!important;align-items:center!important;gap:6px!important}
+.gm-season-legend i{width:12px!important;height:12px!important;display:inline-block!important;border:1px solid rgba(0,0,0,.4)!important}
+.gm-season-legend .win{background:#e5b52f!important}
+.gm-season-legend .draw{background:#171714!important}
+.gm-season-legend .loss{background:#a63227!important}
+.gm-year-foot{
+ display:block!important;padding:10px 2px 0!important;margin:0!important;
+ color:#514a3d!important;font:900 11px 'IBM Plex Mono'!important;letter-spacing:1.5px!important
+}
+
+/* Cabeçalho de Duplas e Trios em linguagem de matéria de revista */
+.gm-editorial-kicker{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ margin:0 0 8px!important;padding:8px 0 7px!important;
+ border-top:5px solid #171714!important;border-bottom:1px solid #171714!important;
+ color:#9b7410!important;background:transparent!important;
+ font:900 10px 'IBM Plex Mono'!important;letter-spacing:2px!important;text-transform:uppercase!important
+}
+.gm-editorial-kicker span{
+ padding:4px 8px!important;background:#171714!important;color:#e5b52f!important;
+ font:800 9px Oswald!important;letter-spacing:1.3px!important
+}
+.gm-editorial-title{
+ margin:0!important;padding:0 0 10px!important;
+ border-bottom:4px solid #171714!important;
+ font:900 clamp(42px,6vw,68px)/.94 'Galo Metrics Display',Georgia,serif!important;
+ letter-spacing:-2px!important;text-transform:uppercase!important
+}
+.gm-editorial-lede{
+ max-width:900px!important;margin:0 0 22px!important;padding:12px 0 14px!important;
+ border-bottom:1px solid #b8ad96!important;
+ color:#373329!important;font:italic 17px/1.5 'Libre Caslon Text',Georgia,serif!important
+}
+@media(max-width:700px){
+ .gm-season .gm-yearbars{height:112px!important;gap:1px!important}
+ .gm-season .gm-yearbars>a>i{max-width:8px!important}
+ .gm-season-legend{gap:10px!important;font-size:9px!important}
+ .gm-editorial-title{font-size:clamp(36px,10vw,50px)!important}
+ .gm-editorial-lede{font-size:15px!important}
+}
+
+/* ALMANAQUE 20 — gráfico independente, sem conflitos com CSS legado */
+.gm-season-viz{
+ display:flex!important;align-items:flex-end!important;justify-content:space-between!important;
+ gap:2px!important;height:132px!important;padding:6px 2px 0!important;
+ border-bottom:2px solid #171714!important;overflow:hidden!important;
+ background:repeating-linear-gradient(to top,transparent 0,transparent 30px,rgba(23,23,20,.10) 31px,transparent 32px)!important
+}
+.gm-season-year{
+ display:flex!important;flex:1 1 0!important;min-width:0!important;height:100%!important;
+ align-items:flex-end!important;justify-content:center!important;text-decoration:none!important
+}
+.gm-season-bar{
+ display:flex!important;flex-direction:column-reverse!important;justify-content:flex-start!important;
+ align-items:stretch!important;width:100%!important;max-width:12px!important;min-width:2px!important;
+ flex:0 0 auto!important;overflow:hidden!important;background:transparent!important;
+ border:0!important;box-shadow:none!important
+}
+.gm-season-bar i{display:block!important;width:100%!important;min-height:0!important;flex:0 0 auto!important}
+.gm-season-bar .gm-win{background:#e5b52f!important}
+.gm-season-bar .gm-draw{background:#171714!important}
+.gm-season-bar .gm-loss{background:#a63227!important}
+.gm-season-legend{
+ display:flex!important;gap:18px!important;align-items:center!important;flex-wrap:wrap!important;
+ padding:10px 2px 0!important;margin-top:8px!important;border-top:1px solid #b9ad93!important;
+ color:#302c24!important;font:800 10px Oswald!important;letter-spacing:1px!important;text-transform:uppercase!important
+}
+.gm-season-legend span{display:inline-flex!important;align-items:center!important;gap:6px!important}
+.gm-season-legend i{width:12px!important;height:12px!important;display:inline-block!important;border:1px solid rgba(0,0,0,.4)!important}
+.gm-season-legend .win{background:#e5b52f!important}
+.gm-season-legend .draw{background:#171714!important}
+.gm-season-legend .loss{background:#a63227!important}
+.gm-year-foot{display:block!important;padding:10px 2px 0!important;font:900 11px 'IBM Plex Mono'!important;letter-spacing:1.5px!important;color:#514a3d!important}
+
+/* Cabeçalho real da página Duplas e Trios: fotografia + manchete de revista */
+.gm-duplas-hero{
+ width:100%!important;margin:0 0 24px!important;position:relative!important;
+ border:2px solid #171714!important;box-shadow:7px 7px 0 #e5b52f!important;
+ background:#171714!important;overflow:hidden!important;line-height:0!important
+}
+.gm-duplas-hero img{
+ display:block!important;width:100%!important;height:auto!important;max-height:410px!important;
+ object-fit:cover!important;object-position:center!important
+}
+@media(max-width:700px){
+ .gm-season-viz{height:108px!important;gap:1px!important}
+ .gm-season-bar{max-width:8px!important}
+ .gm-season-legend{gap:10px!important;font-size:9px!important}
+ .gm-duplas-hero{margin-bottom:18px!important}
+ .gm-duplas-hero img{min-height:210px!important;object-fit:cover!important;object-position:40% center!important}
+}
+
+/* ALMANAQUE 21 — capa editorial do destaque na página inicial */
+.gm-duplas-teaser{
+ display:block!important;width:100%!important;margin:12px 0 24px!important;
+ padding:0!important;border:2px solid #171714!important;background:#171714!important;
+ line-height:0!important;overflow:hidden!important;
+ box-shadow:7px 7px 0 #e5b52f!important;
+ transition:transform .16s ease,box-shadow .16s ease!important
+}
+.gm-duplas-teaser img{
+ display:block!important;width:100%!important;height:auto!important;
+ aspect-ratio:3/1!important;object-fit:cover!important;object-position:center!important
+}
+.gm-duplas-teaser:hover{
+ transform:translate(2px,2px)!important;box-shadow:5px 5px 0 #e5b52f!important
+}
+@media(max-width:700px){
+ .gm-duplas-teaser{margin:10px 0 18px!important;box-shadow:4px 4px 0 #e5b52f!important}
+ .gm-duplas-teaser img{aspect-ratio:2.2/1!important;object-position:35% center!important}
+}
+
+/* ALMANAQUE 22 — chamada compacta: novidade, não manchete principal */
+.gm-duplas-teaser{
+ display:grid!important;grid-template-columns:190px minmax(0,1fr) 82px!important;
+ align-items:stretch!important;gap:0!important;position:relative!important;
+ width:100%!important;max-height:158px!important;min-height:132px!important;
+ margin:14px 0 22px!important;padding:0!important;overflow:hidden!important;
+ color:#171714!important;background:#eee5d1!important;
+ border:1px solid #171714!important;border-left:6px solid #e5b52f!important;
+ box-shadow:3px 3px 0 #171714!important;text-decoration:none!important;line-height:normal!important
+}
+.gm-duplas-teaser>img{
+ display:block!important;width:100%!important;height:100%!important;min-height:132px!important;
+ max-height:158px!important;object-fit:cover!important;object-position:center 38%!important;
+ filter:grayscale(1) contrast(1.08)!important
+}
+.gm-duplas-copy{
+ display:flex!important;flex-direction:column!important;justify-content:center!important;
+ align-items:flex-start!important;gap:5px!important;padding:13px 20px!important;min-width:0!important
+}
+.gm-duplas-copy small{
+ display:inline-block!important;color:#96700c!important;font:900 9px 'IBM Plex Mono'!important;
+ letter-spacing:1.5px!important;text-transform:uppercase!important
+}
+.gm-duplas-copy strong{
+ display:block!important;color:#171714!important;font:900 clamp(25px,3vw,38px)/.98 Georgia,serif!important;
+ letter-spacing:-.8px!important;text-transform:uppercase!important
+}
+.gm-duplas-copy>span{
+ color:#494236!important;font:italic 13px/1.3 Georgia,serif!important
+}
+.gm-duplas-copy>b{
+ margin-top:3px!important;padding-top:4px!important;border-top:1px solid #b9ad93!important;
+ color:#171714!important;font:900 9px 'IBM Plex Mono'!important;letter-spacing:1px!important
+}
+.gm-duplas-index{
+ display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;
+ border-left:1px solid #b9ad93!important;background:#e5b52f!important;
+ color:#171714!important;font:900 27px/.9 Georgia,serif!important;text-align:center!important
+}
+.gm-duplas-index br{display:block!important}
+.gm-duplas-index{font-size:25px!important}
+@media(max-width:700px){
+ .gm-duplas-teaser{grid-template-columns:104px minmax(0,1fr)!important;min-height:118px!important;max-height:132px!important}
+ .gm-duplas-teaser>img{min-height:118px!important;max-height:132px!important}
+ .gm-duplas-copy{padding:9px 11px!important;gap:4px!important}
+ .gm-duplas-copy strong{font-size:23px!important}
+ .gm-duplas-copy>span{font-size:11px!important}
+ .gm-duplas-index{display:none!important}
+}
+
+/* ALMANAQUE 23 — chamada compacta, sem selo lateral quebrado */
+.gm-duplas-teaser{
+ display:grid!important;
+ grid-template-columns:164px minmax(0,1fr)!important;
+ align-items:stretch!important;
+ width:100%!important;
+ min-height:112px!important;
+ max-height:132px!important;
+ margin:12px 0 20px!important;
+ padding:0!important;
+ overflow:hidden!important;
+ background:#eee5d1!important;
+ border:1px solid #171714!important;
+ border-left:5px solid #e5b52f!important;
+ box-shadow:3px 3px 0 #171714!important;
+ color:#171714!important;
+ text-decoration:none!important;
+ line-height:normal!important;
+}
+.gm-duplas-teaser>img{
+ display:block!important;
+ width:100%!important;
+ height:100%!important;
+ min-height:112px!important;
+ max-height:132px!important;
+ object-fit:cover!important;
+ object-position:center 38%!important;
+ filter:grayscale(1) contrast(1.08)!important;
+}
+.gm-duplas-copy{
+ display:flex!important;
+ min-width:0!important;
+ flex-direction:column!important;
+ justify-content:center!important;
+ align-items:flex-start!important;
+ gap:4px!important;
+ padding:10px 18px!important;
+}
+.gm-duplas-copy small{
+ display:flex!important;
+ align-items:center!important;
+ gap:9px!important;
+ color:#96700c!important;
+ font:900 9px 'IBM Plex Mono'!important;
+ letter-spacing:1.4px!important;
+ text-transform:uppercase!important;
+}
+.gm-duplas-copy small i{
+ display:inline-block!important;
+ padding:3px 6px!important;
+ background:#171714!important;
+ color:#e5b52f!important;
+ font:800 8px 'IBM Plex Mono'!important;
+ font-style:normal!important;
+ letter-spacing:1px!important;
+ white-space:nowrap!important;
+}
+.gm-duplas-copy strong{
+ display:block!important;
+ margin:0!important;
+ color:#171714!important;
+ font:900 clamp(24px,2.7vw,34px)/.96 Georgia,serif!important;
+ letter-spacing:-.7px!important;
+ text-transform:uppercase!important;
+}
+.gm-duplas-copy>span{
+ display:block!important;
+ max-width:700px!important;
+ color:#494236!important;
+ font:italic 12px/1.25 Georgia,serif!important;
+}
+.gm-duplas-copy>b{
+ display:inline-block!important;
+ margin-top:2px!important;
+ padding-top:4px!important;
+ border-top:1px solid #b9ad93!important;
+ color:#171714!important;
+ font:900 8px 'IBM Plex Mono'!important;
+ letter-spacing:1px!important;
+}
+.gm-duplas-index{display:none!important}
+@media(max-width:700px){
+ .gm-duplas-teaser{
+  grid-template-columns:104px minmax(0,1fr)!important;
+  min-height:104px!important;
+  max-height:116px!important;
+  margin:10px 0 16px!important;
+ }
+ .gm-duplas-teaser>img{
+  min-height:104px!important;
+  max-height:116px!important;
+ }
+ .gm-duplas-copy{padding:8px 10px!important;gap:3px!important}
+ .gm-duplas-copy small{font-size:8px!important;letter-spacing:.8px!important}
+ .gm-duplas-copy small i{font-size:7px!important;padding:2px 4px!important}
+ .gm-duplas-copy strong{font-size:21px!important}
+ .gm-duplas-copy>span{font-size:10px!important}
+ .gm-duplas-copy>b{font-size:7px!important}
+}
+
+/* ALMANAQUE 24 — cabeçalho e navegação em linguagem de revista */
+header{
+ background:var(--paper)!important;
+ border-bottom:0!important;
+ box-shadow:0 3px 0 var(--ink)!important;
+}
+.top{
+ max-width:1420px!important;
+ padding:14px 24px 13px!important;
+ display:flex!important;
+ align-items:center!important;
+ gap:16px!important;
+ flex-wrap:wrap!important;
+}
+.toprow{
+ display:flex!important;
+ align-items:center!important;
+ justify-content:space-between!important;
+ gap:18px!important;
+ width:100%!important;
+ flex-wrap:nowrap!important;
+}
+.logo{
+ display:flex!important;
+ align-items:center!important;
+ gap:10px!important;
+ flex:0 0 auto!important;
+ font-family:'Libre Caslon Display',Georgia,serif!important;
+ font-size:32px!important;
+ font-weight:900!important;
+ letter-spacing:-.7px!important;
+ color:var(--ink)!important;
+ white-space:nowrap!important;
+}
+.logoimg{height:43px!important;width:auto!important}
+.gm-brand-note{
+ display:flex!important;
+ flex-direction:column!important;
+ justify-content:center!important;
+ gap:2px!important;
+ padding-left:15px!important;
+ border-left:4px solid #e5b52f!important;
+ color:var(--ink)!important;
+ font:italic 800 11px/1.05 Oswald,sans-serif!important;
+ letter-spacing:1px!important;
+ text-transform:uppercase!important;
+}
+.gm-brand-note span{font-size:10px!important;letter-spacing:1.3px!important}
+.gm-brand-date{
+ display:inline-block!important;
+ padding:6px 10px!important;
+ margin-left:2px!important;
+ background:#e5b52f!important;
+ color:#171714!important;
+ transform:skew(-5deg)!important;
+ font:900 10px 'IBM Plex Mono',monospace!important;
+ letter-spacing:1.2px!important;
+ white-space:nowrap!important;
+}
+.topbtns{display:flex!important;align-items:center!important;gap:8px!important;margin-left:auto!important}
+.hq input{min-width:220px!important;width:240px!important;background:transparent!important}
+.topbtns button,.topbtns>a,.gmchip{
+ min-height:38px!important;
+ padding:8px 12px!important;
+ border:1.5px solid var(--ink)!important;
+ border-radius:0!important;
+ background:transparent!important;
+ color:var(--ink)!important;
+ font:900 11px Oswald,sans-serif!important;
+ letter-spacing:1px!important;
+ text-transform:uppercase!important;
+ box-shadow:2px 2px 0 var(--ink)!important;
+}
+.topbtns #tema{
+ background:#171714!important;
+ color:#f5edda!important;
+ border-color:#171714!important;
+ box-shadow:2px 2px 0 #e5b52f!important;
+}
+#navbtn{display:none!important}
+
+/* Faixa preta de navegação com amarelo apenas como acento */
+nav#nav{
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ gap:3px!important;
+ flex-wrap:wrap!important;
+ width:100vw!important;
+ max-width:none!important;
+ margin:0 calc((1420px - 100vw)/2)!important;
+ padding:8px max(24px,calc((100vw - 1372px)/2))!important;
+ background:#171714!important;
+ border-top:1px solid #5a554a!important;
+ border-bottom:5px solid #e5b52f!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+nav#nav>a,nav#nav .menu>summary{
+ display:inline-flex!important;
+ align-items:center!important;
+ min-height:38px!important;
+ padding:8px 12px!important;
+ border:1px solid transparent!important;
+ color:#f5edda!important;
+ background:transparent!important;
+ text-decoration:none!important;
+ text-transform:uppercase!important;
+ font:900 12px Oswald,sans-serif!important;
+ letter-spacing:1.1px!important;
+ cursor:pointer!important;
+}
+nav#nav>a:hover,nav#nav .menu>summary:hover{
+ color:#e5b52f!important;
+ border-color:#e5b52f!important;
+}
+nav#nav>a.on{
+ color:#171714!important;
+ background:#e5b52f!important;
+ border-color:#e5b52f!important;
+ box-shadow:2px 2px 0 rgba(245,237,218,.35)!important;
+}
+nav#nav .menu{position:relative!important}
+nav#nav .menu-p{
+ background:#171714!important;
+ border:1px solid #e5b52f!important;
+ box-shadow:4px 4px 0 rgba(0,0,0,.35)!important;
+}
+nav#nav .menu-p a{
+ display:block!important;
+ padding:10px 14px!important;
+ color:#f5edda!important;
+ border-bottom:1px solid rgba(245,237,218,.18)!important;
+ font:800 11px Oswald,sans-serif!important;
+ letter-spacing:.8px!important;
+ text-transform:uppercase!important;
+}
+nav#nav .menu-p a:hover{background:#e5b52f!important;color:#171714!important}
+nav#nav .novo{background:#e5b52f!important;color:#171714!important;border-radius:0!important}
+nav#nav .nav-sep{display:none!important}
+@media(max-width:1050px){
+ .gm-brand-note,.gm-brand-date{display:none!important}
+ nav#nav{padding-left:16px!important;padding-right:16px!important}
+}
+@media(max-width:700px){
+ .top{padding:9px 12px!important;gap:7px!important}
+ .toprow{flex-wrap:wrap!important;gap:8px!important}
+ .logo{font-size:20px!important;gap:6px!important}
+ .logoimg{height:30px!important}
+ .topbtns{display:contents!important}
+ .topbtns .hq{order:3!important;flex:1 0 100%!important}
+ .hq input{width:100%!important;min-width:0!important}
+ .topbtns #tema{order:2!important}
+ #navbtn{display:inline-flex!important;order:4!important}
+ nav#nav{
+  display:none!important;width:100%!important;margin:0!important;padding:6px 12px 12px!important;
+  flex-direction:column!important;align-items:stretch!important;gap:0!important;
+  border-top:2px solid #e5b52f!important;border-bottom-width:4px!important;
+  max-height:70vh!important;overflow-y:auto!important
+ }
+ body.navopen nav#nav{display:flex!important}
+ nav#nav>a,nav#nav .menu>summary{width:100%!important;justify-content:flex-start!important;border-bottom:1px solid rgba(245,237,218,.17)!important;padding:12px!important}
+ nav#nav .menu{width:100%!important}
+ nav#nav .menu-p{position:static!important;box-shadow:none!important;margin:0 0 6px 12px!important}
+}
+
+/* ALMANAQUE 25 — sistema editorial compartilhado para as páginas internas */
+#app.gm-internal{position:relative}
+.gm-page-ribbon{
+ display:grid!important;
+ grid-template-columns:1fr auto 1fr!important;
+ align-items:center!important;
+ gap:12px!important;
+ min-height:66px!important;
+ margin:0 0 24px!important;
+ padding:13px 18px!important;
+ color:#f5edda!important;
+ background:
+ linear-gradient(90deg,rgba(12,12,11,.88),rgba(12,12,11,.72)),
+ url("assets/gm-editorial-strip.jpg") center 48%/cover!important;
+ border:1px solid #171714!important;
+ border-bottom:5px solid #e5b52f!important;
+ box-shadow:4px 4px 0 #171714!important;
+ font:800 9px 'IBM Plex Mono',monospace!important;
+ letter-spacing:1.2px!important;
+ text-transform:uppercase!important;
+}
+.gm-page-ribbon span:last-child{text-align:right}
+.gm-page-ribbon i{color:#e5b52f!important;font-style:normal!important}
+.gm-page-ribbon b{
+ display:block!important;
+ padding:5px 12px!important;
+ color:#171714!important;
+ background:#e5b52f!important;
+ font:900 11px Oswald,sans-serif!important;
+ letter-spacing:1.5px!important;
+ text-align:center!important;
+}
+#app.gm-internal h1{
+ max-width:100%!important;
+ margin:0 0 18px!important;
+ padding:0 0 13px!important;
+ border-bottom:3px solid #171714!important;
+ color:#171714!important;
+ font-family:'Libre Caslon Display',Georgia,serif!important;
+ font-size:clamp(38px,5.4vw,66px)!important;
+ font-weight:900!important;
+ line-height:.96!important;
+ letter-spacing:-1.4px!important;
+ text-transform:uppercase!important;
+ text-shadow:1px 1px 0 rgba(229,181,47,.5)!important;
+}
+#app.gm-internal .kicker{
+ margin:0 0 8px!important;
+ color:#9b7410!important;
+ font:900 10px 'IBM Plex Mono',monospace!important;
+ letter-spacing:1.8px!important;
+ text-transform:uppercase!important;
+}
+#app.gm-internal h2{
+ display:flex!important;
+ align-items:baseline!important;
+ justify-content:space-between!important;
+ gap:12px!important;
+ margin:30px 0 12px!important;
+ padding:8px 0 7px!important;
+ border-top:3px solid #171714!important;
+ border-bottom:1px solid #b8ad96!important;
+ color:#171714!important;
+ font-family:'Libre Caslon Display',Georgia,serif!important;
+ font-size:clamp(21px,2.5vw,30px)!important;
+ letter-spacing:-.3px!important;
+}
+#app.gm-internal .lede{
+ max-width:780px!important;
+ margin:12px 0 20px!important;
+ color:#4c463b!important;
+ font:italic 17px/1.45 Georgia,serif!important;
+}
+#app.gm-internal .back{
+ margin:0 0 14px!important;
+ padding:5px 8px!important;
+ border:1px solid #171714!important;
+ border-bottom:3px solid #e5b52f!important;
+ color:#171714!important;
+ font:900 10px Oswald,sans-serif!important;
+ letter-spacing:1px!important;
+ text-decoration:none!important;
+}
+#app.gm-internal .tiles{
+ margin:22px 0 14px!important;
+ border-top:2px solid #171714!important;
+ border-left:1px solid #b8ad96!important;
+ background:#eee7d7!important;
+}
+#app.gm-internal .tile{
+ min-height:92px!important;
+ padding:13px 14px!important;
+ border-right:1px solid #b8ad96!important;
+ border-bottom:1px solid #b8ad96!important;
+ box-shadow:inset 0 -3px 0 rgba(229,181,47,.45)!important;
+}
+#app.gm-internal .tile b{
+ color:#171714!important;
+ font-family:'Galo Metrics Display','Courier Prime',monospace!important;
+ font-size:clamp(25px,3vw,34px)!important;
+ font-weight:900!important;
+ font-variant-numeric:tabular-nums!important;
+}
+#app.gm-internal .tile span{
+ color:#6d5b2c!important;
+ font:900 9px Oswald,sans-serif!important;
+ letter-spacing:1.3px!important;
+}
+#app.gm-internal .bar{
+ height:12px!important;
+ margin:12px 0 5px!important;
+ border:1px solid #171714!important;
+ box-shadow:2px 2px 0 rgba(23,23,20,.15)!important;
+}
+#app.gm-internal .legend{
+ display:flex!important;
+ flex-wrap:wrap!important;
+ gap:12px!important;
+ color:#514a3e!important;
+ font:800 10px Oswald,sans-serif!important;
+ letter-spacing:.5px!important;
+ text-transform:uppercase!important;
+}
+#app.gm-internal table{
+ border:1px solid #171714!important;
+ background:#f3eddf!important;
+ font-size:13px!important;
+}
+#app.gm-internal thead,
+#app.gm-internal th{
+ background:#171714!important;
+ color:#f5edda!important;
+}
+#app.gm-internal th{
+ padding:10px 9px!important;
+ border:1px solid rgba(245,237,218,.2)!important;
+ font:900 10px Oswald,sans-serif!important;
+ letter-spacing:1.1px!important;
+}
+#app.gm-internal td{
+ padding:9px!important;
+ border-bottom:1px solid #c9bea7!important;
+ color:#24221e!important;
+}
+#app.gm-internal tbody tr:nth-child(even) td{background:rgba(229,181,47,.07)!important}
+#app.gm-internal tbody tr:hover td{background:rgba(229,181,47,.22)!important}
+#app.gm-internal td.n{
+ color:#171714!important;
+ font-family:'Galo Metrics Display','Courier Prime',monospace!important;
+ font-size:14px!important;
+ font-weight:900!important;
+ font-variant-numeric:tabular-nums!important;
+}
+#app.gm-internal .filters{
+ gap:10px!important;
+ margin:18px 0 14px!important;
+ padding:13px!important;
+ border:1px solid #171714!important;
+ border-left:5px solid #e5b52f!important;
+ background:#eee7d7!important;
+ box-shadow:3px 3px 0 rgba(23,23,20,.16)!important;
+}
+#app.gm-internal .filters label{
+ color:#6d5520!important;
+ font:900 9px Oswald,sans-serif!important;
+ letter-spacing:1.2px!important;
+}
+#app.gm-internal input,
+#app.gm-internal select{
+ border:1.5px solid #171714!important;
+ background:#fffaf0!important;
+ box-shadow:2px 2px 0 rgba(23,23,20,.13)!important;
+}
+#app.gm-internal .note{
+ margin:14px 0!important;
+ border:1px solid #b8ad96!important;
+ border-left:5px solid #e5b52f!important;
+ background:#eee7d7!important;
+ color:#3d382f!important;
+}
+#app.gm-internal .match-head{
+ margin:20px 0 14px!important;
+ padding:20px 12px!important;
+ border-top:5px solid #171714!important;
+ border-bottom:2px solid #171714!important;
+ background:#eee7d7!important;
+ box-shadow:4px 4px 0 #e5b52f!important;
+}
+#app.gm-internal .match-head .t{
+ color:#171714!important;
+ font-family:'Galo Metrics Display',Oswald,sans-serif!important;
+}
+#app.gm-internal .match-head .sc{
+ color:#171714!important;
+ font-family:'Galo Metrics Display','Courier Prime',monospace!important;
+ font-variant-numeric:tabular-nums!important;
+}
+#app.gm-internal .meta{
+ border-left:1px solid #b8ad96!important;
+ background:#f0e9da!important;
+}
+#app.gm-internal .meta div{
+ border-right:1px solid #b8ad96!important;
+ border-bottom:1px solid #b8ad96!important;
+}
+#app.gm-internal .meta span{
+ color:#8a6814!important;
+ font:900 9px Oswald,sans-serif!important;
+ letter-spacing:1.2px!important;
+}
+#app.gm-internal .res{
+ border-radius:0!important;
+ font-weight:900!important;
+ box-shadow:1px 1px 0 #171714!important;
+}
+#app.gm-internal .res.V{background:#e5b52f!important;border-color:#b98d10!important;color:#171714!important}
+#app.gm-internal .res.E{background:#171714!important;border-color:#171714!important;color:#f5edda!important}
+#app.gm-internal .res.D{background:#a63227!important;border-color:#85251d!important;color:#fff!important}
+#app.gm-internal .tag{
+ border-color:#171714!important;
+ background:#e5b52f!important;
+ color:#171714!important;
+ font:900 9px Oswald,sans-serif!important;
+}
+#app.gm-internal .spark .res{box-shadow:none!important}
+#app.gm-internal .empty{
+ padding:24px!important;
+ border:1px dashed #8b806a!important;
+ background:#eee7d7!important;
+ color:#625b4e!important;
+}
+#app.gm-internal .grid2{gap:24px!important}
+#app.gm-internal .click{cursor:pointer!important}
+#app.gm-internal a:not(.back){text-decoration-color:#b28a1d!important;text-underline-offset:3px!important}
+@media(max-width:700px){
+ .gm-page-ribbon{
+  grid-template-columns:1fr auto!important;
+  min-height:58px!important;
+  padding:10px!important;
+  gap:8px!important;
+  font-size:8px!important;
+ }
+ .gm-page-ribbon b{grid-column:1/-1;grid-row:2;justify-self:start!important}
+ .gm-page-ribbon span:last-child{font-size:7px!important}
+ #app.gm-internal h1{font-size:clamp(34px,10vw,48px)!important}
+ #app.gm-internal h2{font-size:22px!important}
+ #app.gm-internal .tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #app.gm-internal table{font-size:11px!important}
+ #app.gm-internal th,#app.gm-internal td{padding:7px 5px!important}
+ #app.gm-internal .match-head{gap:8px!important;padding:14px 6px!important}
+}
+
+/* ALMANAQUE 26 — correção de fluxo: títulos e grids internos */
+#app.gm-internal h2{
+ display:block!important;
+ position:relative!important;
+ box-sizing:border-box!important;
+ width:100%!important;
+ min-width:0!important;
+ max-width:100%!important;
+ float:none!important;
+ clear:both!important;
+ text-align:left!important;
+ justify-content:initial!important;
+ align-items:initial!important;
+ flex-direction:initial!important;
+ flex-wrap:initial!important;
+ white-space:normal!important;
+ overflow-wrap:anywhere!important;
+ margin:26px 0 12px!important;
+ padding:8px 0 7px!important;
+ border-top:3px solid #171714!important;
+ border-bottom:1px solid #b8ad96!important;
+ color:#171714!important;
+ font-family:'Libre Caslon Display',Georgia,serif!important;
+ font-size:clamp(21px,2.5vw,30px)!important;
+ font-weight:900!important;
+ line-height:1.08!important;
+ letter-spacing:-.3px!important;
+}
+#app.gm-internal h2::before,
+#app.gm-internal h2::after{content:none!important;display:none!important}
+#app.gm-internal .grid2{
+ display:grid!important;
+ grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ align-items:start!important;
+ gap:20px!important;
+ min-width:0!important;
+}
+#app.gm-internal .grid2>div,
+#app.gm-internal .grid2>section{
+ min-width:0!important;
+ max-width:100%!important;
+}
+#app.gm-internal table{
+ width:100%!important;
+ max-width:100%!important;
+ table-layout:auto!important;
+ border-collapse:collapse!important;
+}
+#app.gm-internal .grid2 h2{margin-top:0!important}
+#app.gm-internal .grid2 table{margin-top:10px!important}
+#app.gm-internal .gm-page-ribbon{width:100%!important;box-sizing:border-box!important}
+@media(max-width:760px){
+ #app.gm-internal .grid2{grid-template-columns:minmax(0,1fr)!important;gap:16px!important}
+ #app.gm-internal h2{font-size:22px!important;line-height:1.05!important}
+}
+
+/* ALMANAQUE 27 — Duplas e Trios: tipografia real, sem banner ilustrado */
+#app.gm-internal .gm-duplas-heading{
+ position:relative!important;
+ display:block!important;
+ box-sizing:border-box!important;
+ width:100%!important;
+ margin:0 0 22px!important;
+ padding:18px 22px 17px!important;
+ overflow:hidden!important;
+ color:#171714!important;
+ background-color:#e9e0cc!important;
+ background-image:
+  radial-gradient(circle at 1px 1px,rgba(28,25,19,.20) .65px,transparent .9px),
+  radial-gradient(circle at 4px 3px,rgba(28,25,19,.10) .55px,transparent .85px),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.08) 0,rgba(255,255,255,.08) 1px,transparent 1px,transparent 4px),
+  linear-gradient(110deg,rgba(255,255,255,.16),transparent 42%,rgba(35,29,19,.06))!important;
+ background-size:5px 5px,7px 7px,100% 4px,100% 100%!important;
+ border:1px solid #171714!important;
+ border-top:6px solid #171714!important;
+ box-shadow:5px 5px 0 #e5b52f!important;
+}
+#app.gm-internal .gm-duplas-heading:after{
+ content:""!important;
+ position:absolute!important;
+ left:0!important;right:0!important;bottom:0!important;
+ height:5px!important;
+ background:repeating-linear-gradient(90deg,#171714 0 2px,transparent 2px 5px)!important;
+ opacity:.28!important;
+ pointer-events:none!important;
+}
+#app.gm-internal .gm-duplas-overline{
+ display:flex!important;
+ align-items:center!important;
+ justify-content:space-between!important;
+ gap:12px!important;
+ padding-bottom:9px!important;
+ border-bottom:2px solid #171714!important;
+ color:#9a7410!important;
+ font:900 10px 'IBM Plex Mono',monospace!important;
+ letter-spacing:1.5px!important;
+ text-transform:uppercase!important;
+}
+#app.gm-internal .gm-duplas-overline span{
+ color:#4e493e!important;
+ font-size:9px!important;
+ letter-spacing:1px!important;
+ text-align:right!important;
+}
+#app.gm-internal .gm-duplas-heading h1{
+ display:block!important;
+ width:100%!important;
+ margin:12px 0 5px!important;
+ padding:0!important;
+ border:0!important;
+ color:#171714!important;
+ font-family:'Libre Caslon Display',Georgia,serif!important;
+ font-size:clamp(38px,5vw,58px)!important;
+ font-weight:900!important;
+ line-height:.96!important;
+ letter-spacing:-1.2px!important;
+ text-transform:uppercase!important;
+ text-shadow:1px 1px 0 rgba(229,181,47,.65)!important;
+}
+#app.gm-internal .gm-duplas-heading p{
+ margin:0!important;
+ padding-top:8px!important;
+ border-top:1px solid rgba(23,23,20,.35)!important;
+ color:#494236!important;
+ font:italic 15px/1.35 Georgia,serif!important;
+}
+#app.gm-internal .gm-editorial-lede{
+ max-width:900px!important;
+ margin:0 0 18px!important;
+ padding:0 0 13px!important;
+ border-bottom:1px solid #b8ad96!important;
+ color:#39352d!important;
+ font:italic 15px/1.5 Georgia,serif!important;
+}
+/* Textura de papel impresso aplicada às superfícies, sem fotografia/texto rasterizado */
+#app.gm-internal .gm-page-ribbon{
+ background-color:#171714!important;
+ background-image:
+  radial-gradient(circle at 1px 1px,rgba(245,237,218,.18) .65px,transparent .9px),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0,rgba(255,255,255,.035) 1px,transparent 1px,transparent 4px),
+  linear-gradient(100deg,rgba(0,0,0,.15),rgba(255,255,255,.05),rgba(0,0,0,.22))!important;
+ background-size:5px 5px,100% 4px,100% 100%!important;
+}
+#app.gm-internal .note,
+#app.gm-internal .filters,
+#app.gm-internal .empty{
+ background-color:#eee6d5!important;
+ background-image:
+  radial-gradient(circle at 1px 1px,rgba(28,25,19,.12) .55px,transparent .8px),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.09) 0,rgba(255,255,255,.09) 1px,transparent 1px,transparent 5px)!important;
+ background-size:6px 6px,100% 5px!important;
+}
+@media(max-width:700px){
+ #app.gm-internal .gm-duplas-heading{padding:14px 13px!important}
+ #app.gm-internal .gm-duplas-overline{font-size:8px!important;letter-spacing:.8px!important}
+ #app.gm-internal .gm-duplas-overline span{font-size:7px!important}
+ #app.gm-internal .gm-duplas-heading h1{font-size:36px!important}
+ #app.gm-internal .gm-duplas-heading p{font-size:13px!important}
+}
+
+/* ALMANAQUE 28 — textura editorial transversal + capa legível */
+:root{
+ --gm-paper:#f1eadb;
+ --gm-paper-deep:#e7deca;
+ --gm-ink:#171714;
+ --gm-yellow:#e5b52f;
+}
+/* Papel impresso de base: textura discreta para não competir com textos */
+html,body{
+ background-color:var(--gm-paper)!important;
+ background-image:
+  radial-gradient(circle at 1px 1px,rgba(48,39,23,.105) .55px,transparent .8px),
+  radial-gradient(circle at 4px 3px,rgba(255,255,255,.32) .65px,transparent .9px),
+  repeating-linear-gradient(0deg,rgba(80,64,35,.025) 0,rgba(80,64,35,.025) 1px,transparent 1px,transparent 5px)!important;
+ background-size:6px 6px,9px 9px,100% 5px!important;
+}
+/* Componentes recorrentes das páginas internas recebem papel e tinta, sem alterar layout */
+#app.gm-internal .tile,
+#app.gm-internal .filters,
+#app.gm-internal .note,
+#app.gm-internal .empty,
+#app.gm-internal .panel,
+#app.gm-internal .box,
+#app.gm-internal .stat,
+#app.gm-internal .card,
+#app.gm-internal .profile-card,
+#app.gm-internal .detail-card{
+ background-color:#eee6d5!important;
+ background-image:
+  radial-gradient(circle at 1px 1px,rgba(34,29,20,.105) .55px,transparent .85px),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.10) 0,rgba(255,255,255,.10) 1px,transparent 1px,transparent 5px)!important;
+ background-size:6px 6px,100% 5px!important;
+}
+#app.gm-internal table tbody tr:nth-child(odd){
+ background-color:rgba(255,255,255,.20)!important;
+}
+#app.gm-internal table tbody tr:nth-child(even){
+ background-color:rgba(224,210,180,.24)!important;
+}
+#app.gm-internal table th{
+ background-color:#171714!important;
+ background-image:
+  radial-gradient(circle at 1px 1px,rgba(245,237,218,.16) .6px,transparent .85px),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0,rgba(255,255,255,.035) 1px,transparent 1px,transparent 4px)!important;
+ background-size:6px 6px,100% 4px!important;
+}
+#app.gm-internal button,
+#app.gm-internal .btn,
+#app.gm-internal a.button,
+#app.gm-internal .back{
+ background-image:
+  radial-gradient(circle at 1px 1px,rgba(23,23,20,.10) .5px,transparent .8px),
+  linear-gradient(0deg,rgba(255,255,255,.06),rgba(255,255,255,.06))!important;
+ background-size:6px 6px,100% 100%!important;
+}
+#app.gm-internal .gm-page-ribbon,
+.gm-edition-strip{
+ background-color:#171714!important;
+ background-image:
+  radial-gradient(circle at 1px 1px,rgba(245,237,218,.22) .65px,transparent .9px),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0,rgba(255,255,255,.045) 1px,transparent 1px,transparent 4px),
+  linear-gradient(100deg,rgba(0,0,0,.12),rgba(255,255,255,.035),rgba(0,0,0,.2))!important;
+ background-size:5px 5px,100% 4px,100% 100%!important;
+}
+/* Capa: removidas as linhas horizontais que atravessavam a fotografia e o título */
+.gm-cover:after{
+ opacity:.16!important;
+ background-image:
+  radial-gradient(circle at 1px 1px,rgba(245,237,218,.34) .55px,transparent .9px),
+  radial-gradient(circle at 4px 3px,rgba(20,18,14,.34) .6px,transparent .95px),
+  linear-gradient(90deg,rgba(15,14,12,.22),transparent 56%,rgba(15,14,12,.30))!important;
+ background-size:5px 5px,7px 7px,100% 100%!important;
+}
+.gm-cover{
+ background-blend-mode:normal!important;
+ box-shadow:inset 0 0 0 1000px rgba(15,14,12,.43)!important;
+}
+.gm-cover-title{
+ position:relative!important;
+ z-index:2!important;
+ color:#f7f0df!important;
+ text-shadow:
+  2px 2px 0 #171714,
+  4px 4px 0 rgba(0,0,0,.58),
+  0 0 12px rgba(0,0,0,.55)!important;
+ -webkit-text-stroke:.35px rgba(23,23,20,.8)!important;
+}
+.gm-cover-title i{
+ color:#f0bd2e!important;
+ text-shadow:
+  2px 2px 0 #171714,
+  4px 4px 0 rgba(0,0,0,.62),
+  0 0 10px rgba(0,0,0,.55)!important;
+}
+.gm-cover-deck{
+ text-shadow:1px 1px 2px #171714,0 0 8px rgba(0,0,0,.85)!important;
+}
+.gm-eyebrow,.gm-cover-top,.gm-cover-bottom,.gm-cover-note span{
+ text-shadow:1px 1px 2px #171714,0 0 5px rgba(0,0,0,.9)!important;
+}
+@media(max-width:760px){
+ .gm-cover:after{opacity:.12!important}
+ .gm-cover{box-shadow:inset 0 0 0 1000px rgba(15,14,12,.50)!important}
+}
+
+/* ALMANAQUE 29 — cabeçalho escuro permanente; sem seletor de tema */
+header{
+ background:#121210!important;
+ color:#f2eee3!important;
+ border-bottom:4px solid #e5b52f!important;
+}
+header .top,header .toprow,header nav#nav{
+ background:#121210!important;
+ color:#f2eee3!important;
+}
+header .logo,header .logo span,header nav#nav>a,
+header nav#nav .menu summary,header button,header .gmchip,
+header .topbtns,header .topbtns a{
+ color:#f2eee3!important;
+}
+header nav#nav>a:hover,header nav#nav>a.active,
+header nav#nav>a[aria-current="page"]{
+ background:#e5b52f!important;
+ color:#171714!important;
+}
+header input,header .search input{
+ background:#1d1c19!important;
+ color:#f2eee3!important;
+ border-color:#827b69!important;
+}
+header #tema{display:none!important}
+/* Cabeçalho escuro permanente, sem escurecer o conteúdo das páginas */
+header{--ink:#F2EEE3;--ink2:#d6d1c4;--paper:#121212;--mute:#9a958a;--line:#2f2c27;--soft:#1c1b18;--goldt:#D9AE52;color-scheme:dark}
+header .lclaro{display:none!important}header .lescuro{display:inline-block!important}
 </style>
-<script>(function(){var t;try{t=localStorage.getItem('gm-tema')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')})();
-function trocaTema(){var d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('gm-tema',d?'dark':'light')}catch(e){}rotTema()}
-function rotTema(){var b=document.getElementById('tema');if(b)b.textContent=document.documentElement.classList.contains('dark')?'Modo claro':'Modo escuro'}
-document.addEventListener('DOMContentLoaded',rotTema);</script>
 </head>
 <body>
 <header><div class="top">
-  <div class="toprow"><a class="logo" href="#inicio"><img src="escudos/logo-gm-preto.webp" alt="Galo Metrics" class="logoimg lclaro"><img src="escudos/logo-gm-branco.webp" alt="Galo Metrics" class="logoimg lescuro"><span class="logotxt">Galo Metrics</span></a>
-  <span class="topbtns"><form id="hq" class="hq" role="search"><input type="search" id="hqi" placeholder="Buscar jogador, clube, cidade…" aria-label="Buscar no Galo Metrics"></form><a id="gmchip" href="#perfil" class="gmchip">★ Perfil</a><span id="gmconta" class="gmconta" hidden><button id="gmlogin" type="button" aria-haspopup="true"></button><span id="gmmenu" class="gmmenu" hidden></span></span><button id="tema" type="button" onclick="trocaTema()">Modo escuro</button><button id="navbtn" type="button" aria-label="Abrir menu" aria-expanded="false" onclick="var o=document.body.classList.toggle('navopen');this.setAttribute('aria-expanded',o)"><span class="hb"></span>Menu</button></span></div>
+  <div class="toprow"><a class="logo" href="#inicio"><img src="escudos/logo-gm-preto.webp" alt="Galo Metrics" class="logoimg lclaro"><img src="escudos/logo-gm-branco.webp" alt="Galo Metrics" class="logoimg lescuro"><span class="logotxt">Galo Metrics</span></a><span class="gm-brand-note"><b>O ARQUIVO ESTATÍSTICO</b><span>DO ATLÉTICO MINEIRO</span></span><span class="gm-brand-date">DESDE 1908</span>
+  <span class="topbtns"><form id="hq" class="hq" role="search"><input type="search" id="hqi" placeholder="Buscar jogador, clube, cidade…" aria-label="Buscar no Galo Metrics"></form><a id="gmchip" href="#perfil" class="gmchip">★ Perfil</a><span id="gmconta" class="gmconta" hidden><button id="gmlogin" type="button" aria-haspopup="true"></button><span id="gmmenu" class="gmmenu" hidden></span></span><button id="navbtn" type="button" aria-label="Abrir menu" aria-expanded="false" onclick="var o=document.body.classList.toggle('navopen');this.setAttribute('aria-expanded',o)"><span class="hb"></span>Menu</button></span></div>
   <nav id="nav" aria-label="Principal">
     <a href="#inicio">Início</a><a href="#jogos">Jogos</a><a href="#jogadores">Jogadores</a><a href="#adversarios">Adversários</a><a href="#competicoes">Competições</a><a href="#mapa">Mapa</a><a href="#pergunte">Busca</a><a href="#embreve" class="nav-breve">Em breve</a>
     <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#duplas">Duplas e trios <b class="novo">novo</b></a><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
@@ -616,9 +2126,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261124165905';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261124165905"></script>
-<script src="backend-firebase.js?v=20261124165905"></script>
+<script>window.GM_BUILD='20261124192016';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261124192016"></script>
+<script src="backend-firebase.js?v=20261124192016"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -738,39 +2248,76 @@ function proxJogo(j, hoje){
   </section>`;
 }
 function vInicio(){
-  const played = J.filter(j=>j.resultado), r = rec(played), m = D.meta;
-  const hoje = (()=>{ const t=new Date(); return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`; })();
-  const next = J.find(j=>!j.resultado && j.data >= hoje);
-  const top = [...D.jogadores].sort((a,b)=>golsBest(b)-golsBest(a)).slice(0,15);
-  const most = [...D.jogadores].sort((a,b)=>b.jogos-a.jogos).slice(0,10);
-  const years = {}; played.forEach(j=>{ (years[j.temporada] ||= {V:0,E:0,D:0})[j.resultado]++; });
-  const maxY = Math.max(...Object.values(years).map(y=>y.V+y.E+y.D));
-  const big = [...played].filter(j=>j.gp!=null).sort((a,b)=>(b.gp-b.gc)-(a.gp-a.gc)||b.gp-a.gp)[0];
-  const cz = rec(J.filter(j=>j.adversario_id==='cruzeiro mg'));
-  const vs=(CFG.vocesabia||[]); const vsx=vs.length?vs[Math.floor(Math.random()*vs.length)]:'';
-  return `${typeof capaFinal==='function'?capaFinal():''}${typeof capaDuplas==='function'?capaDuplas():''}${CFG.manchete?`<div class="manchete">★ ${CFG.mancheteLink?`<a href="${esc(CFG.mancheteLink)}">${esc(CFG.manchete)}</a>`:esc(CFG.manchete)}</div>`:''}${capa()}<p class="capa-sub">Todos os jogos, todos os gols, todos os números do Galo desde 1908.</p>${blocoBreve()}
-  <p class="lede">${N(m.total)} partidas, de ${fmtD(m.primeiro)} a ${fmtD(m.ultimo)}. Placar e goleadores de toda a história; ficha completa (escalação, estádio, público, minuto dos gols) em ${N(m.fichas)} jogos.</p>
-  ${tiles(r)}${resultBar(r)}
-  ${next?proxJogo(next,hoje):''}
-  ${blocoPublico(false)}
-  <div class="capa-grid"><div>${tambemNesta()}</div>${vsx?`<div class="vsabia-c"><span class="osw">Você sabia?</span><span>${esc(vsx)}</span></div>`:''}</div>
-  <div class="alb-cta"><a href="#album" class="more">★ Álbum dos imortais: ${N(G?Object.keys(G.owned).length:0)} de ${N(D.jogadores.length)} figurinhas coladas →</a> <a href="#desafios" class="more">★ Desafios do dia →</a></div>
-  ${indiceEdicao()}
-  <h2>Jogos por temporada</h2>
-  <div class="yearbars">${Object.entries(years).map(([y,v])=>`<a href="#temporada-${y}" title="${y}: ${v.V}V ${v.E}E ${v.D}D"><div style="height:${110*v.D/maxY}px;background:var(--d)"></div><div style="height:${110*v.E/maxY}px;background:var(--e)"></div><div style="height:${110*v.V/maxY}px;background:var(--v)"></div></a>`).join('')}</div>
-  <div class="yearaxis"><span>${Object.keys(years)[0]}</span><span>1950</span><span>2000</span><span>${Object.keys(years).slice(-1)[0]}</span></div>
-  <div class="grid2">
-    <div><h2>Maiores artilheiros</h2><table><thead><tr><th>#</th><th>Jogador</th><th class="n">Gols</th><th>Período</th></tr></thead><tbody>${top.map((p,i)=>`<tr class="click" onclick="location.hash='jogador-${slug(p.nome)}'"><td class="mono">${i+1}</td><td>${esc(p.nome)}</td><td class="n">${(()=>{const g=accG(ACC.p[p.nome]?.gols,p.nome); return g?g.atual:p.gols;})()}</td><td class="mono uf">${(()=>{const g=ACC.p[p.nome]?.gols; return g&&g.ano<9999?g.de+'–'+g.ano:(p.primeiro||'').slice(0,4)+'–'+(p.ultimo||'').slice(0,4);})()}</td></tr>`).join('')}</tbody></table>
-    <p class="count">Pelo número aceito pelo clube e pela imprensa, quando existe; os demais, pela base.</p></div>
-    <div>${next?'':`<h2>Clássico ${cr('cruzeiro mg','cr2')}</h2>${(()=>{const H=ACC.h2h['cruzeiro mg']; if(!H) return `<p class="mono">${N(cz.n)} jogos</p>${resultBar(cz)}`;
-      const pos=rec(J.filter(j=>j.adversario_id==='cruzeiro mg'&&j.data>H.ate)); const ac={n:H.jogos+pos.n,V:H.V+pos.V,E:H.E+pos.E,D:H.D+pos.D};
-      return `<p class="classico-num"><b>${N(ac.n)}</b> jogos contra o Cruzeiro · ${aprov(ac)} de aproveitamento</p>${resultBar(ac)}`;})()}<p class="count" style="margin-top:10px"><a href="#adversario-${slug('cruzeiro mg')}">Ver retrospecto completo →</a></p>`}
-    <h2>Mais jogos <small class="uf">desde ${fmtD(m.escalacoes_desde)}</small></h2><table><thead><tr><th>#</th><th>Jogador</th><th class="n">Jogos</th><th class="n">Gols</th></tr></thead><tbody>${most.map((p,i)=>`<tr class="click" onclick="location.hash='jogador-${slug(p.nome)}'"><td class="mono">${i+1}</td><td>${esc(p.nome)}</td><td class="n">${p.jogos}</td><td class="n">${p.gols}</td></tr>`).join('')}</tbody></table></div>
+  const played=J.filter(j=>j.resultado), r=rec(played), m=D.meta;
+  const hoje=(()=>{const t=new Date();return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;})();
+  const next=J.find(j=>!j.resultado&&j.data>=hoje);
+  const top=[...D.jogadores].sort((a,b)=>golsBest(b)-golsBest(a)).slice(0,5);
+  const most=[...D.jogadores].sort((a,b)=>b.jogos-a.jogos).slice(0,8);
+  const years={};played.forEach(j=>{(years[j.temporada]||={V:0,E:0,D:0})[j.resultado]++;});
+  const maxY=Math.max(1,...Object.values(years).map(y=>y.V+y.E+y.D));
+  const hero=top[0], heroGoals=hero?(accG(ACC.p[hero.nome]?.gols,hero.nome)?.atual??hero.gols):0;
+  const heroLink=hero?`#jogador-${slug(hero.nome)}`:'#jogadores';
+  const vs=(CFG.vocesabia||[]), vsx=vs.length?vs[Math.floor(Math.random()*vs.length)]:'';
+  const big=[...played].filter(j=>j.gp!=null).sort((a,b)=>(b.gp-b.gc)-(a.gp-a.gc)||b.gp-a.gp)[0];
+  return `${typeof capaFinal==='function'?capaFinal():''}${typeof capaDuplas==='function'?capaDuplas():''}
+  ${CFG.manchete?`<div class="manchete">★ ${CFG.mancheteLink?`<a href="${esc(CFG.mancheteLink)}">${esc(CFG.manchete)}</a>`:esc(CFG.manchete)}</div>`:''}
+  <div class="gm-cover">
+    <div class="gm-cover-top"><span>ARQUIVO ALVINEGRO · DESDE 1908</span><span>GALO METRICS · EDIÇÃO DIGITAL</span></div>
+    <div class="gm-cover-grid">
+      <div class="gm-cover-main">
+        <div class="gm-eyebrow">O arquivo estatístico do Atlético</div>
+        <div class="gm-cover-title">A HISTÓRIA<br><i>EM CAMPO.</i></div>
+        <p class="gm-cover-deck">Jogos, jogadores, gols e temporadas. Uma memória construída lance a lance, número a número.</p>
+        <div class="gm-cover-links"><a href="#jogos">TODOS OS JOGOS ↗</a><a href="#jogadores">JOGADORES ↗</a><a href="#recordes">RECORDES ↗</a></div>
+      </div>
+      <div class="gm-cover-side">
+        <div class="gm-stamp">GALO<br><b>METRICS</b><small>1908—2026</small></div>
+        <div class="gm-cover-note"><b>${N(m.total)}</b><span>PARTIDAS<br>NO ARQUIVO</span></div>
+        <div class="gm-cover-note gm-note-yellow"><b>${N(m.fichas)}</b><span>FICHAS<br>COMPLETAS</span></div>
+      </div>
+    </div>
+    <div class="gm-cover-bottom"><span>ESTATÍSTICAS · MEMÓRIA · IDENTIDADE</span><span>CLUBE ATLÉTICO MINEIRO ★</span></div>
   </div>
+  <div class="gm-edition-strip"><b>O ATLÉTICO EM NÚMEROS</b><span>UM ARQUIVO VIVO DA HISTÓRIA ALVINEGRA</span><span>01 — ABERTURA</span></div>
+  <div class="gm-front-grid">
+    <section class="gm-feature">
+      <div class="gm-label">PERSONAGEM · MAIOR ARTILHEIRO</div>
+      ${hero?`<a class="gm-player-cover" href="${heroLink}"><div class="gm-player-number">${String(heroGoals).padStart(3,'0')}</div><div class="gm-player-copy"><span>O NOME DA HISTÓRIA</span><strong>${esc(hero.nome)}</strong><em>${N(heroGoals)} GOLS REGISTRADOS ↗</em></div></a>`:''}
+      <div class="gm-feature-foot">PERFIS, TRAJETÓRIAS E ESTATÍSTICAS INDIVIDUAIS</div>
+    </section>
+    <section class="gm-scoreboard">
+      <div class="gm-label">PANORAMA HISTÓRICO</div>
+      <div class="gm-record"><b>${N(r.n)}</b><span>JOGOS DISPUTADOS</span></div>
+      <div class="gm-results"><span><b>${N(r.V)}</b> VITÓRIAS</span><span><b>${N(r.E)}</b> EMPATES</span><span><b>${N(r.D)}</b> DERROTAS</span></div>
+      ${resultBar(r)}
+      <p>DE ${fmtD(m.primeiro)} A ${fmtD(m.ultimo)}</p>
+    </section>
+  </div>
+  ${next?`<section class="gm-next"><div class="gm-label">A PRÓXIMA PÁGINA · PRÓXIMO JOGO</div>${proxJogo(next,hoje)}</section>`:''}
+  <div class="gm-columns">
+    <section><div class="gm-section-head"><span>02 / RANKING</span><h2>OS ARTILHEIROS</h2><a href="#jogadores">VER TODOS ↗</a></div>
+      <table class="gm-ranking"><thead><tr><th>#</th><th>JOGADOR</th><th>GOLS</th></tr></thead><tbody>${top.map((p,i)=>{const g=accG(ACC.p[p.nome]?.gols,p.nome);return `<tr class="click" onclick="location.hash='jogador-${slug(p.nome)}'"><td>${String(i+1).padStart(2,'0')}</td><td>${esc(p.nome)}</td><td>${N(g?g.atual:p.gols)}</td></tr>`;}).join('')}</tbody></table>
+    </section>
+    <section><div class="gm-section-head"><span>03 / PARTICIPAÇÃO</span><h2>QUEM MAIS JOGOU</h2><a href="#jogadores">VER TODOS ↗</a></div>
+      <table class="gm-ranking"><thead><tr><th>#</th><th>JOGADOR</th><th>JOGOS</th></tr></thead><tbody>${most.slice(0,6).map((p,i)=>`<tr class="click" onclick="location.hash='jogador-${slug(p.nome)}'"><td>${String(i+1).padStart(2,'0')}</td><td>${esc(p.nome)}</td><td>${N(p.jogos)}</td></tr>`).join('')}</tbody></table>
+    </section>
+  </div>
+  <section class="gm-season"><div class="gm-section-head"><span>04 / LINHA DO TEMPO</span><h2>TEMPORADAS EM CAMPO</h2><a href="#temporadas">EXPLORAR ↗</a></div>
+    <div class="gm-season-viz">${Object.entries(years).map(([y,v])=>{const total=Math.max(1,v.V+v.E+v.D);const h=Math.max(4,Math.round(118*total/maxY));const win=Math.round(h*v.V/total);const draw=Math.round(h*v.E/total);const loss=Math.max(0,h-win-draw);return `<a class="gm-season-year" href="#temporada-${y}" title="${y}: ${v.V} vitórias, ${v.E} empates e ${v.D} derrotas"><span class="gm-season-bar" style="height:${h}px"><i class="gm-win" style="height:${win}px"></i><i class="gm-draw" style="height:${draw}px"></i><i class="gm-loss" style="height:${loss}px"></i></span></a>`;}).join('')}</div><div class="gm-season-legend"><span><i class="win"></i> Vitórias</span><span><i class="draw"></i> Empates</span><span><i class="loss"></i> Derrotas</span></div>
+    <div class="gm-year-foot">1909–2026</div>
+  </section>
+  ${blocoBreve()}
   ${(()=>{const t=new Date(), md=String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); const l=played.filter(j=>!j.data_aprox&&j.data.slice(5)===md);
-    return l.length?`<h2>Neste dia <small class="uf">${t.getDate()}/${t.getMonth()+1} na história</small></h2>${matchTable([...l].reverse(),6)}`:'';})()}
-  <h2>Últimos jogos</h2>${matchTable([...played].reverse().slice(0,10),10)}
-  ${big?`<div class="note">Maior vitória da história na base: <a href="#jogo-${big.id}"><b>${linha(big)}</b></a> (${fmtD(big.data)}, ${esc(big.competicao)}).</div>`:''}`;
+    return l.length?`<section class="gm-hoje"><div class="gm-section-head"><span>05 / NESTE DIA</span><h2>${t.getDate()}/${t.getMonth()+1} NA HISTÓRIA</h2><a href="#pergunte?lista=dia">VER TODOS ↗</a></div>${matchTable([...l].reverse(),6)}</section>`:'';})()}
+  <section class="gm-ultimos"><div class="gm-section-head"><span>06 / RESULTADOS</span><h2>ÚLTIMOS JOGOS</h2><a href="#jogos">VER TODOS ↗</a></div>${matchTable([...played].reverse().slice(0,10),10)}</section>
+  ${(()=>{const H=ACC.h2h['cruzeiro mg']; const cz=rec(J.filter(j=>j.adversario_id==='cruzeiro mg')); const ac=H?(()=>{const pos=rec(J.filter(j=>j.adversario_id==='cruzeiro mg'&&j.data>H.ate)); return {n:H.jogos+pos.n,V:H.V+pos.V,E:H.E+pos.E,D:H.D+pos.D};})():cz;
+    return `<section class="gm-classico"><div class="gm-section-head"><span>07 / CLÁSSICO</span><h2>GALO ${cr('cruzeiro mg','cr2')} CRUZEIRO</h2><a href="#adversario-${slug('cruzeiro mg')}">RETROSPECTO ↗</a></div><p class="classico-num"><b>${N(ac.n)}</b> jogos contra o Cruzeiro · ${aprov(ac)} de aproveitamento</p>${resultBar(ac)}</section>`;})()}
+  ${blocoPublico(false)}
+  <div class="capa-grid"><div>${tambemNesta()}</div></div>
+  <div class="alb-cta"><a href="#album" class="more">★ Álbum dos imortais: ${N(G?Object.keys(G.owned).length:0)} de ${N(D.jogadores.length)} figurinhas coladas →</a> <a href="#desafios" class="more">★ Desafios do dia →</a></div>
+  ${vsx?`<aside class="gm-didyou"><b>VOCÊ SABIA?</b><span>${esc(vsx)}</span></aside>`:''}
+  ${typeof indiceEdicao==='function'?indiceEdicao():''}
+  ${big?`<p class="gm-footnote">REGISTRO EM DESTAQUE · <a href="#jogo-${big.id}">${linha(big)}</a> · ${fmtD(big.data)} · ${esc(big.competicao||'')}</p>`:''}`;
 }
 
 /* ---------- Jogos ---------- */
@@ -2899,6 +4446,14 @@ function route(){
   if(/^(jogo|jogador|adversario|cidade)-/.test(h)) html+=`<p class="count sug-link"><a href="#sugestoes?${new URLSearchParams({sobre:h})}">Viu um erro nesta página, ou tem um escudo ou foto para mandar? Fale com a gente →</a></p>`;
   if(DIA_JOGO&&(h==='desafios'||h.startsWith('desafio-'))) html=html.replace(/href="#desafio(s|-[a-z]+)"/g,(m,x)=>`href="#desafio${x}?dia=${DIA_JOGO}"`);
   $('#app').innerHTML=notaPagina(h)+html;
+  const paginaInicio = h==='inicio';
+  const secaoGM = ({jogos:'JOGOS E RESULTADOS',jogo:'FICHA DA PARTIDA',jogadores:'PERSONAGENS',jogador:'PERFIL DE JOGADOR',adversarios:'ADVERSÁRIOS',adversario:'HISTÓRICO DO CONFRONTO',temporadas:'LINHA DO TEMPO',temporada:'TEMPORADA',recordes:'OS GRANDES FEITOS',tecnicos:'COMANDO ALVINEGRO',competicoes:'COMPETIÇÕES',competicao:'CADERNO DE COMPETIÇÕES',mapa:'O GALO PELO MUNDO',cidades:'CIDADES E ESTÁDIOS',cidade:'ARQUIVO DE CIDADES',comparar:'DUELO DE PERSONAGENS',duplas:'PARCERIAS',busca:'PESQUISA NO ARQUIVO',perfil:'MEU CADERNO',album:'ÁLBUM ALVINEGRO',desafios:'DESAFIOS',ranking:'RANKING',diario:'DIÁRIO ALVINEGRO',pergunte:'PESQUISA NO ARQUIVO'})[h.split('?')[0].replace(/-.*$/,'')] || 'ARQUIVO HISTÓRICO';
+  if(!paginaInicio){
+    $('#app').classList.add('gm-internal');
+    $('#app').insertAdjacentHTML('afterbegin',`<div class="gm-page-ribbon"><span>ARQUIVO ALVINEGRO <i>•</i> DESDE 1908</span><b>${secaoGM}</b><span>GALO METRICS <i>•</i> EDIÇÃO DIGITAL</span></div>`);
+  }else{
+    $('#app').classList.remove('gm-internal');
+  }
   ligaNota();
   const alvo = ['palpites','diario','ranking','album','perfil','dono','dono-falta','dono-secretas','dono-uso','dono-listas','comparar','temporadas','tecnicos','recordes','mapa','pergunte','sugestoes','colaboradores','apoie','embreve','torcedores'].includes(h)?h:sec;
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href').slice(1)===alvo));
@@ -4669,9 +6224,9 @@ function vDuplas(params){
   let parc=''; const parP=q?parDaBusca(q):null; if(parP){ parc=blocoDupla(parP); } else if(q){ const alvo=nomesJog.find(n=>nrm(nomeV(n))===nrm(q)||nrm(n)===nrm(q)); if(alvo){ const L=pares.filter(o=>o.nomes.includes(alvo)).map(o=>({...o, outro:o.nomes.find(n=>n!==alvo)})).sort((a,b)=>b.n-a.n).slice(0,25);
       parc=`<h2>Quem mais jogou ao lado de ${esc(nomeV(alvo))}</h2><table><thead><tr><th>#</th><th>Parceiro</th><th class="n">Jogos juntos</th><th class="n">V-E-D</th><th class="n">Aprov.</th><th class="n">Gols juntos</th></tr></thead><tbody>${L.map((o,i)=>`<tr><td class="n">${i+1}</td><td><a href="#jogador-${slug(o.outro)}">${esc(nomeV(o.outro))}</a></td><td class="n">${o.n}</td><td class="n">${o.V}-${o.E}-${o.D}</td><td class="n">${o.ap}%</td><td class="n">${o.gols}</td></tr>`).join('')}</tbody></table>`; } else parc=`<p class="empty">Não achei "${esc(q)}". Escolha um nome da lista.</p>`; }
   setTimeout(()=>{ const f=$('#dupform'); if(f) f.onsubmit=ev=>{ ev.preventDefault(); location.hash='duplas?j='+encodeURIComponent(f.elements.j.value.trim()); }; },0);
-  return `<div class="kicker">Galo Metrics · parcerias</div><h1>Duplas e trios</h1>
+  return `<div class="gm-duplas-heading"><div class="gm-duplas-overline">★ CADERNO DE PARCERIAS <span>ARQUIVO ALVINEGRO · 1908—2026</span></div><h1>Duplas e trios</h1><p>Parcerias que construíram a história do Atlético, jogo a jogo.</p></div>
   ${DONO?`<p>${artBtn({t:'anuncio-duplas'}).replace('Baixar arte','Arte de anúncio')}</p>`:''}
-  <p class="lede">Quem jogou mais junto pelo Galo, as duplas que mais marcaram no mesmo jogo e os trios que mais venceram. Contamos titulares e quem entrou durante o jogo, nos ${N(J.filter(j=>j._quem).length)} jogos que têm a escalação registrada (dos ${N(J.filter(j=>j.resultado).length)} jogos da base, ${N(J.filter(j=>j.resultado&&!j._quem).length)} só têm placar e gols, quase todos dos primeiros anos).</p>
+  <p class="lede gm-editorial-lede">Quem jogou mais junto pelo Galo, as duplas que mais marcaram no mesmo jogo e os trios que mais venceram. Contamos titulares e quem entrou durante o jogo, nos ${N(J.filter(j=>j._quem).length)} jogos que têm a escalação registrada (dos ${N(J.filter(j=>j.resultado).length)} jogos da base, ${N(J.filter(j=>j.resultado&&!j._quem).length)} só têm placar e gols, quase todos dos primeiros anos).</p>
   <form id="dupform" class="pq-form"><input name="j" list="dupjog" value="${esc(q)}" placeholder="Um jogador (Reinaldo) ou uma dupla (Hulk + Paulinho)" autocomplete="off"><datalist id="dupjog"><option value="Hulk + Paulinho"><option value="Reinaldo + Éder Aleixo"><option value="Diego Tardelli + Jô"><option value="Trio Maldito">${nomesJog.map(n=>`<option value="${esc(nomeV(n))}">`).join('')}</datalist><button class="more" type="submit">Ver parceiros</button></form>
   ${parc}
   <h2>Duplas que mais jogaram juntas</h2>${tabDup(maisJ,[DUP_COLS.J,DUP_COLS.VED,DUP_COLS.AP])}
@@ -4735,7 +6290,7 @@ async function desenhaArteDupla(s){ const nomes=s.n.split('|'); const pr=(s.de||
   const semF=_semF;
   if(semF) T(`* Faltam as escalações de ${semF} jogos dessa época: os números podem ser ainda maiores.`,P,Math.min(y+20,A.BOT-30),'cas',24,INK,'left',W-2*P);
   return cv; }
-function capaDuplas(){ return `<a class="capa-final capa-novo" href="#duplas"><span class="cf-k">★ Novidade</span><b>Duplas e trios</b><span>Quem mais jogou junto pelo Galo, as duplas que mais marcaram e os trios que mais venceram. Pesquise qualquer dupla, como <u>Hulk + Paulinho</u>, e veja os números dela.</span></a>`; }
+function capaDuplas(){ return `<a class="gm-duplas-teaser" href="#duplas" aria-label="Abrir Duplas e Trios"><img src="assets/duplas-trios-foto.jpg" alt="Dois jogadores do Atlético Mineiro lado a lado"><span class="gm-duplas-copy"><small>★ NOVIDADE <i>01 · ESPECIAL</i></small><strong>Duplas e trios</strong><span>Quem mais jogou junto pelo Galo? Descubra as parcerias que marcaram época.</span><b>EXPLORAR A SEÇÃO ↗</b></span></a>`; }
 
 const perTxt=pr=>perTxtB(pr);
 const comSufixo=(t,pr)=>{ const sx=perTxt(pr); return sx&&!nrm(t).includes(nrm(sx).replace(/^(no|na|em) /,''))?t+' '+sx:(pr&&pr.de||pr&&pr.ate?t+' '+perTxt({...pr,grupo:null,txt:null}):t); };
