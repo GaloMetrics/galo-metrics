@@ -611,9 +611,9 @@ document.addEventListener('DOMContentLoaded',rotTema);</script>
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261124105907';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261124105907"></script>
-<script src="backend-firebase.js?v=20261124105907"></script>
+<script>window.GM_BUILD='20261124125414';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261124125414"></script>
+<script src="backend-firebase.js?v=20261124125414"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -3049,6 +3049,7 @@ function listasParecidas(q){ try{ garantePaisesMM(); }catch(e){} const w=nrm(q).
     if(L[5]==='seq'&&!/sequenc|seguid|serie|jejum|invict|invencib|seca/.test(w.join(' '))) s-=2;
     const wq=w.join(' '); const rq=LISTA_REQ[L[1]]; if(rq&&!rq.test(wq)) s-=4; if(/menos/.test(L[1])&&!/menos|pior|poucos|menor/.test(wq)) s-=3; if(/-mais$/.test(L[1])&&/menos|poucos|menor/.test(wq)) s-=3; if(L[5]==='tclube'&&!/temporad|\bano\b|anos|campanha|brasileir|time|clube|equipe/.test(wq)) s-=2;
     if(['adv-art','est-art','dia-art'].includes(L[1])) s=-99;
+    if(L[1]==='jogos'&&/^(jogos|jogou|partidas|jogadores jogos|jogos jogadores)$/.test(wq)) s+=4;
     const contraGalo=/(venc\w*|ganh\w*|derrot\w*|bat\w*) (o |do |no )?galo|carrasc|algoz|mais perdeu|mais derrotas/.test(nrm(q)); if(L[1]==='advd') s+=contraGalo?4:-4; if(L[1]==='advv'&&contraGalo) s-=4;
     return {L, s}; }).filter(o=>o.s>=1).sort((a,b)=>b.s-a.s).map(o=>o.L); }
 const filtroDesde=(id,d)=>{ const anos=[...new Set(J.map(j=>j.temporada))].sort((a,b)=>b-a); return `<p class="count">Desde <select onchange="location.hash='pergunte?lista=${id}'+(this.value?'&desde='+this.value:'')"><option value="">o início (1908)</option>${anos.map(a=>`<option ${a===d?'selected':''}>${a}</option>`).join('')}</select></p>`; };
@@ -4021,9 +4022,23 @@ function porCompeticao(){ const m={}; JP().filter(j=>j.resultado&&j.grupo!=='Ami
   [['mm-lib','Libertadores','libertadores liberta'],['mm-cdb','Copa do Brasil','copa do brasil cdb'],['mm-sula','Sul-Americana','sul americana sulamericana sula']].forEach(([id,g,s])=>add('Mata-matas',id,`Mata-matas na ${g}`,'confrontos',()=>linhasMM(m=>m.grupo===g),MMS+' '+s,'mm'));
   add('Mata-matas','mm-fin','Finais de mata-mata','finais',()=>linhasMM(m=>m.final),'final finais decisao decisoes titulo '+MMS,'mm');
   add('Mata-matas','mm-est','Mata-matas contra clubes estrangeiros','confrontos',()=>linhasMM(m=>m.uf.length===3),MMS+' estrangeiro estrangeiros gringos internacional internacionais exterior','mm');
+  const ARTW='artilheiro artilheiros gols gol marcou marcaram fez fizeram goleador jogador jogadores';
+  const jogContra=f=>{ const m={}; JP().filter(j=>j.resultado&&j.escalacao_galo&&f(j)).forEach(j=>{ const e=j.escalacao_galo; new Set([...(e.titulares||[]),...(e.substituicoes||[]).map(x=>x.entrou)].filter(Boolean)).forEach(n=>m[n]=(m[n]||0)+1); }); return Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([n,v])=>({nome:nomeV(n), href:'#jogador-'+slug(n), v})); };
+  const ehEst=j=>(j.adversario_uf||'').length===3;
+  add('Jogadores','jogos','Jogadores com mais jogos pelo Galo','jogos',()=>PER?jogContra(()=>true):D.jogadores.filter(p=>p.jogos).map(p=>({nome:nomeV(p.nome), href:'#jogador-'+slug(p.nome), v:p.jogos})).sort((a,b)=>b.v-a.v),'jogos jogou atuou partidas jogador jogadores mais jogos recordista quem mais jogou vestiu camisa');
+  LISTA_REQ['jogos']=/jog|atu|partida|vestiu/;
+  add('Gols','art-est','Quem mais marcou contra clubes estrangeiros','gols',()=>contaEv(e=>e.j&&ehEst(e.j)),ARTW+' estrangeiro estrangeiros gringo gringos internacional internacionais exterior de fora');
+  add('Jogadores','jog-est','Jogadores com mais jogos contra clubes estrangeiros','jogos',()=>jogContra(ehEst),'jogos jogou atuou partidas jogador jogadores estrangeiro estrangeiros gringo gringos internacional internacionais exterior de fora');
+  LISTA_REQ['mm-est']=/mata|confront|elimin|passou|caiu|classific|decis/; LISTA_REQ['jog-est']=/jog|atu|partida/;
   window.garantePaisesMM=()=>{ if(garantePaisesMM.ok||!J.length) return; garantePaisesMM.ok=true;
   const paises={}; mataMatasSafe().forEach(m=>{ if(m.uf.length===3) paises[m.uf]=(paises[m.uf]||0)+1; });
+  const pj={}; J.forEach(j=>{ const u=j.adversario_uf||''; if(u.length===3&&j.resultado) pj[u]=(pj[u]||0)+1; });
+  Object.entries(pj).filter(([,n])=>n>=5).forEach(([p])=>{ const gent=(UFS[p]||[p,p])[1], nome=(UFS[p]||[p])[0]; const sinP=' '+nrm(gent)+' '+nrm(gent).replace(/s$/,'')+' '+nrm(nome)+' '+p.toLowerCase();
+    add('Gols','art-'+p.toLowerCase(),`Quem mais marcou contra clubes ${gent}`,'gols',()=>contaEv(e=>e.j&&e.j.adversario_uf===p),ARTW+sinP);
+    add('Jogadores','jog-'+p.toLowerCase(),`Jogadores com mais jogos contra clubes ${gent}`,'jogos',()=>jogContra(j=>j.adversario_uf===p),'jogos jogou atuou partidas jogador jogadores'+sinP); LISTA_REQ['jog-'+p.toLowerCase()]=/jog|atu|partida/; });
   Object.entries(paises).filter(([,n])=>n>=2).sort((a,b)=>b[1]-a[1]).forEach(([p])=>{ const gent=(UFS[p]||[p,p])[1], nome=(UFS[p]||[p])[0];
+    const sinP=' '+nrm(gent)+' '+nrm(gent).replace(/s$/,'')+' '+nrm(nome)+' '+p.toLowerCase();
+    LISTA_REQ['mm-'+p.toLowerCase()]=/mata|confront|elimin|passou|caiu|classific|decis/;
     add('Mata-matas','mm-'+p.toLowerCase(),`Mata-matas contra clubes ${gent}`,'confrontos',()=>linhasMM(m=>m.uf===p),MMS+' '+nrm(gent)+' '+nrm(gent).replace(/s$/,'')+' '+nrm(nome)+' '+p.toLowerCase(),'mm'); });
   const iS=LISTAS.findIndex(x=>x[0]==='Sequências'); if(iS>0){ const novos=LISTAS.splice(LISTAS.length-(LISTAS.length-LISTAS.findIndex(x=>/^mm-[a-z]{3}$/.test(x[1])&&!['mm-lib','mm-cdb','mm-fin','mm-est'].includes(x[1]))),99); LISTAS.splice(iS,0,...novos); } };
   const SQ='sequencia sequencias seguidas seguidos serie';
