@@ -2198,9 +2198,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261125194519';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261125194519"></script>
-<script src="backend-firebase.js?v=20261125194519"></script>
+<script>window.GM_BUILD='20261125200038';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261125200038"></script>
+<script src="backend-firebase.js?v=20261125200038"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2497,7 +2497,8 @@ function vJogo(id){
   const bola = n => n ? `<span class="gb" title="${n} ${n>1?'gols':'gol'}">${n>3?'⚽×'+n:'⚽'.repeat(n)}</span>` : '';
   let ficha = '';
   if (j.tem_ficha){
-    const eg=j.escalacao_galo, ea=j.escalacao_adv;
+    const prev=!j.resultado&&j.escalacao_prevista&&j.escalacao_prevista.titulares.length;
+    const eg=prev?j.escalacao_prevista:j.escalacao_galo, ea=prev?(j.escalacao_adv_prevista||j.escalacao_adv):j.escalacao_adv;
     const nomeJ=(p,galo)=>galo&&D.jogadores.some(x=>x.nome===p)?`<a href="#jogador-${slug(p)}">${esc(p)}</a>`:esc(p);
     const lineup=(e,tec,galo)=>{ if(!e||!e.titulares.length) return '<p class="empty">Escalação não registrada.</p>';
       const gc=golsDe(galo?'galo':'adv'), subs=[...new Set(e.substituicoes.map(s=>s.entrou).filter(Boolean))];
@@ -2508,7 +2509,7 @@ function vJogo(id){
       <div><span>Local</span>${esc(j.cidade||'–')}</div><div><span>Estádio</span>${j.estadio?`<a href="${linkJogos({est:j.estadio})}">${esc(j.estadio)}</a>`:'–'}</div>
       <div><span>Público</span>${j.publico!=null?N(j.publico)+' '+esc(j.publico_tipo||''):'–'}</div><div><span>Renda</span>${esc(j.renda||'–')}</div>
       <div><span>Árbitro</span>${esc(j.arbitro||'–')}</div>${j.expulsoes?`<div><span>Expulsões</span>${esc(j.expulsoes)}</div>`:''}</div>
-      ${eg&&eg.titulares&&eg.titulares.length>=7?`<h2>O Galo em campo</h2>${campoHTML(eg.titulares,{form:eg.form||(j.data<'1960'&&eg.titulares.length===11?'2-3-5':null), gols:golsDe('galo'), notas:(diario()[j.id]||{}).nj, craque:(diario()[j.id]||{}).cr})}`:''}
+      ${prev?'<p class="note"><b>Escalações confirmadas.</b> O jogo ainda não aconteceu; jogos e gols só entram na base depois do apito final.</p>':''}${eg&&eg.titulares&&eg.titulares.length>=7?`<h2>${prev?'O Galo vai a campo':'O Galo em campo'}</h2>${campoHTML(eg.titulares,{form:eg.form||(j.data<'1960'&&eg.titulares.length===11?'2-3-5':null), gols:golsDe('galo'), notas:(diario()[j.id]||{}).nj, craque:(diario()[j.id]||{}).cr})}`:''}
       <div class="grid2"><div><h2>${esc(L.n)}</h2>${lineup(galoLeft?eg:ea, galoLeft?j.tecnico_galo:j.tecnico_adv, galoLeft)}</div>
       <div><h2>${esc(R.n)}</h2>${lineup(galoLeft?ea:eg, galoLeft?j.tecnico_adv:j.tecnico_galo, !galoLeft)}</div></div>
       ${eg&&eg.reservas&&eg.reservas.length?`<p class="count"><b>Banco do Galo:</b> ${eg.reservas.map(n=>`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`).join(', ')}</p>`:''}
@@ -4276,7 +4277,7 @@ function blocoPublico(det){
 }
 /* ---------- Campinho ---------- */
 function linhasCampo(tit, form){
-  if(form&&FORMS[form]){ const F=FORMS[form]; const out=[]; let k=0; F.forEach(n=>{ out.push(tit.slice(k,k+n)); k+=n; }); return out; } // palpite: a ordem dos campos já é da esquerda para a direita
+  if(form&&FORMS[form]){ const F=form==='4-2-3-1'&&tit.length===11?[1,4,2,3,1]:FORMS[form]; const out=[]; let k=0; F.forEach(n=>{ out.push(tit.slice(k,k+n)); k+=n; }); return out; } // palpite: a ordem dos campos já é da esquerda para a direita
   const L={Goleiro:[],Defensor:[],Meia:[],Atacante:[]}; tit.forEach((n,i)=>{ let p=posTxt(n)||(i===0?'Goleiro':'Meia'); if(p==='Goleiro'&&L.Goleiro.length) p='Defensor'; L[p].push(n); });
   if(!L.Goleiro.length&&tit.length) L.Goleiro.push(L.Defensor.shift()||tit[0]);
   return [L.Goleiro,L.Defensor,L.Meia,L.Atacante].filter(x=>x.length).map(x=>x.slice().reverse());
