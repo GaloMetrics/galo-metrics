@@ -2198,9 +2198,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261124211601';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261124211601"></script>
-<script src="backend-firebase.js?v=20261124211601"></script>
+<script>window.GM_BUILD='20261125111718';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261125111718"></script>
+<script src="backend-firebase.js?v=20261125111718"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2531,14 +2531,14 @@ function vJogo(id){
 /* ---------- Jogadores ---------- */
 function vJogadores(){
   setTimeout(()=>{
-    const rows=D.jogadores.map(p=>({...p,pos:posTxt(p.nome),_href:'jogador-'+slug(p.nome),gb:golsBest(p),periodo:p.periodo_aceito||((p.primeiro||'').slice(0,4)+'–'+(p.ultimo||'').slice(0,4))}));
-    const draw=()=>{ const q=$('#pq').value.toLowerCase(); sortable('ptab',[
+    const rows=D.jogadores.map(p=>({...p,pos:posDet(p.nome)||posTxt(p.nome),_g:posTxt(p.nome),_s:posSub(posDet(p.nome)),_href:'jogador-'+slug(p.nome),gb:golsBest(p),periodo:p.periodo_aceito||((p.primeiro||'').slice(0,4)+'–'+(p.ultimo||'').slice(0,4))}));
+    const draw=()=>{ const q=$('#pq').value.toLowerCase(), fp=$('#ppos').value; sortable('ptab',[
       {k:'nome',t:'Jogador'},{k:'pos',t:'Posição'},{k:'gb',t:'Gols',n:1,f:o=>{const g=accG(ACC.p[o.nome]?.gols,o.nome); return g?g.atual:o.gols;}},{k:'jogos',t:'Jogos*',n:1,f:o=>{const j=ACC.p[o.nome]?.jogos; return j?j.v+(j.dataAte?jogosApos(o.nome,j.dataAte):0):o.jogos;}},{k:'gols_penalti',t:'Pên.*',n:1},{k:'periodo',t:'Período'}],
-      rows.filter(r=>r.nome.toLowerCase().includes(q)),'gb'); };
-    $('#pq').oninput=draw; draw();
+      rows.filter(r=>r.nome.toLowerCase().includes(q)&&(!fp||(fp[0]==='g'?r._g===fp.slice(2):r._s===fp.slice(2)))),'gb'); };
+    $('#pq').oninput=draw; $('#ppos').onchange=draw; draw();
   });
   return `<div class="kicker">Elenco histórico</div><h1>Jogadores</h1>
-  <div class="filters"><label>Buscar jogador<input id="pq" placeholder="nome…"></label></div>
+  <div class="filters"><label>Buscar jogador<input id="pq" placeholder="nome…"></label><label>Posição<select id="ppos"><option value="">Todas</option><option value="g:Goleiro">Goleiros</option><option value="g:Defensor">Defensores</option><option value="s:zagueiro">· Zagueiros</option><option value="s:lateral">· Laterais</option><option value="g:Meia">Meio-campistas</option><option value="s:volante">· Volantes</option><option value="s:meia">· Meias</option><option value="g:Atacante">Atacantes</option><option value="s:ponta">· Pontas</option><option value="s:atacante">· Atacantes e centroavantes</option></select></label></div>
   <p class="cmp-cta"><a class="more" href="#comparar">Comparar jogadores →</a></p>
   <p class="count">Quando existe número aceito pelo clube e pela imprensa, é ele que aparece (a comparação com a base fica na página do jogador). Gols cobrem toda a história. *Jogos e pênaltis só a partir de ${fmtD(D.meta.escalacoes_desde)}, quando as escalações entram na base.</p><div id="ptab"></div>`;
 }
@@ -2555,7 +2555,7 @@ function vJogador(s){
   if (p.soAceito) return `<a class="back" href="#jogadores">← Jogadores</a><div class="kicker">Jogador · ${esc(p.periodo_aceito)}</div><h1>${esc(p.nome)}</h1>${typeof subNome==='function'?subNome(p):''}
     <div class="tiles"><div class="tile"><b>${N(ajAtual)}</b><small class="basesm">ainda sem escalações na base</small><span>Jogos</span></div></div>${notaAcc.replace(/Em cinza,[^<]*/,'')}
     <p class="count">A base tem escalações a partir de ${fmtD(D.meta.escalacoes_desde)}; os jogos deste período serão conferidos quando as fichas antigas entrarem.</p>`;
-  return `<a class="back" href="#jogadores">← Jogadores</a><div class="kicker">${(()=>{ const x=posicaoDe(p.nome); return x?esc(x.pos)+(x.est?' (estimada)':'')+' · ':'Jogador · '; })()}${fmtD(p.primeiro)} a ${fmtD(p.ultimo)}</div>${fotoJog(p.nome)?`<img class="jog-foto" src="${PIX}" data-up="${fotoJog(p.nome)}" alt="Foto de ${esc(p.nome)}">`:''}<div class="jog-tit"><h1>${esc(p.nome)}</h1>${typeof subNome==='function'?subNome(p):''}${typeof notaTopoJog==='function'?notaTopoJog(p):''}</div>
+  return `<a class="back" href="#jogadores">← Jogadores</a><div class="kicker">${(()=>{ const x=posicaoDe(p.nome), d=posDet(p.nome); return d?esc(d)+' · ':x?esc(x.pos)+(x.est?' (estimada)':'')+' · ':'Jogador · '; })()}${fmtD(p.primeiro)} a ${fmtD(p.ultimo)}</div>${fotoJog(p.nome)?`<img class="jog-foto" src="${PIX}" data-up="${fotoJog(p.nome)}" alt="Foto de ${esc(p.nome)}">`:''}<div class="jog-tit"><h1>${esc(p.nome)}</h1>${typeof subNome==='function'?subNome(p):''}${typeof notaTopoJog==='function'?notaTopoJog(p):''}</div>
   <div class="tiles">${GK&&!(ag?ag.atual:p.gols)?'':`<div class="tile"><b>${ag?ag.atual:p.gols}</b>${ag&&ag.base!==ag.atual?`<small class="basesm">base ${ag.base}</small>`:''}<span>Gols</span></div>`}${aj&&!p.jogos?`<div class="tile"><b>${N(ajAtual)}</b><small class="basesm">sem escalações na base</small><span>Jogos</span></div>`:''}${p.jogos?`<div class="tile"><b>${aj?N(ajAtual):p.jogos}</b>${aj&&p.jogos!==ajAtual?`<small class="basesm">base ${p.jogos}*</small>`:''}<span>Jogos${aj?'':'*'}</span></div>${GK?`<div class="tile"><b>${N(GK.cs.length)}</b><small class="basesm">${Math.round(100*GK.cs.length/GK.gj.length)}% dos ${GK.gj.length} jogos no gol</small><span>Sem sofrer gols*</span></div><div class="tile"><b>${(GK.sofr/Math.max(1,GK.tit)).toFixed(2).replace('.',',')}</b><span>Gols sofridos por jogo*</span></div>${(()=>{ const pr=penResumo(p.nome); return pr.l.length?`<div class="tile"><b>${pr.l.length}</b><small class="basesm">${pr.jogo} no jogo · ${pr.disputa} em disputas</small><span>Pênaltis defendidos*</span></div>`:''; })()}`:`<div class="tile"><b>${p.gols_penalti}</b><span>De pênalti*</span></div>${(()=>{ const f=golsDeTipo(p.nome,e=>e.falta); return f?`<div class="tile"><b>${f}</b><span>De falta</span></div>`:''; })()}${(()=>{ const d=golsDeTipo(p.nome,e=>e.decisivo); return d?`<div class="tile"><b>${d}</b><span>Gols da vitória</span></div>`:''; })()}`}<div class="tile"><b>${aprov(r)}</b><span>Aproveit. do time*</span></div>`:''}</div>
   ${blocoDonoJogador(p)}
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">${tw(`${nomeV(p.nome)} pelo Galo: ${N(ag?ag.atual:p.gols)} gols${p.jogos?`, ${N(aj?ajAtual:p.jogos)} jogos`:''}, de ${(p.primeiro||'').slice(0,4)} a ${(p.ultimo||'').slice(0,4)}.`)}</div>
@@ -3811,6 +3811,7 @@ const POSS=['Goleiro','Defensor','Meia','Atacante'];
 let PENC=null;
 function posicaoDe(nome){
   const x=JOGX[slug(nome)]; if(x&&POSS.includes(x.posicao)) return {pos:x.posicao, est:false};
+  { const d=posDet(nome); if(d) return {pos:posGrupo(d), est:false}; }
   const p=D.jogadores.find(q=>q.nome===nome); if(p&&p.posicao) return {pos:p.posicao, est:false};
   if(!PENC){ PENC={}; J.forEach(j=>(j.pen_defendidos||[]).forEach(d=>{ PENC[d.goleiro]=(PENC[d.goleiro]||0)+1; })); }
   if(PENC[nome]) return {pos:'Goleiro', est:true};
@@ -3818,6 +3819,10 @@ function posicaoDe(nome){
   return null;
 }
 const posTxt=n=>{ const x=posicaoDe(n); return x?x.pos:''; };
+function posDet(nome){ const B=D.bios&&D.bios.jogadores&&D.bios.jogadores[nome]; let t=B&&B.posicao; if(!t) return '';
+  t=t.replace(/\.$/,'').replace(/\s*-\s*/g,'-').toLowerCase().replace('centro-avante','centroavante').replace('lateral-esquerda','lateral-esquerdo'); return t.charAt(0).toUpperCase()+t.slice(1); }
+function posGrupo(d){ d=(d||'').toLowerCase(); if(d.startsWith('goleiro')) return 'Goleiro'; if(/zagueiro|lateral|libero|líbero/.test(d)) return 'Defensor'; if(/volante|meia/.test(d)) return 'Meia'; if(/atacante|centroavante|ponta/.test(d)) return 'Atacante'; return ''; }
+function posSub(d){ d=(d||'').toLowerCase(); if(d.startsWith('goleiro')) return 'goleiro'; if(d.includes('zagueiro')) return 'zagueiro'; if(d.includes('lateral')) return 'lateral'; if(d.includes('volante')) return 'volante'; if(d.includes('meia')) return 'meia'; if(d.includes('ponta')) return 'ponta'; if(/atacante|centroavante/.test(d)) return 'atacante'; return ''; }
 
 /* ---------- categorias para Conexões e Impostor ---------- */
 let CATS=null;
