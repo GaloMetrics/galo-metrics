@@ -2198,9 +2198,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261125125239';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261125125239"></script>
-<script src="backend-firebase.js?v=20261125125239"></script>
+<script>window.GM_BUILD='20261125130148';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261125130148"></script>
+<script src="backend-firebase.js?v=20261125130148"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -5524,6 +5524,16 @@ function vFalta(){
   const sg=J.filter(j=>j.resultado&&(j.gp||0)>0&&(j.gols||[]).filter(g=>g.lado==='galo').length<(j.gp||0)).sort((a,b)=>b.data.localeCompare(a.data));
   listas.gols=sg.map(j=>`${jt(j)};faltam ${(j.gp||0)-(j.gols||[]).filter(g=>g.lado==='galo').length} gols`);
   const lGols=sg.map(j=>`<tr><td class="mono">${fmtD(j.data)}</td><td><a href="#jogo-${j.id}">${esc(j.adversario)}</a> <small class="uf">${esc(placar(j))}</small></td><td class="n">${(j.gp||0)-(j.gols||[]).filter(g=>g.lado==='galo').length}</td></tr>`);
+  // jogadores e técnicos sem ficha pessoal
+  const BJ=(D.bios&&D.bios.jogadores)||{}, BT=(D.bios&&D.bios.tecnicos)||{};
+  const per=p=>p.periodo_aceito||((p.primeiro||'').slice(0,4)+'–'+(p.ultimo||'').slice(0,4));
+  const sj=D.jogadores.filter(p=>!BJ[p.nome]&&!/n[aã]o identificado/i.test(p.nome)&&((p.jogos||0)>0||golsBest(p)>0)).sort((a,b)=>(b.jogos||0)-(a.jogos||0)||golsBest(b)-golsBest(a));
+  listas.jog=sj.map(p=>`${p.nome};${per(p)};${p.jogos||0} jogos;${golsBest(p)||0} gols`);
+  const lJog=sj.map(p=>`<tr><td><a href="#jogador-${slug(p.nome)}">${esc(p.nome)}</a></td><td class="mono">${esc(per(p))}</td><td class="n">${N(p.jogos||0)}</td><td class="n">${N(golsBest(p)||0)}</td></tr>`);
+  const stc=D.tecnicos.filter(t=>!BT[t.nome]&&!/interino|n[aã]o identificado|desconhecido/i.test(t.nome)).sort((a,b)=>(b.jogos||0)-(a.jogos||0));
+  listas.tecf=stc.map(t=>`${t.nome};${(t.primeiro||'').slice(0,4)}–${(t.ultimo||'').slice(0,4)};${t.jogos||0} jogos`);
+  const lTecf=stc.map(t=>`<tr><td><a href="#tecnico-${slug(t.nome)}">${esc(t.nome)}</a></td><td class="mono">${(t.primeiro||'').slice(0,4)}–${(t.ultimo||'').slice(0,4)}</td><td class="n">${N(t.jogos||0)}</td></tr>`);
+  const sjDec={}; sj.forEach(p=>{ const d=Math.floor(+(String(p.primeiro||'').slice(0,4))/10)*10; if(d) sjDec[d]=(sjDec[d]||0)+1; });
   // local e público
   const sl=J.filter(j=>j.resultado&&(!j.estadio||!j.cidade)).sort((a,b)=>b.data.localeCompare(a.data)); listas.local=sl.map(j=>`${jt(j)};${j.estadio?'':'sem estádio'} ${j.cidade?'':'sem cidade'}`);
   const sp=J.filter(j=>j.resultado&&!j.publico&&j.data>='1970').sort((a,b)=>b.data.localeCompare(a.data)); listas.pub=sp.map(jt);
@@ -5533,9 +5543,11 @@ function vFalta(){
   const tot=advSem.length+sf.length+sg.length;
   return `<a class="back" href="#dono">← Página do dono</a><div class="kicker">Só você vê esta página</div><h1>O que falta</h1>
   <p class="lede">O que ainda falta na base, do mais importante para o menos. Cada lista tem o botão "Copiar lista" (separada por ponto e vírgula, cola direto numa planilha). Quando um torcedor manda escudo, foto ou correção pela aba de sugestões, é aqui que dá para ver o que ainda falta.</p>
-  <div class="kpis" style="margin:18px 0 26px"><div><b>${N(advSem.length)}</b><span>escudos</span></div><div><b>${N(fx.length)}</b><span>fotos de jogadores</span></div><div><b>${N(sf.length)}</b><span>jogos sem ficha</span></div><div><b>${N(sg.length)}</b><span>jogos com gols sem autor</span></div></div>
+  <div class="kpis" style="margin:18px 0 26px"><div><b>${N(advSem.length)}</b><span>escudos</span></div><div><b>${N(fx.length)}</b><span>fotos de jogadores</span></div><div><b>${N(sf.length)}</b><span>jogos sem ficha</span></div><div><b>${N(sg.length)}</b><span>jogos com gols sem autor</span></div><div><b>${N(sj.length)}</b><span>jogadores sem ficha</span></div></div>
   ${blocoEscudosRapido(advSem)}
   ${ser('Fotos de jogadores','foto',fx.length,'Figurinhas sem foto: primeiro as lendárias, depois as brilhantes, cada grupo pelos que mais jogaram. Enquanto não tem foto, a figurinha mostra o escudo do Galo da época do jogador.',['Jogador','Raridade','Período','Jogos'],lFoto)}
+  ${ser('Jogadores sem ficha','jog',sj.length,`Jogadores da base sem ficha pessoal (nome completo, nascimento, naturalidade, posição e carreira), dos que mais jogaram para os que menos jogaram. Sem ficha, o jogador fica fora do mapa de nascimento, de "Jogaram no Galo e no…", dos rankings por posição e de parte dos desafios. Por década de estreia: ${Object.keys(sjDec).sort().map(d=>`${d}: ${N(sjDec[d])}`).join(' · ')}.`,['Jogador','Período','Jogos','Gols'],lJog)}
+  ${ser('Técnicos sem ficha','tecf',stc.length,'Técnicos da base sem ficha pessoal, dos que mais comandaram o Galo para os que menos.',['Técnico','Período','Jogos'],lTecf)}
   ${ser('Jogos sem ficha (escalação)','ficha',sf.length,`Jogos sem escalação do Galo. Finais primeiro, depois dos mais recentes para os mais antigos. Por década: ${Object.keys(porDec).sort().map(d=>`${d}: ${N(porDec[d])}`).join(' · ')}.`,['Data','Jogo','Competição'],sf.map(jl))}
   ${ser('Gols sem autor','gols',sg.length,'Jogos em que o Galo marcou mais gols do que os que têm autor registrado.',['Data','Jogo','Gols sem autor'],lGols)}
   ${ser('Jogos sem estádio ou cidade','local',sl.length,'Jogos sem o estádio ou a cidade na ficha.',['Data','Jogo','Competição'],sl.map(jl))}
