@@ -2198,9 +2198,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261125171037';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261125171037"></script>
-<script src="backend-firebase.js?v=20261125171037"></script>
+<script>window.GM_BUILD='20261125194441';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261125194441"></script>
+<script src="backend-firebase.js?v=20261125194441"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4749,6 +4749,9 @@ function listasParecidas(q){ try{ garantePaisesMM(); }catch(e){} const w=nrm(q).
     const prim=nrm(L[2]).replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(x=>x&&!PALAVRAS_VAZIAS.has(x)&&!GENERICAS.has(x))[0]; if(prim&&w.some(x=>x===prim||x+'s'===prim||x===prim+'s')) s+=2;
     if(L[5]==='seq'&&!/sequenc|seguid|serie|jejum|invict|invencib|seca/.test(w.join(' '))) s-=2;
     const wq=w.join(' '); const rq=LISTA_REQ[L[1]]; if(rq&&!rq.test(wq)) s-=4; if(/menos/.test(L[1])&&!/menos|pior|poucos|menor/.test(wq)) s-=3; if(/-mais$/.test(L[1])&&/menos|poucos|menor/.test(wq)) s-=3; if(L[5]==='tclube'&&!/temporad|\bano\b|anos|campanha|brasileir|time|clube|equipe/.test(wq)) s-=2;
+    if(/^t-/.test(L[1])&&/\b(quem|jogador|jogadores|atleta)\b/.test(wq)) s-=8;
+    if(L[1]==='jt-jogos'||L[1]==='jt-gols'){ const temp=/temporad|\bano\b/.test(wq), ind=/\b(quem|jogador|jogadores|atleta|individual)\b/.test(wq), jg=/\bjog(o|os|ou)\b|partida/.test(wq), gl=/\bgol(s)?\b|marc/.test(wq);
+      const tc=/^temporadas? (com|de|do)\b/.test(wq)&&!ind; if(L[1]==='jt-jogos'){ if(tc) s-=8; else if(temp&&jg&&!gl) s+=6; else if(gl) s-=6; } else { if(tc) s-=8; else if(temp&&gl&&!jg) s+=ind?14:0; else if(jg&&!gl) s-=8; } }
     if(['adv-art','est-art','dia-art'].includes(L[1])) s=-99;
     if(/^mf-/.test(L[1])&&!/final|decis|titul|taca/.test(wq)) s-=4;
     if(L[1]==='jogos'&&/^(jogos|jogou|partidas|jogadores jogos|jogos jogadores)$/.test(wq)) s+=4;
@@ -5825,6 +5828,11 @@ const linhaArt=o=>({nome:`${o.ano}${o.ano===+hojeStr().slice(0,4)?' (em andament
 (function(){
   const add=(g,id,t,u,fn,sin,tipo,res)=>{ LISTAS.push([g,id,t,u,fn,tipo,res]); if(sin) LISTA_SIN[id]=sin; };
   const AT='artilheiro artilheiros artilharia temporada temporadas ano anos cada goleador';
+  const jtStats=()=>{ const c={}; JP().forEach(j=>{ if(!j.resultado) return; const t=j.temporada; const e=j.escalacao_galo; if(e) new Set([...(e.titulares||[]),...(e.substituicoes||[]).map(x=>x.entrou)].filter(Boolean)).forEach(n=>{ const k=n+'|'+t; (c[k] ||= {n,t,j:0,g:0}).j++; }); j.gols.forEach(g=>{ if(g.lado==='galo'&&isGoal(g)&&g.jogador){ const k=g.jogador+'|'+t; (c[k] ||= {n:g.jogador,t,j:0,g:0}).g++; } }); }); return Object.values(c); };
+  const jtLin=(o,v,obs)=>({nome:`${nomeV(o.n)} · ${o.t}${o.t===+hojeStr().slice(0,4)?' (em andamento)':''}`, href:'#jogador-'+slug(o.n), v, obs});
+  add('Jogadores','jt-jogos','Mais jogos em uma temporada','jogos',()=>jtStats().filter(o=>o.j).sort((a,b)=>b.j-a.j||b.g-a.g||b.t-a.t).map(o=>jtLin(o,o.j,o.g?`${o.g} ${o.g===1?'gol':'gols'}`:'')),'mais jogos numa temporada em uma temporada em um ano num ano no mesmo ano so ano recorde de jogos partidas jogou mais jogador jogadores quem jogou quem mais jogou atleta','temp');
+  add('Gols','jt-gols','Mais gols de um jogador em uma temporada','gols',()=>jtStats().filter(o=>o.g).sort((a,b)=>b.g-a.g||a.j-b.j||b.t-a.t).map(o=>jtLin(o,o.g,o.j?`${o.j} jogos`:'')),'mais gols numa temporada em uma temporada em um ano num ano no mesmo ano recorde de gols quem fez quem marcou quem mais marcou fez mais gols artilheiro jogador individual','temp');
+  LISTA_REQ['jt-jogos']=/temporada|\bano\b|num ano|mesmo ano/; LISTA_REQ['jt-gols']=/temporada|\bano\b|num ano|mesmo ano/;
   add('Gols','art-temp','Artilheiros por temporada','gols do artilheiro',o=>artTemporadas().filter(x=>inPer({data:x.ano+'-07-01'})&&(!o.desde||x.ano>=o.desde)).sort((a,b)=>b.ano-a.ano).map(linhaArt),AT+' por temporada do ano','temp');
   add('Gols','art-temp-mais','Artilheiros de temporada com mais gols','gols do artilheiro',o=>artTemporadas().filter(x=>inPer({data:x.ano+'-07-01'})&&(!o.desde||x.ano>=o.desde)).sort((a,b)=>b.g-a.g||b.ano-a.ano).map(linhaArt),AT+' mais gols maior melhor','temp');
   add('Gols','art-temp-menos','Artilheiros de temporada com menos gols','gols do artilheiro',o=>artTemporadas().filter(x=>inPer({data:x.ano+'-07-01'})&&x.nj>=20&&(!o.desde||x.ano>=o.desde)).sort((a,b)=>a.g-b.g||b.ano-a.ano).map(linhaArt),AT+' menos gols menor pior pouco poucos desde','temp');
