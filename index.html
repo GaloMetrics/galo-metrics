@@ -2107,6 +2107,7 @@ header input,header .search input{
  border-color:#827b69!important;
 }
 header #tema{display:none!important}
+.sub-nome{font-size:15px;color:#555;margin:-6px 0 12px;line-height:1.45}.sub-nome b{color:var(--ink);font-weight:600}
 .ficha-canto{border:2px solid var(--ink);background:#fbf9f3;padding:12px 16px;margin:14px 0}.ficha-canto>summary{cursor:pointer;font-family:Oswald,sans-serif;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-size:13px}.ficha-canto dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;margin:10px 0 4px}.ficha-canto dt{font-family:Oswald,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8C6610;padding-top:3px}.ficha-canto dd{margin:0;line-height:1.45}@media(max-width:700px){.ficha-canto dl{grid-template-columns:1fr}.ficha-canto dt{padding-top:6px}}
 /* ===== Celular: leitura e navegação ===== */
 @media (max-width:700px){
@@ -2197,9 +2198,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261124211034';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261124211034"></script>
-<script src="backend-firebase.js?v=20261124211034"></script>
+<script>window.GM_BUILD='20261124211601';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261124211601"></script>
+<script src="backend-firebase.js?v=20261124211601"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2551,10 +2552,10 @@ function vJogador(s){
   const ag=accG(ACC.p[p.nome]?.gols,p.nome), aj=ACC.p[p.nome]?.jogos;
   const ajAtual = aj ? aj.v + (aj.dataAte?jogosApos(p.nome,aj.dataAte):0) : null;
   const notaAcc = (ag||aj) ? `<div class="note acc-note"><b>Número aceito.</b> ${ag?`Gols: ${ag.v}${ag.dataAte?` até ${fmtD(ag.dataAte)}`:''} (${fonteLink(ag.fonte)})${ag.extra?`, mais ${ag.extra} registrados na base depois disso`:''}. `:''}${aj?`Jogos: ${aj.v}${aj.dataAte?` até ${fmtD(aj.dataAte)}`:''} (${fonteLink(aj.fonte)})${ajAtual>aj.v?`, mais ${ajAtual-aj.v} registrados na base depois disso`:''}. `:''}${((ag&&ag.base!==ag.atual)||(aj&&p.jogos&&p.jogos!==ajAtual))?`Em cinza, o que a base Galo Metrics registra jogo a jogo${ag&&ACC.p[p.nome].gols.ano<9999?` entre ${ACC.p[p.nome].gols.de} e ${ACC.p[p.nome].gols.ano}`:''}.`:(ag||(aj&&p.jogos))?`A base Galo Metrics registra o mesmo número${ag&&ACC.p[p.nome].gols.ano<9999?` entre ${ACC.p[p.nome].gols.de} e ${ACC.p[p.nome].gols.ano}`:''}.`:''}</div>` : '';
-  if (p.soAceito) return `<a class="back" href="#jogadores">← Jogadores</a><div class="kicker">Jogador · ${esc(p.periodo_aceito)}</div><h1>${esc(p.nome)}</h1>
+  if (p.soAceito) return `<a class="back" href="#jogadores">← Jogadores</a><div class="kicker">Jogador · ${esc(p.periodo_aceito)}</div><h1>${esc(p.nome)}</h1>${typeof subNome==='function'?subNome(p):''}
     <div class="tiles"><div class="tile"><b>${N(ajAtual)}</b><small class="basesm">ainda sem escalações na base</small><span>Jogos</span></div></div>${notaAcc.replace(/Em cinza,[^<]*/,'')}
     <p class="count">A base tem escalações a partir de ${fmtD(D.meta.escalacoes_desde)}; os jogos deste período serão conferidos quando as fichas antigas entrarem.</p>`;
-  return `<a class="back" href="#jogadores">← Jogadores</a><div class="kicker">${(()=>{ const x=posicaoDe(p.nome); return x?esc(x.pos)+(x.est?' (estimada)':'')+' · ':'Jogador · '; })()}${fmtD(p.primeiro)} a ${fmtD(p.ultimo)}</div>${fotoJog(p.nome)?`<img class="jog-foto" src="${PIX}" data-up="${fotoJog(p.nome)}" alt="Foto de ${esc(p.nome)}">`:''}<div class="jog-tit"><h1>${esc(p.nome)}</h1>${typeof notaTopoJog==='function'?notaTopoJog(p):''}</div>
+  return `<a class="back" href="#jogadores">← Jogadores</a><div class="kicker">${(()=>{ const x=posicaoDe(p.nome); return x?esc(x.pos)+(x.est?' (estimada)':'')+' · ':'Jogador · '; })()}${fmtD(p.primeiro)} a ${fmtD(p.ultimo)}</div>${fotoJog(p.nome)?`<img class="jog-foto" src="${PIX}" data-up="${fotoJog(p.nome)}" alt="Foto de ${esc(p.nome)}">`:''}<div class="jog-tit"><h1>${esc(p.nome)}</h1>${typeof subNome==='function'?subNome(p):''}${typeof notaTopoJog==='function'?notaTopoJog(p):''}</div>
   <div class="tiles">${GK&&!(ag?ag.atual:p.gols)?'':`<div class="tile"><b>${ag?ag.atual:p.gols}</b>${ag&&ag.base!==ag.atual?`<small class="basesm">base ${ag.base}</small>`:''}<span>Gols</span></div>`}${aj&&!p.jogos?`<div class="tile"><b>${N(ajAtual)}</b><small class="basesm">sem escalações na base</small><span>Jogos</span></div>`:''}${p.jogos?`<div class="tile"><b>${aj?N(ajAtual):p.jogos}</b>${aj&&p.jogos!==ajAtual?`<small class="basesm">base ${p.jogos}*</small>`:''}<span>Jogos${aj?'':'*'}</span></div>${GK?`<div class="tile"><b>${N(GK.cs.length)}</b><small class="basesm">${Math.round(100*GK.cs.length/GK.gj.length)}% dos ${GK.gj.length} jogos no gol</small><span>Sem sofrer gols*</span></div><div class="tile"><b>${(GK.sofr/Math.max(1,GK.tit)).toFixed(2).replace('.',',')}</b><span>Gols sofridos por jogo*</span></div>${(()=>{ const pr=penResumo(p.nome); return pr.l.length?`<div class="tile"><b>${pr.l.length}</b><small class="basesm">${pr.jogo} no jogo · ${pr.disputa} em disputas</small><span>Pênaltis defendidos*</span></div>`:''; })()}`:`<div class="tile"><b>${p.gols_penalti}</b><span>De pênalti*</span></div>${(()=>{ const f=golsDeTipo(p.nome,e=>e.falta); return f?`<div class="tile"><b>${f}</b><span>De falta</span></div>`:''; })()}${(()=>{ const d=golsDeTipo(p.nome,e=>e.decisivo); return d?`<div class="tile"><b>${d}</b><span>Gols da vitória</span></div>`:''; })()}`}<div class="tile"><b>${aprov(r)}</b><span>Aproveit. do time*</span></div>`:''}</div>
   ${blocoDonoJogador(p)}
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">${tw(`${nomeV(p.nome)} pelo Galo: ${N(ag?ag.atual:p.gols)} gols${p.jogos?`, ${N(aj?ajAtual:p.jogos)} jogos`:''}, de ${(p.primeiro||'').slice(0,4)} a ${(p.ultimo||'').slice(0,4)}.`)}</div>
@@ -6539,14 +6540,20 @@ function catalogoListas(grupos){
   <details class="cat-semideia"><summary>Sem ideia? Veja as ${nL} listas prontas</summary>${blocos}</details>`; }
 
 /* Ficha pessoal (O Canto do Galo): nascimento, naturalidade, títulos e carreira */
+function idadeDe(d){ if(!d) return ''; const n=new Date(d+'T12:00:00'), h=new Date(); let a=h.getFullYear()-n.getFullYear(); if(h<new Date(h.getFullYear(),n.getMonth(),n.getDate())) a--; return a; }
+function subNome(p){ const B=(D.bios&&D.bios.jogadores||{})[p.nome]; if(!B) return '';
+  const nc=B.nome_completo&&nrm(B.nome_completo)!==nrm(nomeV(p.nome))?esc(B.nome_completo):'';
+  const ns=(B.nascimento?`Nascido em ${fmtD(B.nascimento)}${B.falecimento?'':` (${idadeDe(B.nascimento)} anos)`}${B.naturalidade?' em '+esc(B.naturalidade):''}`:(B.naturalidade?'Natural de '+esc(B.naturalidade):''))+(B.falecimento?`. Faleceu em ${fmtD(B.falecimento)}`:'');
+  if(!nc&&!ns) return '';
+  return `<div class="sub-nome">${nc?`<b>${nc}</b>`:''}${nc&&ns?'<br>':''}${ns}</div>`; }
 function fichaTec(nome){ const B=nome&&(D.bios&&D.bios.tecnicos||{})[nome]; return B?fichaCanto({nome},B,'Ficha do técnico'):''; }
 function fichaCanto(p,B0,tit){ const B=B0||(D.bios&&D.bios.jogadores||{})[p.nome]; if(!B) return '';
   const idade=d=>{ if(!d) return ''; const n=new Date(d+'T12:00:00'), h=new Date(); let a=h.getFullYear()-n.getFullYear(); if(h<new Date(h.getFullYear(),n.getMonth(),n.getDate())) a--; return a; };
   const clube=c=>/^atl[eé]tico$/i.test(c)?'<b>Galo</b>':esc(c);
   const linhas=[];
-  if(B.nome_completo&&nrm(B.nome_completo)!==nrm(nomeV(p.nome))) linhas.push(['Nome completo',esc(B.nome_completo)]);
-  if(B.nascimento) linhas.push(['Nascimento',`${fmtD(B.nascimento)} <span class="count">(${idade(B.nascimento)} anos)</span>`]);
-  if(B.naturalidade) linhas.push(['Natural de',esc(B.naturalidade)]);
+  if(B0&&B.nome_completo&&nrm(B.nome_completo)!==nrm(nomeV(p.nome))) linhas.push(['Nome completo',esc(B.nome_completo)]);
+  if(B0&&B.nascimento) linhas.push(['Nascimento',`${fmtD(B.nascimento)}${B.falecimento?'':` <span class="count">(${idade(B.nascimento)} anos)</span>`}`]); if(B0&&B.falecimento) linhas.push(['Falecimento',fmtD(B.falecimento)]);
+  if(B0&&B.naturalidade) linhas.push(['Natural de',esc(B.naturalidade)]);
   if(B.posicao) linhas.push(['Posição',esc(B.posicao)]);
   if(B.periodo) linhas.push(['No Galo',esc(B.periodo)]);
   if(B.titulos&&B.titulos.length) linhas.push(['Títulos pelo Galo',B.titulos.map(esc).join('<br>')]);
@@ -6554,7 +6561,7 @@ function fichaCanto(p,B0,tit){ const B=B0||(D.bios&&D.bios.jogadores||{})[p.nome
   if(B.mais_escalados) linhas.push(['Mais escalados',esc(B.mais_escalados)]);
   if(B.clubes&&B.clubes.length) linhas.push([B0?'Outros clubes':'Carreira',B.clubes.map(clube).join(B0?', ':' → ')+(B.clube_atual_desde?` <span class="count">(no último desde ${esc(B.clube_atual_desde)})</span>`:'')]);
   if(!linhas.length) return '';
-  return `<details class="ficha-canto" open><summary>${tit||'Ficha do jogador'}</summary><dl>${linhas.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl><p class="count">Fonte: O Canto do Galo.</p></details>`; }
+  return `<details class="ficha-canto" open><summary>${tit||'Ficha do jogador'}</summary><dl>${linhas.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></details>`; }
 
 </script>
 </body>
