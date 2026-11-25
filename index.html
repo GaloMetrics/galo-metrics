@@ -2198,9 +2198,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261125113537';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261125113537"></script>
-<script src="backend-firebase.js?v=20261125113537"></script>
+<script>window.GM_BUILD='20261125114932';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261125114932"></script>
+<script src="backend-firebase.js?v=20261125114932"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2539,7 +2539,7 @@ function vJogadores(){
   });
   return `<div class="kicker">Elenco histórico</div><h1>Jogadores</h1>
   <div class="filters"><label>Buscar jogador<input id="pq" placeholder="nome…"></label><label>Posição<select id="ppos"><option value="">Todas</option><option value="g:Goleiro">Goleiros</option><option value="g:Defensor">Defensores</option><option value="s:zagueiro">· Zagueiros</option><option value="s:lateral">· Laterais</option><option value="g:Meia">Meio-campistas</option><option value="s:volante">· Volantes</option><option value="s:meia">· Meias</option><option value="g:Atacante">Atacantes</option><option value="s:ponta">· Pontas</option><option value="s:atacante">· Atacantes e centroavantes</option></select></label></div>
-  <p class="cmp-cta"><a class="more" href="#comparar">Comparar jogadores →</a></p>
+  <p class="cmp-cta"><a class="more" href="#comparar">Comparar jogadores →</a> <a class="more" href="#jogaram">Jogaram no Galo e no… →</a> <a class="more" href="#estrangeiros">Estrangeiros →</a> <a class="more" href="#mapa?aba=nasc">Onde nasceram →</a></p>
   <p class="count">Quando existe número aceito pelo clube e pela imprensa, é ele que aparece (a comparação com a base fica na página do jogador). Gols cobrem toda a história. *Jogos e pênaltis só a partir de ${fmtD(D.meta.escalacoes_desde)}, quando as escalações entram na base.</p><div id="ptab"></div>`;
 }
 function vJogador(s){
@@ -2697,7 +2697,7 @@ function vRecordes(){
 function vTecnicos(){
   setTimeout(()=>sortable('ttab',[{k:'nome',t:'Técnico'},{k:'jogos',t:'J',n:1},{k:'V',t:'V',n:1},{k:'E',t:'E',n:1},{k:'D',t:'D',n:1},{k:'ap',t:'Aprov.',n:1,f:o=>o.ap+'%'},{k:'periodo',t:'Período'}],
     D.tecnicos.map(t=>({...t,_href:'jogos?'+new URLSearchParams({tec:t.nome}),ap:t.jogos?Math.round(100*(3*t.V+t.E)/(3*t.jogos)):0,periodo:fmtD(t.primeiro)+' a '+fmtD(t.ultimo)})),'jogos'));
-  return `<div class="kicker">Comando</div><h1>Técnicos</h1><p class="count" style="margin-top:14px">A partir de ${fmtD(D.meta.escalacoes_desde)}, quando as fichas entram na base. Inclui interinos. Clique num técnico para ver todos os jogos dele.</p><div id="ttab"></div>`;
+  return `<div class="kicker">Comando</div><h1>Técnicos</h1><p class="count" style="margin-top:14px">A partir de ${fmtD(D.meta.escalacoes_desde)}, quando as fichas entram na base. Inclui interinos. Clique num técnico para ver todos os jogos dele.</p><p class="cmp-cta"><a class="more" href="#presidentes">Presidentes do Galo →</a></p><div id="ttab"></div>`;
 }
 
 /* ---------- Comparativo de jogadores ---------- */
@@ -4506,6 +4506,10 @@ function route(){
   else if(h==='duplas') html=vDuplas(params);
   else if(h.startsWith('temporada-')) {html=vTemporada(h.slice(10)); sec='temporadas';}
   else if(h==='tecnicos') html=vTecnicos();
+  else if(h==='presidentes') {html=vPresidentes(); sec='tecnicos';}
+  else if(h.startsWith('presidente-')) {html=vPresidente(h.slice(11)); sec='tecnicos';}
+  else if(h==='jogaram') {html=vJogaram(params); sec='jogadores';}
+  else if(h==='estrangeiros') {html=vEstrangeiros(params); sec='jogadores';}
   else if(h==='recordes') html=vRecordes();
   else if(h==='perfil') html=vPerfil();
   else if(h==='diario') {html=vDiario(); sec='perfil';}
@@ -4538,7 +4542,7 @@ function route(){
   else if(h==='pergunte') html=vPergunte(params);
   else if(h==='cidades') html=vCidades();
   else if(h.startsWith('cidade-')) {html=vCidade(h.slice(7)); sec='cidades';}
-  else if(h==='mapa') html=vMapa(params);
+  else if(h==='mapa') html=/aba=nasc/.test(params||'')?vMapaNasc(new URLSearchParams(params).get('aba'),new URLSearchParams(params).get('uf'),new URLSearchParams(params).get('cid')):vMapa(params);
   else if(h==='viradas') {html=vViradas(params); sec='recordes';}
   else if(h==='sugestoes') html=vSugestoes(params);
   else if(h==='colaboradores') html=vColaboradores();
@@ -4761,6 +4765,7 @@ function vPergunte(params){
   else if(q.trim()){ const PQ=parsePer(q), prQ=PQ.per, qL=prQ?PQ.limpo:q; const ents=buscaEntidades(qL); let par=listasParecidas(qL); if(prQ&&/^(jogos?|partidas?|retrospecto|resultados?|desempenho|campanha|historico|)$/.test(nrm(qL).replace(/\b(do|o|galo|atletico|de|todos|os)\b/g,'').trim())) par=[LISTAS.find(l=>l[1]==='jogos-loc')]; if(prQ){ const qv=nrm(qL).replace(/\b(do|o|a|as|os|galo|atletico|de|todas|todos|lista|quais|foram)\b/g,'').trim(); const mR={vitoria:'res-v',vitorias:'res-v',venceu:'res-v',empate:'res-e',empates:'res-e',empatou:'res-e',derrota:'res-d',derrotas:'res-d',perdeu:'res-d'}[qv]; if(mR) par=[LISTAS.find(l=>l[1]===mR)]; }
     try{ if(!route.keep&&!DONO&&TRK.bq.length<20&&TRK.bq[TRK.bq.length-1]?.q!==q.slice(0,80)){ TRK.bq.push({q:q.trim().slice(0,80), r:par.length?par[0][1]:(ents?'@':'')}); TRK.n++;  clearTimeout(window._trkT); window._trkT=setTimeout(()=>trkEnvia(true),4000); } }catch(e){}
     const dq0=diaDaBusca(qL); if(dq0&&!/\b(19|20)\d{2}\b/.test(qL)) par.unshift(LISTAS.find(x=>x[1]===(/artilh|gol|marc|fez|fizer/.test(nrm(q))?'dia-art':'dia')));
+    const clQ=clubeDaBusca(qL); if(clQ){ const Lc=jogaramLinhas([clQ.nome])||[]; corpo+=`<h2>Jogaram no Galo e no ${esc(clQ.nome.replace(/-[A-Z]{2,3}$/,''))}</h2><p class="lede">${N(Lc.length)} jogadores passaram pelos dois clubes.</p><ol class="rank">${Lc.sort((a,b)=>b.jogos-a.jogos).slice(0,15).map((x,i)=>`<li><span class="rank-n">${i+1}</span><a href="#${x._href}">${esc(x.nome)}</a>${x.quando?`<small class="rank-obs">${esc(x.quando)} do Galo</small>`:''}<b>${N(x.jogos)}</b></li>`).join('')}</ol><p class="count"><a href="#jogaram?${new URLSearchParams({c:clQ.nome})}">Ver todos →</a></p>`; }
     const parQ=parDaBusca(qL); if(parQ){ corpo+=comPer(prQ,()=>blocoDupla(parQ)); }
     const golQ=/artilh|\bgols?\b|marc|\bfez\b|fizer|goleador/.test(nrm(qL)); let entQ=null;
     if(golQ&&!dq0&&!/gols? olimpic|cruzeiro|classico/.test(nrm(qL))){ const E=entDaBusca(qL); if(E.adv&&E.adv!=='galo'&&!/cruzeiro/.test(nrm(qL))){ entQ=E.adv; par.unshift(LISTAS.find(x=>x[1]==='adv-art')); } else if(E.est){ entQ=E.est; par.unshift(LISTAS.find(x=>x[1]==='est-art')); } }
@@ -4851,7 +4856,7 @@ function vMapa(params){
   }
   return `<div class="kicker">Almanaque · geografia</div><h1>O mapa do Galo</h1>
   <div class="tiles"><div class="tile"><b>${N(rows.length)}</b><span>Cidades</span></div><div class="tile"><b>${Object.keys(porUF).length}<small>/27</small></b><span>Estados</span></div><div class="tile"><b>${nPaises}</b><span>Países</span></div><div class="tile"><b>${N(nEst)}</b><span>Estádios</span></div></div>
-  <div class="abas"><a href="#mapa?aba=brasil" class="${aba==='brasil'?'on':''}">Brasil</a><a href="#mapa?aba=mundo" class="${aba!=='brasil'?'on':''}">Mundo</a><a href="#cidades">Lista de cidades</a></div>
+  <div class="abas"><a href="#mapa?aba=brasil" class="${aba==='brasil'?'on':''}">Brasil</a><a href="#mapa?aba=mundo" class="${aba!=='brasil'?'on':''}">Mundo</a><a href="#mapa?aba=nasc">Nascimento: Brasil</a><a href="#mapa?aba=nasc-mundo">Nascimento: mundo</a><a href="#cidades">Lista de cidades</a></div>
   <div class="mapa-box">${svg}<div class="mapa-leg"><span><i class="t1"></i>poucos jogos</span><span><i class="t5"></i>muitos jogos</span><span><i class="dotl"></i>cidade (tamanho = jogos)</span></div></div>
   ${lista}`;
 }
@@ -6554,10 +6559,10 @@ function subNome(p){ const B=(D.bios&&D.bios.jogadores||{})[p.nome]; if(!B) retu
 function fichaTec(nome){ const B=nome&&(D.bios&&D.bios.tecnicos||{})[nome]; return B?fichaCanto({nome},B,'Ficha do técnico'):''; }
 function fichaCanto(p,B0,tit){ const B=B0||(D.bios&&D.bios.jogadores||{})[p.nome]; if(!B) return '';
   const idade=d=>{ if(!d) return ''; const n=new Date(d+'T12:00:00'), h=new Date(); let a=h.getFullYear()-n.getFullYear(); if(h<new Date(h.getFullYear(),n.getMonth(),n.getDate())) a--; return a; };
-  const clube=c=>/^atl[eé]tico$/i.test(c)?'<b>Galo</b>':esc(c);
+  const clube=c=>/^atl[eé]tico$/i.test(c)?'<b>Galo</b>':clubeLink(c);
   const linhas=[];
   if(B0&&B.nome_completo&&nrm(B.nome_completo)!==nrm(nomeV(p.nome))) linhas.push(['Nome completo',esc(B.nome_completo)]);
-  if(B0&&B.nascimento) linhas.push(['Nascimento',`${fmtD(B.nascimento)}${B.falecimento?'':` <span class="count">(${idade(B.nascimento)} anos)</span>`}`]); if(B0&&B.falecimento) linhas.push(['Falecimento',fmtD(B.falecimento)]);
+  if(B0&&B.nascimento) linhas.push(['Nascimento',`${fmtD(B.nascimento)}${(B.falecimento||idade(B.nascimento)>=95)?'':` <span class="count">(${idade(B.nascimento)} anos)</span>`}`]); if(B0&&B.falecimento) linhas.push(['Falecimento',fmtD(B.falecimento)]);
   if(B0&&B.naturalidade) linhas.push(['Natural de',esc(B.naturalidade)]);
   if(B.posicao) linhas.push(['Posição',esc(B.posicao)]);
   if(B.periodo) linhas.push(['No Galo',esc(B.periodo)]);
@@ -6567,6 +6572,160 @@ function fichaCanto(p,B0,tit){ const B=B0||(D.bios&&D.bios.jogadores||{})[p.nome
   if(B.clubes&&B.clubes.length) linhas.push([B0?'Outros clubes':'Carreira',B.clubes.map(clube).join(B0?', ':' → ')+(B.clube_atual_desde?` <span class="count">(no último desde ${esc(B.clube_atual_desde)})</span>`:'')]);
   if(!linhas.length) return '';
   return `<details class="ficha-canto" open><summary>${tit||'Ficha do jogador'}</summary><dl>${linhas.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></details>`; }
+
+/* ---------- Posição fina (O Canto do Galo) e listas por posição na Busca ---------- */
+function posFina(nome){ const d=nrm(posDet(nome)); if(!d) return '';
+  if(d.startsWith('goleiro')) return 'gol'; if(/lateral.?direit/.test(d)) return 'latd'; if(/lateral.?esquerd/.test(d)) return 'late'; if(/lateral/.test(d)) return 'lat';
+  if(/zagueiro|libero|beque/.test(d)) return 'zag'; if(/volante|medio/.test(d)) return 'vol'; if(/meia|ponta de lanca|armador/.test(d)) return 'mei';
+  if(/ponta/.test(d)) return 'pon'; if(/centro.?avante/.test(d)) return 'cen'; if(/atacante/.test(d)) return 'ata'; return ''; }
+const POS_LISTAS=[
+  ['gol','Goleiros','goleiro goleiros arqueiro arqueiros',k=>k==='gol',/goleir|arqueir/,1],
+  ['zag','Zagueiros','zagueiro zagueiros beque beques',k=>k==='zag',/zagueir|beque/],
+  ['def','Defensores','defensor defensores defesa',k=>['zag','lat','latd','late'].includes(k),/defensor|defesa/],
+  ['lat','Laterais','lateral laterais',k=>['lat','latd','late'].includes(k),/^(?!.*(direit|esquerd)).*lateral/],
+  ['latd','Laterais direitos','lateral laterais direito direitos',k=>k==='latd',/lateral.*direit|direit.*lateral/],
+  ['late','Laterais esquerdos','lateral laterais esquerdo esquerdos',k=>k==='late',/lateral.*esquerd|esquerd.*lateral/],
+  ['vol','Volantes','volante volantes cabeca area',k=>k==='vol',/volante|cabeca/],
+  ['mei','Meias','meia meias meio campo campista campistas armador armadores',k=>k==='mei',/\bmeias?\b|armador|meio/],
+  ['pon','Pontas','ponta pontas ponteiro ponteiros extremo extremos',k=>k==='pon',/\bpontas?\b|ponteir|extrem/],
+  ['cen','Centroavantes','centroavante centroavantes centro avante',k=>k==='cen',/centroavant|centro avant/],
+  ['ata','Atacantes','atacante atacantes',k=>['ata','cen','pon'].includes(k),/atacant/]];
+(function(){
+  const jogC=()=>{ const m={}; JP().filter(j=>j.resultado&&j.escalacao_galo).forEach(j=>{ const e=j.escalacao_galo; new Set([...(e.titulares||[]),...(e.substituicoes||[]).map(x=>x.entrou)].filter(Boolean)).forEach(n=>m[n]=(m[n]||0)+1); }); return Object.entries(m).sort((a,b)=>b[1]-a[1]).map(([n,v])=>({nome:nomeV(n), href:'#jogador-'+slug(n), v})); };
+  POS_LISTAS.forEach(([k,t,sin,ok,req,soJogos])=>{
+    const set=()=>new Set(D.jogadores.filter(p=>ok(posFina(p.nome))).map(p=>slug(p.nome)));
+    const filtra=L=>{ const s=set(); return L.filter(x=>s.has((x.href||'').replace('#jogador-',''))); };
+    if(!soJogos){ LISTAS.push(['Posições','pos-'+k+'-gols',t+' com mais gols','gols',()=>PER?filtra(contaEv(()=>true)):D.jogadores.filter(p=>ok(posFina(p.nome))).map(p=>({nome:nomeV(p.nome), href:'#jogador-'+slug(p.nome), v:golsBest(p), obs:posDet(p.nome)})).sort((a,b)=>b.v-a.v)]);
+      LISTA_SIN['pos-'+k+'-gols']=sin+' gols gol marcou marcaram artilheiro artilheiros goleador'; LISTA_REQ['pos-'+k+'-gols']=req; }
+    LISTAS.push(['Posições','pos-'+k+'-jogos',t+' com mais jogos','jogos',()=>PER?filtra(jogC()):D.jogadores.filter(p=>p.jogos&&ok(posFina(p.nome))).map(p=>({nome:nomeV(p.nome), href:'#jogador-'+slug(p.nome), v:p.jogos, obs:posDet(p.nome)})).sort((a,b)=>b.v-a.v)]);
+    LISTA_SIN['pos-'+k+'-jogos']=sin+' jogos jogou jogaram atuou partidas'; LISTA_REQ['pos-'+k+'-jogos']=req;
+  });
+})();
+
+/* ---------- Jogaram no Galo e no... (carreiras do Canto do Galo) ---------- */
+let CLUBES_IDX=null;
+function clubeN(c){ c=String(c||'').replace(/\.{2,}|…/g,'').replace(/^e\s+/i,'').replace(/\s*-\s*/g,'-').replace(/\s+/g,' ').trim(); if(!c||/^atl[eé]tico$/i.test(c)) return null;
+  if(/^palestra it[aá]lia(-mg|\/)|^palestra mineiro|^ipiranga \(?cruzeiro/i.test(c)) return 'Cruzeiro-MG'; if(/^palestra it[aá]lia-sp/i.test(c)) return 'Palmeiras-SP'; return c; }
+function clubesIdx(){ if(CLUBES_IDX) return CLUBES_IDX; const m={};
+  const put=(c,tipo,nome,quando)=>{ const n=clubeN(c); if(!n) return; const k=nrm(n); const o=(m[k] ||= {nome:n, jog:{}, tec:{}}); o[tipo][nome] ||= quando; };
+  const quando=(B,c)=>{ const cl=(B.clubes||[]), gi=cl.map((x,i)=>/^atl[eé]tico$/i.test(String(x).replace(/\.+/g,'').trim())?i:-1).filter(i=>i>=0); const ci=cl.map((x,i)=>clubeN(x)&&nrm(clubeN(x))===nrm(clubeN(c))?i:-1).filter(i=>i>=0);
+    if(!ci.length) return 'base'; if(!gi.length) return ''; const antes=ci.some(i=>i<gi[gi.length-1]), dep=ci.some(i=>i>gi[0]); return antes&&dep?'antes e depois':antes?'antes':'depois'; };
+  Object.entries(D.bios&&D.bios.jogadores||{}).forEach(([nome,B])=>{ [...(B.base||[]),...(B.clubes||[])].forEach(c=>put(c,'jog',nome,quando(B,c))); });
+  Object.entries(D.bios&&D.bios.tecnicos||{}).forEach(([nome,B])=>{ (B.clubes||[]).forEach(c=>put(c,'tec',nome,'')); });
+  Object.keys(m).forEach(k=>{ if(!m[k]||/-[a-z]{2,3}$/.test(k)) return; const alvo=Object.keys(m).filter(x=>x!==k&&x.replace(/-[a-z]{2,3}$/,'')===k); if(alvo.length===1){ const o=m[alvo[0]]; Object.entries(m[k].jog).forEach(([n,q])=>o.jog[n] ||= q); Object.entries(m[k].tec).forEach(([n,q])=>o.tec[n] ||= q); delete m[k]; } });
+  return CLUBES_IDX=m; }
+function clubeLink(c){ const n=clubeN(c); return n?`<a href="#jogaram?${new URLSearchParams({c:n})}">${esc(c)}</a>`:esc(c); }
+const RIVAIS_CHIPS=['Cruzeiro-MG','América-MG','Flamengo-RJ','Palmeiras-SP','Corinthians-SP','São Paulo-SP','Santos-SP','Vasco da Gama-RJ','Fluminense-RJ','Botafogo-RJ','Grêmio-RS','Internacional-RS'];
+function jogaramLinhas(cs){ const I=clubesIdx(); const os=cs.map(c=>I[nrm(clubeN(c)||'')]).filter(Boolean); if(!os.length||os.length<cs.length) return null;
+  const nomes=Object.keys(os[0].jog).filter(n=>os.every(o=>o.jog[n]!=null));
+  return nomes.map(n=>{ const p=D.jogadores.find(x=>x.nome===n)||{nome:n}; return {nome:nomeV(n), _n:n, _href:'jogador-'+slug(n), pos:posDet(n)||'', jogos:p.jogos||0, gols:golsBest(p)||0, periodo:(D.bios.jogadores[n]||{}).periodo||'', quando:cs.length===1?os[0].jog[n]:''}; }); }
+function vJogaram(params){
+  const P=new URLSearchParams(params||''); const cs=(P.get('c')||'').split('|').map(s=>s.trim()).filter(Boolean); const I=clubesIdx();
+  const todos=Object.values(I).filter(o=>Object.keys(o.jog).length>=2).sort((a,b)=>Object.keys(b.jog).length-Object.keys(a.jog).length);
+  const go=`(()=>{ const a=document.getElementById('jc1').value.trim(), b=document.getElementById('jc2').value.trim(); if(a) location.hash='jogaram?'+new URLSearchParams({c:[a,b].filter(Boolean).join('|')}); })()`;
+  let corpo='';
+  if(cs.length){ const L=jogaramLinhas(cs); const nomes=cs.map(c=>(I[nrm(clubeN(c)||'')]||{nome:c}).nome);
+    if(!L) corpo=`<p class="empty">Não achei "${esc(cs.join(' e '))}" nas carreiras. Escolha um clube da lista.</p>`;
+    else { const tit=`Jogaram no Galo e no ${nomes.map(x=>x.replace(/-[A-Z]{2,3}$/,'')).join(' e no ')}`; const tec=cs.length===1?Object.keys(I[nrm(clubeN(cs[0]))].tec):[];
+      const ant=L.filter(x=>x.quando==='antes').length, dep=L.filter(x=>x.quando==='depois').length;
+      corpo=`<h2>${esc(tit)}</h2><p class="lede">${N(L.length)} jogador${L.length===1?'':'es'}${cs.length===1&&L.length?`: ${N(ant)} chegaram de lá, ${N(dep)} foram para lá depois do Galo${L.length-ant-dep?` e ${N(L.length-ant-dep)} passaram antes e depois ou só na base`:''}`:''}.</p><div id="jgtab"></div>
+      ${tec.length?`<h3>Técnicos que também trabalharam no ${esc(nomes[0])}</h3><p>${tec.sort().map(t=>`<a class="chip" href="#jogos?${new URLSearchParams({tec:t})}">${esc(t)}</a>`).join(' ')}</p>`:''}
+      <p class="count">Carreiras de O Canto do Galo. Jogos e gols da base do Galo Metrics.</p>`;
+      setTimeout(()=>sortable('jgtab',[{k:'nome',t:'Jogador'},{k:'pos',t:'Posição'},{k:'jogos',t:'Jogos',n:1},{k:'gols',t:'Gols',n:1},{k:'periodo',t:'No Galo'},...(cs.length===1?[{k:'quando',t:'No outro clube'}]:[])],L,'jogos',500)); } }
+  return `<div class="kicker">Carreiras</div><h1>Jogaram no Galo e no…</h1>
+  <p class="count">Escolha um clube (e, se quiser, um segundo) para ver quem passou pelo Galo e por ele.</p>
+  <datalist id="jclubes">${todos.map(o=>`<option value="${esc(o.nome)}">`).join('')}</datalist>
+  <div class="filters"><label>Clube<input id="jc1" list="jclubes" value="${esc(cs[0]||'')}" placeholder="Cruzeiro-MG"></label><label>E também no (opcional)<input id="jc2" list="jclubes" value="${esc(cs[1]||'')}" placeholder="Flamengo-RJ"></label><label>&nbsp;<button type="button" class="more" onclick="${go}">Ver</button></label></div>
+  <div class="pq-ex">${RIVAIS_CHIPS.map(c=>`<a class="chip" href="#jogaram?${new URLSearchParams({c})}">${esc(c.replace(/-[A-Z]{2}$/,''))}</a>`).join('')}</div>${corpo}`;
+}
+function clubeDaBusca(q){ const t=' '+nrm(q).replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ')+' '; if(!/jogaram|jogou|passaram|passou|atuaram|atuou|vestiram|defenderam|ambos|tambem/.test(t)) return null;
+  let best=null; Object.values(clubesIdx()).forEach(o=>{ const b=nrm(o.nome.replace(/-[A-Z]{2,3}$/,'')).replace(/[^a-z0-9 ]/g,' ').trim(); if(b.length<4||b==='galo') return; if(t.includes(' '+b+' ')){ const sc=b.length*1000+Object.keys(o.jog).length; if(!best||sc>best.sc) best={o,sc}; } }); return best&&best.o; }
+
+/* ---------- Presidentes ---------- */
+const PRES_FIX={'José Francisco de Paula Júnior':'1952-1953 e 1956-1957'};
+function presAnos(per){ const a=new Set(); String(per||'').replace(/\(.*?\)|\[.*?\]/g,'').replace(/(\d{4})\s*-\s*(\d{4})/g,(m,x,y)=>{ for(let i=+x;i<=+y;i++) a.add(i); return ' '; }).replace(/\d{4}/g,m=>{ a.add(+m); return ''; }); return [...a].sort((x,y)=>x-y); }
+function presLista(){ return Object.entries(D.bios&&D.bios.presidentes||{}).map(([k,B])=>{ const anos=presAnos(PRES_FIX[k]||B.periodo), s=new Set(anos), r=rec(J.filter(j=>j.resultado&&s.has(j.temporada)));
+  const tit=(B.titulos||[]).filter(t=>!/vice/i.test(t)).reduce((n,t)=>n+Math.max(1,(t.match(/\b(18|19|20)\d{2}\b/g)||[]).length),0);
+  return {...B, nome:k, anos, r, tit, _href:'presidente-'+slug(k)}; }).sort((a,b)=>(a.ordem||99)-(b.ordem||99)); }
+function vPresidentes(){
+  const L=presLista();
+  setTimeout(()=>sortable('prtab',[{k:'ordem',t:'Nº',n:1},{k:'nome',t:'Presidente'},{k:'mand',t:'Mandatos'},{k:'jogos',t:'Jogos',n:1},{k:'V',t:'V',n:1},{k:'E',t:'E',n:1},{k:'D',t:'D',n:1},{k:'ap',t:'Aprov.',n:1,f:o=>o.jogos?o.ap+'%':'–'},{k:'tit',t:'Títulos',n:1}],
+    L.map(p=>({...p,mand:(PRES_FIX[p.nome]||p.periodo||'').replace(/\s*\[VER\]/,'').replace(/\.$/,''),jogos:p.r.n,V:p.r.V,E:p.r.E,D:p.r.D,ap:p.r.n?Math.round(100*(3*p.r.V+p.r.E)/(3*p.r.n)):0,_tb:-(p.ordem||99)})),'ordem',100));
+  return `<div class="kicker">Gestão</div><h1>Presidentes do Galo</h1><p class="count" style="margin-top:14px">Os ${L.length} presidentes da história, de Margival Mendes Leal (1908) a hoje. Jogos e aproveitamento contam as temporadas de cada mandato; anos de transição entram para os dois presidentes. Títulos e diretorias de O Canto do Galo.</p><div id="prtab"></div>`;
+}
+function vPresidente(s){
+  const p=presLista().find(x=>slug(x.nome)===s); if(!p) return '<p class="empty">Presidente não encontrado.</p>';
+  const tecs=(p.treinadores||'').replace(/\.$/,'').split(/;|,| e (?=[A-ZÁÉÍÓÚ])/).map(x=>x.trim()).filter(Boolean).map(t=>{ const T=D.tecnicos.find(x=>nrm(x.nome)===nrm(t)); return T?`<a class="chip" href="#jogos?${new URLSearchParams({tec:T.nome})}">${esc(t)}</a>`:`<span class="chip">${esc(t)}</span>`; }).join(' ');
+  const L=[]; if(p.nascimento) L.push(['Nascimento',fmtD(p.nascimento)+(p.naturalidade&&p.naturalidade!=='?'?' em '+esc(p.naturalidade):'')]); else if(p.naturalidade&&!/^\?/.test(p.naturalidade)) L.push(['Natural de',esc(p.naturalidade)]);
+  if(p.falecimento) L.push(['Falecimento',fmtD(p.falecimento)]);
+  L.push(['Mandatos',esc((PRES_FIX[p.nome]||p.periodo||'').replace(/\s*\[VER\]/,''))]);
+  if(p.titulos&&p.titulos.length) L.push(['Títulos',p.titulos.map(esc).join('<br>')]);
+  if(tecs) L.push(['Treinadores',tecs]);
+  if(p.realizacoes) L.push(['Realizações',esc(p.realizacoes)]);
+  if(p.obs) L.push(['Observações',esc(p.obs)]);
+  const r=p.r; const ix=presLista().findIndex(x=>x.nome===p.nome), all=presLista(), ant=all[ix-1], prox=all[ix+1];
+  return `<div class="kicker">${p.ordem?p.ordem+'º presidente':'Presidente'} do Galo</div><h1>${esc(p.nome)}</h1>
+  ${r.n?`<div class="statrow"><div class="stat"><b>${N(r.n)}</b><span>jogos</span></div><div class="stat"><b>${r.V}</b><span>vitórias</span></div><div class="stat"><b>${r.E}</b><span>empates</span></div><div class="stat"><b>${r.D}</b><span>derrotas</span></div><div class="stat"><b>${aprov(r)}</b><span>aproveitamento</span></div><div class="stat"><b>${N(r.gp)}</b><span>gols pró</span></div></div>`:''}
+  <details class="ficha-canto" open><summary>Ficha do presidente</summary><dl>${L.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></details>
+  ${p.diretoria?`<details class="ficha-canto"><summary>Diretoria</summary><p style="line-height:1.5">${esc(p.diretoria)}</p></details>`:''}
+  ${p.anos.length?`<h3>Temporadas</h3><div class="pq-ex">${p.anos.map(a=>`<a class="chip" href="#temporada-${a}">${a}</a>`).join('')}</div>`:''}
+  <p class="count" style="margin-top:20px">${ant?`<a href="#presidente-${slug(ant.nome)}">← ${esc(ant.nome)}</a>`:''}${ant&&prox?' · ':''}${prox?`<a href="#presidente-${slug(prox.nome)}">${esc(prox.nome)} →</a>`:''} · <a href="#presidentes">Todos os presidentes</a></p>`;
+}
+
+/* ---------- Naturalidade dos jogadores: mapa, estrangeiros e listas ---------- */
+const GENT_P={ARG:'argentinos',URY:'uruguaios',COL:'colombianos',ECU:'equatorianos',PRY:'paraguaios',VEN:'venezuelanos',ITA:'italianos',CHL:'chilenos',HUN:'húngaros',GIN:'guineenses',BOL:'bolivianos',SRB:'sérvios',USA:'norte-americanos',JPN:'japoneses',PER:'peruanos',PRT:'portugueses',ESP:'espanhóis',DEU:'alemães',FRA:'franceses',MEX:'mexicanos'};
+function nascDe(nome,tipo){ const B=(D.bios&&D.bios[tipo||'jogadores']||{})[nome]; if(!B||!B.naturalidade) return null; const g=(D.bios.geo_nasc||{})[B.naturalidade]; return g?{...g, nat:B.naturalidade}:null; }
+function nascRows(tipo){ return Object.keys(D.bios&&D.bios[tipo||'jogadores']||{}).map(n=>{ const g=nascDe(n,tipo); if(!g) return null; const p=D.jogadores.find(x=>x.nome===n)||{}; const B=D.bios[tipo||'jogadores'][n];
+  return {nome:tipo==='tecnicos'?n:nomeV(n), _n:n, _href:tipo==='tecnicos'?'jogos?'+new URLSearchParams({tec:n}):'jogador-'+slug(n), g, pais:g.pais, cid:(g.cid||'')+(g.uf?' - '+g.uf:''), pos:tipo==='tecnicos'?'Técnico':(posDet(n)||''), jogos:tipo==='tecnicos'?((D.tecnicos.find(x=>x.nome===n)||{}).jogos||0):(p.jogos||0), gols:tipo==='tecnicos'?0:(golsBest(p)||0), periodo:B.periodo||''}; }).filter(Boolean); }
+function vEstrangeiros(params){
+  const P=new URLSearchParams(params||''), ps=P.get('pais')||'';
+  const J_=nascRows('jogadores').filter(r=>r.g.iso3!=='BRA'), T_=nascRows('tecnicos').filter(r=>r.g.iso3!=='BRA');
+  const por={}; J_.forEach(r=>{ (por[r.g.iso3] ||= {nome:r.pais,n:0}).n++; });
+  const L=ps?J_.filter(r=>r.g.iso3===ps):J_, LT=ps?T_.filter(r=>r.g.iso3===ps):T_;
+  setTimeout(()=>{ const draw=()=>{ const q=nrm($('#eq').value); sortable('etab',[{k:'nome',t:'Jogador'},{k:'pais',t:'País'},{k:'cid',t:'Cidade'},{k:'pos',t:'Posição'},{k:'jogos',t:'Jogos',n:1},{k:'gols',t:'Gols',n:1},{k:'periodo',t:'No Galo'}],L.filter(r=>!q||nrm(r.nome+' '+r.pais+' '+r.cid).includes(q)),'jogos',500); }; $('#eq').oninput=draw; draw();
+    if(LT.length) sortable('ettab',[{k:'nome',t:'Técnico'},{k:'pais',t:'País'},{k:'cid',t:'Cidade'},{k:'jogos',t:'Jogos',n:1},{k:'periodo',t:'No Galo'}],LT,'jogos'); });
+  return `<div class="kicker">Naturalidade</div><h1>Estrangeiros no Galo</h1>
+  <div class="tiles"><div class="tile"><b>${N(J_.length)}</b><span>Jogadores</span></div><div class="tile"><b>${Object.keys(por).length}</b><span>Países</span></div><div class="tile"><b>${N(T_.length)}</b><span>Técnicos</span></div></div>
+  <div class="pq-ex"><a class="chip${ps?'':' on'}" href="#estrangeiros">Todos</a>${Object.entries(por).sort((a,b)=>b[1].n-a[1].n).map(([k,o])=>`<a class="chip${k===ps?' on':''}" href="#estrangeiros?pais=${k}">${esc(o.nome)} (${o.n})</a>`).join('')}</div>
+  <div class="filters"><label>Buscar<input id="eq" placeholder="nome, país ou cidade…"></label></div>
+  <h2>${ps?'Jogadores nascidos: '+esc((por[ps]||{}).nome||ps):'Jogadores nascidos fora do Brasil'}</h2><div id="etab"></div>
+  ${LT.length?`<h2>Técnicos estrangeiros</h2><div id="ettab"></div>`:''}
+  <p class="count">Naturalidade das fichas de O Canto do Galo. <a href="#mapa?aba=nasc-mundo">Ver no mapa →</a></p>`;
+}
+function vMapaNasc(aba,uf,cid){
+  const M=D.geo, R=nascRows('jogadores'); const tom=(n,max)=>{ if(!n) return ''; const t=Math.log(1+n)/Math.log(1+max); return t>.8?'t5':t>.6?'t4':t>.4?'t3':t>.2?'t2':'t1'; };
+  const raio=n=>Math.max(2.2,Math.min(14,2*Math.sqrt(n)));
+  const porC={}; R.forEach(r=>{ const k=r.g.nat; (porC[k] ||= {g:r.g,l:[]}).l.push(r); });
+  const tab=l=>`<table><thead><tr><th>Jogador</th><th class="hide-s">Posição</th><th>Nasceu em</th><th class="n">Jogos</th><th class="n">Gols</th></tr></thead><tbody>${l.sort((a,b)=>b.jogos-a.jogos).map(r=>`<tr class="click" onclick="location.hash='${r._href}'"><td>${esc(r.nome)}</td><td class="hide-s">${esc(r.pos)}</td><td>${esc(r.cid||r.pais)}</td><td class="n">${N(r.jogos)}</td><td class="n">${N(r.gols)}</td></tr>`).join('')}</tbody></table>`;
+  let svg, lista;
+  if(aba==='nasc'){ const br=R.filter(r=>r.g.iso3==='BRA'); const porUF={}; br.forEach(r=>{ (porUF[r.g.uf] ||= []).push(r); }); const mx=Math.max(...Object.values(porUF).map(l=>l.length));
+    const cids=Object.values(porC).filter(o=>o.g.iso3==='BRA'&&o.g.bx!=null).sort((a,b)=>b.l.length-a.l.length);
+    svg=`<svg class="mapa" viewBox="0 0 ${M.br.w} ${M.br.h}" role="img" aria-label="Onde nasceram os jogadores do Galo">${Object.entries(M.br.uf).map(([u,d])=>`<a href="#mapa?aba=nasc&uf=${u}"><path d="${d}" class="uf ${tom((porUF[u]||[]).length,mx)}${u===uf?' sel':''}"><title>${esc(M.br.nomes[u])}: ${N((porUF[u]||[]).length)} jogadores</title></path></a>`).join('')}
+      ${[...cids].reverse().map(o=>`<a href="#mapa?${new URLSearchParams({aba:'nasc',cid:o.g.nat})}"><circle cx="${o.g.bx}" cy="${o.g.by}" r="${raio(o.l.length)}" class="dot"><title>${esc(o.g.cid)} - ${o.g.uf}: ${N(o.l.length)} jogadores</title></circle></a>`).join('')}</svg>`;
+    if(cid&&porC[cid]) lista=`<h2>Nascidos em ${esc(cid)}: ${N(porC[cid].l.length)}</h2>${tab(porC[cid].l)}<p class="count"><a href="#mapa?aba=nasc">← Todos os estados</a></p>`;
+    else if(uf) { const l=porUF[uf]||[]; const top=Object.values(porC).filter(o=>o.g.uf===uf&&o.g.cid&&o.g.cid!=='?').sort((a,b)=>b.l.length-a.l.length).slice(0,12);
+      lista=`<h2>${esc(M.br.nomes[uf])}: ${N(l.length)} jogadores</h2><div class="pq-ex">${top.map(o=>`<a class="chip" href="#mapa?${new URLSearchParams({aba:'nasc',cid:o.g.nat})}">${esc(o.g.cid||'?')} (${o.l.length})</a>`).join('')}</div>${tab(l)}<p class="count"><a href="#mapa?aba=nasc">← Todos os estados</a></p>`; }
+    else lista=`<h2>Estados</h2><table><thead><tr><th>Estado</th><th class="n">Jogadores</th><th>Cidade que mais revelou</th></tr></thead><tbody>${Object.entries(porUF).sort((a,b)=>b[1].length-a[1].length).map(([u,l])=>{ const c=Object.values(porC).filter(o=>o.g.uf===u&&o.g.cid).sort((a,b)=>b.l.length-a.l.length)[0]; return `<tr class="click" onclick="location.hash='mapa?aba=nasc&uf=${u}'"><td>${esc(M.br.nomes[u]||u)}</td><td class="n">${N(l.length)}</td><td>${c?esc(c.g.cid)+' ('+c.l.length+')':''}</td></tr>`; }).join('')}</tbody></table>
+      <h3>Cidades que mais revelaram jogadores para o Galo</h3><ol class="rank">${cids.slice(0,15).map((o,i)=>`<li><span class="rank-n">${i+1}</span><a href="#mapa?${new URLSearchParams({aba:'nasc',cid:o.g.nat})}">${esc(o.g.cid)} - ${o.g.uf}</a><b>${N(o.l.length)}</b></li>`).join('')}</ol>`;
+  } else { const ex=R.filter(r=>r.g.iso3!=='BRA'); const porP={}; ex.forEach(r=>{ (porP[r.g.iso3] ||= {nome:r.pais,l:[]}).l.push(r); }); const mx=Math.max(...Object.values(porP).map(o=>o.l.length)); const ps=uf;
+    const pts=Object.values(porC).filter(o=>o.g.iso3!=='BRA'&&o.g.wx!=null);
+    svg=`<svg class="mapa" viewBox="0 40 1000 380" role="img" aria-label="Países onde nasceram jogadores do Galo">${Object.entries(M.mundo.p).map(([k,d])=>`<a href="#mapa?aba=nasc-mundo&uf=${k}"><path d="${d}" class="uf ${k==='BRA'?'br':tom((porP[k]||{l:[]}).l.length,mx)}${k===ps?' sel':''}"><title>${esc((porP[k]||{}).nome||k)}${porP[k]?': '+porP[k].l.length+' jogadores':''}</title></path></a>`).join('')}
+      ${pts.map(o=>`<circle cx="${o.g.wx}" cy="${o.g.wy}" r="${Math.max(2,raio(o.l.length)*.55)}" class="dot"><title>${esc(o.g.cid||o.g.pais)}: ${o.l.length}</title></circle>`).join('')}</svg>`;
+    lista=ps&&porP[ps]?`<h2>Nascidos: ${esc(porP[ps].nome)}, ${porP[ps].l.length}</h2>${tab(porP[ps].l)}<p class="count"><a href="#mapa?aba=nasc-mundo">← Todos os países</a> · <a href="#estrangeiros?pais=${ps}">Lista completa</a></p>`
+      :`<h2>Países</h2><table><thead><tr><th>País</th><th class="n">Jogadores</th><th>Mais jogos pelo Galo</th></tr></thead><tbody>${Object.entries(porP).sort((a,b)=>b[1].l.length-a[1].l.length).map(([k,o])=>{ const t=[...o.l].sort((a,b)=>b.jogos-a.jogos)[0]; return `<tr class="click" onclick="location.hash='mapa?aba=nasc-mundo&uf=${k}'"><td>${esc(o.nome)}</td><td class="n">${o.l.length}</td><td>${esc(t.nome)} (${N(t.jogos)})</td></tr>`; }).join('')}</tbody></table><p class="count"><a href="#estrangeiros">Lista de todos os estrangeiros →</a></p>`; }
+  const nBR=R.filter(r=>r.g.iso3==='BRA').length;
+  return `<div class="kicker">Almanaque · naturalidade</div><h1>Onde nasceram os jogadores do Galo</h1>
+  <div class="tiles"><div class="tile"><b>${N(R.length)}</b><span>Jogadores com naturalidade</span></div><div class="tile"><b>${N(nBR)}</b><span>Brasileiros</span></div><div class="tile"><b>${N(R.length-nBR)}</b><span>Estrangeiros</span></div><div class="tile"><b>${new Set(R.filter(r=>r.g.uf).map(r=>r.g.uf)).size}<small>/27</small></b><span>Estados</span></div></div>
+  <div class="abas"><a href="#mapa?aba=brasil">Jogos no Brasil</a><a href="#mapa?aba=mundo">Jogos no mundo</a><a href="#mapa?aba=nasc" class="${aba==='nasc'?'on':''}">Nascimento: Brasil</a><a href="#mapa?aba=nasc-mundo" class="${aba!=='nasc'?'on':''}">Nascimento: mundo</a></div>
+  <div class="mapa-box">${svg}<div class="mapa-leg"><span><i class="t1"></i>poucos jogadores</span><span><i class="t5"></i>muitos jogadores</span><span><i class="dotl"></i>cidade natal (tamanho = jogadores)</span></div></div>${lista}
+  <p class="count">Naturalidade das fichas de O Canto do Galo (${N(R.length)} jogadores).</p>`;
+}
+(function(){
+  const lin=f=>()=>nascRows('jogadores').filter(f).map(r=>({nome:r.nome, href:'#'+r._href, v:r.jogos, obs:r.cid||r.pais})).sort((a,b)=>b.v-a.v);
+  LISTAS.push(['Naturalidade','estrangeiros','Jogadores estrangeiros com mais jogos pelo Galo','jogos',lin(r=>r.g.iso3!=='BRA')]); LISTA_SIN['estrangeiros']='estrangeiro estrangeiros gringo gringos exterior nascidos fora do brasil nacionalidade naturalidade jogadores'; LISTA_REQ['estrangeiros']=/estrangeir|gringo|exterior|fora do brasil/;
+  Object.entries(GENT_P).forEach(([k,g])=>{ LISTAS.push(['Naturalidade','nasc-'+k,'Jogadores '+g.split(' ')[0]+' do Galo','jogos',lin(r=>r.g.iso3===k)]); LISTA_SIN['nasc-'+k]=g+' jogadores nascidos'; LISTA_REQ['nasc-'+k]=new RegExp(g.split(' ').map(x=>nrm(x).slice(0,-2)).join('|')); });
+  Object.entries(UFS).filter(([u])=>u.length===2).forEach(([u,[e,g]])=>{ LISTAS.push(['Naturalidade','nasc-'+u,`Jogadores ${g} do Galo (nascidos em ${e})`,'jogos',lin(r=>r.g.uf===u)]); const gg=u==='RJ'?'cariocas':g; LISTA_SIN['nasc-'+u]=nrm(gg)+' jogadores nascidos naturais'; LISTA_REQ['nasc-'+u]=new RegExp(nrm(gg).split(/ e |-/).map(x=>x.trim().slice(0,-2)).filter(x=>x.length>=4).join('|')); });
+})();
 
 </script>
 </body>
