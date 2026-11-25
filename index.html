@@ -2198,9 +2198,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261125170707';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261125170707"></script>
-<script src="backend-firebase.js?v=20261125170707"></script>
+<script>window.GM_BUILD='20261125171037';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261125171037"></script>
+<script src="backend-firebase.js?v=20261125171037"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -3612,7 +3612,9 @@ function blocoDonoImg(tipo, chave, nome){
 }
 
 /* ---------- Perfil e conquistas ---------- */
-function gExtra(){ G.diario ||= {}; G.vis ||= {jogo:{},jogador:{},adversario:{},temporada:{},competicao:{}}; G.seq ||= {ult:'',atual:0,max:0}; G.conq ||= {}; G.jd ||= {}; G.perfil ||= {apelido:'',fav:''}; G.jdSeq ||= {ult:'',atual:0,max:0}; }
+const RENOMES={'Rony (2025–26)':'Rony','Rolete (1996)':'Rolete','Miron':'Myron'};
+function gRenomes(){ let mud=false; Object.entries(RENOMES).forEach(([a,b])=>{ ['owned','jogVistos'].forEach(k=>{ const o=G[k]; if(o&&o[a]!==undefined){ o[b]=k==='owned'?(o[b]||0)+o[a]:(o[b]||o[a]); delete o[a]; mud=true; } }); if(G.perfil&&G.perfil.fav===a){ G.perfil.fav=b; mud=true; } }); return mud; }
+function gExtra(){ try{ if(gRenomes()) setTimeout(()=>{ try{ gSave(); }catch(e){} },0); }catch(e){} G.diario ||= {}; G.vis ||= {jogo:{},jogador:{},adversario:{},temporada:{},competicao:{}}; G.seq ||= {ult:'',atual:0,max:0}; G.conq ||= {}; G.jd ||= {}; G.perfil ||= {apelido:'',fav:''}; G.jdSeq ||= {ult:'',atual:0,max:0}; }
 function diasEntre(a,b){ return Math.round((new Date(b+'T12:00')-new Date(a+'T12:00'))/864e5); }
 function marcaVisita(h){
   gExtra(); const d=hojeStr();
