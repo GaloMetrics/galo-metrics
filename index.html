@@ -2190,7 +2190,7 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
   <span class="topbtns"><form id="hq" class="hq" role="search"><input type="search" id="hqi" placeholder="Buscar jogador, clube, cidade…" aria-label="Buscar no Galo Metrics"></form><a id="gmchip" href="#perfil" class="gmchip">★ Perfil</a><span id="gmconta" class="gmconta" hidden><button id="gmlogin" type="button" aria-haspopup="true"></button><span id="gmmenu" class="gmmenu" hidden></span></span><button id="navbtn" type="button" aria-label="Abrir menu" aria-expanded="false" onclick="var o=document.body.classList.toggle('navopen');this.setAttribute('aria-expanded',o)"><span class="hb"></span>Menu</button></span></div>
   <nav id="nav" aria-label="Principal">
     <a href="#inicio">Início</a><a href="#jogos">Jogos</a><a href="#jogadores">Jogadores</a><a href="#adversarios">Adversários</a><a href="#competicoes">Competições</a><a href="#mapa">Mapa</a><a href="#pergunte">Busca</a><a href="#embreve" class="nav-breve">Em breve</a>
-    <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#duplas">Duplas e trios <b class="novo">novo</b></a><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#presidentes">Presidentes <b class="novo">novo</b></a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
+    <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#duplas">Duplas e trios <b class="novo">novo</b></a><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#presidentes">Presidentes <b class="novo">novo</b></a><a href="#estadios">Estádios <b class="novo">novo</b></a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
     <span class="nav-sep" aria-hidden="true"></span>
     <details class="menu jogar"><summary>★ Jogar</summary><div class="menu-p"><a href="#desafios">Desafios do dia</a><a href="#palpites">Palpites</a><a href="#album">Álbum de figurinhas</a><a href="#ranking">Ranking da semana</a></div></details>
     <details class="menu area"><summary>Meu perfil</summary><div class="menu-p"><a href="#perfil">Perfil e conquistas</a><a href="#torcedores">Amigos</a><a href="#diario">Meu diário</a><a href="#sugestoes">Sugestões e correções</a><a href="#colaboradores">Colaboradores</a><a href="#apoie">♥ Apoie</a><a href="#dono" id="navdono" hidden>Página do dono</a></div></details>
@@ -2198,9 +2198,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261125200038';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261125200038"></script>
-<script src="backend-firebase.js?v=20261125200038"></script>
+<script>window.GM_BUILD='20261125212706';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261125212706"></script>
+<script src="backend-firebase.js?v=20261125212706"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2506,7 +2506,7 @@ function vJogo(id){
       ${subs.length?`<div class="subhead">Substitutos</div><ul class="lineup">${subs.map(p=>`<li><span>${nomeJ(p,galo)} ${bola(gc[p])}</span></li>`).join('')}</ul>`:''}
       ${tec?`<p class="count">Técnico: <b>${galo?`<a href="${typeof tecHref==='function'?tecHref(tec):linkJogos({tec})}">${esc(tec)}</a>`:esc(tec)}</b></p>`:''}`; };
     ficha = `<div class="meta">
-      <div><span>Local</span>${esc(j.cidade||'–')}</div><div><span>Estádio</span>${j.estadio?`<a href="${linkJogos({est:j.estadio})}">${esc(j.estadio)}</a>`:'–'}</div>
+      <div><span>Local</span>${esc(j.cidade||'–')}</div><div><span>Estádio</span>${j.estadio?`<a href="${estHref(j.estadio)}">${esc(j.estadio)}</a>`:'–'}</div>
       <div><span>Público</span>${j.publico!=null?N(j.publico)+' '+esc(j.publico_tipo||''):'–'}</div><div><span>Renda</span>${esc(j.renda||'–')}</div>
       <div><span>Árbitro</span>${esc(j.arbitro||'–')}</div>${j.expulsoes?`<div><span>Expulsões</span>${esc(j.expulsoes)}</div>`:''}</div>
       ${prev?'<p class="note"><b>Escalações confirmadas.</b> O jogo ainda não aconteceu; jogos e gols só entram na base depois do apito final.</p>':''}${eg&&eg.titulares&&eg.titulares.length>=7?`<h2>${prev?'O Galo vai a campo':'O Galo em campo'}</h2>${campoHTML(eg.titulares,{form:eg.form||(j.data<'1960'&&eg.titulares.length===11?'2-3-5':null), gols:golsDe('galo'), notas:(diario()[j.id]||{}).nj, craque:(diario()[j.id]||{}).cr})}`:''}
@@ -2515,7 +2515,7 @@ function vJogo(id){
       ${eg&&eg.reservas&&eg.reservas.length?`<p class="count"><b>Banco do Galo:</b> ${eg.reservas.map(n=>`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`).join(', ')}</p>`:''}
       ${j.obs?`<div class="note"><b>Obs.</b> ${esc(j.obs)}</div>`:''}`;
   } else {
-    const mt=[j.cidade?`<div><span>Local</span>${esc(j.cidade)}</div>`:'', j.estadio?`<div><span>Estádio</span><a href="${linkJogos({est:j.estadio})}">${esc(j.estadio)}</a></div>`:'', j.publico!=null?`<div><span>Público</span>${N(j.publico)} ${esc(j.publico_tipo||'')}</div>`:''].join('');
+    const mt=[j.cidade?`<div><span>Local</span>${esc(j.cidade)}</div>`:'', j.estadio?`<div><span>Estádio</span><a href="${estHref(j.estadio)}">${esc(j.estadio)}</a></div>`:'', j.publico!=null?`<div><span>Público</span>${N(j.publico)} ${esc(j.publico_tipo||'')}</div>`:''].join('');
     ficha = `${mt?`<div class="meta">${mt}</div>`:''}<div class="note">Ficha completa (escalação${j.estadio?'':', estádio'}${j.publico!=null?'':', público'}) ainda não cadastrada para este jogo.${j.cidade_fonte?' Local e público: RSSSF Brasil (Jackass Molibidenio).':''}</div>`;
   }
   return `${nav}<div class="kicker">${esc(j.competicao||'')}${j.fase?' · '+esc(j.fase):''} · ${fmtD(j.data,j.data_aprox)} ${mandoLbl(j)?' · '+mandoLbl(j):''}</div>
@@ -4513,6 +4513,8 @@ function route(){
   else if(h==='tecnicos') html=vTecnicos();
   else if(h==='presidentes') {html=vPresidentes(); sec='presidentes';}
   else if(h.startsWith('presidente-')) {html=vPresidente(h.slice(11)); sec='presidentes';}
+  else if(h==='estadios') {html=vEstadios(); sec='estadios';}
+  else if(h.startsWith('estadio-')) {html=vEstadio(h.slice(8)); sec='estadios';}
   else if(h.startsWith('tecnico-')) {html=vTecnico(h.slice(8)); sec='tecnicos';}
   else if(h==='jogaram') {html=vJogaram(params); sec='jogadores';}
   else if(h==='estrangeiros') {html=vEstrangeiros(params); sec='jogadores';}
@@ -4718,7 +4720,7 @@ const LISTAS=[
  ['Jogos','golsjogo','Jogos com mais gols do Galo','gols',()=>listaJogos(JP().filter(j=>j.resultado).sort((a,b)=>b.gp-a.gp||b.data.localeCompare(a.data)),j=>j.gp)],
  ['Lugares e adversários','adv','Adversários mais enfrentados','jogos',()=>(PER?advPer():advRows()).map(a=>({nome:a.nome, href:'#'+a._href, v:a.J})).sort((a,b)=>b.v-a.v)],
  ['Lugares e adversários','advv','Adversários que o Galo mais venceu','vitórias',()=>(PER?advPer():advRows()).map(a=>({nome:a.nome, href:'#'+a._href, v:a.V})).sort((a,b)=>b.v-a.v)],
- ['Lugares e adversários','estadios','Estádios com mais jogos','jogos',()=>Object.entries(PER?contaPor(j=>j.estadio&&!/n[ãa]o identificado/i.test(j.estadio)?j.estadio:null):estadiosAll()).sort((a,b)=>b[1]-a[1]).map(([n,v])=>({nome:n, href:linkJogos({est:n}), v}))],
+ ['Lugares e adversários','estadios','Estádios com mais jogos','jogos',()=>Object.entries(PER?contaPor(j=>j.estadio&&!/n[ãa]o identificado/i.test(j.estadio)?j.estadio:null):estadiosAll()).sort((a,b)=>b[1]-a[1]).map(([n,v])=>({nome:n, href:PER?linkJogos({est:n}):estHref(n), v}))],
  ['Lugares e adversários','cidades','Cidades onde o Galo mais jogou','jogos',()=>PER?Object.entries(contaPor(j=>j.cidade)).sort((a,b)=>b[1]-a[1]).map(([c,v])=>({nome:c, href:'#cidade-'+slug(c), v})):Object.entries(cidadesAll()).sort((a,b)=>b[1].l.length-a[1].l.length).map(([c,o])=>({nome:c, href:'#cidade-'+slug(c), v:o.l.length}))],
 ];
 function contaPor(f){ const m={}; JP().forEach(j=>{ const k=f(j); if(k) m[k]=(m[k]||0)+1; }); return m; }
@@ -4738,7 +4740,7 @@ function buscaEntidades(q){
   const html = bloco('Jogadores', jog.map(p=>`<li><a href="#jogador-${slug(p.nome)}">${esc(p.nome)}</a> <small class="uf">${N(golsBest(p))} gols${p.jogos?' · '+N(p.jogos)+' jogos':''} · ${(p.primeiro||'').slice(0,4)}–${(p.ultimo||'').slice(0,4)}</small></li>`))
     + bloco('Adversários', adv.map(a=>`<li>${cr(a.id)}<a href="#adversario-${slug(a.id)}">${esc(a.nome)}</a> <small class="uf">${a.J} jogos</small></li>`))
     + bloco('Cidades', cid.map(([c,o])=>`<li><a href="#cidade-${slug(c)}">${esc(c)}</a> <small class="uf">${o.l.length} jogos</small></li>`))
-    + bloco('Estádios', est.map(([e,n])=>`<li><a href="${linkJogos({est:e})}">${esc(e)}</a> <small class="uf">${n} jogos</small></li>`))
+    + bloco('Estádios', est.map(([e,n])=>`<li><a href="${estHref(e)}">${esc(e)}</a> <small class="uf">${n} jogos</small></li>`))
     + bloco('Técnicos', tec.map(t=>`<li><a href="#tecnicos">${esc(t.nome)}</a> <small class="uf">${t.jogos} jogos · ${t.V}V ${t.E}E ${t.D}D</small></li>`))
     + bloco('Temporada', temp.map(y=>`<li><a href="#temporada-${y}">Temporada ${y}</a></li>`));
   return html;
@@ -4774,7 +4776,7 @@ function vPergunte(params){
   if(L){ const [,id,tit0,unid,fn0,tipo,res]=L; const fn=o=>comPer(prL,()=>fn0(o)); const diaP=P.get('dia')||null, entP=P.get('ent')||null; const tit=prL?comSufixo(tituloLista(id,tit0,{dia:diaP,ent:entP}),prL):tituloLista(id,tit0,{dia:diaP,ent:entP}); const todas=fn({desde,dia:diaP,ent:entP}).filter(x=>x.v>0), linhas=(tipo==='mm'||tipo==='temp'||tipo==='datas'||id==='dia')?todas:todas.slice(0,30);
     corpo=`<h2>${esc(tit)}</h2>${tipo!=='datas'?filtroPer(id,prL,diaP,entP):''}${tipo!=='datas'&&todas.length?`<p>${artBtn({t:'lista',id,...perSpec(prL),...(diaP?{dia:diaP}:{}),...(entP?{ent:entP}:{})})}</p>`:''}${tipo==='datas'?`<p>${artBtn({t:'datas',id})} <a class="ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?${new URLSearchParams({text:tit+'\n\n'+(res?res(todas):''), url:'https://galometrics.com.br/#pergunte?lista='+id})}">Pronto para tweet ↗︎</a></p>`:''}${tipo==='mm'&&todas.length?`<p class="lede">${esc(resumoMM(todas,id==='mm-fin'||/^mf-/.test(id)))}</p>`:''}${res&&todas.length?`<p class="lede">${esc(res(todas))}</p>`:''}${linhas.length?`<ol class="rank">${linhas.map((x,i)=>liLista(x,i)).join('')}</ol><p class="count">Em ${esc(unid)}. Contagem jogo a jogo da base do Galo Metrics.</p>`:'<p class="empty">Nada para mostrar.</p>'}<p><a class="back" href="#pergunte">← Todas as listas</a></p>`; }
   else if(q.trim()&&(NQ=natDaBusca(q))){ const l=NQ.fn(); corpo=`${NQ.opts?`<div class="note"><b>${NQ.opts.every(o=>/^Cidade/.test(o.lab))?'Qual cidade você quer ver?':NQ.opts.some(o=>/^País/.test(o.lab))?'Você quer ver o país, o estado ou a cidade?':'Você quer ver o estado ou a cidade?'}</b> Há mais de um lugar com esse nome. Abaixo, a primeira opção.<div class="pq-ex" style="margin-top:8px">${NQ.opts.map((o,i)=>`<a class="chip${i?'':' on'}" href="#pergunte?${new URLSearchParams({q:o.q})}">${esc(o.lab)} (${N(o.n)})</a>`).join('')}</div></div>`:''}<h2>${esc(NQ.tit)}</h2><p class="lede">${N(l.length)} ${l.length===1?'jogador':'jogadores'} com essa naturalidade.</p><ol class="rank">${l.slice(0,15).map((x,i)=>`<li><span class="rank-n">${i+1}</span><a href="${x.href}">${esc(x.nome)}</a>${x.obs?`<small class="rank-obs">${esc(x.obs)}</small>`:''}<b>${N(x.v)}</b></li>`).join('')}</ol><p class="count">Em jogos. <a href="${NQ.href}">Ver todos →</a></p>`; }
-  else if(q.trim()){ const PQ=parsePer(q), prQ=PQ.per, qL=prQ?PQ.limpo:q; const qnT=nrm(q).replace(/[^a-z0-9 ]/g,' '), lugW=qnT.replace(/\b(jogos?|partidas?|do|da|o|a|os|galo|atletico|no|na|nos|nas|em|de|jogando|retrospecto|resultados?)\b/g,' ').replace(/\s+/g,' ').trim();
+  else if(q.trim()){ const PQ=parsePer(q), prQ=PQ.per, qL=prQ?PQ.limpo:q; { const qe=nrm(q).replace(/^(estadio|jogos (no|na|em)) /,'').trim(), estQ=Object.keys(estIdx()).filter(k=>nrm(k)===qe||nrm(k).replace(/\s*\(.*\)/,'')===qe); if(estQ.length) corpo+=`<div class="note">${estQ.map(k=>`<a class="more" href="#estadio-${slug(k)}">Perfil do estádio ${esc(k)} →</a>`).join(' · ')}</div>`; } const qnT=nrm(q).replace(/[^a-z0-9 ]/g,' '), lugW=qnT.replace(/\b(jogos?|partidas?|do|da|o|a|os|galo|atletico|no|na|nos|nas|em|de|jogando|retrospecto|resultados?)\b/g,' ').replace(/\s+/g,' ').trim();
   const timeH=(prQ&&prQ.loc&&lugW&&!/\b(contra|vs|x|estado|cidade|municipio|em|no|na|nos|nas|jogando)\b/.test(qnT))?advRows().filter(a=>nrm(a.nome).replace(/\b(clube|fc|ec|sc|esporte|futebol)\b/g,'').replace(/\s+/g,' ').trim()===lugW).sort((x,y)=>y.J-x.J):[];
   const cM=qnT.match(/\bcontra (?:o |a |os |as )?(.+?)\s*$/), cW=cM?cM[1].replace(/\b(no|na|em|de|desde|ate)\b.*$/,'').trim():'';
   const cUF=cW?Object.keys(UFS).find(u=>u.length===2&&nrm(UFS[u][0])===cW):null, cTime=cUF?advRows().filter(a=>nrm(a.nome).replace(/\b(clube|fc|ec|sc|esporte|futebol)\b/g,'').replace(/\s+/g,' ').trim()===cW).sort((x,y)=>y.J-x.J):[];
@@ -4832,7 +4834,7 @@ function vCidade(s){
   return `<a class="back" href="#cidades">← Cidades</a><div class="kicker">${esc(g&&g.pais!=='Brasil'?g.pais:(g&&g.estado)||row.reg)} · ${fmtD(l[0].data,l[0].data_aprox)} a ${fmtD(l[l.length-1].data)}</div><h1>${esc(row.nome)}</h1>
   ${tiles(r)}${resultBar(r)}
   ${pub?`<p class="count">Público somado nas fichas: <b>${N(pub)}</b> pessoas.</p>`:''}
-  <div class="grid2"><div><h2>Estádios</h2><table><tbody>${Object.entries(est).sort((a,b)=>b[1]-a[1]).map(([e,n])=>`<tr class="click" onclick="location.hash='${linkJogos({est:e})}'"><td>${esc(e)}</td><td class="n">${n}</td></tr>`).join('')||'<tr><td>Sem estádio registrado.</td></tr>'}</tbody></table>
+  <div class="grid2"><div><h2>Estádios</h2><table><tbody>${Object.entries(est).sort((a,b)=>b[1]-a[1]).map(([e,n])=>`<tr class="click" onclick="location.hash='${estHref(e).replace(/^#/,'')}'"><td>${esc(e)}</td><td class="n">${n}</td></tr>`).join('')||'<tr><td>Sem estádio registrado.</td></tr>'}</tbody></table>
   <h2>Artilheiros na cidade</h2><table><tbody>${Object.entries(gol).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([n,v])=>`<tr class="click" onclick="location.hash='jogador-${slug(n)}'"><td>${esc(nomeV(n))}</td><td class="n">${v}</td></tr>`).join('')||'<tr><td>Nenhum gol com autor.</td></tr>'}</tbody></table></div>
   <div><h2>Adversários</h2><table><tbody>${Object.values(adv).sort((a,b)=>b.l.length-a.l.length).slice(0,12).map(a=>{ const x=rec(a.l); return `<tr class="click" onclick="location.hash='adversario-${slug(a.id)}'"><td>${cr(a.id)}${esc(a.n)}</td><td class="n">${a.l.length}</td><td class="n mono">${x.V}V ${x.E}E ${x.D}D</td></tr>`; }).join('')}</tbody></table>
   ${g?miniMapa(g):''}</div></div>
@@ -4936,7 +4938,7 @@ function secEstadio(){
   <h3>Quem você mais viu marcar</h3><table><tbody>${top(golsG,8).map(([n,v])=>`<tr class="click" onclick="location.hash='jogador-${slug(n)}'"><td>${esc(nomeV(n))}</td><td class="n"><b>${v}</b></td></tr>`).join('')||'<tr><td>Nenhum gol com autor.</td></tr>'}</tbody></table></div>
   <div><h3>Adversários que você mais viu em campo</h3><table><tbody>${top(advJ).map(([k,v])=>{ const [n,t]=k.split('|'); return `<tr><td>${esc(n)} <small class="uf">${esc(t)}</small></td><td class="n"><b>${v}</b></td></tr>`; }).join('')||'<tr><td>Sem escalação dos adversários.</td></tr>'}</tbody></table>
   <h3>Algozes que você viu marcar</h3><table><tbody>${top(golsA,6).map(([k,v])=>{ const [n,t]=k.split('|'); return `<tr><td>${esc(n)} <small class="uf">${esc(t)}</small></td><td class="n"><b>${v}</b></td></tr>`; }).join('')||'<tr><td>Ninguém marcou contra o Galo na sua frente.</td></tr>'}</tbody></table></div></div>
-  <h3>Passaporte: estádios</h3><div class="carimbos">${top(est,60).map(([e,n])=>carimbo(e,n,estPrim[e],linkJogos({est:e}))).join('')}</div>
+  <h3>Passaporte: estádios</h3><div class="carimbos">${top(est,60).map(([e,n])=>carimbo(e,n,estPrim[e],estHref(e))).join('')}</div>
   <div class="grid2"><div><h3>Passaporte: cidades</h3><div class="carimbos">${top(cid,60).map(([c,n])=>carimbo(c.split(',')[0],n,cidPrim[c],'#cidade-'+slug(c))).join('')}</div>
   <p class="count">${ufs.size} ${ufs.size===1?'estado':'estados'}${paises.size>1?' e '+paises.size+' países':''}.</p></div><div>${mapa}</div></div>
   <div class="grid2"><div><h3>Adversários</h3><table><thead><tr><th>Adversário</th><th class="n">J</th><th class="n">V</th><th class="n">E</th><th class="n">D</th></tr></thead><tbody>${Object.values(adv).sort((a,b)=>b.l.length-a.l.length).map(a=>{ const x=rec(a.l); return `<tr class="click" onclick="location.hash='adversario-${slug(a.id)}'"><td>${cr(a.id)}${esc(a.n)}</td><td class="n">${a.l.length}</td><td class="n">${x.V}</td><td class="n">${x.E}</td><td class="n">${x.D}</td></tr>`; }).join('')}</tbody></table></div>
@@ -6860,6 +6862,43 @@ function quemClube(n){ const B=(D.bios&&D.bios.jogadores||{})[n]; if(!B) return 
   if((B.base||[]).some(gal)||i===0) return {txt:'Revelado pelo Galo', k:'galo', r:null};
   if(i>0){ const x=clubeN(cl[i-1]); if(x){ const uf=(x.match(/-([A-Z]{2,4})$/)||[])[1]||''; return {txt:'Veio do '+x.replace(/-[A-Z]{2,4}$/,''), k:nrm(x), r:uf?'r:'+uf:null}; } }
   return null; }
+
+/* ---------- Estádios: lista e perfil ---------- */
+const estOk=e=>e&&!/^n[ãa]o identificado$/i.test(e);
+function estHref(e){ return estOk(e)?'#estadio-'+slug(e):linkJogos({est:e}); }
+function estIdx(){ const o={}; J.forEach(j=>{ if(!estOk(j.estadio)) return; (o[j.estadio] ||= []).push(j); }); return o; }
+function estCidade(L){ const c={}; L.forEach(j=>{ if(j.cidade) c[j.cidade]=(c[j.cidade]||0)+1; }); return (Object.entries(c).sort((a,b)=>b[1]-a[1])[0]||[''])[0]; }
+function vEstadios(){
+  const I=estIdx(), rows=Object.entries(I).map(([e,L])=>{ const R=L.filter(j=>j.resultado), r=rec(R), ds=L.map(j=>j.data).sort();
+    return {nome:e, cid:estCidade(L), jogos:r.n, V:r.V, E:r.E, D:r.D, ap:r.n?Math.round(100*(3*r.V+r.E)/(3*r.n)):0, gp:r.gp, pri:+ds[0].slice(0,4), ult:+ds[ds.length-1].slice(0,4), _href:'estadio-'+slug(e)}; });
+  setTimeout(()=>sortable('esttab',[{k:'nome',t:'Estádio'},{k:'cid',t:'Cidade'},{k:'jogos',t:'Jogos',n:1},{k:'V',t:'V',n:1},{k:'E',t:'E',n:1},{k:'D',t:'D',n:1},{k:'ap',t:'Aprov.',n:1,f:o=>o.jogos?o.ap+'%':'–'},{k:'gp',t:'Gols',n:1},{k:'pri',t:'Desde',n:1},{k:'ult',t:'Até',n:1}],rows,'jogos',1000),0);
+  const tot=rows.reduce((s,r)=>s+r.jogos,0);
+  return `<div class="kicker">Onde o Galo jogou</div><h1>Estádios</h1>
+  <div class="tiles"><div class="tile"><b>${N(rows.length)}</b><span>Estádios</span></div><div class="tile"><b>${N(new Set(rows.map(r=>r.cid).filter(Boolean)).size)}</b><span>Cidades</span></div><div class="tile"><b>${N(tot)}</b><span>Jogos com estádio</span></div></div>
+  <p class="count" style="margin-top:14px">Todos os estádios em que o Galo jogou, com a campanha em cada um. Clique em um estádio para ver o perfil completo. <a href="#mapa">Ver no mapa →</a></p>
+  <input id="eq" class="busca-in" placeholder="Filtrar por estádio ou cidade…" oninput="document.querySelectorAll('#esttab tbody tr').forEach(tr=>tr.style.display=nrm(tr.textContent).includes(nrm(this.value))?'':'none')" style="margin:10px 0;width:100%;max-width:420px">
+  <div id="esttab"></div>`;
+}
+function vEstadio(s){
+  const I=estIdx(), e=Object.keys(I).find(k=>slug(k)===s); if(!e) return '<p class="empty">Estádio não encontrado.</p>';
+  const L=I[e].slice().sort((a,b)=>a.data<b.data?-1:1), R=L.filter(j=>j.resultado), r=rec(R), cid=estCidade(L);
+  const jl=j=>`<a href="#jogo-${j.id}">${fmtD(j.data)} · Galo ${j.gp} x ${j.gc} ${esc(j.adversario)}</a>`;
+  const pub=L.filter(j=>j.publico).sort((a,b)=>b.publico-a.publico), mv=R.filter(j=>j.resultado==='V').sort((a,b)=>(b.gp-b.gc)-(a.gp-a.gc)||b.gp-a.gp)[0], md=R.filter(j=>j.resultado==='D').sort((a,b)=>(b.gc-b.gp)-(a.gc-a.gp)||b.gc-a.gc)[0];
+  const fut=L.filter(j=>!j.resultado&&j.data>=hojeStr()); const fx=[['Cidade',esc(cid||'–')]]; if(R.length) fx.push(['Primeiro jogo',jl(R[0])],['Último jogo',jl(R[R.length-1])]); if(fut.length) fx.push(['Próximo jogo',`<a href="#jogo-${fut[0].id}">${fmtD(fut[0].data)} · Galo x ${esc(fut[0].adversario)}</a>`]);
+  if(pub[0]) fx.push(['Maior público',`${N(pub[0].publico)} ${esc(pub[0].publico_tipo||'')} · ${jl(pub[0])}`]); if(mv) fx.push(['Maior vitória',jl(mv)]); if(md) fx.push(['Maior derrota',jl(md)]);
+  const grp=(f)=>{ const o={}; R.forEach(j=>{ const k=f(j); if(k) (o[k] ||= []).push(j); }); return Object.entries(o).sort((a,b)=>b[1].length-a[1].length); };
+  const tab=(tit,lst,lk,max)=>lst.length?`<h2>${tit}</h2><table><thead><tr><th></th><th class="n">Jogos</th><th class="n hide-s">V</th><th class="n hide-s">E</th><th class="n hide-s">D</th><th class="n">Aprov.</th></tr></thead><tbody>${lst.slice(0,max||99).map(([k,l])=>{ const x=rec(l); return `<tr${lk?` class="click" onclick="location.hash='${lk(k,l)}'"`:''}><td>${esc(k)}</td><td class="n">${N(x.n)}</td><td class="n hide-s">${x.V}</td><td class="n hide-s">${x.E}</td><td class="n hide-s">${x.D}</td><td class="n">${aprov(x)}</td></tr>`; }).join('')}</tbody></table>`:'';
+  const outros=Object.keys(I).filter(k=>k!==e&&estCidade(I[k])===cid&&cid).sort((a,b)=>I[b].length-I[a].length).slice(0,8);
+  return `<a class="back" href="#estadios">← Estádios</a><div class="kicker">Estádio${cid?' · '+esc(cid):''} · ${L[0].data.slice(0,4)}${L.length>1&&L[L.length-1].data.slice(0,4)!==L[0].data.slice(0,4)?'–'+L[L.length-1].data.slice(0,4):''}</div><h1>${esc(e)}</h1>
+  ${tilesRec(r,`<div class="tile"><b>${N(r.gp)}</b><span>Gols pró</span></div><div class="tile"><b>${N(r.gc)}</b><span>Gols contra</span></div>`)}
+  <div class="ficha-canto"><dl>${fx.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></div>
+  <div class="grid2"><div>${tab('Por competição',grp(j=>j.grupo||j.competicao),null,12)}</div><div>${tab('Adversários mais enfrentados',grp(j=>j.adversario),(k,l)=>'adversario-'+slug(l[0].adversario_id||k),10)}</div></div>
+  ${R.length?`<h2>Jogadores neste estádio</h2>${rankJog(R)}`:''}
+  ${pub.length?`<h2>Maiores públicos</h2><ol class="rank">${pub.slice(0,10).map((j,i)=>`<li><span class="rank-n">${i+1}</span><a href="#jogo-${j.id}">${fmtD(j.data)} · Galo ${j.gp} x ${j.gc} ${esc(j.adversario)}</a><b>${N(j.publico)}</b></li>`).join('')}</ol>`:''}
+  ${R.length?`<h2>Por temporada</h2>${tabTemp(R)}`:''}
+  ${outros.length?`<h3>Outros estádios em ${esc(cid.replace(/, [A-Z]{2}$/,''))}</h3><div class="pq-ex">${outros.map(k=>`<a class="chip" href="#estadio-${slug(k)}">${esc(k)} (${I[k].length})</a>`).join('')}</div>`:''}
+  <p class="count" style="margin-top:16px"><a class="more" href="${linkJogos({est:e})}">Ver todos os ${N(L.length)} jogos →</a></p>`;
+}
 
 </script>
 </body>
