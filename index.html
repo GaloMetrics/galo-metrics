@@ -2199,9 +2199,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261125212947';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261125212947"></script>
-<script src="backend-firebase.js?v=20261125212947"></script>
+<script>window.GM_BUILD='20261125213518';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261125213518"></script>
+<script src="backend-firebase.js?v=20261125213518"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -6953,23 +6953,150 @@ function vArena100(){
   const st=j=>{ const n=num.get(j.id); return n===1||n===50||n===100||n===101?' style="background:var(--soft);font-weight:600"':''; };
   const status=j100&&!j100.resultado?`<div class="note" style="margin-top:18px"><b>Jogo 100:</b> Galo x ${esc(j100.adversario)}, ${fmtD(j100.data)}${j100.hora?' às '+esc(j100.hora):''} (${esc(j100.competicao||'')}). ${j101?`<b>Jogo 101:</b> Galo x ${esc(j101.adversario)}, ${fmtD(j101.data)}.`:''}</div>`
     :j100?`<div class="note" style="margin-top:18px"><b>Jogo 100:</b> ${jl(j100)}. ${j101&&!j101.resultado?`<b>Jogo 101:</b> Galo x ${esc(j101.adversario)}, ${fmtD(j101.data)}.`:''}</div>`:'';
-  return `<div class="kicker">Especial · Arena MRV · ${L[0].data.slice(0,4)}–${L[L.length-1].data.slice(0,4)}</div><h1>100 jogos na Arena MRV</h1>
-  <p class="lede">A casa do Galo chega ao jogo 100. Todos os números da Arena MRV, do primeiro jogo, em ${fmtD(L[0].data)}, até hoje: campanha, artilheiros, mata-matas, cada edição e a lista completa de jogos.</p>
+  const DX=mrvDossie(L,R,num,jl), sec=id=>{ const x=DX.find(p=>p[0]===id); return x?`<h2 id="${x[0]}">${x[1]}</h2>${x[2]}`:''; };
+  const SUM=[['mrv-marcos','Marcos'],['mrv-linha','Linha do tempo'],['mrv-seq','Sequências'],['mrv-art','Artilheiros'],['mrv-gols','Raio-x dos gols'],['mrv-placares','Placares'],['mrv-fluxo','Viradas'],['mrv-mata','Mata-matas'],['mrv-ed','Por edição'],['mrv-jog','Jogadores'],['mrv-rivais','Gols sofridos'],['mrv-tec','Técnicos'],['mrv-arb','Árbitros'],['mrv-adv','Adversários'],['mrv-origem','Clássicos'],['mrv-cal','Calendário'],['mrv-pub','Público e renda'],['mrv-cmp','Comparativo'],['mrv-cur','Curiosidades'],['mrv-todos','Todos os jogos']];
+  return `<div class="kicker">Dossiê · Arena MRV · ${L[0].data.slice(0,4)}–${L[L.length-1].data.slice(0,4)}</div><h1>100 jogos na Arena MRV</h1>
+  <p class="lede">A Arena MRV chega ao jogo 100. O dossiê completo da casa do Galo desde a inauguração, em ${fmtD(L[0].data)}: campanha, sequências, artilheiros, gols minuto a minuto, viradas, mata-matas, cada edição, jogadores, técnicos, árbitros, público, renda, comparativos e todos os jogos.</p>
   ${status}
+  <div class="pq-ex" style="margin-top:14px">${SUM.map(([id,t])=>`<a class="chip" href="javascript:void 0" onclick="document.getElementById('${id}')?.scrollIntoView({behavior:'smooth'})">${t}</a>`).join('')}</div>
   ${tilesRec(r,`<div class="tile"><b>${N(r.gp)}</b><span>Gols pró</span></div><div class="tile"><b>${N(r.gc)}</b><span>Gols contra</span></div><div class="tile"><b>${N(cs)}</b><span>Sem sofrer gol</span></div>`)}
-  <h2>Marcos</h2><div class="ficha-canto"><dl>${marcos.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></div>
-  <h2>Artilheiros</h2><p class="count">${N(nGols)} gols de ${N(nArt)} jogadores diferentes (sem contar gols contra).</p>
+  <h2 id="mrv-marcos">Marcos</h2><div class="ficha-canto"><dl>${marcos.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></div>
+  ${sec('mrv-linha')}${sec('mrv-seq')}
+  <h2 id="mrv-art">Artilheiros</h2><p class="count">${N(nGols)} gols de ${N(nArt)} jogadores diferentes (sem contar gols contra).</p>
   <div class="grid2"><div><h3>Artilheiros</h3>${rk(gm,25)}</div><div><h3>Mais jogos</h3>${rk(jm,25)}</div></div>
   ${hat.length?`<h3>Três gols ou mais em um jogo</h3><ol class="rank">${hat.map(([n,v,j],i)=>`<li><span class="rank-n">${i+1}</span>${lk(n)} · ${jl(j)}<b>${v}</b></li>`).join('')}</ol>`:''}
-  <h2>Todos os mata-matas</h2><p class="count">${mr.n} jogos eliminatórios: ${mr.V} vitórias, ${mr.E} empates e ${mr.D} derrotas (${aprov(mr)}).</p>
+  ${sec('mrv-gols')}${sec('mrv-placares')}${sec('mrv-fluxo')}
+  <h2 id="mrv-mata">Todos os mata-matas</h2><p class="count">${mr.n} jogos eliminatórios: ${mr.V} vitórias, ${mr.E} empates e ${mr.D} derrotas (${aprov(mr)}).</p>
   ${Object.entries(Med).map(([k,l])=>`<h3>${esc(k)}</h3><table><tbody>${l.map(j=>`<tr><td class="mono">${fmtD(j.data)}</td><td>${esc(fase(j))}</td><td><a href="#jogo-${j.id}">Galo ${j.gp} x ${j.gc} ${esc(j.adversario)}</a>${pen(j)}</td><td class="n">${res(j)}</td></tr>`).join('')}</tbody></table>`).join('')}
-  <h2>Jogos por edição</h2><table>${cab.replace('<th></th>','<th>Edição</th>')}<tbody>${edK.map(k=>linha(esc(k),ed[k])).join('')}</tbody></table>
+  <h2 id="mrv-ed">Jogos por edição</h2><table>${cab.replace('<th></th>','<th>Edição</th>')}<tbody>${edK.map(k=>linha(esc(k),ed[k])).join('')}</tbody></table>
   <div class="grid2"><div><h2>Por competição</h2><table>${cab}<tbody>${Object.entries(comp).sort((a,b)=>b[1].length-a[1].length).map(([k,l])=>linha(esc(k),l)).join('')}</tbody></table></div>
   <div><h2>Por temporada</h2><table>${cab}<tbody>${Object.keys(temp).sort().map(k=>linha(`<a href="#temporada-${k}">${k}</a>`,temp[k])).join('')}</tbody></table></div></div>
-  <h2>Adversários</h2><table>${cab}<tbody>${Object.entries(adv).sort((a,b)=>b[1].length-a[1].length||a[0].localeCompare(b[0])).map(([k,l])=>linha(`<a href="#adversario-${slug(l[0].adversario_id||k)}">${esc(k)}</a>`,l)).join('')}</tbody></table>
-  ${pubM.length?`<h2>Maiores públicos</h2><ol class="rank">${pubM.slice(0,10).map((j,i)=>`<li><span class="rank-n">${i+1}</span>${jl(j)}<b>${N(j.publico)}</b></li>`).join('')}</ol>`:''}
-  <h2>Todos os jogos</h2><table><thead><tr><th class="n">Nº</th><th>Data</th><th class="hide-s">Competição</th><th>Jogo</th><th class="n hide-s">Público</th><th class="n"></th></tr></thead><tbody>${L.map(j=>`<tr${st(j)}><td class="n mono">${num.get(j.id)}</td><td class="mono">${fmtD(j.data)}</td><td class="hide-s">${esc(j.competicao||'')}${fase(j)?' · '+esc(fase(j)):''}</td><td>${jl(j).replace(/^<a href="([^"]*)">[^·]*· /,'<a href="$1">')}${pen(j)}</td><td class="n hide-s">${j.publico?N(j.publico):''}</td><td class="n">${res(j)}</td></tr>`).join('')}</tbody></table>
+  ${sec('mrv-jog')}${sec('mrv-rivais')}${sec('mrv-tec')}${sec('mrv-arb')}
+  <h2 id="mrv-adv">Adversários</h2><table>${cab}<tbody>${Object.entries(adv).sort((a,b)=>b[1].length-a[1].length||a[0].localeCompare(b[0])).map(([k,l])=>linha(`<a href="#adversario-${slug(l[0].adversario_id||k)}">${esc(k)}</a>`,l)).join('')}</tbody></table>
+  ${sec('mrv-origem')}${sec('mrv-cal')}${sec('mrv-pub')}
+  ${pubM.length?`<h3>Maiores públicos</h3><ol class="rank">${pubM.slice(0,10).map((j,i)=>`<li><span class="rank-n">${i+1}</span>${jl(j)}<b>${N(j.publico)}</b></li>`).join('')}</ol>`:''}
+  ${sec('mrv-cmp')}${sec('mrv-cur')}
+  <h2 id="mrv-todos">Todos os jogos</h2><table><thead><tr><th class="n">Nº</th><th>Data</th><th class="hide-s">Competição</th><th>Jogo</th><th class="n hide-s">Público</th><th class="n"></th></tr></thead><tbody>${L.map(j=>`<tr${st(j)}><td class="n mono">${num.get(j.id)}</td><td class="mono">${fmtD(j.data)}</td><td class="hide-s">${esc(j.competicao||'')}${fase(j)?' · '+esc(fase(j)):''}</td><td>${jl(j).replace(/^<a href="([^"]*)">[^·]*· /,'<a href="$1">')}${pen(j)}</td><td class="n hide-s">${j.publico?N(j.publico):''}</td><td class="n">${res(j)}</td></tr>`).join('')}</tbody></table>
   <p class="count" style="margin-top:16px"><a class="more" href="#estadio-arena-mrv">Perfil do estádio →</a> · <a class="more" href="#estadios">Todos os estádios →</a></p>`;
+}
+function mrvDossie(L,R,num,jl){
+  const P=[], add=(id,t,h)=>{ if(h) P.push([id,t,h]); };
+  const pct=(a,b)=>b?Math.round(100*a/b)+'%':'–', bar=(v,m,c)=>`<span style="display:inline-block;height:9px;width:${m?Math.round(120*v/m):0}px;background:${c};vertical-align:middle;margin-right:6px"></span>`;
+  const lk=n=>D.jogadores.some(x=>x.nome===n)?`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`:esc(n);
+  const ol=(arr,max,fmt)=>`<ol class="rank">${arr.slice(0,max).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${fmt(x)}</li>`).join('')}</ol>`;
+  const top=o=>Object.entries(o).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+  const tile=(v,t)=>`<div class="tile"><b>${v}</b><span>${t}</span></div>`;
+  const cab=`<thead><tr><th></th><th class="n">Jogos</th><th class="n hide-s">V</th><th class="n hide-s">E</th><th class="n hide-s">D</th><th class="n hide-s">GP</th><th class="n hide-s">GC</th><th class="n">Aprov.</th></tr></thead>`;
+  const linha=(k,l)=>{ const x=rec(l); return `<tr><td>${k}</td><td class="n">${x.n}</td><td class="n hide-s">${x.V}</td><td class="n hide-s">${x.E}</td><td class="n hide-s">${x.D}</td><td class="n hide-s">${x.gp}</td><td class="n hide-s">${x.gc}</td><td class="n">${aprov(x)}</td></tr>`; };
+  const grp=f=>{ const o={}; R.forEach(j=>{ const k=f(j); if(k!=null&&k!=='') (o[k] ||= []).push(j); }); return o; };
+  const tabG=(o,ord,lab)=>`<table>${cab}<tbody>${(ord||Object.keys(o).sort((a,b)=>o[b].length-o[a].length||a.localeCompare(b))).filter(k=>o[k]).map(k=>linha(lab?lab(k,o[k]):esc(k),o[k])).join('')}</tbody></table>`;
+  const r=rec(R);
+
+  // 1. linha do tempo
+  add('mrv-linha','Linha do tempo',`<p class="count">Cada quadrado é um jogo, em ordem: verde vitória, amarelo empate, vermelho derrota, contorno jogo a jogar. Passe o mouse ou toque para ver o jogo.</p><div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:10px">${L.map(j=>`<a href="#jogo-${j.id}" title="${num.get(j.id)}. ${fmtD(j.data)} Galo ${j.resultado?j.gp+' x '+j.gc:'x'} ${esc(j.adversario)}" style="width:26px;height:26px;display:flex;align-items:center;justify-content:center;font:600 9px 'Courier Prime',monospace;text-decoration:none;color:${j.resultado==='E'?'#111':'#fff'};background:${j.resultado?`var(--${j.resultado.toLowerCase()})`:'transparent'};border:1px solid var(--ink)${j.resultado?'':';color:var(--ink)'}">${num.get(j.id)}</a>`).join('')}</div>`);
+
+  // 2. sequências
+  const seqs=(ok)=>{ let c=0,m=0,f=null; R.forEach(j=>{ if(ok(j)){ c++; if(c>m){m=c;f=j;} } else c=0; }); return {m,f,atual:c}; };
+  const ini=(f,n)=>R[R.indexOf(f)-n+1];
+  const S=[['Invencibilidade',j=>j.resultado!=='D'],['Vitórias seguidas',j=>j.resultado==='V'],['Sem vencer',j=>j.resultado!=='V'],['Derrotas seguidas',j=>j.resultado==='D'],['Marcando gol',j=>j.gp>0],['Sem sofrer gol',j=>j.gc===0],['Sofrendo gol',j=>j.gc>0],['Sem marcar gol',j=>j.gp===0]];
+  add('mrv-seq','Sequências',`<table><thead><tr><th></th><th class="n">Recorde</th><th>Período</th><th class="n">Atual</th></tr></thead><tbody>${S.map(([t,f])=>{ const s=seqs(f); return `<tr><td>${t}</td><td class="n">${s.m}</td><td class="mono">${s.f?fmtD(ini(s.f,s.m).data)+' a '+fmtD(s.f.data):'–'}</td><td class="n">${s.atual}</td></tr>`; }).join('')}</tbody></table>`);
+
+  // 3. gols
+  const GG=[],GA=[]; R.forEach(j=>j.gols.forEach(g=>(g.lado==='adv'?GA:GG).push(Object.assign({j},g))));
+  const fx=[[1,15],[16,30],[31,45],[46,60],[61,75],[76,90]], fxk=m=>{ if(m==null) return -1; const i=fx.findIndex(([a,b])=>m>=a&&m<=b); return i<0?5:i; };
+  const cP=fx.map((_,i)=>GG.filter(g=>fxk(g.minuto)===i).length), cC=fx.map((_,i)=>GA.filter(g=>fxk(g.minuto)===i).length), mx=Math.max(...cP,...cC,1);
+  const t1=a=>a.filter(g=>g.minuto!=null&&g.minuto<=45).length, t2=a=>a.filter(g=>g.minuto!=null&&g.minuto>45).length;
+  const tp=(a,t)=>a.filter(g=>g.tipo===t).length;
+  const jogos3=R.filter(j=>j.gp+j.gc>=3).length, z=R.filter(j=>j.gp===0&&j.gc===0).length;
+  add('mrv-gols','Raio-x dos gols',`<div class="tiles">${tile((r.gp/r.n).toFixed(2).replace('.',','),'Gols pró por jogo')}${tile((r.gc/r.n).toFixed(2).replace('.',','),'Gols contra por jogo')}${tile(t1(GG)+' / '+t2(GG),'Pró no 1º / 2º tempo')}${tile(t1(GA)+' / '+t2(GA),'Contra no 1º / 2º tempo')}${tile(tp(GG,'penalty'),'Gols de pênalti')}${tile(tp(GA,'penalty'),'Pênaltis sofridos (gols)')}${tile(tp(GG,'falta'),'Gols de falta')}${tile(tp(GG,'contra')+' / '+tp(GA,'contra'),'Gols contra a favor / contra')}</div>
+  <h3>Gols por faixa de minutos</h3><table><thead><tr><th>Minutos</th><th>Galo</th><th>Adversários</th></tr></thead><tbody>${fx.map(([a,b],i)=>`<tr><td class="mono">${a}–${b}${b===90?'+':''}</td><td>${bar(cP[i],mx,'var(--ink)')}${cP[i]}</td><td>${bar(cC[i],mx,'var(--d)')}${cC[i]}</td></tr>`).join('')}</tbody></table>
+  ${(()=>{ const ac=GG.filter(g=>g.minuto>=85).sort((a,b)=>a.j.data<b.j.data?-1:1); return ac.length?`<h3>Gols do Galo a partir dos 85 minutos (${ac.length})</h3>${ol(ac,99,g=>`${lk(g.jogador)} ${g.minuto}' · ${jl(g.j)}`)}`:''; })()}`);
+
+  // 4. placares
+  const pl={}; R.forEach(j=>{ const k=`${j.gp} x ${j.gc}`; pl[k]=(pl[k]||0)+1; });
+  const gole=R.filter(j=>j.gp-j.gc>=3).sort((a,b)=>(b.gp-b.gc)-(a.gp-a.gc)||b.gp-a.gp);
+  add('mrv-placares','Placares',`<div class="grid2"><div><p class="count">${jogos3} jogos tiveram 3 gols ou mais, ${R.filter(j=>j.gp>=3).length} deles com 3 ou mais do Galo. ${z} terminaram 0 x 0.</p><h3>Placares mais comuns</h3>${ol(top(pl),12,([k,v])=>`Galo ${k}<b>${v}</b>`)}</div><div><h3>Vitórias por 3 gols ou mais (${gole.length})</h3>${ol(gole,20,j=>jl(j))}</div></div>`);
+
+  // 5. como o jogo andou
+  const fluxo=j=>{ let a=0,b=0,lid=false,atr=false,prim=null; j.gols.slice().sort((x,y)=>(x.minuto??999)-(y.minuto??999)).forEach(g=>{ if(g.lado==='adv') b++; else a++; if(prim==null) prim=g.lado; if(a>b) lid=true; if(b>a) atr=true; }); return {lid,atr,prim}; };
+  const F=R.map(j=>Object.assign({j},fluxo(j)));
+  const abriu=F.filter(x=>x.prim==='galo').map(x=>x.j), sofreu=F.filter(x=>x.prim==='adv').map(x=>x.j);
+  const vir=F.filter(x=>x.atr&&x.j.resultado==='V').map(x=>x.j), busc=F.filter(x=>x.atr&&x.j.resultado==='E').map(x=>x.j);
+  const perd=F.filter(x=>x.lid&&x.j.resultado!=='V').map(x=>x.j);
+  const rt=l=>{ const x=rec(l); return `${x.V}V ${x.E}E ${x.D}D (${aprov(x)})`; };
+  add('mrv-fluxo','Como os jogos andaram',`<table><tbody><tr><td>Galo abriu o placar</td><td class="n">${abriu.length}</td><td>${rt(abriu)}</td></tr><tr><td>Adversário abriu o placar</td><td class="n">${sofreu.length}</td><td>${rt(sofreu)}</td></tr><tr><td>Saiu atrás e venceu (viradas)</td><td class="n">${vir.length}</td><td></td></tr><tr><td>Saiu atrás e buscou o empate</td><td class="n">${busc.length}</td><td></td></tr><tr><td>Esteve vencendo e não ganhou</td><td class="n">${perd.length}</td><td>${perd.filter(j=>j.resultado==='E').length} empates, ${perd.filter(j=>j.resultado==='D').length} derrotas</td></tr></tbody></table>
+  <div class="grid2"><div>${vir.length?`<h3>Viradas</h3>${ol(vir,99,jl)}`:''}${busc.length?`<h3>Empates buscados</h3>${ol(busc,99,jl)}`:''}</div><div>${perd.length?`<h3>Vitórias que escaparam</h3>${ol(perd,99,jl)}`:''}</div></div>`);
+
+  // 6. jogadores
+  const PJ={}, pj=n=>PJ[n] ||= {nome:n,j:0,t:0,s:0,g:0,pen:0,gb:0,V:0,E:0,D:0,pri:null};
+  const estreia={}; J.forEach(j=>{ const e=j.escalacao_galo; if(!e||!j.resultado) return; [...(e.titulares||[]),...(e.substituicoes||[]).map(x=>x.entrou)].forEach(n=>{ if(n&&(!estreia[n]||j.data<estreia[n].data)) estreia[n]=j; }); });
+  const abre={}, banco={};
+  R.forEach(j=>{ const e=j.escalacao_galo||{}, tit=new Set(e.titulares||[]), ent=new Set((e.substituicoes||[]).map(x=>x.entrou).filter(Boolean));
+    new Set([...tit,...ent]).forEach(n=>{ const o=pj(n); o.j++; tit.has(n)?o.t++:o.s++; o[j.resultado]++; if(!o.pri) o.pri=j; });
+    j.gols.forEach(g=>{ if(!isGoal(g)) return; const o=pj(g.jogador); o.g++; if(g.tipo==='penalty') o.pen++; if(ent.has(g.jogador)){ o.gb++; banco[g.jogador]=(banco[g.jogador]||0)+1; } });
+    const f=j.gols.slice().sort((x,y)=>(x.minuto??999)-(y.minuto??999))[0]; if(f&&isGoal(f)) abre[f.jogador]=(abre[f.jogador]||0)+1; });
+  const rows=Object.values(PJ).filter(o=>o.j||o.g).map(o=>({nome:nomeV(o.nome),jogos:o.j,tit:o.t,sup:o.s,gols:o.g,pen:o.pen,gb:o.gb,V:o.V,E:o.E,D:o.D,ap:o.j?Math.round(100*(3*o.V+o.E)/(3*o.j)):0,_href:D.jogadores.some(x=>x.nome===o.nome)?'jogador-'+slug(o.nome):''}));
+  setTimeout(()=>{ try{ sortable('mrvjog',[{k:'nome',t:'Jogador'},{k:'jogos',t:'Jogos',n:1},{k:'tit',t:'Titular',n:1},{k:'sup',t:'Entrou',n:1},{k:'gols',t:'Gols',n:1},{k:'pen',t:'Pên.',n:1},{k:'gb',t:'Gols saindo do banco',n:1},{k:'V',t:'V',n:1},{k:'E',t:'E',n:1},{k:'D',t:'D',n:1},{k:'ap',t:'Aprov.',n:1,f:o=>o.ap+'%'}],rows,'jogos',500); }catch(e){ console.warn(e); } },0);
+  const estr=Object.entries(estreia).filter(([n,j])=>j.estadio==='Arena MRV').sort((a,b)=>a[1].data<b[1].data?-1:1);
+  const fieis=Object.values(PJ).filter(o=>o.j>=15).map(o=>[o.nome,Math.round(100*(3*o.V+o.E)/(3*o.j)),o.j]).sort((a,b)=>b[1]-a[1]||b[2]-a[2]);
+  add('mrv-jog','Jogadores',`<p class="count">${rows.length} jogadores entraram em campo pelo Galo na Arena MRV. Clique no título de uma coluna para ordenar.</p><div id="mrvjog"></div>
+  <div class="grid2"><div><h3>Quem mais abriu o placar</h3>${ol(top(abre),10,([n,v])=>`${lk(n)}<b>${v}</b>`)}</div><div><h3>Gols saindo do banco</h3>${ol(top(banco),10,([n,v])=>`${lk(n)}<b>${v}</b>`)}</div></div>
+  <div class="grid2"><div><h3>Melhor aproveitamento (mín. 15 jogos)</h3>${ol(fieis,10,([n,a,q])=>`${lk(n)} <small class="uf">${q} jogos</small><b>${a}%</b>`)}</div><div><h3>Estrearam pelo Galo na Arena (${estr.length})</h3>${ol(estr,60,([n,j])=>`${lk(n)} · <a href="#jogo-${j.id}">${fmtD(j.data)} x ${esc(j.adversario)}</a>`)}</div></div>`);
+
+  // 7. artilheiros adversários
+  const ga={}, gaT={}; R.forEach(j=>j.gols.forEach(g=>{ if(g.lado==='adv'&&g.jogador&&!/contra/.test(g.tipo||'')&&g.jogador!=='Não identificado'){ ga[g.jogador]=(ga[g.jogador]||0)+1; gaT[g.jogador]=j.adversario; } }));
+  const advGols={}; R.forEach(j=>{ advGols[j.adversario]=(advGols[j.adversario]||0)+j.gc; });
+  add('mrv-rivais','Quem fez gol no Galo na Arena',`<div class="grid2"><div><h3>Jogadores adversários</h3>${ol(top(ga),15,([n,v])=>`${esc(n)} <small class="uf">${esc(gaT[n])}</small><b>${v}</b>`)}</div><div><h3>Times que mais marcaram</h3>${ol(top(advGols).filter(x=>x[1]),15,([n,v])=>`${esc(n)}<b>${v}</b>`)}</div></div>`);
+
+  // 8. técnicos e árbitros
+  const tg=grp(j=>j.tecnico_galo), ta=grp(j=>j.tecnico_adv), ar=grp(j=>j.arbitro);
+  const venceram=Object.entries(ta).filter(([k,l])=>l.some(j=>j.resultado==='D')).map(([k,l])=>[k,l.filter(j=>j.resultado==='D').length,l]).sort((a,b)=>b[1]-a[1]);
+  add('mrv-tec','Técnicos',`${tabG(tg,Object.keys(tg).sort((a,b)=>tg[a][0].data<tg[b][0].data?-1:1),(k,l)=>`<a href="${tecHref(k)}">${esc(k)}</a> <small class="uf">${fmtD(l[0].data)} a ${fmtD(l[l.length-1].data)}</small>`)}
+  <div class="grid2"><div><h3>Técnicos adversários mais vezes na Arena</h3>${ol(top(Object.fromEntries(Object.entries(ta).map(([k,l])=>[k,l.length]))),10,([n,v])=>`${esc(n)}<b>${v}</b>`)}</div><div><h3>Técnicos que venceram o Galo na Arena</h3>${ol(venceram,20,([n,v,l])=>`${esc(n)} <small class="uf">${esc([...new Set(l.filter(j=>j.resultado==='D').map(j=>j.adversario))].join(', '))}</small><b>${v}</b>`)}</div></div>`);
+  add('mrv-arb','Árbitros',tabG(ar,Object.keys(ar).sort((a,b)=>ar[b].length-ar[a].length||a.localeCompare(b)).slice(0,20)));
+
+  // 9. adversários por origem e clássicos
+  const ufN=u=>u&&u.length===2?u:(u||'Exterior');
+  const PAIS={ARG:'Argentina',URU:'Uruguai',VEN:'Venezuela',PER:'Peru',COL:'Colômbia',CHI:'Chile',BOL:'Bolívia',EQU:'Equador',PAR:'Paraguai',MEX:'México'}; const uf=grp(j=>j.adversario_uf?(j.adversario_uf.length===2?j.adversario_uf:(PAIS[j.adversario_uf]||j.adversario_uf)):null);
+  const cl=(id,t)=>{ const l=R.filter(j=>j.adversario_id===id); if(!l.length) return ''; const x=rec(l); return `<tr><td><a href="#adversario-${slug(id)}">${t}</a></td><td class="n">${x.n}</td><td class="n hide-s">${x.V}</td><td class="n hide-s">${x.E}</td><td class="n hide-s">${x.D}</td><td class="n hide-s">${x.gp}</td><td class="n hide-s">${x.gc}</td><td class="n">${aprov(x)}</td></tr>`; };
+  const mg=R.filter(j=>j.adversario_uf==='MG'), br=R.filter(j=>j.adversario_uf&&j.adversario_uf.length===2&&j.adversario_uf!=='MG'), ex=R.filter(j=>j.adversario_uf&&j.adversario_uf.length!==2);
+  add('mrv-origem','Clássicos e origem dos adversários',`<table>${cab}<tbody>${cl('cruzeiro mg','Clássico contra o Cruzeiro')}${cl('america mg','Clássico contra o América')}${linha('Times mineiros',mg)}${linha('Times de outros estados',br)}${linha('Times estrangeiros',ex)}</tbody></table>
+  <h3>Por estado ou país do adversário</h3>${tabG(uf)}`);
+
+  // 10. calendário
+  const DS=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'], MS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const ds=grp(j=>DS[new Date(j.data+'T12:00').getDay()]), ms=grp(j=>MS[+j.data.slice(5,7)-1]);
+  add('mrv-cal','Calendário',`<div class="grid2"><div><h3>Por dia da semana</h3>${tabG(ds,DS)}</div><div><h3>Por mês</h3>${tabG(ms,MS)}</div></div>`);
+
+  // 11. público e renda
+  const pub=R.filter(j=>j.publico), tot=pub.reduce((s,j)=>s+j.publico,0);
+  const rv=j=>{ const s=String(j.renda||'').replace(/[^\d,]/g,'').replace(',','.'); return +s||0; }, rd=R.filter(j=>rv(j)>0), rt_=rd.reduce((s,j)=>s+rv(j),0);
+  const brl=v=>'R$ '+Math.round(v).toLocaleString('pt-BR');
+  const pc=grp(j=>j.publico?(j.grupo||j.competicao):null);
+  const pubR=x=>{ const v=R.filter(x); return v.length?rec(v):null; };
+  const fa=[['Até 25 mil',j=>j.publico&&j.publico<25000],['25 a 35 mil',j=>j.publico>=25000&&j.publico<35000],['35 a 40 mil',j=>j.publico>=35000&&j.publico<40000],['Acima de 40 mil',j=>j.publico>=40000]];
+  add('mrv-pub','Público e renda',`<div class="tiles">${tile(N(tot),'Público total')}${tile(N(Math.round(tot/(pub.length||1))),'Média por jogo')}${tile(N(R.filter(j=>j.publico>=40000).length),'Jogos com 40 mil ou mais')}${rd.length?tile(brl(rt_),'Renda total'):''}${rd.length?tile(brl(rt_/rd.length),'Renda média'):''}</div>
+  <div class="grid2"><div><h3>Média de público por competição</h3><table><thead><tr><th></th><th class="n">Jogos</th><th class="n">Média</th></tr></thead><tbody>${Object.entries(pc).sort((a,b)=>b[1].reduce((s,j)=>s+j.publico,0)/b[1].length-a[1].reduce((s,j)=>s+j.publico,0)/a[1].length).map(([k,l])=>`<tr><td>${esc(k)}</td><td class="n">${l.length}</td><td class="n">${N(Math.round(l.reduce((s,j)=>s+j.publico,0)/l.length))}</td></tr>`).join('')}</tbody></table>
+  <h3>Campanha por faixa de público</h3><table><thead><tr><th></th><th class="n">Jogos</th><th class="n">Aprov.</th></tr></thead><tbody>${fa.map(([t,f])=>{ const x=pubR(f); return x?`<tr><td>${t}</td><td class="n">${x.n}</td><td class="n">${aprov(x)}</td></tr>`:''; }).join('')}</tbody></table></div>
+  <div><h3>Menores públicos</h3>${ol(pub.slice().sort((a,b)=>a.publico-b.publico),10,j=>`${jl(j)}<b>${N(j.publico)}</b>`)}${rd.length?`<h3>Maiores rendas</h3>${ol(rd.slice().sort((a,b)=>rv(b)-rv(a)),10,j=>`${jl(j)}<b>${brl(rv(j))}</b>`)}`:''}</div></div>`);
+
+  // 12. comparativo
+  const n=R.length, prim=(est,desde)=>J.filter(j=>j.estadio===est&&j.resultado&&(!desde||j.data>=desde)).sort((a,b)=>a.data<b.data?-1:1).slice(0,n);
+  const ini0=R[0].data, fora=J.filter(j=>j.resultado&&j.data>=ini0&&j.estadio!=='Arena MRV'), cas=fora.filter(j=>j.galo_mandante), vis=fora.filter(j=>!j.galo_mandante);
+  const cmp=[[`Arena MRV (${n} jogos)`,R],[`Mineirão, primeiros ${n} jogos (desde 1965)`,prim('Mineirão')],[`Independência, primeiros ${n} jogos após a reforma (desde 2012)`,prim('Independência','2012-01-01')],['Galo em outros estádios no mesmo período',fora],['Galo como mandante fora da Arena no período',cas],['Galo como visitante no período',vis]];
+  add('mrv-cmp','Comparativo',`<p class="count">Como a Arena MRV se compara com as outras casas do Galo e com o resto da campanha desde a inauguração.</p><table>${cab}<tbody>${cmp.filter(x=>x[1].length).map(([k,l])=>linha(esc(k),l)).join('')}</tbody></table>`);
+
+  // 13. curiosidades
+  const cur=[];
+  const nv=R.filter(j=>j.resultado==='V').length; cur.push(`O Galo venceu ${pct(nv,R.length)} dos jogos na Arena e perdeu só ${pct(r.D,R.length)}.`);
+  const adm={}; R.forEach(j=>{ adm[j.adversario]=(adm[j.adversario]||0)+1; }); const ma=top(adm)[0]; if(ma) cur.push(`O adversário que mais visitou a Arena foi o ${esc(ma[0])}, com ${ma[1]} jogos.`);
+  const nunca=Object.entries(grp(j=>j.adversario)).filter(([k,l])=>l.length>=2&&l.every(j=>j.resultado==='V')).map(([k,l])=>`${esc(k)} (${l.length})`); if(nunca.length) cur.push(`100% de vitórias contra: ${nunca.join(', ')}.`);
+  const semV=Object.entries(grp(j=>j.adversario)).filter(([k,l])=>l.length>=2&&!l.some(j=>j.resultado==='V')).map(([k,l])=>`${esc(k)} (${l.length})`); if(semV.length) cur.push(`Nunca venceu na Arena: ${semV.join(', ')}.`);
+  const art=top(Object.fromEntries(Object.values(PJ).map(o=>[o.nome,o.g])))[0]; if(art) cur.push(`${lk(art[0])} marcou ${art[1]} dos ${GG.filter(g=>isGoal(g)).length} gols de jogadores do Galo na Arena (${pct(art[1],GG.filter(g=>isGoal(g)).length)}).`);
+  const naoP=R.filter(j=>j.gc===0).length; cur.push(`Em ${naoP} dos ${R.length} jogos o Galo não sofreu gol, e em ${R.filter(j=>j.gp===0).length} não marcou.`);
+  const pts=3*r.V+r.E; cur.push(`São ${pts} pontos conquistados em ${3*R.length} disputados.`);
+  add('mrv-cur','Curiosidades',`<ul class="lista-cur">${cur.map(c=>`<li style="margin:6px 0">${c}</li>`).join('')}</ul>`);
+  return P;
 }
 
 </script>
