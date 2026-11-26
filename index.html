@@ -2185,6 +2185,7 @@ header{--ink:#F2EEE3;--ink2:#d6d1c4;--paper:#121212;--mute:#9a958a;--line:#2f2c2
 header .lclaro{display:none!important}header .lescuro{display:inline-block!important}
 </style>
 <style id="mrv100-css">
+.gm-duplas-teaser>img.gm-mrv-img{object-position:center 50%!important;filter:none!important}
 /* Especial 100 jogos na Arena MRV: escopo .mrv. Paleta: preto, branco, cinza, papel; dourado só em detalhe. */
 #app .mrv{--mi:#171714;--mp:#f4f1ea;--mg:#8e8c86;--mg2:#c9c6be;--ml:#bdb8ab;color:var(--mi)}
 #app .mrv a{color:var(--mi)}
@@ -2201,7 +2202,7 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 #app.gm-internal .mrv .mrv-deck{font:italic 16px/1.5 'Libre Caslon Text',Georgia,serif!important;color:#d8d3c7!important;margin:0!important;max-width:520px}
 #app .mrv .mrv-capa-pe{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #5b5953;padding-top:10px;font:700 10px 'Courier Prime',monospace;letter-spacing:.16em;text-transform:uppercase;color:#bdbab2}
 #app .mrv .mrv-capa-foto{margin:0;min-height:440px;position:relative}
-#app .mrv .mrv-capa-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 55%;display:block}
+#app .mrv .mrv-capa-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 40%;display:block}
 /* fachada: as faixas brancas e cinza da Arena viram a tira de números */
 #app .mrv .mrv-fachada{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));border:2px solid var(--mi);border-top:0}
 #app .mrv .mrv-fachada>div{padding:18px 12px 14px;min-height:118px;display:flex;flex-direction:column;justify-content:space-between;background:#f7f5ef;border-right:1px solid var(--mi)}
@@ -2271,6 +2272,8 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 /* fotos */
 #app .mrv .mrv-foto{margin:54px 0 0}
 #app .mrv .mrv-foto img{display:block;width:100%;height:clamp(240px,38vw,460px);object-fit:cover;border:2px solid var(--mi)}
+#app .mrv .mrv-foto-noite img{object-position:center 58%}
+#app .mrv .mrv-foto-torcida img{object-position:center 48%}
 #app .mrv .mrv-foto figcaption{font:700 10px 'Courier Prime',monospace;letter-spacing:.13em;text-transform:uppercase;color:#6b6861;padding:8px 0;border-bottom:1px solid var(--ml)}
 /* fim */
 #app .mrv .mrv-fim{margin-top:54px;border-top:6px solid var(--mi);display:flex;flex-wrap:wrap}
@@ -2317,9 +2320,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261125223656';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261125223656"></script>
-<script src="backend-firebase.js?v=20261125223656"></script>
+<script>window.GM_BUILD='20261125224426';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261125224426"></script>
+<script src="backend-firebase.js?v=20261125224426"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -6566,7 +6569,7 @@ async function desenhaArteDupla(s){ const nomes=s.n.split('|'); const pr=(s.de||
   return cv; }
 function capaDuplas(){ if(typeof mrv100Ativo==='function'&&mrv100Ativo()){ const L=J.filter(j=>j.estadio==='Arena MRV').sort((a,b)=>a.data<b.data?-1:1), j100=L[99];
     const sub=j100&&j100.resultado?`Jogo 100: Galo ${j100.gp} x ${j100.gc} ${esc(j100.adversario)}. O dossiê completo da casa do Galo.`:`Jogo 100: Galo x ${j100?esc(j100.adversario):''}. O dossiê completo da casa do Galo.`;
-    return `<a class="gm-duplas-teaser" href="#arena-mrv-100" aria-label="Abrir o dossiê 100 jogos na Arena MRV"><img src="assets/arena-mrv-foto.jpg" alt="Arena MRV com o escudo do Galo" style="object-position:34% 45%"><span class="gm-duplas-copy"><small>★ NOVIDADE <i>02 · ESPECIAL</i></small><strong>100 jogos na Arena MRV</strong><span>${sub}</span><b>VER O DOSSIÊ ↗︎</b></span></a>`; }
+    return `<a class="gm-duplas-teaser" href="#arena-mrv-100" aria-label="Abrir o dossiê 100 jogos na Arena MRV"><img class="gm-mrv-img" src="assets/arena-mrv-foto.jpg" alt="Escudo do Galo na fachada da Arena MRV"><span class="gm-duplas-copy"><small>★ NOVIDADE <i>02 · ESPECIAL</i></small><strong>100 jogos na Arena MRV</strong><span>${sub}</span><b>VER O DOSSIÊ ↗︎</b></span></a>`; }
   return `<a class="gm-duplas-teaser" href="#duplas" aria-label="Abrir Duplas e Trios"><img src="assets/duplas-trios-foto.jpg" alt="Dois jogadores do Atlético Mineiro lado a lado"><span class="gm-duplas-copy"><small>★ NOVIDADE <i>01 · ESPECIAL</i></small><strong>Duplas e trios</strong><span>Quem mais jogou junto pelo Galo? Descubra as parcerias que marcaram época.</span><b>EXPLORAR A SEÇÃO ↗︎</b></span></a>`; }
 
 const perTxt=pr=>perTxtB(pr);
@@ -7091,7 +7094,7 @@ function vArena100(){
       <p class="mrv-deck">O dossiê completo da casa do Galo desde a inauguração, em ${fmtD(L[0].data)}: campanha, sequências, artilheiros, gols minuto a minuto, viradas, mata-matas, cada edição, jogadores, técnicos, árbitros, público, renda, comparativos e todos os jogos.</p>
       <div class="mrv-capa-pe"><span>Belo Horizonte, MG</span><span>${ano0}–${anoN}</span></div>
     </div>
-    <figure class="mrv-capa-foto"><img src="assets/mrv-capa.jpg" alt="Fachada da Arena MRV com o escudo do Atlético, ao entardecer"></figure>
+    <figure class="mrv-capa-foto"><img src="assets/mrv-capa.jpg" alt="Escudo do Atlético na fachada da Arena MRV, ao entardecer"></figure>
   </div>
   <div class="mrv-faixa" aria-hidden="true"></div>
   <div class="mrv-fachada" aria-label="Números da Arena MRV">${fach.map(([v,t])=>`<div><b>${v}</b><span>${t}</span></div>`).join('')}</div>
@@ -7099,7 +7102,7 @@ function vArena100(){
   <div class="mrv-indice" role="navigation" aria-label="Índice do dossiê"><div class="mrv-indice-t">Índice</div><ol>${SUM.map(([id,t],i)=>`<li><a href="javascript:void 0" onclick="document.getElementById('${id}')?.scrollIntoView({behavior:'smooth'})"><span>${t}</span><i>${String(i+1).padStart(2,'0')}</i></a></li>`).join('')}</ol></div>
   ${wrap('mrv-marcos','Marcos',`<dl class="mrv-marcos">${marcos.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>`)}
   ${sec('mrv-linha')}
-  ${foto('assets/mrv-aerea.jpg','Arena MRV vista de cima, com as faixas brancas e cinza da cobertura','Arena MRV vista de cima: as faixas brancas e cinza da cobertura','mrv-foto-larga')}
+  ${foto('assets/mrv-noite.jpg','Arena MRV iluminada à noite, vista do alto','Arena MRV à noite, vista do alto','mrv-foto-larga mrv-foto-noite')}
   ${sec('mrv-seq')}
   ${wrap('mrv-art','Artilheiros',`<div class="grid2"><div><h3>Artilheiros</h3>${rk(gm,25)}</div><div><h3>Mais jogos</h3>${rk(jm,25)}</div></div>
   ${hat.length?`<h3>Três gols ou mais em um jogo</h3><ol class="rank">${hat.map(([n,v,j],i)=>`<li><span class="rank-n">${i+1}</span>${lk(n)} · ${jl(j)}<b>${v}</b></li>`).join('')}</ol>`:''}`,`${N(nGols)} gols de ${N(nArt)} jogadores diferentes (sem contar gols contra).`)}
@@ -7109,7 +7112,7 @@ function vArena100(){
   <div class="grid2"><div><h3>Por competição</h3><table>${cab}<tbody>${Object.entries(comp).sort((a,b)=>b[1].length-a[1].length).map(([k,l])=>linha(esc(k),l)).join('')}</tbody></table></div>
   <div><h3>Por temporada</h3><table>${cab}<tbody>${Object.keys(temp).sort().map(k=>linha(`<a href="#temporada-${k}">${k}</a>`,temp[k])).join('')}</tbody></table></div></div>`)}
   ${sec('mrv-jog')}
-  ${foto('assets/mrv-faixas.jpg','Fachada da Arena MRV com faixas brancas e cinza e o escudo do Atlético','Arena MRV: a fachada em faixas brancas e cinza','mrv-foto-larga')}
+  ${foto('assets/mrv-torcida.jpg','Torcida do Galo com as luzes dos celulares acesas nas arquibancadas da Arena MRV','Torcida do Galo com as luzes dos celulares acesas na Arena MRV','mrv-foto-larga mrv-foto-torcida')}
   ${sec('mrv-tec')}${sec('mrv-arb')}
   ${wrap('mrv-adv','Adversários',`<table>${cab}<tbody>${Object.entries(adv).sort((a,b)=>b[1].length-a[1].length||a[0].localeCompare(b[0])).map(([k,l])=>linha(`<a href="#adversario-${slug(l[0].adversario_id||k)}">${esc(k)}</a>`,l)).join('')}</tbody></table>`)}
   ${sec('mrv-origem')}${sec('mrv-cal')}
