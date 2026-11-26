@@ -2354,9 +2354,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261126193755';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261126193755"></script>
-<script src="backend-firebase.js?v=20261126193755"></script>
+<script>window.GM_BUILD='20261126194256';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261126194256"></script>
+<script src="backend-firebase.js?v=20261126194256"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4523,12 +4523,14 @@ function vPalpites(){
 async function arteBase(caminho, aba, tema){
   if(tema===undefined) tema=document.documentElement.classList.contains('tema-vi')&&!document.documentElement.classList.contains('dark')?'vi':''; const VI=tema==='vi';
   const W=1080,H=1350,P=70, cv=document.createElement('canvas'); cv.width=W; cv.height=H; const x=cv.getContext('2d');
-  await Promise.all(['400 80px "Galo Metrics Display"','400 80px "Abril Fatface"','700 40px Oswald','700 30px "Courier Prime"','400 30px "Libre Caslon Text"'].map(f=>document.fonts.load(f).catch(()=>{})));
-  const INK=VI?'#2a1032':'#111', PAP=VI?'#fff1ea':'#F5F2EA', GOLD=VI?'#e8487f':'#C9962B', GOLDD=VI?'#b02a63':'#8C6610', V='#1f7a43', R='#b3261e', CINZA=VI?'#82586f':'#6b6458';
-  const F=(f,sz)=>({abril:`400 ${sz}px "Galo Metrics Display", "Abril Fatface", Georgia, serif`, osw:`700 ${sz}px Oswald, Archivo, sans-serif`, mono:`700 ${sz}px "Courier Prime", monospace`, cas:`400 ${sz}px "Libre Caslon Text", Georgia, serif`}[f]);
-  const T=(t,px,py,f,sz,c=INK,al='left',max=0)=>{ x.font=F(f,sz); if(max) while(sz>14&&x.measureText(t).width>max){ sz-=2; x.font=F(f,sz); } x.fillStyle=c; x.textAlign=al; x.textBaseline='alphabetic'; x.fillText(t,px,py); return x.measureText(t).width; };
-  const Tm=(t,px,py,sz,max,al='left')=>{ x.font=F('abril',sz); while(sz>20&&x.measureText(t).width>max){ sz-=2; x.font=F('abril',sz); } x.textAlign=al; x.textBaseline='alphabetic'; x.fillStyle='rgba(201,150,43,.85)'; x.fillText(t,px+5,py+5); x.fillStyle=INK; x.fillText(t,px,py); return sz; };
-  const wrap=(t,px,py,f,sz,max,lh,c=INK,al='left',maxL=99)=>{ x.font=F(f,sz); x.fillStyle=c; x.textAlign=al; x.textBaseline='alphabetic'; const ws=String(t).split(/\s+/); let ln='', y=py, n=0; for(const w of ws){ const tt=ln?ln+' '+w:w; if(x.measureText(tt).width>max&&ln){ if(++n>=maxL){ ln+='…'; break; } x.fillText(ln,px,y); ln=w; y+=lh; } else ln=tt; } if(ln) x.fillText(ln,px,y); return y; };
+  await Promise.all(['400 80px "Galo Metrics Display"','400 80px "Abril Fatface"','900 80px Archivo','800 40px Archivo','700 40px Oswald','700 30px "Courier Prime"','400 30px "Libre Caslon Text"'].map(f=>document.fonts.load(f).catch(()=>{})));
+  const INK=VI?'#2a1032':'#f4f1ea', PAP=VI?'#fff1ea':'#171714', GOLD=VI?'#e8487f':'#c9a54a', GOLDD=VI?'#b02a63':'#c9a54a', V=VI?'#1f7a43':'#7cc495', R=VI?'#b3261e':'#e8877c', CINZA=VI?'#82586f':'#bdbab2';
+  const PANEL=VI?'rgba(255,255,255,.55)':'rgba(244,241,234,.05)', LINHA=VI?'rgba(17,17,17,.2)':'rgba(244,241,234,.22)', CAMPO1=VI?'#E6E0CF':'#23221f', CAMPO2=VI?'#DDD6C2':'#1d1c1a', CTA_BG=VI?'#111':'#f7f5ef', CTA_TX=VI?'#F5F2EA':'#171714';
+  const F=(f,sz)=>(VI?{abril:`400 ${sz}px "Galo Metrics Display", "Abril Fatface", Georgia, serif`, osw:`700 ${sz}px Oswald, Archivo, sans-serif`}:{abril:`900 extra-condensed ${sz}px Archivo, Oswald, sans-serif`, osw:`800 condensed ${sz}px Archivo, Oswald, sans-serif`})[f]||({ mono:`700 ${sz}px "Courier Prime", monospace`, cas:`400 ${sz}px "Libre Caslon Text", Georgia, serif`}[f]);
+  const UP=(t,f)=>(!VI&&f==='abril')?String(t).toUpperCase():t;
+  const T=(t,px,py,f,sz,c=INK,al='left',max=0)=>{ t=UP(t,f); x.font=F(f,sz); if(max) while(sz>14&&x.measureText(t).width>max){ sz-=2; x.font=F(f,sz); } x.fillStyle=c; x.textAlign=al; x.textBaseline='alphabetic'; x.fillText(t,px,py); return x.measureText(t).width; };
+  const Tm=(t,px,py,sz,max,al='left')=>{ t=UP(t,'abril'); x.font=F('abril',sz); while(sz>20&&x.measureText(t).width>max){ sz-=2; x.font=F('abril',sz); } x.textAlign=al; x.textBaseline='alphabetic'; if(VI){ x.fillStyle='rgba(201,150,43,.85)'; x.fillText(t,px+5,py+5); } x.fillStyle=INK; x.fillText(t,px,py); return sz; };
+  const wrap=(t,px,py,f,sz,max,lh,c=INK,al='left',maxL=99)=>{ t=UP(t,f); x.font=F(f,sz); x.fillStyle=c; x.textAlign=al; x.textBaseline='alphabetic'; const ws=String(t).split(/\s+/); let ln='', y=py, n=0; for(const w of ws){ const tt=ln?ln+' '+w:w; if(x.measureText(tt).width>max&&ln){ if(++n>=maxL){ ln+='…'; break; } x.fillText(ln,px,y); ln=w; y+=lh; } else ln=tt; } if(ln) x.fillText(ln,px,y); return y; };
   const rr=(px,py,w,h,r)=>{ x.beginPath(); x.moveTo(px+r,py); x.arcTo(px+w,py,px+w,py+h,r); x.arcTo(px+w,py+h,px,py+h,r); x.arcTo(px,py+h,px,py,r); x.arcTo(px,py,px+w,py,r); x.closePath(); };
   const crest=async(id,cx,cy,sz)=>{ const im=await loadImg(escSrc(id)); if(im) cvImg(x,im,cx-sz/2,cy-sz/2,sz,sz); return im; };
   const galoIm=await loadImg(galoEsc(hojeStr()));
@@ -4541,18 +4543,26 @@ async function arteBase(caminho, aba, tema){
       ['M108 150 C70 120 30 125 4 150 C40 132 76 138 108 152Z','M108 150 C80 105 50 90 18 96 C56 104 86 122 108 152Z','M108 150 C112 104 100 76 78 58 C100 86 106 116 106 152Z','M108 150 C140 112 170 104 198 112 C164 118 136 132 110 154Z','M108 150 C150 140 182 152 196 176 C170 158 140 152 110 154Z','M108 150 C126 116 146 96 170 86 C148 104 128 126 110 152Z'].forEach(d=>x.fill(new Path2D(d))); x.restore(); };
     palma(-60,H-860,2.2,false); palma(W+60,H-760,1.9,true); }
   else { x.fillStyle=PAP; x.fillRect(0,0,W,H); }
+  if(VI){
   // barra de navegador
-  const g=VI?x.createLinearGradient(0,0,W,0):x.createLinearGradient(0,0,0,150); if(VI){ g.addColorStop(0,'#4a1f5e'); g.addColorStop(.5,'#9c3274'); g.addColorStop(1,'#d9614f'); } else { g.addColorStop(0,'#262523'); g.addColorStop(1,'#151514'); } x.fillStyle=g; x.fillRect(0,0,W,150);
-  [36,62,88].forEach(cx=>{ x.fillStyle=VI?'rgba(255,255,255,.45)':'#5a5650'; x.beginPath(); x.arc(cx,36,8,0,7); x.fill(); });
-  x.fillStyle=PAP; rr(124,14,300,56,14); x.fill(); x.fillRect(124,44,300,30);
-  T(aba||'Galo Metrics',148,51,'osw',24,INK,'left',260);
-  x.fillStyle=VI?'rgba(255,255,255,.18)':'#34322f'; rr(P-20,84,W-2*P+40,50,25); x.fill();
-  const wb=T('galometrics.com.br',P+8,119,'osw',27,PAP); T(caminho||'',P+10+wb,119,'osw',27,'#a59e8f','left',W-2*P-wb-40);
-  if(VI){ const gl=x.createLinearGradient(0,0,W,0); gl.addColorStop(0,'#c2417f'); gl.addColorStop(.6,'#f08a5d'); gl.addColorStop(1,'#f7b267'); x.fillStyle=gl; } else x.fillStyle=GOLD; x.fillRect(0,150,W,5);
-  // rodapé (sem faixa preta)
-  x.fillStyle=INK; x.fillRect(P,H-108,W-2*P,2);
-  T('GALO METRICS',P,H-44,'abril',36,INK); T('galometrics.com.br',W-P,H-46,'osw',28,GOLDD,'right');
-  return {cv,x,W,H,P,T,Tm,F,wrap,rr,crest,galo,carimbo,INK,PAP,GOLD,GOLDD,V,R,CINZA,TOP:156,BOT:H-130};
+    const g=VI?x.createLinearGradient(0,0,W,0):x.createLinearGradient(0,0,0,150); if(VI){ g.addColorStop(0,'#4a1f5e'); g.addColorStop(.5,'#9c3274'); g.addColorStop(1,'#d9614f'); } else { g.addColorStop(0,'#262523'); g.addColorStop(1,'#151514'); } x.fillStyle=g; x.fillRect(0,0,W,150);
+    [36,62,88].forEach(cx=>{ x.fillStyle=VI?'rgba(255,255,255,.45)':'#5a5650'; x.beginPath(); x.arc(cx,36,8,0,7); x.fill(); });
+    x.fillStyle=PAP; rr(124,14,300,56,14); x.fill(); x.fillRect(124,44,300,30);
+    T(aba||'Galo Metrics',148,51,'osw',24,INK,'left',260);
+    x.fillStyle=VI?'rgba(255,255,255,.18)':'#34322f'; rr(P-20,84,W-2*P+40,50,25); x.fill();
+    const wb=T('galometrics.com.br',P+8,119,'osw',27,PAP); T(caminho||'',P+10+wb,119,'osw',27,'#a59e8f','left',W-2*P-wb-40);
+    if(VI){ const gl=x.createLinearGradient(0,0,W,0); gl.addColorStop(0,'#c2417f'); gl.addColorStop(.6,'#f08a5d'); gl.addColorStop(1,'#f7b267'); x.fillStyle=gl; } else x.fillStyle=GOLD; x.fillRect(0,150,W,5);
+  }
+  else {
+    for(let i=0;i<16;i++){ x.fillStyle=i%2?'#8e8c86':'#f7f5ef'; x.fillRect(i*W/16,0,W/16+1,20); }
+    x.font='700 19px "Courier Prime", monospace'; try{ x.letterSpacing='4px'; }catch(e){} x.fillStyle=GOLD; x.textAlign='left'; x.textBaseline='alphabetic'; x.fillText(('GALO METRICS · '+(aba||'Edição digital')).toUpperCase().slice(0,60),P,86);
+    x.font='700 17px "Courier Prime", monospace'; try{ x.letterSpacing='2px'; }catch(e){} x.fillStyle='#8e8c86'; x.fillText(('galometrics.com.br'+(caminho||'')).slice(0,70),P,120); try{ x.letterSpacing='0px'; }catch(e){}
+    x.fillStyle='#5b5953'; x.fillRect(P,150,W-2*P,2);
+  }
+  // rodapé
+  if(VI){ x.fillStyle=INK; x.fillRect(P,H-108,W-2*P,2); T('GALO METRICS',P,H-44,'abril',36,INK); T('galometrics.com.br',W-P,H-46,'osw',28,GOLDD,'right'); }
+  else { x.fillStyle='#5b5953'; x.fillRect(P,H-108,W-2*P,2); x.font='700 15px "Courier Prime", monospace'; try{ x.letterSpacing='3px'; }catch(e){} x.fillStyle=GOLD; x.textAlign='left'; x.fillText('GALO METRICS',P,H-46); try{ x.letterSpacing='0px'; }catch(e){} x.font='900 condensed 42px Archivo, Oswald, sans-serif'; x.fillStyle=INK; x.textAlign='right'; x.fillText('GALOMETRICS.COM.BR',W-P,H-42); }
+  return {cv,x,W,H,P,T,Tm,F,wrap,rr,crest,galo,carimbo,INK,PAP,GOLD,GOLDD,V,R,CINZA,PANEL,LINHA,CAMPO1,CAMPO2,CTA_BG,CTA_TX,VI,TOP:156,BOT:H-130};
 }
 const artBtn=spec=>`<button type="button" class="ghost" data-arte="${esc(JSON.stringify(spec))}">Baixar arte</button>`;
 async function desenhaArte(s){
@@ -4575,7 +4585,7 @@ async function desenhaArte(s){
     T('★ '+(s.k||(isP?'MEU PALPITE':(d.est?'EU ESTAVA LÁ':'MEU JOGO'))),P,226,'osw',34,GOLD,'left',W-2*P-240);
     T(s.f||`${(j.competicao||'').toUpperCase()}${j.fase?' · '+j.fase.toUpperCase():''} · ${fmtD(j.data,j.data_aprox)}`,P,268,'osw',24,INK,'left',W-2*P-260);
     // placar
-    const nInfo=isP?(d.marc&&d.marc.length?1:0):((j.gols.some(g=>g.lado==='galo')?1:0)+(d.n?1:0)+(d.cr?1:0)+(d.t?2:0)); const bh=temCampo?300:400, by=temCampo?300:Math.max(310,Math.round(310+(A.BOT-310-bh-nInfo*70)/2-40)); x.fillStyle='rgba(255,255,255,.55)'; x.fillRect(P,by,W-2*P,bh); x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P,by,W-2*P,bh);
+    const nInfo=isP?(d.marc&&d.marc.length?1:0):((j.gols.some(g=>g.lado==='galo')?1:0)+(d.n?1:0)+(d.cr?1:0)+(d.t?2:0)); const bh=temCampo?300:400, by=temCampo?300:Math.max(310,Math.round(310+(A.BOT-310-bh-nInfo*70)/2-40)); x.fillStyle=A.PANEL; x.fillRect(P,by,W-2*P,bh); x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P,by,W-2*P,bh);
     const cxL=P+170, cxR=W-P-170, cy=by+(temCampo?120:150), cs=temCampo?170:210;
     for(const [id,cx] of [[L,cxL],[Rr,cxR]]){ if(id==='galo') galo(cx,cy,cs*1.08); else await crest(id,cx,cy,cs*0.8); }
     const gp=isP?d.gp:j.gp, gc=isP?d.gc:j.gc;
@@ -4593,7 +4603,7 @@ async function desenhaArte(s){
     }
     if(temCampo){
       const X0=P,PW=W-2*P,Y0=Math.max(yy-10,isP?700:760),PH=A.BOT-Y0-10;
-      x.fillStyle='#E6E0CF'; x.fillRect(X0,Y0,PW,PH); for(let i=0;i<6;i++){ if(i%2){ x.fillStyle='#DDD6C2'; x.fillRect(X0,Y0+i*PH/6,PW,PH/6); } }
+      x.fillStyle=A.CAMPO1; x.fillRect(X0,Y0,PW,PH); for(let i=0;i<6;i++){ if(i%2){ x.fillStyle=A.CAMPO2; x.fillRect(X0,Y0+i*PH/6,PW,PH/6); } }
       x.strokeStyle=INK; x.lineWidth=3; x.strokeRect(X0,Y0,PW,PH); x.beginPath(); x.moveTo(X0,Y0+PH/2); x.lineTo(X0+PW,Y0+PH/2); x.stroke(); x.beginPath(); x.arc(X0+PW/2,Y0+PH/2,Math.min(56,PH/6),0,Math.PI*2); x.stroke();
       x.strokeRect(X0+PW/2-130,Y0+PH-56,260,56); x.strokeRect(X0+PW/2-130,Y0,260,56);
       const gols={}; (isP?(d.marc||[]):j.gols.filter(g=>g.lado==='galo'&&isGoal(g)).map(g=>g.jogador)).forEach(n=>{ gols[n]=(gols[n]||0)+1; });
@@ -4608,7 +4618,7 @@ async function desenhaArte(s){
   if(s.t==='estadio'){
     const S=statsEstadio(); galo(W-P-90,300,190);
     T('★ '+(s.k||'FICHA DO TORCEDOR'),P,226,'osw',34,GOLD,'left',W-2*P-220); if(s.f) wrap(s.f,P,320,'abril',64,W-2*P-220,74,INK,'left',3); else { Tm('Fui ao',P,330,96,W-2*P-220); Tm('estádio',P,430,96,W-2*P-220); }
-    let y=500; x.strokeStyle=INK; x.lineWidth=4; x.fillStyle='rgba(255,255,255,.55)'; x.fillRect(P,y,W-2*P,190); x.strokeRect(P,y,W-2*P,190);
+    let y=500; x.strokeStyle=INK; x.lineWidth=4; x.fillStyle=A.PANEL; x.fillRect(P,y,W-2*P,190); x.strokeRect(P,y,W-2*P,190);
     const cw=(W-2*P)/2; T(String(S.ids.length),P+30,y+120,'abril',100,INK); T('JOGOS NO ESTÁDIO',P+30,y+165,'osw',24,INK);
     x.fillStyle=INK; x.fillRect(P+cw,y,2,190); T(S.r.V+S.r.E+S.r.D?aprov(S.r):'–',P+cw+30,y+120,'abril',100,GOLD,'left',cw-60); T('APROVEITAMENTO',P+cw+30,y+165,'osw',24,INK);
     y+=210; const c3=(W-2*P)/3; [['VITÓRIAS',S.r.V,V],['EMPATES',S.r.E,GOLD],['DERROTAS',S.r.D,R]].forEach(([l,v,c],i)=>{ x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P+i*c3+(i?10:0),y,c3-(i===1?20:10),150); T(String(v),P+i*c3+34,y+92,'abril',72,c); T(l,P+i*c3+34,y+130,'osw',22,INK); });
@@ -4621,7 +4631,7 @@ async function desenhaArte(s){
   if(s.t==='desafio'){
     galo(W-P-90,300,190);
     T('★ '+(s.k||'DESAFIO DO DIA · '+fmtD(hojeStr())),P,226,'osw',34,GOLD,'left',W-2*P-220); Tm(s.f||s.nome,P,350,100,W-2*P-230);
-    let y=420; x.fillStyle='rgba(255,255,255,.55)'; x.fillRect(P,y,W-2*P,230); x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P,y,W-2*P,230);
+    let y=420; x.fillStyle=A.PANEL; x.fillRect(P,y,W-2*P,230); x.strokeStyle=INK; x.lineWidth=4; x.strokeRect(P,y,W-2*P,230);
     Tm(String(s.res),W/2,y+160,130,W-2*P-60,'center'); y+=300;
     if(s.grade){ const rows=s.grade.split('\n').filter(Boolean); const n=Math.max(...rows.map(r=>[...r].length)); const sq=Math.min(92,(W-2*P)/n-12, (A.BOT-y-150)/rows.length-12); const gx=(W-n*(sq+12)+12)/2;
       rows.forEach((r,ri)=>[...r].forEach((c,ci)=>{ x.fillStyle=c==='v'?'#2f7d47':c==='a'?'#D9A21B':'#555'; A.rr(gx+ci*(sq+12),y+ri*(sq+12),sq,sq,8); x.fill(); })); y+=rows.length*(sq+12)+40; }
@@ -5909,12 +5919,12 @@ async function desenhaArteUF(s){
   const fr=s.f||fraseUF(d), fs=fr.length>110?48:fr.length>80?54:62; let y=wrap(fr,P,326,'abril',fs,W-2*P-210,Math.round(fs*1.2));
   y+=64; const cols=[[d.pos.length,'positivo',V],[d.igu.length,'igual',GOLD],[d.neg.length,'negativo',R]]; const cw=(W-2*P)/3;
   x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+180,W-2*P,3);
-  cols.forEach(([n,l,c],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+30,2,120); } T(String(n),P+i*cw+30,y+108,'abril',90,c,'left',cw-50); T(('RETROSPECTO '+l).toUpperCase(),P+i*cw+30,y+152,'osw',21,INK,'left',cw-50); });
+  cols.forEach(([n,l,c],i)=>{ if(i){ x.fillStyle=A.LINHA; x.fillRect(P+i*cw,y+30,2,120); } T(String(n),P+i*cw+30,y+108,'abril',90,c,'left',cw-50); T(('RETROSPECTO '+l).toUpperCase(),P+i*cw+30,y+152,'osw',21,INK,'left',cw-50); });
   y+=240;
   T('OS MAIS ENFRENTADOS',P,y,'osw',26,GOLDD); y+=66;
   const top=d.C.slice().sort((a,b)=>b.J-a.J).slice(0,5); const passo=Math.min(76,Math.floor((A.BOT-20-y)/Math.max(1,top.length)));
   for(const r of top){ const im=await loadImg(escSrc(r.id)); if(im) cvImg(x,im,P,y-38,48,48);
-    T(r.nome,P+68,y,'cas',32,INK,'left',520); T(`${r.V}V  ${r.E}E  ${r.D}D`,W-P,y,'osw',26,'#4a4640','right'); x.fillStyle='rgba(17,17,17,.12)'; x.fillRect(P,y+22,W-2*P,1); y+=passo; }
+    T(r.nome,P+68,y,'cas',32,INK,'left',520); T(`${r.V}V  ${r.E}E  ${r.D}D`,W-P,y,'osw',26,A.CINZA,'right'); x.fillStyle=A.LINHA; x.fillRect(P,y+22,W-2*P,1); y+=passo; }
   return cv;
 }
 
@@ -6132,7 +6142,7 @@ async function desenhaArteDatas(s){
   let y=wrap(s.f||L0[2],P,310,'abril',50,W-2*P-180,58,INK,'left',3);
   y+=40; const cw=(W-2*P)/3;
   x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+128,W-2*P,3);
-  [[r.V,r.V===1?'vitória':'vitórias',V],[r.E,r.E===1?'empate':'empates',GOLD],[r.D,r.D===1?'derrota':'derrotas',R]].forEach(([n,l,c],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+22,2,86); } T(String(n),P+i*cw+26,y+86,'abril',70,c); T(l.toUpperCase(),P+i*cw+26+x.measureText(String(n)).width+14,y+84,'osw',24,INK); });
+  [[r.V,r.V===1?'vitória':'vitórias',V],[r.E,r.E===1?'empate':'empates',GOLD],[r.D,r.D===1?'derrota':'derrotas',R]].forEach(([n,l,c],i)=>{ if(i){ x.fillStyle=A.LINHA; x.fillRect(P+i*cw,y+22,2,86); } T(String(n),P+i*cw+26,y+86,'abril',70,c); T(l.toUpperCase(),P+i*cw+26+x.measureText(String(n)).width+14,y+84,'osw',24,INK); });
   T(`${aprov(r)} de aproveitamento · ${r.gp} gols marcados, ${r.gc} sofridos`,P,y+166,'cas',24,CINZA,'left',W-2*P);
   y+=212; const n=rows.length, lh=Math.max(26,Math.min(48,Math.floor((A.BOT-40-y)/Math.max(1,n)))), fs=Math.min(24,lh-7);
   rows.forEach(rw=>{ const dt=rw.dt||{}; const res=rw.j?rw.j.resultado:null;
@@ -6188,7 +6198,7 @@ async function desenhaArteLista(s){
     else { const c=r.cls==='v'?V:r.cls==='d'?R:GOLD; x.fillStyle=c; A.rr(P,y-fs+2,12,fs,3); x.fill(); }
     T(r.nome,P+60,y,'cas',fs,INK,'left',r.txt?W-2*P-60-330:W-2*P-60-170);
     if(r.txt) T(r.txt,W-P,y,'osw',fs-6,r.cls==='v'?V:r.cls==='d'?R:GOLDD,'right',320); else T(N(r.v),W-P,y,'abril',fs+6,i<3?GOLD:INK,'right');
-    x.fillStyle='rgba(17,17,17,.12)'; x.fillRect(P,y+Math.round(lh*0.35),W-2*P,1); y+=lh; });
+    x.fillStyle=A.LINHA; x.fillRect(P,y+Math.round(lh*0.35),W-2*P,1); y+=lh; });
   if(rows.length>max) T(`E mais ${rows.length-max} na lista completa em galometrics.com.br`,P,Math.min(y+4,A.BOT+2),'cas',20,CINZA,'left',W-2*P);
   return cv;
 }
@@ -6304,7 +6314,7 @@ async function desenhaArteTitulo(s){
     if(j&&j.gp!=null){ T(`Galo ${j.gp} x ${j.gc} ${f.adv}${f.pen?`  ·  pên. ${f.pen}`:''}`,W/2,780,'osw',42,INK,'center',W-2*P); }
     T(`${fmtD(f.data)} · ${f.estadio}, ${f.local.split(',')[0]}`,W/2,828,'cas',26,CINZA,'center');
     let y=890; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+150,W-2*P,3); const cw=(W-2*P)/4;
-    [[r.n,'jogos'],[r.V,'vitórias'],[r.gp,'gols'],[tit.length+'º','título internacional']].forEach(([n,l],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+28,2,96); } T(String(n),P+i*cw+cw/2,y+92,'abril',64,i===3?GOLD:INK,'center'); T(l.toUpperCase(),P+i*cw+cw/2,y+128,'osw',19,INK,'center',cw-16); });
+    [[r.n,'jogos'],[r.V,'vitórias'],[r.gp,'gols'],[tit.length+'º','título internacional']].forEach(([n,l],i)=>{ if(i){ x.fillStyle=A.LINHA; x.fillRect(P+i*cw,y+28,2,96); } T(String(n),P+i*cw+cw/2,y+92,'abril',64,i===3?GOLD:INK,'center'); T(l.toUpperCase(),P+i*cw+cw/2,y+128,'osw',19,INK,'center',cw-16); });
     const tacas=[['conmebol','Conmebol 1992'],['conmebol','Conmebol 1997'],['libertadores','Libertadores 2013'],['recopa','Recopa 2014'],['sul-americana','Sula 2026']];
     for(let i=0;i<5;i++){ const im=await loadImg('escudos/tacas/'+tacas[i][0]+'.webp'); const cx=P+(W-2*P)*(i+.5)/5; if(im){ const h=118, w=im.width*h/im.height; x.drawImage(im,cx-w/2,1064,w,h); } T(tacas[i][1].toUpperCase(),cx,1204,'osw',18,i===4?GOLDD:INK,'center',180); }
     return cv; }
@@ -6316,7 +6326,7 @@ async function desenhaArteTitulo(s){
   let y=800; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); y+=56; T('O CAMINHO',P,y,'osw',26,GOLDD); y+=50;
   mataMatas().filter(m=>m.grupo==='Sul-Americana'&&m.ano===f.ano&&!m.futuro&&!m.final).sort((a,b)=>a.j.data.localeCompare(b.j.data)).forEach(m=>{ x.fillStyle=m.r==='C'?V:R; A.rr(P,y-24,12,28,3); x.fill(); T(m.adv,P+30,y,'cas',32,INK,'left',560); T(`${m.gp} x ${m.gc}`,W-P,y,'osw',30,INK,'right'); y+=58; });
   T(`Campanha: ${r.n} jogos · ${r.V} vitórias · ${r.gp} gols`,P,Math.min(y+20,A.BOT-50),'osw',26,INK,'left',W-2*P);
-  if(e!=='vice') wrap('Se vencer, o Galo se junta a Inter e São Paulo: os únicos brasileiros com Libertadores, Sul-Americana e Recopa.',P,Math.min(y+70,A.BOT),'cas',24,GOLDD,W-2*P,32,GOLDD,'left',2);
+  if(e!=='vice') wrap('Se vencer, o Galo se junta a Inter e São Paulo: os únicos brasileiros com Libertadores, Sul-Americana e Recopa.',P,Math.min(y+70,A.BOT),'cas',24,W-2*P,32,GOLDD,'left',2);
   return cv;
 }
 function blocoFinalDono(){
@@ -6486,8 +6496,8 @@ async function desenhaArteChamada(s){
   T('JOGUE COM A GENTE NO SITE',P,y,'osw',28,GOLDD); y+=56;
   const itens=[['🗳','Quem vai decidir?','vote no seu palpite'],['🎯','Bolão da torcida','crave o placar'],['📍','De onde você vai ver?','veja onde a torcida está'],['🧠','Quiz da campanha','16 perguntas']];
   y+=8; itens.forEach(([ic,t,sub])=>{ T(ic,P+20,y,'osw',38,INK,'center'); T(t,P+70,y,'osw',38,INK,'left',520); T(sub,W-P,y,'cas',25,CINZA,'right',360); y+=72; });
-  y=Math.min(y,A.BOT-118); x.fillStyle='#111'; A.rr(P,y,W-2*P,96,10); x.fill();
-  T('Entre e participe',W/2,y+40,'osw',26,'#F5F2EA','center',W-2*P-40);
+  y=Math.min(y,A.BOT-118); x.fillStyle=A.CTA_BG; A.rr(P,y,W-2*P,96,10); x.fill();
+  T('Entre e participe',W/2,y+40,'osw',26,A.CTA_TX,'center',W-2*P-40);
   T('galometrics.com.br/#final',W/2,y+76,'osw',28,GOLD,'center');
   return cv;
 }
@@ -6634,7 +6644,7 @@ async function desenhaArteDupla(s){ const nomes=s.n.split('|'); const pr=(s.de||
   T('★ '+(s.k||'DUPLA DA HISTÓRIA'),P,232,'osw',36,GOLD,'left',W-2*P-190);
   let y=wrap(s.f||nomes.map(nomeV).join(' + '),P,330,'abril',72,W-2*P-180,80,INK,'left',3)+20; if(pr) { T(perTxt(pr),P,y+10,'osw',28,GOLDD); y+=40; }
   y+=30; x.fillStyle=INK; x.fillRect(P,y,W-2*P,3); x.fillRect(P,y+180,W-2*P,3); const cw=(W-2*P)/3;
-  [[N(r.n)+(_semF?'*':''),'jogos juntos',INK],[r.V,'vitórias',V],[aprov(r),'aproveitamento',GOLD]].forEach(([n,l,c],i)=>{ if(i){ x.fillStyle='rgba(17,17,17,.2)'; x.fillRect(P+i*cw,y+30,2,120); } T(String(n),P+i*cw+cw/2,y+108,'abril',84,c,'center',cw-20); T(l.toUpperCase(),P+i*cw+cw/2,y+150,'osw',22,INK,'center',cw-20); });
+  [[N(r.n)+(_semF?'*':''),'jogos juntos',INK],[r.V,'vitórias',V],[aprov(r),'aproveitamento',GOLD]].forEach(([n,l,c],i)=>{ if(i){ x.fillStyle=A.LINHA; x.fillRect(P+i*cw,y+30,2,120); } T(String(n),P+i*cw+cw/2,y+108,'abril',84,c,'center',cw-20); T(l.toUpperCase(),P+i*cw+cw/2,y+150,'osw',22,INK,'center',cw-20); });
   y+=250; T(`${r.E} empates · ${r.D} derrotas · ${r.gp} gols do Galo`,P,y,'osw',30,INK,'left',W-2*P); y+=60;
   nomes.forEach(n=>{ T(`${nomeV(n)}: ${g[n]} ${g[n]===1?'gol':'gols'} nos jogos juntos`,P,y,'cas',32,INK,'left',W-2*P); y+=52; });
   if(ambos){ T(`Em ${ambos} ${ambos===1?'jogo':'jogos'}, ${nomes.length===3?'os três':'os dois'} marcaram.`,P,y+6,'cas',30,GOLDD,'left',W-2*P); y+=60; }
@@ -6658,8 +6668,8 @@ async function desenhaArteAnuncioDuplas(s){ const B=duplasBase(); const d1=B.par
   item('Mais jogos juntos',d1.nomes.map(nomeV).join(' + '),`${d1.n} jogos`);
   item('Os dois marcaram no mesmo jogo',d2.nomes.map(nomeV).join(' + '),`${d2.ambos} vezes`);
   item(t1.nomes.slice().sort().join('|')==='Jairo|Mário de Castro|Said'?'Trio com mais gols: o Trio Maldito':'Trio com mais gols',t1.nomes.slice().sort().join('|')==='Jairo|Mário de Castro|Said'?'Said + Jairo + Mário de Castro':t1.nomes.map(nomeV).join(' + '),`${t1.gols} gols`);
-  y=Math.min(y+6,A.BOT-118); x.fillStyle='#111'; A.rr(P,y,W-2*P,96,10); x.fill();
-  T('Pesquise qualquer dupla, como Hulk + Paulinho',W/2,y+40,'osw',26,'#F5F2EA','center',W-2*P-40); T('galometrics.com.br/#duplas',W/2,y+76,'osw',28,GOLD,'center');
+  y=Math.min(y+6,A.BOT-118); x.fillStyle=A.CTA_BG; A.rr(P,y,W-2*P,96,10); x.fill();
+  T('Pesquise qualquer dupla, como Hulk + Paulinho',W/2,y+40,'osw',26,A.CTA_TX,'center',W-2*P-40); T('galometrics.com.br/#duplas',W/2,y+76,'osw',28,GOLD,'center');
   return cv; }
 
 const todosMarcaram=o=>o.gi&&o.gi.every(v=>v>0);
@@ -6669,19 +6679,19 @@ const nomeGols=o=>o.nomes.map((n,i)=>`${nomeV(n)} (${o.gi?o.gi[i]:0})`).join(' +
 async function desenhaArteListaReels(s,rows,tit,unid,tipo,res,id){
   const W=1080,H=1920,P=80, cv=document.createElement('canvas'); cv.width=W; cv.height=H; const x=cv.getContext('2d');
   await Promise.all(['400 80px "Galo Metrics Display"','400 80px "Abril Fatface"','700 40px Oswald','600 40px Oswald','400 30px "Libre Caslon Text"','700 30px "Libre Caslon Text"','italic 400 30px "Libre Caslon Text"'].map(f=>document.fonts.load(f).catch(()=>{})));
-  const INK='#111', PAP='#F3F0E8', GOLD='#C9962B', GOLDD='#8C6610', GOLDL='#E0B95A', CINZA='#555', V='#1f7a43', R='#b3261e';
-  const F=(f,sz)=>({abril:`400 ${sz}px "Galo Metrics Display", "Abril Fatface", Georgia, serif`, osw:`700 ${sz}px Oswald, sans-serif`, osw6:`600 ${sz}px Oswald, sans-serif`, osw4:`400 ${sz}px Oswald, sans-serif`, cas:`400 ${sz}px "Libre Caslon Text", Georgia, serif`, casb:`700 ${sz}px "Libre Caslon Text", Georgia, serif`, casi:`italic 400 ${sz}px "Libre Caslon Text", Georgia, serif`}[f]);
+  const INK='#f4f1ea', PAP='#171714', GOLD='#c9a54a', GOLDD='#c9a54a', GOLDL='#c9a54a', CINZA='#bdbab2', V='#7cc495', R='#e8877c';
+  const F=(f,sz)=>({abril:`900 extra-condensed ${sz}px Archivo, Oswald, sans-serif`, osw:`800 condensed ${sz}px Archivo, Oswald, sans-serif`, osw6:`700 condensed ${sz}px Archivo, Oswald, sans-serif`, osw4:`500 condensed ${sz}px Archivo, Oswald, sans-serif`, cas:`400 ${sz}px "Libre Caslon Text", Georgia, serif`, casb:`700 ${sz}px "Libre Caslon Text", Georgia, serif`, casi:`italic 400 ${sz}px "Libre Caslon Text", Georgia, serif`}[f]);
   const T=(t,px,py,f,sz,c=INK,al='left',max=0,ls=0)=>{ x.font=F(f,sz); x.letterSpacing=ls+'px'; if(max) while(sz>14&&x.measureText(t).width>max){ sz-=2; x.font=F(f,sz); } x.fillStyle=c; x.textAlign=al; x.textBaseline='alphabetic'; x.fillText(t,px,py); const w=x.measureText(t).width; x.letterSpacing='0px'; return w; };
   // texto com "(n)" em dourado; encolhe para caber
   const rich=(t,px,py,f,sz,c,cg,max)=>{ const partes=String(t).split(/(\(\d+\))/).filter(Boolean); const med=z=>partes.reduce((w,pt)=>{ x.font=F(/^\(\d+\)$/.test(pt)?(f==='casb'?'cas':f):f,z); return w+x.measureText(pt).width; },0);
     while(sz>16&&med(sz)>max) sz-=2; let cx=px; x.textAlign='left'; x.textBaseline='alphabetic'; partes.forEach(pt=>{ const g=/^\(\d+\)$/.test(pt); x.font=F(g&&f==='casb'?'cas':f,sz); x.fillStyle=g?cg:c; x.fillText(pt,cx,py); cx+=x.measureText(pt).width; }); return sz; };
   const fitRich=(t,f,sz,max)=>{ const partes=String(t).split(/(\(\d+\))/).filter(Boolean); const med=z=>partes.reduce((w,pt)=>{ x.font=F(/^\(\d+\)$/.test(pt)&&f==='casb'?'cas':f,z); return w+x.measureText(pt).width; },0); while(sz>16&&med(sz)>max) sz-=2; return sz; };
   const wrapW=(t,f,sz,max)=>{ x.font=F(f,sz); const ws=String(t).split(/\s+/); const ls=[]; let ln=''; for(const w of ws){ const tt=ln?ln+' '+w:w; if(x.measureText(tt).width>max&&ln){ ls.push(ln); ln=w; } else ln=tt; } if(ln) ls.push(ln); return ls; };
-  x.fillStyle=PAP; x.fillRect(0,0,W,H);
+  x.fillStyle=PAP; x.fillRect(0,0,W,H); for(let i=0;i<16;i++){ x.fillStyle=i%2?'#8e8c86':'#f7f5ef'; x.fillRect(i*W/16,0,W/16+1,20); }
   const galoIm=await loadImg(galoEsc(hojeStr()));
   // topo
-  let y=110; T('GALO METRICS',P,y,'osw',34,INK,'left',0,6); T('RANKING',W-P,y,'osw4',24,CINZA,'right',0,4);
-  x.fillStyle=INK; x.fillRect(P,y+30,W-2*P,3); y+=110;
+  let y=110; x.font='700 22px "Courier Prime", monospace'; x.letterSpacing='5px'; x.fillStyle=GOLD; x.textAlign='left'; x.fillText('GALO METRICS · RANKING',P,y); x.letterSpacing='0px';
+  x.fillStyle='#5b5953'; x.fillRect(P,y+30,W-2*P,2); y+=110;
   T('★ '+(s.k||'VOCÊ SABIA?'),P,y,'osw6',34,GOLD,'left',W-2*P-170,5);
   if(galoIm){ x.save(); x.shadowColor='rgba(17,17,17,.25)'; x.shadowBlur=14; x.shadowOffsetY=5; cvImg(x,galoIm,W-P-130,y-36,130,130); x.restore(); }
   // título
@@ -6715,7 +6725,7 @@ async function desenhaArteListaReels(s,rows,tit,unid,tipo,res,id){
     y+=h; });
   if(rows.length>top) T('Veja a lista completa em galometrics.com.br',P,y+50,'casi',26,CINZA,'left',W-2*P);
   // rodapé
-  x.fillStyle=INK; x.fillRect(P,H-112,W-2*P,3); T('GALO METRICS',P,H-50,'abril',46,INK); T('galometrics.com.br',W-P,H-52,'osw6',36,GOLDD,'right');
+  x.fillStyle='#5b5953'; x.fillRect(P,H-112,W-2*P,2); x.font='700 17px "Courier Prime", monospace'; x.letterSpacing='4px'; x.fillStyle=GOLD; x.textAlign='left'; x.fillText('GALO METRICS',P,H-52); x.letterSpacing='0px'; T('GALOMETRICS.COM.BR',W-P,H-46,'abril',50,INK,'right');
   return cv; }
 
 /* Dono: escudos rápidos (vários de uma vez, colar, arrastar) */
