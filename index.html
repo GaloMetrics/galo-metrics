@@ -2354,9 +2354,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261126191331';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261126191331"></script>
-<script src="backend-firebase.js?v=20261126191331"></script>
+<script>window.GM_BUILD='20261126193540';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261126193540"></script>
+<script src="backend-firebase.js?v=20261126193540"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4557,6 +4557,7 @@ async function arteBase(caminho, aba, tema){
 const artBtn=spec=>`<button type="button" class="ghost" data-arte="${esc(JSON.stringify(spec))}">Baixar arte</button>`;
 async function desenhaArte(s){
   if(s.t==='uf') return desenhaArteUF(s);
+  if(s.t==='nasc') return desenhaArteNasc(s);
   if(s.t==='datas') return desenhaArteDatas(s);
   if(s.t==='lista') return desenhaArteLista(s);
   if(s.t==='titulo') return desenhaArteTitulo(s);
@@ -6989,9 +6990,9 @@ function vMapaNasc(aba,uf,cid){
     const cids=Object.values(porC).filter(o=>o.g.iso3==='BRA'&&o.g.bx!=null).sort((a,b)=>b.l.length-a.l.length);
     svg=`<svg class="mapa" viewBox="0 0 ${M.br.w} ${M.br.h}" role="img" aria-label="Onde nasceram os jogadores do Galo">${Object.entries(M.br.uf).map(([u,d])=>`<a href="#mapa?aba=nasc&uf=${u}"><path d="${d}" class="uf ${tom((porUF[u]||[]).length,mx)}${u===uf?' sel':''}"><title>${esc(M.br.nomes[u])}: ${N((porUF[u]||[]).length)} jogadores</title></path></a>`).join('')}
       ${[...cids].reverse().map(o=>`<a href="#mapa?${new URLSearchParams({aba:'nasc',cid:o.g.nat})}"><circle cx="${o.g.bx}" cy="${o.g.by}" r="${raio(o.l.length)}" class="dot"><title>${esc(o.g.cid)} - ${o.g.uf}: ${N(o.l.length)} jogadores</title></circle></a>`).join('')}</svg>`;
-    if(cid&&porC[cid]) lista=`<h2>Nascidos em ${esc(cid)}: ${N(porC[cid].l.length)}</h2>${tab(porC[cid].l)}<p class="count"><a href="#mapa?aba=nasc">← Todos os estados</a></p>`;
+    if(cid&&porC[cid]) lista=`<h2>Nascidos em ${esc(cid)}: ${N(porC[cid].l.length)}</h2><p>${artBtn({t:'nasc',cid}).replace('Baixar arte','Arte desta cidade')}</p>${tab(porC[cid].l)}<p class="count"><a href="#mapa?aba=nasc">← Todos os estados</a></p>`;
     else if(uf) { const l=porUF[uf]||[]; const top=Object.values(porC).filter(o=>o.g.uf===uf&&o.g.cid&&o.g.cid!=='?').sort((a,b)=>b.l.length-a.l.length).slice(0,12);
-      lista=`<h2>${esc(M.br.nomes[uf])}: ${N(l.length)} jogadores</h2><div class="pq-ex">${top.map(o=>`<a class="chip" href="#mapa?${new URLSearchParams({aba:'nasc',cid:o.g.nat})}">${esc(o.g.cid||'?')} (${o.l.length})</a>`).join('')}</div>${tab(l)}<p class="count"><a href="#mapa?aba=nasc">← Todos os estados</a></p>`; }
+      lista=`<h2>${esc(M.br.nomes[uf])}: ${N(l.length)} jogadores</h2><p>${artBtn({t:'nasc',uf}).replace('Baixar arte','Arte deste estado')}</p><div class="pq-ex">${top.map(o=>`<a class="chip" href="#mapa?${new URLSearchParams({aba:'nasc',cid:o.g.nat})}">${esc(o.g.cid||'?')} (${o.l.length})</a>`).join('')}</div>${tab(l)}<p class="count"><a href="#mapa?aba=nasc">← Todos os estados</a></p>`; }
     else lista=`<h2>Estados</h2><table><thead><tr><th>Estado</th><th class="n">Jogadores</th><th>Cidade que mais revelou</th></tr></thead><tbody>${Object.entries(porUF).sort((a,b)=>b[1].length-a[1].length).map(([u,l])=>{ const c=Object.values(porC).filter(o=>o.g.uf===u&&o.g.cid).sort((a,b)=>b.l.length-a.l.length)[0]; return `<tr class="click" onclick="location.hash='mapa?aba=nasc&uf=${u}'"><td>${esc(M.br.nomes[u]||u)}</td><td class="n">${N(l.length)}</td><td>${c?esc(c.g.cid)+' ('+c.l.length+')':''}</td></tr>`; }).join('')}</tbody></table>
       <h3>Cidades que mais revelaram jogadores para o Galo</h3><ol class="rank">${cids.slice(0,15).map((o,i)=>`<li><span class="rank-n">${i+1}</span><a href="#mapa?${new URLSearchParams({aba:'nasc',cid:o.g.nat})}">${esc(o.g.cid)} - ${o.g.uf}</a><b>${N(o.l.length)}</b></li>`).join('')}</ol>`;
   } else { const ex=R.filter(r=>r.g.iso3!=='BRA'); const porP={}; ex.forEach(r=>{ (porP[r.g.iso3] ||= {nome:r.pais,l:[]}).l.push(r); }); const mx=Math.max(...Object.values(porP).map(o=>o.l.length)); const ps=uf;
@@ -7313,6 +7314,59 @@ function mrvDossie(L,R,num,jl){
   const pts=3*r.V+r.E; cur.push(`São ${pts} pontos conquistados em ${3*R.length} disputados.`);
   add('mrv-cur','Curiosidades',`<ul class="lista-cur">${cur.map(c=>`<li style="margin:6px 0">${c}</li>`).join('')}</ul>`);
   return P;
+}
+
+/* ---------- Artes no estilo do dossiê (preto, faixas da fachada, letra condensada) ---------- */
+async function arteDossie(){
+  const W=1080,H=1350,P=60, cv=document.createElement('canvas'); cv.width=W; cv.height=H; const x=cv.getContext('2d');
+  await Promise.all(['900 100px Archivo','800 40px Archivo','700 20px "Courier Prime"','italic 400 28px "Libre Caslon Text"'].map(f=>document.fonts.load(f).catch(()=>{})));
+  const INK='#171714', PAP='#f4f1ea', BR='#f7f5ef', CZ='#8e8c86', CZ2='#bdbab2', OURO='#c9a54a', LIN='#4a4844';
+  const font=(w,sz,st)=>{ x.font=`${w} ${sz}px Archivo, Oswald, "Arial Narrow", sans-serif`; try{ x.fontStretch=st||'extra-condensed'; }catch(e){} try{ x.letterSpacing='0px'; }catch(e){} };
+  const mono=(sz,sp)=>{ x.font=`700 ${sz}px "Courier Prime", monospace`; try{ x.fontStretch='normal'; x.letterSpacing=(sp||0)+'px'; }catch(e){} };
+  const cas=sz=>{ x.font=`italic 400 ${sz}px "Libre Caslon Text", Georgia, serif`; try{ x.fontStretch='normal'; x.letterSpacing='0px'; }catch(e){} };
+  const txt=(t,px,py,c,al)=>{ x.fillStyle=c; x.textAlign=al||'left'; x.textBaseline='alphabetic'; x.fillText(t,px,py); return x.measureText(t).width; };
+  const fit=(t,w,sz,max,st)=>{ font(w,sz,st); while(sz>24&&x.measureText(t).width>max){ sz-=2; font(w,sz,st); } return sz; };
+  const wrap=(t,px,py,max,lh,c)=>{ x.fillStyle=c; x.textAlign='left'; const ws=String(t).split(/\s+/); let ln='',y=py; for(const w of ws){ const tt=ln?ln+' '+w:w; if(x.measureText(tt).width>max&&ln){ x.fillText(ln,px,y); ln=w; y+=lh; } else ln=tt; } if(ln) x.fillText(ln,px,y); return y; };
+  x.fillStyle=INK; x.fillRect(0,0,W,H);
+  const faixa=(y,h)=>{ for(let i=0;i<16;i++){ x.fillStyle=i%2?CZ:BR; x.fillRect(i*W/16,y,W/16+1,h); } };
+  faixa(0,20);
+  const kicker=(t,y)=>{ mono(19,4); txt(t.toUpperCase(),P,y,OURO); };
+  const fachada=(itens,y,h)=>{ const n=itens.length, w=(W-2*P)/n; x.strokeStyle=PAP; x.lineWidth=3; x.strokeRect(P,y,W-2*P,h);
+    itens.forEach(([v,l],i)=>{ const px=P+i*w; x.fillStyle=i%2?CZ:BR; x.fillRect(px+(i?1:1.5),y+1.5,w-(i?1:1.5)-(i===n-1?1.5:0),h-3); if(i){ x.fillStyle=INK; x.fillRect(px-1,y,2,h); }
+      const c=i%2?'#fff':INK; fit(String(v),900,92,w-36); txt(String(v),px+18,y+h-46,c); mono(14,2); txt(l.toUpperCase(),px+18,y+h-20,c); }); };
+  const rodape=(frase,chamada)=>{ x.fillStyle='#5b5953'; x.fillRect(P,H-120,W-2*P,2); cas(21); wrap(frase,P,H-70,430,29,CZ2); mono(15,3); txt((chamada||'Veja no site').toUpperCase(),W-P,H-82,OURO,'right'); font(900,44,'condensed'); txt('GALOMETRICS.COM.BR',W-P,H-44,PAP,'right'); };
+  return {cv,x,W,H,P,INK,PAP,BR,CZ,CZ2,OURO,LIN,font,mono,cas,txt,fit,wrap,faixa,kicker,fachada,rodape};
+}
+function dadosNasc(s){
+  const R=nascRows('jogadores'); let L, nome, sub, tipo;
+  if(s.cid){ L=R.filter(r=>r.g.nat===s.cid); const g=L[0]&&L[0].g; nome=g?(g.cid&&g.cid!=='?'?g.cid:g.pais):s.cid; sub=g?(g.uf||g.pais||''):''; tipo='cidade'; }
+  else if(s.uf){ L=R.filter(r=>r.g.iso3==='BRA'&&r.g.uf===s.uf); nome=(UFS[s.uf]||[s.uf])[0]; sub=s.uf; tipo='estado'; }
+  L=(L||[]).sort((a,b)=>b.jogos-a.jogos||b.gols-a.gols);
+  let pos=null; if(tipo==='cidade'&&L[0]&&L[0].g.uf){ const por={}; R.filter(r=>r.g.uf===L[0].g.uf&&r.g.cid&&r.g.cid!=='?').forEach(r=>{ por[r.g.nat]=(por[r.g.nat]||0)+1; }); const ord=Object.entries(por).sort((a,b)=>b[1]-a[1]); pos=ord.findIndex(e=>e[0]===s.cid)+1; }
+  return {L, nome, sub, tipo, pos, jogos:L.reduce((t,r)=>t+r.jogos,0), gols:L.reduce((t,r)=>t+r.gols,0)};
+}
+async function desenhaArteNasc(s){
+  const d=dadosNasc(s), A=await arteDossie(); const {cv,x,W,H,P,PAP,CZ,CZ2,OURO,LIN,font,mono,txt,fit,kicker,fachada,rodape,cas,wrap}=A;
+  kicker('Galo Metrics · Jogadores da sua '+(d.tipo==='estado'?'terra':'cidade'),78);
+  font(900,96); txt(d.tipo==='estado'?'NASCERAM EM':'NASCERAM EM',P,180,PAP);
+  const nm=d.nome.toUpperCase(); const sz=fit(nm,900,150,W-2*P-(d.sub?90:0)); const wN=txt(nm,P,180+sz*0.9,CZ2);
+  if(d.sub&&d.tipo==='cidade'){ mono(22,3); txt(d.sub,P+wN+14,180+sz*0.9,OURO); }
+  const yE=180+sz*0.9+96; font(900,96); txt('E JOGARAM NO GALO',P,yE,PAP);
+  const yF=yE+40; fachada([[N(d.L.length),d.L.length===1?'Jogador':'Jogadores'],[N(d.jogos),'Jogos pelo Galo'],[N(d.gols),'Gols pelo Galo']],yF,150);
+  let y=yF+150+44;
+  if(d.pos&&d.L[0]){ cas(24); txt(`${d.pos}ª cidade de ${(UFS[d.L[0].g.uf]||[d.L[0].g.uf])[0]} que mais deu jogadores ao Galo.`,P,y,CZ2); y+=26; }
+  x.fillStyle=PAP; x.fillRect(P,y,W-2*P,3); y+=3;
+  const maxRows=Math.max(1,Math.min(d.L.length,Math.floor((H-150-y-(d.L.length>8?40:0))/62))), mxJ=Math.max(1,...d.L.map(r=>r.jogos));
+  d.L.slice(0,maxRows).forEach((r,i)=>{ const yy=y+i*62;
+    font(900,36); txt(String(i+1),P,yy+42,CZ);
+    const nmr=nomeV(r._n).toUpperCase(); fit(nmr,800,30,W-2*P-330,'condensed'); const wn=txt(nmr,P+58,yy+36,PAP);
+    mono(13,2); txt(((r.pos||'')+(r.periodo?' · '+r.periodo:'')).toUpperCase().slice(0,42),P+58,yy+56,'#9a978f');
+    font(900,34); txt(N(r.jogos),W-P-140,yy+38,PAP,'right'); mono(12,2); txt('JOGOS',W-P-140,yy+54,'#9a978f','right');
+    font(900,34); txt(N(r.gols),W-P,yy+38,PAP,'right'); mono(12,2); txt('GOLS',W-P,yy+54,'#9a978f','right');
+    x.fillStyle=LIN; x.fillRect(P,yy+61,W-2*P,1); });
+  if(d.L.length>maxRows){ cas(22); txt(`E mais ${d.L.length-maxRows} ${d.L.length-maxRows===1?'jogador':'jogadores'} na lista completa.`,P,y+maxRows*62+32,CZ2); }
+  rodape('Lista em construção: ainda faltam alguns nomes.','Veja a lista completa');
+  return cv;
 }
 
 </script>
