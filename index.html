@@ -2308,7 +2308,14 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 <style id="sino-css">
 #sinosug{position:fixed;right:18px;bottom:18px;z-index:900;width:58px;height:58px;border-radius:50%;background:#171714;color:#f4f1ea;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 0 0 3px #f4f1ea,0 0 0 5px #171714,0 8px 20px rgba(0,0,0,.35)}
 #sinosug[hidden]{display:none}
-#sinosug b{position:absolute;top:-6px;right:-6px;min-width:24px;height:24px;padding:0 6px;border-radius:12px;background:#e5b52f;color:#171714;font:800 13px/24px 'Archivo',Arial,sans-serif;text-align:center;border:2px solid #171714}
+#sinosug b{position:absolute;min-width:24px;height:24px;padding:0 6px;border-radius:12px;font:800 13px/20px 'Archivo',Arial,sans-serif;text-align:center;border:2px solid #171714}
+#sinosug b.s-corr{top:-7px;right:-7px;background:#e5b52f;color:#171714}
+#sinosug b.s-outros{bottom:-7px;right:-7px;background:#f4f1ea;color:#171714}
+#sinosug .s-leg{position:absolute;right:70px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:flex-end;gap:4px;pointer-events:none}
+#sinosug .s-leg i{font:700 11px/1 'Courier Prime',monospace;font-style:normal;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;background:#f4f1ea;color:#171714;border:2px solid #171714;padding:4px 7px}
+#sinosug .s-leg i.c{background:#e5b52f}
+#sinosug:not(.tem-corr).sino-pulso::after{border-color:#8e8c86}
+@media (max-width:640px){#sinosug .s-leg{display:none}}
 #sinosug:hover{background:#000}
 #sinosug:focus-visible{outline:3px solid #e5b52f;outline-offset:4px}
 #sinosug.sino-pulso svg{animation:sinoBalanca 2.4s ease-in-out infinite;transform-origin:50% 10%}
@@ -2321,6 +2328,16 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 #nav summary.tem-sug{position:relative}
 #nav summary.tem-sug::after{content:"";position:absolute;top:4px;right:-2px;width:9px;height:9px;border-radius:50%;background:#e5b52f;border:2px solid #171714}
 @media print{#sinosug{display:none}}
+.sug-abas{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+.sug-aba{font:700 12px 'Courier Prime',monospace;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border:2px solid #171714;background:#f7f5ef;color:#171714;cursor:pointer}
+.sug-aba.on{background:#171714;color:#f4f1ea}
+.sug-aba b{display:inline-block;margin-left:4px;padding:0 6px;background:#e5b52f;color:#171714;border-radius:9px}
+.sug-it.sug-corr:not(.vista){border-left:6px solid #e5b52f;padding-left:12px}
+.sug-aviso{border:2px solid #171714;padding:10px 14px;margin:10px 0;background:#f7f5ef}
+.sug-aviso summary{cursor:pointer;font:700 13px 'Courier Prime',monospace;letter-spacing:.06em;text-transform:uppercase}
+.sug-aviso p{margin:8px 0;font-size:14px}
+.sug-aviso-f{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sug-aviso-f input{flex:1 1 240px;font:14px 'Courier Prime',monospace;padding:8px;border:1px solid #171714;background:#fff}
 </style>
 </head>
 <body>
@@ -2337,9 +2354,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261126160238';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261126160238"></script>
-<script src="backend-firebase.js?v=20261126160238"></script>
+<script>window.GM_BUILD='20261126160707';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261126160707"></script>
+<script src="backend-firebase.js?v=20261126160707"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -5226,7 +5243,7 @@ async function ligaSugestoes(){
       if(file){ const A=await window.claude.use('assets'); if(!A) throw new Error('upload indisponível para você'); const up=await A.upload(file); item.asset=up.id; item.url=up.url; item.tipoArq=up.contentType; }
       try{ trk('sugestao'); }catch(_){} const ref=GDB.doc('sugestoes/'+GUID); const s=await ref.get(); const atual=s.exists?(s.data().itens||[]):[];
       await ref.set({itens:[...atual, item].slice(-100), atualizado:item.quando});
-      f.reset(); sync(); msg.textContent='Recebido, obrigado! O dono do site vai conferir.'; toast('Envio recebido. Valeu!'); mostraMinhas(); if(DONO) carregaSugestoes();
+      avisaDono(item); f.reset(); sync(); msg.textContent='Recebido, obrigado! O dono do site vai conferir.'; toast('Envio recebido. Valeu!'); mostraMinhas(); if(DONO) carregaSugestoes();
     }catch(err){ console.error(err); msg.textContent='Não foi possível enviar agora ('+(err&&err.message||'erro')+'). Tente de novo mais tarde.'; }
     btn.disabled=false; };
 }
@@ -5236,37 +5253,60 @@ async function mostraMinhas(){
     box.innerHTML=`<h2>Seus envios</h2>${L.slice().reverse().map(x=>`<div class="sug-it"><span class="tag light">${esc((TIPOS_SUG.find(t=>t[0]===x.tipo)||[,''])[1])}</span> <b>${esc(x.sobre||'')}</b> <small class="uf">${fmtD(x.quando.slice(0,10))}</small>${x.msg?`<p>${esc(x.msg)}</p>`:''}${x.asset?`<img src="${upSrc(x)}" data-up="${esc(upId(x))}" alt="Imagem enviada" class="sug-img">`:''}</div>`).join('')}`; resolveUps(box); }catch(e){}
 }
 async function carregaSugestoes(){
-  if(!GDB) return; SUG_TODAS=[];
-  try{ const s=await GDB.collection('sugestoes').limit(500).get(); (s.docs||[]).forEach(d=>{ (d.data().itens||[]).forEach((x,i)=>SUG_TODAS.push({...x, uid:d.id, k:d.id+'_'+i})); }); }catch(e){ console.error(e); }
-  SUG_TODAS.sort((a,b)=>String(b.quando).localeCompare(String(a.quando)));
+  if(!GDB) return; await puxaVistas(); const L0=[];
+  try{ const s=await GDB.collection('sugestoes').limit(500).get(); (s.docs||[]).forEach(d=>{ (d.data().itens||[]).forEach((x,i)=>L0.push({...x, uid:d.id, k:d.id+'_'+i})); }); }catch(e){ console.error(e); return; }
+  SUG_TODAS=L0; SUG_TODAS.sort((a,b)=>String(b.quando).localeCompare(String(a.quando)));
   desenhaSugDono();
 }
-let SINO_ULT=null;
+let SINO_ULT=null, SUG_VISTAS=null, SUG_FILTRO='todas', VISTAS_T=null;
+function sugVistas(){ if(!SUG_VISTAS){ try{ SUG_VISTAS=JSON.parse(localStorage.getItem('gm-sug-vistas')||'{}'); }catch(e){ SUG_VISTAS={}; } } return SUG_VISTAS; }
+function salvaVistas(v){ SUG_VISTAS=v; try{ localStorage.setItem('gm-sug-vistas',JSON.stringify(v)); }catch(e){}
+  clearTimeout(VISTAS_T); VISTAS_T=setTimeout(async()=>{ if(!GDB||!DONO) return; try{ await GDB.doc('admin/sugvistas').set({v, em:Date.now()}); }catch(e){ console.warn('vistas',e); } },600); }
+async function puxaVistas(){ if(!GDB||!DONO) return; try{ const d=await GDB.doc('admin/sugvistas').get(); const nuvem=d.exists?(d.data().v||{}):{}; const loc=sugVistas(); const m={...nuvem,...loc}; const mudou=Object.keys(m).length!==Object.keys(nuvem).length; SUG_VISTAS=m; try{ localStorage.setItem('gm-sug-vistas',JSON.stringify(m)); }catch(e){} if(mudou) salvaVistas(m); }catch(e){ console.warn('vistas',e); } }
+/* aviso no celular: o envio dispara uma notificação no app ntfy do dono (tópico configurado na página de sugestões) */
+async function avisaDono(x){ const t=String(CFG.avisoTopico||'').trim(); if(!t) return;
+  const q=new URLSearchParams({title:(x.tipo==='correcao'?'Nova correção de dado':x.tipo==='foto'?'Nova foto enviada':x.tipo==='escudo'?'Novo escudo enviado':'Nova sugestão')+' · Galo Metrics', tags:x.tipo==='correcao'?'warning':'bell', priority:x.tipo==='correcao'?'4':'3', click:'https://galometrics.com.br/#sugestoes'});
+  try{ await fetch('https://ntfy.sh/'+encodeURIComponent(t)+'?'+q, {method:'POST', body:String(x.sobre||'Sem assunto').slice(0,160)}); }catch(e){} }
 function sinoSug(){
   if(!DONO||!SUG_TODAS) return;
-  let vistas={}; try{ vistas=JSON.parse(localStorage.getItem('gm-sug-vistas')||'{}'); }catch(e){}
-  const n=SUG_TODAS.filter(x=>!vistas[x.k]).length;
+  let vistas=sugVistas();
+  const nov=SUG_TODAS.filter(x=>!vistas[x.k]), nc=nov.filter(x=>x.tipo==='correcao').length, no=nov.length-nc, n=nov.length;
   let b=document.getElementById('sinosug');
-  if(!b){ b=document.createElement('a'); b.id='sinosug'; b.href='#sugestoes'; b.onclick=()=>setTimeout(()=>document.getElementById('sugdono')?.scrollIntoView({behavior:'smooth'}),700); document.body.appendChild(b); }
-  b.hidden=!n; b.setAttribute('aria-label',`${n} ${n===1?'sugestão nova':'sugestões novas'} para conferir`); b.title=b.getAttribute('aria-label');
-  b.innerHTML=`<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm7-6V11a7 7 0 0 0-5.5-6.84V3.5a1.5 1.5 0 0 0-3 0v.66A7 7 0 0 0 5 11v5l-2 2v1h18v-1l-2-2Z"/></svg><b>${n>99?'99+':n}</b>`;
-  const lk=document.querySelector('#nav a[href="#sugestoes"]'); if(lk){ let t=lk.querySelector('.sug-n'); if(!t){ t=document.createElement('b'); t.className='sug-n'; lk.appendChild(t); } t.textContent=n; t.hidden=!n; const sm=lk.closest('details')?.querySelector('summary'); if(sm) sm.classList.toggle('tem-sug',!!n); }
+  if(!b){ b=document.createElement('a'); b.id='sinosug'; b.href='#sugestoes'; document.body.appendChild(b); }
+  b.onclick=()=>{ SUG_FILTRO=nc?'correcao':'outros'; setTimeout(()=>{ desenhaSugDono(); document.getElementById('sugdono')?.scrollIntoView({behavior:'smooth'}); },700); };
+  const rot=[nc?`${nc} ${nc===1?'correção de dado':'correções de dado'}`:'',no?`${no} ${no===1?'outro envio':'outros envios'}`:''].filter(Boolean).join(' e ');
+  b.hidden=!n; b.classList.toggle('tem-corr',!!nc); b.setAttribute('aria-label',`Novos para conferir: ${rot}`); b.title=`Novos para conferir: ${rot}`;
+  b.innerHTML=`<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm7-6V11a7 7 0 0 0-5.5-6.84V3.5a1.5 1.5 0 0 0-3 0v.66A7 7 0 0 0 5 11v5l-2 2v1h18v-1l-2-2Z"/></svg>${nc?`<b class="s-corr">${nc>99?'99+':nc}</b>`:''}${no?`<b class="s-outros">${no>99?'99+':no}</b>`:''}<span class="s-leg">${nc?`<i class="c">${nc} ${nc===1?'correção':'correções'}</i>`:''}${no?`<i>${no} ${no===1?'sugestão':'sugestões'}</i>`:''}</span>`;
+  const lk=document.querySelector('#nav a[href="#sugestoes"]'); if(lk){ let t=lk.querySelector('.sug-n'); if(!t){ t=document.createElement('b'); t.className='sug-n'; lk.appendChild(t); } t.textContent=nc&&no?`${nc} + ${no}`:n; t.hidden=!n; const sm=lk.closest('details')?.querySelector('summary'); if(sm) sm.classList.toggle('tem-sug',!!n); }
   document.title=(n?`(${n}) `:'')+document.title.replace(/^\(\d+\+?\)\s*/,'');
-  if(SINO_ULT!==null&&n>SINO_ULT){ try{ toast(n-SINO_ULT===1?'Chegou uma sugestão nova.':`Chegaram ${n-SINO_ULT} sugestões novas.`); }catch(e){} b.classList.remove('sino-pulso'); void b.offsetWidth; }
+  if(SINO_ULT!==null&&n>SINO_ULT){ try{ toast(n-SINO_ULT===1?'Chegou um envio novo.':`Chegaram ${n-SINO_ULT} envios novos.`); }catch(e){} b.classList.remove('sino-pulso'); void b.offsetWidth; }
   b.classList.toggle('sino-pulso',!!n); SINO_ULT=n;
 }
 function desenhaSugDono(){
   sinoSug();
   const box=$('#sugdono'); if(!box||!SUG_TODAS) return;
-  let vistas={}; try{ vistas=JSON.parse(localStorage.getItem('gm-sug-vistas')||'{}'); }catch(e){}
+  let vistas=sugVistas();
   const T=k=>(TIPOS_SUG.find(t=>t[0]===k)||[,''])[1];
-  box.innerHTML=SUG_TODAS.length?`<p class="count">${SUG_TODAS.length} envios · ${SUG_TODAS.filter(x=>!vistas[x.k]).length} novos</p>${SUG_TODAS.map(x=>`<div class="sug-it${vistas[x.k]?' vista':''}"><span class="tag${x.tipo==='correcao'?'':' light'}">${esc(T(x.tipo))}</span> <b>${esc(x.sobre||'(sem assunto)')}</b> <small class="uf">${fmtD(String(x.quando).slice(0,10))}${x.quem?' · '+esc(x.quem):''}</small>${x.pagina?` · <a href="#${esc(x.pagina)}">abrir página</a>`:''}${x.msg?`<p>${esc(x.msg)}</p>`:''}${x.asset?`<a href="${upSrc(x)}" target="_blank" rel="noopener"><img src="${upSrc(x)}" data-up="${esc(upId(x))}" alt="Imagem enviada" class="sug-img"></a>`:''}${(COLAB.itens||[]).some(c=>c.k===x.k)?`<span class="tag">✓ Aceita (+${(COLAB.itens.find(c=>c.k===x.k)||{}).pts} pts)</span> ${upId(x)&&(x.tipo==='foto'||x.tipo==='escudo')?(imagemAplicada(x)?'<span class="tag">✓ No site</span> ':`<button type="button" class="more" data-aplica="${esc(x.k)}">Colocar no site</button> `):''}<button type="button" class="ghost" data-desfaz="${esc(x.k)}">Desfazer</button> `:`<span class="aceita"><input type="number" min="0" max="500" value="${PTS_COLAB[x.tipo]||20}" aria-label="Pontos" data-pts="${esc(x.k)}"> <button type="button" class="more" data-aceita="${esc(x.k)}">Aceitar e dar pontos</button></span> `}<button type="button" class="ghost" data-vista="${esc(x.k)}">${vistas[x.k]?'Marcar como nova':'Marcar como vista'}</button></div>`).join('')}`:'<p class="empty">Nenhum envio ainda.</p>'; resolveUps(box);
+  const ehC=x=>x.tipo==='correcao', nC=SUG_TODAS.filter(x=>ehC(x)&&!vistas[x.k]).length, nO=SUG_TODAS.filter(x=>!ehC(x)&&!vistas[x.k]).length;
+  const LF=SUG_TODAS.filter(x=>SUG_FILTRO==='correcao'?ehC(x):SUG_FILTRO==='outros'?!ehC(x):true).slice().sort((a,b)=>(!!vistas[a.k]-!!vistas[b.k])||((SUG_FILTRO==='todas')?(ehC(b)-ehC(a)):0)||String(b.quando).localeCompare(String(a.quando)));
+  const aba=(f,t,nn)=>`<button type="button" class="sug-aba${SUG_FILTRO===f?' on':''}" data-filtro="${f}" aria-pressed="${SUG_FILTRO===f}">${t}${nn?` <b>${nn} ${nn===1?'nova':'novas'}</b>`:''}</button>`;
+  const avisoBox=`<details class="sug-aviso"${CFG.avisoTopico?'':' open'}><summary>Aviso no celular ${CFG.avisoTopico?'<span class="tag">ligado</span>':'<span class="tag light">desligado</span>'}</summary>
+    <p>Receba uma notificação no celular a cada envio novo, mesmo com o site fechado. 1) Instale o app gratuito <b>ntfy</b> (Android ou iPhone). 2) Toque em + e assine o tópico abaixo. 3) Salve aqui e toque em Testar.</p>
+    <div class="sug-aviso-f"><input id="avtop" value="${esc(CFG.avisoTopico||('galometrics-'+Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,6)))}" aria-label="Tópico do ntfy" spellcheck="false"> <button type="button" class="more" id="avsalva">Salvar</button> <button type="button" class="ghost" id="avteste">Testar</button>${CFG.avisoTopico?' <button type="button" class="ghost" id="avdesliga">Desligar</button>':''}</div>
+    <p class="uf">Use um nome difícil de adivinhar: quem souber o tópico consegue ver os avisos. O aviso leva só o tipo e o assunto do envio, sem nome nem mensagem.</p></details>`;
+  box.innerHTML=SUG_TODAS.length?`${avisoBox}<div class="sug-abas" role="group" aria-label="Filtrar envios">${aba('todas','Todos',nC+nO)}${aba('correcao','Correções de dado',nC)}${aba('outros','Sugestões, fotos e escudos',nO)}</div><p class="count">${(()=>{ const a=LF.length, b=LF.filter(x=>!vistas[x.k]).length; return `${a} ${a===1?'envio':'envios'} · ${b} ${b===1?'novo':'novos'}`; })()}</p>${LF.map(x=>`<div class="sug-it${vistas[x.k]?' vista':''}${ehC(x)?' sug-corr':''}"><span class="tag${x.tipo==='correcao'?'':' light'}">${esc(T(x.tipo))}</span> <b>${esc(x.sobre||'(sem assunto)')}</b> <small class="uf">${fmtD(String(x.quando).slice(0,10))}${x.quem?' · '+esc(x.quem):''}</small>${x.pagina?` · <a href="#${esc(x.pagina)}">abrir página</a>`:''}${x.msg?`<p>${esc(x.msg)}</p>`:''}${x.asset?`<a href="${upSrc(x)}" target="_blank" rel="noopener"><img src="${upSrc(x)}" data-up="${esc(upId(x))}" alt="Imagem enviada" class="sug-img"></a>`:''}${(COLAB.itens||[]).some(c=>c.k===x.k)?`<span class="tag">✓ Aceita (+${(COLAB.itens.find(c=>c.k===x.k)||{}).pts} pts)</span> ${upId(x)&&(x.tipo==='foto'||x.tipo==='escudo')?(imagemAplicada(x)?'<span class="tag">✓ No site</span> ':`<button type="button" class="more" data-aplica="${esc(x.k)}">Colocar no site</button> `):''}<button type="button" class="ghost" data-desfaz="${esc(x.k)}">Desfazer</button> `:`<span class="aceita"><input type="number" min="0" max="500" value="${PTS_COLAB[x.tipo]||20}" aria-label="Pontos" data-pts="${esc(x.k)}"> <button type="button" class="more" data-aceita="${esc(x.k)}">Aceitar e dar pontos</button></span> `}<button type="button" class="ghost" data-vista="${esc(x.k)}">${vistas[x.k]?'Marcar como nova':'Marcar como vista'}</button></div>`).join('')}`:'<p class="empty">Nenhum envio ainda.</p>'; resolveUps(box);
   const salvaColab=async(novo)=>{ try{ const r=GDB.doc('colab/aceitos'); const c=await r.get(); const at=c.exists?(c.data().itens||[]):[]; const it=novo(at); await r.set({itens:it, atualizado:new Date().toISOString()}); COLAB={itens:it}; desenhaSugDono(); }catch(e){ console.error(e); toast('Não foi possível salvar agora.'); } };
-  box.querySelectorAll('[data-aceita]').forEach(b=>b.onclick=()=>{ const k=b.dataset.aceita, x=SUG_TODAS.find(y=>y.k===k); const pts=Math.max(0,Math.min(500,+box.querySelector(`[data-pts="${k}"]`).value||0)); vistas[k]=1; try{ localStorage.setItem('gm-sug-vistas',JSON.stringify(vistas)); }catch(e){}
+  box.querySelectorAll('[data-aceita]').forEach(b=>b.onclick=()=>{ const k=b.dataset.aceita, x=SUG_TODAS.find(y=>y.k===k); const pts=Math.max(0,Math.min(500,+box.querySelector(`[data-pts="${k}"]`).value||0)); vistas[k]=1; salvaVistas(vistas);
     salvaColab(at=>at.some(c=>c.k===k)?at:[...at,{k, uid:x.uid, nome:(x.quem||x.apelido||'').slice(0,80), tipo:x.tipo, sobre:(x.sobre||'').slice(0,200), pts, quando:new Date().toISOString()}]).then(async()=>{ let extra=''; if(upId(x)&&(x.tipo==='foto'||x.tipo==='escudo')) extra=' '+await aplicaImagem(x); toast(`Aceita, +${pts} pontos para ${x.quem||x.apelido||'o colaborador'}.${extra}`); }); });
   box.querySelectorAll('[data-aplica]').forEach(b=>b.onclick=async()=>{ const x=SUG_TODAS.find(y=>y.k===b.dataset.aplica); const r=await aplicaImagem(x); toast(r); desenhaSugDono(); });
   box.querySelectorAll('[data-desfaz]').forEach(b=>b.onclick=()=>{ const k=b.dataset.desfaz; salvaColab(at=>at.filter(c=>c.k!==k)); });
-  box.querySelectorAll('[data-vista]').forEach(b=>b.onclick=()=>{ const k=b.dataset.vista; if(vistas[k]) delete vistas[k]; else vistas[k]=1; try{ localStorage.setItem('gm-sug-vistas',JSON.stringify(vistas)); }catch(e){} desenhaSugDono(); });
+  box.querySelectorAll('[data-filtro]').forEach(b=>b.onclick=()=>{ SUG_FILTRO=b.dataset.filtro; desenhaSugDono(); });
+  const salvaTop=async v=>{ const c=JSON.parse(JSON.stringify(CFG)); if(v) c.avisoTopico=v; else delete c.avisoTopico; try{ await GDB.doc('site/config').set({json:JSON.stringify(c), em:Date.now()}); aplicaCfg(c); toast(v?'Aviso no celular ligado.':'Aviso no celular desligado.'); desenhaSugDono(); }catch(e){ toast('Não foi possível salvar agora.'); } };
+  const top=()=>(box.querySelector('#avtop').value||'').trim().replace(/[^A-Za-z0-9_-]/g,'');
+  const bs=box.querySelector('#avsalva'); if(bs) bs.onclick=()=>{ const v=top(); if(v.length<8){ toast('Use um tópico com pelo menos 8 letras ou números.'); return; } salvaTop(v); };
+  const bt=box.querySelector('#avteste'); if(bt) bt.onclick=async()=>{ const v=top(); if(!v) return; try{ const r=await fetch('https://ntfy.sh/'+encodeURIComponent(v)+'?'+new URLSearchParams({title:'Teste · Galo Metrics',tags:'bell',click:'https://galometrics.com.br/#sugestoes'}),{method:'POST',body:'Se você está vendo isto, o aviso de sugestões novas está funcionando.'}); toast(r.ok?'Aviso de teste enviado. Confira o celular.':'O ntfy não aceitou o envio agora.'); }catch(e){ toast('Não foi possível falar com o ntfy agora.'); } };
+  const bd=box.querySelector('#avdesliga'); if(bd) bd.onclick=()=>salvaTop('');
+  box.querySelectorAll('[data-vista]').forEach(b=>b.onclick=()=>{ const k=b.dataset.vista; if(vistas[k]) delete vistas[k]; else vistas[k]=1; salvaVistas(vistas); desenhaSugDono(); });
 }
 
 /* ---------- Colaboradores: pontos, selos e ranking ---------- */
