@@ -2183,6 +2183,45 @@ header #tema{display:none!important}
 /* Cabeçalho escuro permanente, sem escurecer o conteúdo das páginas */
 header{--ink:#F2EEE3;--ink2:#d6d1c4;--paper:#121212;--mute:#9a958a;--line:#2f2c27;--soft:#1c1b18;--goldt:#D9AE52;color-scheme:dark}
 header .lclaro{display:none!important}header .lescuro{display:inline-block!important}
+
+/* ===== DOSSIÊ ARENA MRV · edição comemorativa ===== */
+.mrv-dossier{--mrv-paper:#eee5d1;--mrv-ink:#171613;--mrv-gold:#d5a51e;--mrv-red:#a83227;color:var(--mrv-ink);background:radial-gradient(rgba(35,29,18,.10) .55px,transparent .7px) 0 0/4px 4px,linear-gradient(0deg,rgba(255,255,255,.12),rgba(255,255,255,.12)),var(--mrv-paper);padding:clamp(12px,2.2vw,28px);position:relative;isolation:isolate}
+.mrv-dossier:before{content:"";position:absolute;inset:7px;border:1px solid rgba(23,22,19,.18);pointer-events:none;z-index:-1}
+.mrv-dossier .mrv-cover{background:var(--mrv-ink);color:#f4eddd;border:1px solid var(--mrv-ink);box-shadow:7px 7px 0 var(--mrv-gold);padding:clamp(16px,2.5vw,30px);margin:0 7px 30px;position:relative;overflow:hidden}
+.mrv-dossier .mrv-cover:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.2) 3px 4px),radial-gradient(circle at 18% 22%,transparent 0 2px,rgba(255,255,255,.18) 2.5px 3px,transparent 3.5px);mix-blend-mode:screen}
+.mrv-cover-meta,.mrv-cover-bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:700 10px/1.4 'Courier Prime',monospace;letter-spacing:.13em;text-transform:uppercase}
+.mrv-cover-rule{height:5px;background:var(--mrv-gold);margin:13px 0 17px}
+.mrv-cover-grid{display:grid;grid-template-columns:minmax(130px, .9fr) minmax(220px,1.3fr) minmax(110px,.55fr);align-items:center;gap:clamp(12px,2vw,28px)}
+.mrv-cover-number{font:900 clamp(88px,17vw,210px)/.72 'GaloMetricsDisplay',Impact,sans-serif;letter-spacing:-.09em;color:var(--mrv-gold);text-shadow:4px 4px 0 #000;white-space:nowrap}
+.mrv-cover-number span{display:block;font:900 clamp(17px,2.5vw,32px)/1 'GaloMetricsDisplay',Impact,sans-serif;letter-spacing:.12em;color:#f4eddd;margin:13px 0 0 9px}
+.mrv-cover-copy{border-left:5px solid var(--mrv-gold);padding-left:clamp(14px,2vw,28px)}
+.mrv-cover-kicker,.mrv-section-kicker{font:800 10px/1.3 'GaloMetricsDisplay',Impact,sans-serif;letter-spacing:.19em;text-transform:uppercase;color:var(--mrv-gold);margin:0 0 8px}
+.mrv-cover-copy h1{font:900 clamp(44px,8vw,96px)/.82 Georgia,serif;letter-spacing:-.055em;text-transform:uppercase;margin:0;color:#f4eddd}
+.mrv-cover-copy>p:last-child{font:italic clamp(14px,1.5vw,19px)/1.35 Georgia,serif;max-width:390px;margin:16px 0 0;color:#d9d0bd}
+.mrv-cover-seal{border:2px solid var(--mrv-gold);aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transform:rotate(3deg);padding:10px;font:800 9px/1.4 'GaloMetricsDisplay',Impact,sans-serif;letter-spacing:.12em}
+.mrv-cover-seal b{font:900 clamp(30px,4vw,52px)/1 Georgia,serif;color:var(--mrv-gold);letter-spacing:-.06em}
+.mrv-cover-bottom{border-top:1px solid rgba(244,237,221,.45);padding-top:11px;margin-top:22px;color:#cfc5b0}
+.mrv-editorial-intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(220px,.7fr);gap:22px;align-items:end;margin:0 7px 20px;padding-bottom:16px;border-bottom:3px double var(--mrv-ink)}
+.mrv-editorial-intro h2{font:900 clamp(28px,4vw,46px)/.98 Georgia,serif;text-transform:uppercase;letter-spacing:-.035em;margin:4px 0 8px}
+.mrv-editorial-intro .lede{font:italic 15px/1.45 Georgia,serif;margin:0;max-width:720px;color:#514a3e}
+.mrv-century-match{background:#1a1916;color:#f4eddd;padding:13px 16px;border-left:6px solid var(--mrv-gold);display:flex;flex-direction:column;gap:4px;min-width:0}
+.mrv-century-label{font:800 9px/1.3 'GaloMetricsDisplay',Impact,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--mrv-gold)}
+.mrv-century-match b{font:800 clamp(17px,2vw,24px)/1.1 Georgia,serif}.mrv-century-match>span:last-child{font:10px/1.4 'Courier Prime',monospace;color:#d1c8b6}
+.mrv-dossier>.pq-ex{display:flex;flex-wrap:wrap;gap:5px;margin:18px 7px 22px!important;padding:10px 0;border-top:1px solid rgba(23,22,19,.35);border-bottom:1px solid rgba(23,22,19,.35)}
+.mrv-dossier>.pq-ex .chip{border:1px solid var(--mrv-ink)!important;background:transparent!important;border-radius:0!important;padding:6px 9px!important;font:800 9px/1.2 'GaloMetricsDisplay',Impact,sans-serif!important;letter-spacing:.07em;text-transform:uppercase;color:var(--mrv-ink)!important}
+.mrv-dossier>.pq-ex .chip:hover{background:var(--mrv-ink)!important;color:var(--mrv-paper)!important}
+.mrv-dossier h2[id^="mrv-"]{font:900 clamp(22px,3vw,34px)/1 Georgia,serif;letter-spacing:-.025em;text-transform:uppercase;border-top:3px solid var(--mrv-ink);padding-top:10px;margin:28px 0 12px;scroll-margin-top:18px}
+.mrv-dossier h3{font-family:'GaloMetricsDisplay',Impact,sans-serif;text-transform:uppercase;letter-spacing:.06em}
+.mrv-dossier .tiles{gap:0!important;border:1px solid var(--mrv-ink);background:rgba(255,255,255,.22);box-shadow:4px 4px 0 rgba(213,165,30,.75);margin:18px 7px 26px}
+.mrv-dossier .tile{border-right:1px solid rgba(23,22,19,.28);border-bottom:1px solid rgba(23,22,19,.28);border-radius:0!important;background:transparent!important;padding:12px 10px!important}
+.mrv-dossier .tile b{font-family:Georgia,serif;font-size:clamp(20px,2.5vw,30px);font-weight:900;letter-spacing:-.04em}
+.mrv-dossier .tile span{font:800 9px/1.3 'GaloMetricsDisplay',Impact,sans-serif;letter-spacing:.09em;text-transform:uppercase}
+.mrv-dossier .ficha-canto,.mrv-dossier table,.mrv-dossier .rank{border-radius:0!important;border:1px solid var(--mrv-ink)!important;background:rgba(255,255,255,.24)}
+.mrv-dossier table{width:100%;border-collapse:collapse}.mrv-dossier th{background:var(--mrv-ink)!important;color:#f4eddd!important;font:800 9px/1.3 'GaloMetricsDisplay',Impact,sans-serif!important;letter-spacing:.08em;text-transform:uppercase;padding:8px 7px!important}.mrv-dossier td{padding:7px!important;border-bottom:1px solid rgba(23,22,19,.22)!important;font-size:12px}
+.mrv-dossier tr:nth-child(even) td{background:rgba(213,165,30,.10)}.mrv-dossier .rank li{border-bottom:1px solid rgba(23,22,19,.22)!important;padding:9px 10px!important}
+.mrv-dossier .rank-n{color:#9b7415!important;font-family:'GaloMetricsDisplay',Impact,sans-serif!important;font-weight:900}
+.mrv-dossier .mrv-backlinks{border-top:3px double var(--mrv-ink);padding-top:14px;margin-top:30px!important}
+@media(max-width:700px){.mrv-cover-grid{grid-template-columns:1fr auto;gap:12px}.mrv-cover-number{font-size:clamp(76px,23vw,130px)}.mrv-cover-copy{grid-column:1/-1;grid-row:2;border-left:0;border-top:4px solid var(--mrv-gold);padding:12px 0 0}.mrv-cover-seal{grid-column:2;grid-row:1;width:95px}.mrv-editorial-intro{grid-template-columns:1fr}.mrv-cover-meta,.mrv-cover-bottom{font-size:8px}.mrv-dossier .tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 </style>
 </head>
 <body>
@@ -6955,8 +6994,9 @@ function vArena100(){
     :j100?`<div class="note" style="margin-top:18px"><b>Jogo 100:</b> ${jl(j100)}. ${j101&&!j101.resultado?`<b>Jogo 101:</b> Galo x ${esc(j101.adversario)}, ${fmtD(j101.data)}.`:''}</div>`:'';
   const DX=mrvDossie(L,R,num,jl), sec=id=>{ const x=DX.find(p=>p[0]===id); return x?`<h2 id="${x[0]}">${x[1]}</h2>${x[2]}`:''; };
   const SUM=[['mrv-marcos','Marcos'],['mrv-linha','Linha do tempo'],['mrv-seq','Sequências'],['mrv-art','Artilheiros'],['mrv-gols','Raio-x dos gols'],['mrv-placares','Placares'],['mrv-fluxo','Viradas'],['mrv-mata','Mata-matas'],['mrv-ed','Por edição'],['mrv-jog','Jogadores'],['mrv-tec','Técnicos'],['mrv-arb','Árbitros'],['mrv-adv','Adversários'],['mrv-origem','Clássicos'],['mrv-cal','Calendário'],['mrv-pub','Público e renda'],['mrv-cmp','100 primeiros jogos'],['mrv-cur','Curiosidades'],['mrv-todos','Todos os jogos']];
-  return `<div class="kicker">Dossiê · Arena MRV · ${L[0].data.slice(0,4)}–${L[L.length-1].data.slice(0,4)}</div><h1>100 jogos na Arena MRV</h1>
-  <p class="lede">A Arena MRV chega ao jogo 100. O dossiê completo da casa do Galo desde a inauguração, em ${fmtD(L[0].data)}: campanha, sequências, artilheiros, gols minuto a minuto, viradas, mata-matas, cada edição, jogadores, técnicos, árbitros, público, renda, comparativos e todos os jogos.</p>
+  const jogoCentenario=j100?`<div class="mrv-century-match"><span class="mrv-century-label">O jogo do centenário</span><b>${j100.resultado?`Galo ${j100.gp} × ${j100.gc} ${esc(j100.adversario)}`:`Atlético x ${esc(j100.adversario)}`}</b><span>${fmtD(j100.data)}${j100.hora?` · ${esc(j100.hora)}`:""} · ${esc(j100.competicao||"")}</span></div>`:"";
+  return `<article class="mrv-dossier"><header class="mrv-cover"><div class="mrv-cover-meta"><span>GALO METRICS · ARQUIVO ALVINEGRO</span><span>DOSSIÊ ESPECIAL · 2023—2026</span></div><div class="mrv-cover-rule"></div><div class="mrv-cover-grid"><div class="mrv-cover-number">100<span>JOGOS</span></div><div class="mrv-cover-copy"><p class="mrv-cover-kicker">EDIÇÃO COMEMORATIVA</p><h1>ARENA<br>MRV</h1><p>A casa do Galo. Uma história contada jogo a jogo.</p></div><div class="mrv-cover-seal"><span>ATLÉTICO</span><b>100</b><span>JOGOS EM CASA</span></div></div><div class="mrv-cover-bottom"><span>DESDE ${fmtD(L[0].data)}</span><span>${N(L.length)} PARTIDAS NO ARQUIVO</span><span>BELO HORIZONTE · MG</span></div></header>
+  <div class="mrv-editorial-intro"><div><span class="mrv-section-kicker">CADERNO ESPECIAL · ${L[0].data.slice(0,4)}—${L[L.length-1].data.slice(0,4)}</span><h2>100 jogos na Arena MRV</h2><p class="lede">Da inauguração ao jogo do centenário: campanha, personagens, gols, viradas, arquibancada e todos os números da casa alvinegra.</p></div>${jogoCentenario}</div>
   ${status}
   <div class="pq-ex" style="margin-top:14px">${SUM.map(([id,t])=>`<a class="chip" href="javascript:void 0" onclick="document.getElementById('${id}')?.scrollIntoView({behavior:'smooth'})">${t}</a>`).join('')}</div>
   ${tilesRec(r,`<div class="tile"><b>${N(r.gp)}</b><span>Gols pró</span></div><div class="tile"><b>${N(r.gc)}</b><span>Gols contra</span></div><div class="tile"><b>${N(cs)}</b><span>Sem sofrer gol</span></div>`)}
@@ -6977,7 +7017,7 @@ function vArena100(){
   ${pubM.length?`<h3>Maiores públicos</h3><ol class="rank">${pubM.slice(0,10).map((j,i)=>`<li><span class="rank-n">${i+1}</span>${jl(j)}<b>${N(j.publico)}</b></li>`).join('')}</ol>`:''}
   ${sec('mrv-cmp')}${sec('mrv-cur')}
   <h2 id="mrv-todos">Todos os jogos</h2><table><thead><tr><th class="n">Nº</th><th>Data</th><th class="hide-s">Competição</th><th>Jogo</th><th class="n hide-s">Público</th><th class="n"></th></tr></thead><tbody>${L.map(j=>`<tr${st(j)}><td class="n mono">${num.get(j.id)}</td><td class="mono">${fmtD(j.data)}</td><td class="hide-s">${esc(j.competicao||'')}${fase(j)?' · '+esc(fase(j)):''}</td><td>${jl(j).replace(/^<a href="([^"]*)">[^·]*· /,'<a href="$1">')}${pen(j)}</td><td class="n hide-s">${j.publico?N(j.publico):''}</td><td class="n">${res(j)}</td></tr>`).join('')}</tbody></table>
-  <p class="count" style="margin-top:16px"><a class="more" href="#estadio-arena-mrv">Perfil do estádio →</a> · <a class="more" href="#estadios">Todos os estádios →</a></p>`;
+  <p class="count mrv-backlinks" style="margin-top:16px"><a class="more" href="#estadio-arena-mrv">Perfil do estádio →</a> · <a class="more" href="#estadios">Todos os estádios →</a></p></article>`;
 }
 function mrvDossie(L,R,num,jl){
   const P=[], add=(id,t,h)=>{ if(h) P.push([id,t,h]); };
