@@ -2320,9 +2320,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261125230142';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261125230142"></script>
-<script src="backend-firebase.js?v=20261125230142"></script>
+<script>window.GM_BUILD='20261125231704';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261125231704"></script>
+<script src="backend-firebase.js?v=20261125231704"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -7187,7 +7187,9 @@ function mrvDossie(L,R,num,jl){
   <div class="grid2"><div><h3>Melhor aproveitamento (mín. 15 jogos)</h3>${ol(fieis,10,([n,a,q])=>`${lk(n)} <small class="uf">${q} jogos</small><b>${a}%</b>`)}</div><div><h3>Estrearam pelo Galo na Arena (${estr.length})</h3>${ol(estr,60,([n,j])=>`${lk(n)} · <a href="#jogo-${j.id}">${fmtD(j.data)} x ${esc(j.adversario)}</a>`)}</div></div>`);
 
   // 8. técnicos e árbitros
-  const tg=grp(j=>j.tecnico_galo), ta=grp(j=>j.tecnico_adv), ar=grp(j=>j.arbitro);
+  const arbK=a=>nrm(String(a).split(',')[0].replace(/\s*\([^)]*\)/g,'')).trim(), arbN={}; R.forEach(j=>{ if(!j.arbitro) return; const k=arbK(j.arbitro), lim=String(j.arbitro).replace(/\s*\(\d+ª\)/g,'').trim(); (arbN[k] ||= {})[lim]=(arbN[k][lim]||0)+1; });
+  const arbNome=k=>Object.entries(arbN[k]).sort((a,b)=>b[1]-a[1]||(/,/.test(b[0])-/,/.test(a[0])))[0][0];
+  const tg=grp(j=>j.tecnico_galo), ta=grp(j=>j.tecnico_adv), ar=grp(j=>j.arbitro?arbNome(arbK(j.arbitro)):null);
   const venceram=Object.entries(ta).filter(([k,l])=>l.some(j=>j.resultado==='D')).map(([k,l])=>[k,l.filter(j=>j.resultado==='D').length,l]).sort((a,b)=>b[1]-a[1]);
   add('mrv-tec','Técnicos',`${tabG(tg,Object.keys(tg).sort((a,b)=>tg[a][0].data<tg[b][0].data?-1:1),(k,l)=>`<a href="${tecHref(k)}">${esc(k)}</a> <small class="uf">${fmtD(l[0].data)} a ${fmtD(l[l.length-1].data)}</small>`)}
   <h3>Técnicos adversários mais vezes na Arena</h3>${ol(top(Object.fromEntries(Object.entries(ta).map(([k,l])=>[k,l.length]))),10,([n,v])=>`${esc(n)}<b>${v}</b>`)}`);
