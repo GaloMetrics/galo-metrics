@@ -2354,9 +2354,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261126193540';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261126193540"></script>
-<script src="backend-firebase.js?v=20261126193540"></script>
+<script>window.GM_BUILD='20261126193612';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261126193612"></script>
+<script src="backend-firebase.js?v=20261126193612"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -7360,7 +7360,7 @@ async function desenhaArteNasc(s){
   d.L.slice(0,maxRows).forEach((r,i)=>{ const yy=y+i*62;
     font(900,36); txt(String(i+1),P,yy+42,CZ);
     const nmr=nomeV(r._n).toUpperCase(); fit(nmr,800,30,W-2*P-330,'condensed'); const wn=txt(nmr,P+58,yy+36,PAP);
-    mono(13,2); txt(((r.pos||'')+(r.periodo?' · '+r.periodo:'')).toUpperCase().slice(0,42),P+58,yy+56,'#9a978f');
+    { let sub=((r.pos||'')+(r.periodo?' · '+String(r.periodo).replace(/[.;\s]+$/,''):'')).toUpperCase(); mono(13,2); while(sub.length>8&&x.measureText(sub).width>W-2*P-330) sub=sub.replace(/\s*\S+$/,'')+'…'; txt(sub.replace(/…+$/,'…'),P+58,yy+56,'#9a978f'); }
     font(900,34); txt(N(r.jogos),W-P-140,yy+38,PAP,'right'); mono(12,2); txt('JOGOS',W-P-140,yy+54,'#9a978f','right');
     font(900,34); txt(N(r.gols),W-P,yy+38,PAP,'right'); mono(12,2); txt('GOLS',W-P,yy+54,'#9a978f','right');
     x.fillStyle=LIN; x.fillRect(P,yy+61,W-2*P,1); });
