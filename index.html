@@ -2375,9 +2375,9 @@ html,body,h1,h2,h3,h4,strong,b,.gm-duplas-copy strong{font-variant-numeric:linin
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261127135637';try{if(/[?&]v=/.test(location.search))history.replaceState(null,'',location.pathname+location.hash);}catch(e){}(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261127135637"></script>
-<script src="backend-firebase.js?v=20261127135637"></script>
+<script>window.GM_BUILD='20261127135748';try{if(/[?&]v=/.test(location.search))history.replaceState(null,'',location.pathname+location.hash);}catch(e){}(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261127135748"></script>
+<script src="backend-firebase.js?v=20261127135748"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -7793,9 +7793,9 @@ async function desenhaArteChines(s){ const A=await arteDossie(); const {cv,x,W,H
     { const {atual,ult,prox}=chAnos(i);
       mono(14,2); txt(`${atual?'AGORA':'ÚLT.'} ${ult}`,cx+12,cy+20,on?OURO:'#bdbab2'); txt(`PRÓX. ${prox}`,cx+cw-12,cy+20,on?OURO:'#bdbab2','right'); }
     x.font='700 64px "Noto Serif CJK SC","Noto Sans CJK SC","Microsoft YaHei","PingFang SC",serif'; try{ x.fontStretch='normal'; x.letterSpacing='0px'; }catch(e){} x.fillStyle=on?'rgba(23,23,20,.22)':'rgba(23,23,20,.12)'; x.textAlign='right'; x.fillText(CH_HANZI[i],cx+cw-12,cy+ch-14);
-    x.font='58px "Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif'; x.textAlign='left'; x.fillStyle='#171714'; x.fillText(CH_EMOJI[i],cx+16,cy+(on?92:100));
-    if(on){ font(900,112,'condensed'); txt(Math.round(z.ap)+'%',cx+16,cy+ch-14,'#171714'); } else { font(900,64,'condensed'); txt(Math.round(z.ap)+'%',cx+cw-16,cy+100,'#171714','right'); }
-    font(800,36,'condensed'); if(on) txt(z.a.toUpperCase(),cx+90,cy+84,'#171714'); else txt(z.a.toUpperCase(),cx+16,cy+ch-22,'#6b6862'); });
+    x.font='58px "Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif'; x.textAlign='left'; x.fillStyle='#171714'; x.fillText(CH_EMOJI[i],cx+16,cy+100);
+    font(900,64,'condensed'); txt(Math.round(z.ap)+'%',cx+cw-16,cy+100,'#171714','right');
+    font(800,36,'condensed'); txt(z.a.toUpperCase(),cx+16,cy+ch-22,on?'#171714':'#6b6862'); });
   rodape('Aproveitamento do Galo em cada animal do ano chinês.','Busque “horóscopo chinês”'); return cv; }
 function respostaDireta(q){
   const n=nrm(q).replace(/[?!.]+$/,'').trim(); let m;
