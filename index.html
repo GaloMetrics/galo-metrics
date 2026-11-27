@@ -2374,9 +2374,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261127115320';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261127115320"></script>
-<script src="backend-firebase.js?v=20261127115320"></script>
+<script>window.GM_BUILD='20261127115704';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261127115704"></script>
+<script src="backend-firebase.js?v=20261127115704"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -7292,10 +7292,10 @@ function v9x2(){
   <div class="nx-ninao"><b>167</b><span>gols creditados a Ninão pelo Cruzeiro</span><b>2</b><span>deles no Galo 9 x 2 Palestra</span></div>
   <p>Os gols do 9 x 2 estão na conta do maior ídolo palestrino da época. Ninão ainda seria tricampeão pelo Palestra (1928 a 1930), já com o irmão Nininho, que também jogou o 9 x 2.</p>`,'Os gols do 9 x 2 estão na conta do Cruzeiro.')}
 
-  ${sec('nx-classico',`<div class="tiles">${[[N(rc.n),'Clássicos na base'],[`${rc.V} · ${rc.E} · ${rc.D}`,'V · E · D do Galo'],[N(ant.length),'Clássicos antes do 9 x 2'],[`${ra.V} · ${ra.E} · ${ra.D}`,'V · E · D até ali']].map(([v,t])=>`<div class="tile"><b>${v}</b><span>${t}</span></div>`).join('')}</div>
-  <div class="grid2"><div><h3>Maiores vitórias do Galo no clássico</h3><ol class="rank">${mg.slice(0,6).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${jl(x)}<b>+${x.gp-x.gc}</b></li>`).join('')}</ol></div>
-  <div><h3>Maiores vitórias do Cruzeiro no clássico</h3><ol class="rank">${mgC.slice(0,6).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${jl(x)}<b>+${x.gc-x.gp}</b></li>`).join('')}</ol></div></div>
-  <p class="count">Em ${N(rc.n)} clássicos, ninguém chegou perto dos 7 gols de diferença: a segunda maior goleada do confronto, dos dois lados, foi por 5. E os 9 gols do Galo seguem sendo o máximo que um time marcou num clássico.</p>`)}
+  ${sec('nx-classico',`${(()=>{ const H=ACC.h2h[j.adversario_id]; if(!H) return ''; const pos=rec(C.filter(x=>x.data>H.ate)); const t={n:H.jogos+pos.n,V:H.V+pos.V,E:H.E+pos.E,D:H.D+pos.D};
+    return `<div class="tiles">${[[N(t.n),'Clássicos'],[N(t.V),'Vitórias do Galo'],[N(t.E),'Empates'],[N(t.D),'Derrotas']].map(([v,l])=>`<div class="tile"><b>${v}</b><span>${l}</span></div>`).join('')}</div><p class="count">Na contagem do Atlético${H.fonte&&H.fonte.nome?' ('+esc(H.fonte.nome)+')':''}, atualizada com os jogos seguintes.</p>`; })()}
+  <h3>Maiores vitórias do Galo no clássico</h3><ol class="rank">${mg.slice(0,6).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${jl(x)}<b>+${x.gp-x.gc}</b></li>`).join('')}</ol>
+  <p class="count">Nenhuma outra goleada do clássico chegou a 7 gols de diferença. E os 9 gols do Galo seguem sendo o máximo que um time marcou num clássico.</p>`)}
 
   ${sec('nx-1927',`<dl class="mrv-marcos">
     <dt>Belo Horizonte</dt><dd>Uma capital com 30 anos. A Universidade de Minas Gerais, hoje UFMG, tinha sido fundada em 7 de setembro, dois meses antes do jogo.</dd>
