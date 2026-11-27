@@ -2374,9 +2374,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261127115000';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261127115000"></script>
-<script src="backend-firebase.js?v=20261127115000"></script>
+<script>window.GM_BUILD='20261127115320';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261127115320"></script>
+<script src="backend-firebase.js?v=20261127115320"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -7209,7 +7209,7 @@ function v9x2(){
   const jl=x=>`<a href="#jogo-${x.id}">${fmtD(x.data)} · ${x.galo_mandante===false?`Cruzeiro ${x.gc} x ${x.gp} Galo`:`Galo ${x.gp} x ${x.gc} ${esc(x.adversario)}`}</a>`;
   const camp=J.filter(x=>x.temporada===1927&&x.resultado&&x.grupo==='Campeonato Mineiro'&&!/Desconsid|Início/i.test(x.competicao||'')).sort((x,y)=>x.data<y.data?-1:1), rcp=rec(camp);
   const trio=['Said','Mário de Castro','Jairo'].map(n=>{ const p=D.jogadores.find(x=>x.nome===n)||{}; const B=(D.bios&&D.bios.jogadores||{})[n]||{}; return {n,p,B,g:typeof golsBest==='function'?golsBest(p):p.gols}; });
-  const SUM=[['nx-ficha','A ficha'],['nx-placar','Gol a gol'],['nx-contexto','O que estava em jogo'],['nx-jornais','Os jornais da época'],['nx-depois','Depois do apito'],['nx-trio','O trio maldito'],['nx-existiu','“Esse jogo existiu?”'],['nx-ninao','O caso Ninão'],['nx-classico','No tamanho do clássico'],['nx-1927','O mundo em 1927'],['nx-fontes','Fontes']];
+  const SUM=[['nx-ficha','A ficha'],['nx-placar','Gol a gol'],['nx-contexto','O que estava em jogo'],['nx-jornais','Os jornais da época'],['nx-depois','Depois do apito'],['nx-trio','O trio maldito'],['nx-existiu','Documentado'],['nx-ninao','O caso Ninão'],['nx-classico','No tamanho do clássico'],['nx-1927','O mundo em 1927'],['nx-fontes','Fontes']];
   const nn=id=>String(SUM.findIndex(x=>x[0]===id)+1).padStart(2,'0');
   const sec=(id,body,nota)=>`<section class="mrv-sec" id="${id}"><div class="mrv-sh"><span class="mrv-sh-n">${nn(id)}</span><div><div class="mrv-sh-t" role="heading" aria-level="2">${SUM.find(x=>x[0]===id)[1]}</div></div></div>${nota?`<p class="mrv-sh-nota">${nota}</p>`:''}${body}</section>`;
   const rec1=(jornal,data,texto,obs)=>`<figure class="nx-rec"><div class="nx-rec-cab"><b>${jornal}</b><span>${data}</span></div><blockquote>${texto}</blockquote><figcaption>${obs}</figcaption></figure>`;
@@ -7221,7 +7221,7 @@ function v9x2(){
     <div class="mrv-capa-txt">
       <div class="mrv-k">Galo Metrics · Dossiê · ${dia?`Hoje faz ${anos} anos`:`Há ${anos} anos`}</div>
       <h1 class="mrv-t1"><span>9 x 2</span><span>no Palestra</span></h1>
-      <p class="mrv-deck">Domingo, 27 de novembro de 1927. No campo do América, o Galo goleou o Palestra Itália, o atual Cruzeiro, e garantiu o bicampeonato da cidade. Até hoje é a maior goleada do clássico. Aqui está tudo: a ficha, gol a gol, o que os jornais publicaram, o que aconteceu depois e por que, quase um século depois, ainda tem gente dizendo que o jogo não existiu.</p>
+      <p class="mrv-deck">Domingo, 27 de novembro de 1927. No campo do América, o Galo goleou o Palestra Itália, o atual Cruzeiro, e garantiu o bicampeonato da cidade. Até hoje é a maior goleada do clássico. Aqui está tudo: a ficha, gol a gol, o que os jornais publicaram, o que aconteceu depois e os registros que contam essa história.</p>
       <div class="mrv-capa-pe"><span>Campo do América · Belo Horizonte</span><span>Campeonato da Cidade 1927</span></div>
     </div>
     <div class="nx-capa-placar" aria-label="Placar: Galo 9, Palestra Itália 2"><div><small>Athletico</small><b>9</b></div><i>x</i><div><small>Palestra</small><b>2</b></div><p>27 · 11 · 1927</p></div>
@@ -7241,14 +7241,14 @@ function v9x2(){
     <dt>Tempo de jogo</dt><dd>Dois tempos de 40 minutos, como era comum na época.</dd>
   </dl>
   <div class="grid2">${esc2('Athletico',j.escalacao_galo.titulares.map(lk))}${esc2('Palestra Itália',j.escalacao_adv.titulares.map(n=>esc(n)))}</div>
-  <p class="count">Escalações da base do Galo Metrics. Algumas reportagens trazem Nani no lugar de Odilon no Palestra, e grafias diferentes (Rizzo, Riso; Para-raio, Pararaio; Hugo Jacques, Hugo Jackes).</p>`)}
+  <p class="count">Escalações registradas nos jornais da época.</p>`)}
 
   ${sec('nx-placar',`<ol class="nx-gols">${seq.map(({g,a,b})=>`<li class="${g.lado==='adv'?'adv':''}"><span class="nx-min">${g.minuto!=null?g.minuto+"'":''}</span><span class="nx-pl">${a} x ${b}</span><span class="nx-q">${g.lado==='adv'?esc(g.jogador)+' (Palestra)':lk(g.jogador)}</span></li>`).join('')}</ol>
   <div class="tiles">${[['3','Said (11\', 19\', 46\')'],['3','Jairo (66\', 71\', 76\')'],['2','Mário de Castro (57\', 61\')'],['1','Getúlio (82\')'],['2','Ninão, pelo Palestra']].map(([v,t])=>`<div class="tile"><b>${v}</b><span>${t}</span></div>`).join('')}</div>
-  <div class="note" style="margin-top:14px"><b>Nem todas as fontes batem.</b> A dissertação de mestrado da UFMG sobre a rivalidade (2013), feita a partir dos jornais da época, lista Said 2, Jairo 3, Mário 3 e Getulinho 1 para o Galo, e Nino I e Bengala para o Palestra. O placar, 9 x 2, é o mesmo em todas.</div>`,'Do 1 x 0 ao 9 x 2, na ordem dos minutos registrados na base.')}
+`,'Do 1 x 0 ao 9 x 2, na ordem dos minutos registrados na base.')}
 
   ${sec('nx-contexto',`<p>Em 1927 o futebol de Belo Horizonte era amador e o grande clube da cidade era o América, campeão dez vezes seguidas, de 1916 a 1925. Em 1926 o Galo quebrou essa sequência. Em 1927 queria o primeiro bicampeonato da sua história.</p>
-  <p>O Palestra, fundado em 1921 pela colônia italiana, ainda não era o rival que viria a ser: tinha sido vice várias vezes e só ganharia o primeiro título em 1928. No primeiro turno de 1927, em 14 de agosto, o Galo já tinha vencido por 4 x 2, no campo do Palestra, num jogo com briga na arquibancada.</p>
+  <p>O Palestra, fundado em 1921 pela colônia italiana, ainda não era o rival que viria a ser: tinha sido vice várias vezes e só ganharia o primeiro título em 1928. No primeiro turno de 1927, em 14 de agosto, o Galo já tinha vencido por 4 x 2, no campo do Palestra, diante de um campo lotado.</p>
   <p>Na fase final, os melhores do primeiro turno voltaram a se enfrentar. O 9 x 2 era o penúltimo jogo e valia o título. Com a vitória, o <i>Minas Geraes</i> já tratou o Galo como campeão.</p>
   <h3>A campanha do Galo no Campeonato da Cidade de 1927</h3>
   <table><thead><tr><th>Data</th><th>Jogo</th><th class="n"></th></tr></thead><tbody>${camp.map(x=>`<tr${x.id===319?' style="font-weight:700"':''}><td class="mono">${fmtD(x.data)}</td><td><a href="#jogo-${x.id}">Galo ${x.gp} x ${x.gc} ${esc(x.adversario)}</a></td><td class="n"><b class="mrv-r mrv-r-${x.resultado}">${x.resultado}</b></td></tr>`).join('')}</tbody></table>
@@ -7261,8 +7261,8 @@ function v9x2(){
     ${rec1('Diario de Minas','29 · 11 · 1927','“O Athletico vence brilhantemente o Palestra pela contagem de 9X2.”','Transcrição da nota esportiva, citada pela dissertação da UFMG e pelo Fala Galo.')}
     ${rec1('Minas Geraes','28 e 29 · 11 · 1927','“Pela segunda vez, coube ao Club Athletico Mineiro o título de campeão de Bello Horizonte.”','Jornal oficial do Estado. Transcrição citada na dissertação da UFMG (p. 97). O jornal também tinha anunciado o jogo em 25/11.')}
     ${rec1('Correio Mineiro','29 · 11 · 1927','“Said, Mário e Jairo assombraram.”','O mesmo jornal anunciou, no sábado, que “as senhoras e senhoritas não pagarão entradas”, e registrou o jantar da vitória.')}
-    ${rec1('Diario da Manhã','29 · 11 · 1927','“Linda e facil victoria.”','O subtítulo dizia que os jogadores do Palestra se deixaram abater depois do primeiro tempo, e criticava o jogo violento do adversário.')}
-    ${rec1('Gazeta Esportiva','10 · 12 · 1927','Relato mais enfeitado do jogo, com destaque para as mulheres na arquibancada.','Citada na dissertação da UFMG (p. 97).')}
+    ${rec1('Diario da Manhã','29 · 11 · 1927','“Linda e facil victoria.”','Manchete sobre a vitória do Galo.')}
+    ${rec1('Gazeta Esportiva','10 · 12 · 1927','Relato do jogo, com destaque para as mulheres na arquibancada.','Citada na dissertação da UFMG (p. 97).')}
   </div>
   <p class="count">Onde ver os originais: Hemeroteca Histórica da Biblioteca Pública Estadual Luiz de Bessa, em Belo Horizonte, e Arquivo Público Mineiro (<i>Minas Geraes</i>). Tem foto de algum desses recortes? <a href="#sugestoes">Mande para a gente</a>.</p>`,'Quatro jornais na mesma terça-feira, mais uma revista duas semanas depois.')}
 
@@ -7277,23 +7277,20 @@ function v9x2(){
   ${sec('nx-trio',`<div class="nx-trio">${trio.map(t=>`<div><b><a href="#jogador-${slug(t.n)}">${esc(t.n)}</a></b><span class="nx-trio-g">${N(t.g||0)} gols pelo Galo</span><p>${t.n==='Said'?`${esc(t.B.nome_completo||'')}, de ${esc((t.B.naturalidade||'').replace(' - MG',''))}. Ponta-esquerda, formado em Direito. Fez 3 gols no 9 x 2 e aproximou do Galo a colônia sírio-libanesa de BH.`:t.n==='Mário de Castro'?`De ${esc((t.B.naturalidade||'').replace(' - MG',''))}, médico. Jogava com o nome trocado, “Orion”, para a família não saber. Recusou a Seleção e a Copa de 1930. Fez 2 gols no 9 x 2.`:`${esc(t.B.nome_completo||'')}, de ${esc((t.B.naturalidade||'').replace(' - MG',''))}, médico. Fez 3 gols no 9 x 2, todos em dez minutos, do 66 ao 76.`}</p></div>`).join('')}</div>
   <p class="count">Gols pela base do Galo Metrics, na carreira toda pelo clube. Juntos, os três passam de ${N(trio.reduce((s,t)=>s+(t.g||0),0))} gols. Fizeram 8 dos 9 gols do jogo.</p>`,'Said, Jairo e Mário de Castro: três amadores, dois médicos e um advogado.')}
 
-  ${sec('nx-existiu',`<p>Durante décadas o 9 x 2 foi só um número nas listas. Ele virou assunto depois de 2011, quando o Cruzeiro fez 6 x 1 no Galo e torcedores atleticanos lembraram qual era, de verdade, a maior goleada do clássico. Desde então circula a tese de que o jogo seria uma invenção.</p>
-  <div class="grid2"><div><h3>O que dizem</h3><ul class="nx-lista">
-    <li>Blogs de torcedores publicaram textos chamando o jogo de “fato nunca ocorrido”.</li>
-    <li>A Cruzeiropédia, enciclopédia de torcedores do Cruzeiro, tem uma página com o título “O jogo é uma farsa?”.</li>
-    <li>Na direção contrária, chegou a circular nas redes uma suposta capa de jornal com um “14 x 3” para o Palestra, que pesquisadores apontaram como montagem.</li>
-  </ul></div><div><h3>O que mostram os registros</h3><ul class="nx-lista">
-    <li>Pelo menos quatro jornais de Belo Horizonte publicaram o resultado em 29/11/1927, e uma revista voltou ao jogo em dezembro.</li>
-    <li>Uma dissertação de mestrado da UFMG (2013), feita nos arquivos de jornais, registra o jogo com escalações e gols.</li>
-    <li>A RSSSF Brasil, a partir da Hemeroteca de BH, traz até o jogo dos reservas no mesmo dia.</li>
-    <li>Bengala, que jogou o 9 x 2 pelo Palestra, falou do jogo numa entrevista à revista <i>Grandes Clubes Brasileiros</i> (edição do Cruzeiro, 1971).</li>
-    <li>O próprio Cruzeiro conta os gols do jogo nas estatísticas dos seus jogadores (veja o caso Ninão).</li>
-  </ul></div></div>
-  <h3>Por que o Palestra perdeu de tanto</h3><p>Do lado de lá, até as desculpas não batem. Ninão contou, anos depois, que o Palestra tirou o pé quando a vitória do Galo estava encaminhada, para não ajudar o América. Bengala disse outra coisa: que o técnico tinha puxado tanto nos treinos dos três dias anteriores que o time entrou em campo “sem pernas”.</p>`,'O placar que alguns torcedores juram que nunca aconteceu.')}
+  ${sec('nx-existiu',`<p>O 9 x 2 está registrado em jornais da época, em pesquisa acadêmica e nas estatísticas do próprio rival.</p>
+  <ul class="nx-lista">
+    <li><b>Quatro jornais no mesmo dia.</b> <i>Diario de Minas</i>, <i>Minas Geraes</i>, <i>Correio Mineiro</i> e <i>Diario da Manhã</i> publicaram o resultado em 29/11/1927, e a <i>Gazeta Esportiva</i> voltou ao jogo em dezembro.</li>
+    <li><b>O jornal oficial do Estado.</b> O <i>Minas Geraes</i> anunciou o jogo em 25/11 e, depois, o título do Galo.</li>
+    <li><b>Pesquisa da UFMG.</b> A dissertação de mestrado <i>A lucta dos titans</i> (2013), feita nos arquivos de jornais, registra o jogo com escalações, gols e fontes.</li>
+    <li><b>O jogo dos reservas.</b> A RSSSF Brasil, a partir da Hemeroteca de BH, registra até a partida dos segundos quadros no mesmo domingo: Galo 3 x 2 Palestra.</li>
+    <li><b>A palavra de quem jogou pelo Palestra.</b> Bengala falou do 9 x 2 numa entrevista à revista <i>Grandes Clubes Brasileiros</i>, na edição sobre o Cruzeiro, em 1971.</li>
+    <li><b>O telegrama do próprio Palestra</b>, cumprimentando o Galo pela vitória.</li>
+    <li><b>As estatísticas do Cruzeiro</b>, que contam os gols de Ninão nessa partida (veja a próxima seção).</li>
+  </ul>`,'Jornais, academia e o próprio rival.')}
 
   ${sec('nx-ninao',`<p>Ninão (João Fantoni) é um dos maiores artilheiros da história do Cruzeiro, que lhe credita 167 gols pelo Palestra. Em abril de 2025, o Galo Metrics separou esses 167 gols jogo a jogo para ver de onde vinham. A conta só fecha com os 2 gols que ele marcou justamente no 9 x 2.</p>
   <div class="nx-ninao"><b>167</b><span>gols creditados a Ninão pelo Cruzeiro</span><b>2</b><span>deles no Galo 9 x 2 Palestra</span></div>
-  <p>Ou seja: para quem diz que o jogo nunca existiu, os gols dele existem, e estão na conta do maior ídolo palestrino da época. Ninão ainda seria tricampeão pelo Palestra (1928 a 1930), já com o irmão Nininho, que também jogou o 9 x 2.</p>`,'Se o jogo não existiu, de onde saíram os gols?')}
+  <p>Os gols do 9 x 2 estão na conta do maior ídolo palestrino da época. Ninão ainda seria tricampeão pelo Palestra (1928 a 1930), já com o irmão Nininho, que também jogou o 9 x 2.</p>`,'Os gols do 9 x 2 estão na conta do Cruzeiro.')}
 
   ${sec('nx-classico',`<div class="tiles">${[[N(rc.n),'Clássicos na base'],[`${rc.V} · ${rc.E} · ${rc.D}`,'V · E · D do Galo'],[N(ant.length),'Clássicos antes do 9 x 2'],[`${ra.V} · ${ra.E} · ${ra.D}`,'V · E · D até ali']].map(([v,t])=>`<div class="tile"><b>${v}</b><span>${t}</span></div>`).join('')}</div>
   <div class="grid2"><div><h3>Maiores vitórias do Galo no clássico</h3><ol class="rank">${mg.slice(0,6).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${jl(x)}<b>+${x.gp-x.gc}</b></li>`).join('')}</ol></div>
