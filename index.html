@@ -2375,9 +2375,9 @@ html,body,h1,h2,h3,h4,strong,b,.gm-duplas-copy strong{font-variant-numeric:linin
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261127135417';try{if(/[?&]v=/.test(location.search))history.replaceState(null,'',location.pathname+location.hash);}catch(e){}(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261127135417"></script>
-<script src="backend-firebase.js?v=20261127135417"></script>
+<script>window.GM_BUILD='20261127135637';try{if(/[?&]v=/.test(location.search))history.replaceState(null,'',location.pathname+location.hash);}catch(e){}(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261127135637"></script>
+<script src="backend-firebase.js?v=20261127135637"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -7779,6 +7779,7 @@ function chCuriosidade(){ const d=chDados(), p=d.pior, m=d.melhor, empM=d.L.filt
   const ehGalo=p.a==='Galo';
   return `<div class="note" style="margin:14px 0"><b>Curiosidade:</b> ${ehGalo?`o pior aproveitamento do Galo na história é justamente no <b>Ano do Galo</b>: ${Math.round(p.ap)}%, ${Math.round(d.tot-p.ap)} pontos abaixo da média histórica (${Math.round(d.tot)}%).`:`o pior aproveitamento é no Ano ${daAnimal(p.a)} ${p.a} (${Math.round(p.ap)}%).`} O melhor é no Ano ${empM.length>1?'do '+empM.slice(0,-1).join(', ')+' e '+daAnimal(empM[empM.length-1])+' '+empM[empM.length-1]:daAnimal(m.a)+' '+m.a} (${Math.round(m.ap)}%).${(()=>{ const rb=chRebaixamento(); return rb&&ehGalo?` E tem mais: o ano do rebaixamento, 2005, foi um Ano do Galo. Naquele Brasileiro foram ${rb.r.V} vitórias, ${rb.r.E} empates e ${rb.r.D} derrotas.`:''; })()}</div>`; }
 const CH_EMOJI=['🐀','🐂','🐅','🐇','🐉','🐍','🐎','🐐','🐒','🐓','🐕','🐖'], CH_HANZI=['鼠','牛','虎','兔','龍','蛇','馬','羊','猴','雞','狗','豬'];
+function chAnos(i){ const hj=hojeStr(); let Y=+hj.slice(0,4); const c=CNY[Y-1900]; if(c&&hj.slice(5,7)+hj.slice(8,10)<c) Y--; const df=(i-((Y-1900)%12)+12)%12; return {atual:df===0, ult:df===0?Y:Y+df-12, prox:df===0?Y+12:Y+df}; }
 function chRebaixamento(){ const L=J.filter(j=>j.temporada===2005&&j.grupo==='Campeonato Brasileiro'&&j.resultado); if(!L.length||!L.every(j=>chAnimal(j.data)===9)) return null; return {L,r:rec(L)}; }
 async function desenhaArteChines(s){ const A=await arteDossie(); const {cv,x,W,H,P,INK,PAP,CZ,CZ2,OURO,LIN,font,mono,txt,fit,kicker,rodape,cas,wrap}=A; const d=chDados();
   await document.fonts.load('64px "Noto Color Emoji"').catch(()=>{});
@@ -7786,14 +7787,15 @@ async function desenhaArteChines(s){ const A=await arteDossie(); const {cv,x,W,H
   kicker('Galo Metrics · Calendário chinês',78);
   font(900,92); txt('O GALO NO',P,175,PAP); const t=`ANO ${daAnimal(alvo.a).toUpperCase()} ${alvo.a.toUpperCase()}`; fit(t,900,92,W-2*P); txt(t,P,262,OURO);
   cas(30); wrap(ehG?`O pior aproveitamento da história do Galo.${rb?' E o rebaixamento de 2005? Ano do Galo.':''}`:`Média histórica do Galo: ${Math.round(d.tot)}%.`,P,320,W-2*P,40,CZ2);
-  const top=425, gap=14, cols=3, rows=4, cw=(W-2*P-gap*(cols-1))/cols, ch=(H-170-top-gap*(rows-1))/rows, maxR=Math.round(d.melhor.ap);
-  // argolas do calendário
-  for(let k=0;k<6;k++){ const cx=P+40+k*(W-2*P-80)/5; x.fillStyle=INK; x.beginPath(); x.arc(cx,top-4,9,0,7); x.fill(); x.strokeStyle=CZ; x.lineWidth=4; x.beginPath(); x.arc(cx,top-14,10,Math.PI*.15,Math.PI*.85,true); x.stroke(); }
+  const top=400, gap=14, cols=3, rows=4, cw=(W-2*P-gap*(cols-1))/cols, ch=(H-170-top-gap*(rows-1))/rows, maxR=Math.round(d.melhor.ap);
   d.L.forEach((z,i)=>{ const cx=P+(i%cols)*(cw+gap), cy=top+Math.floor(i/cols)*(ch+gap), on=z===alvo;
-    x.fillStyle=on?OURO:'#f4f1ea'; x.fillRect(cx,cy,cw,ch); x.fillStyle='#171714'; x.fillRect(cx,cy,cw,14);
-    x.font='58px "Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif'; x.textAlign='left'; x.fillStyle='#171714'; x.fillText(CH_EMOJI[i],cx+16,cy+92);
-    font(900,64,'condensed'); txt(Math.round(z.ap)+'%',cx+cw-16,cy+92,'#171714','right');
-    font(800,36,'condensed'); txt(z.a.toUpperCase(),cx+16,cy+ch-22,on?'#171714':'#6b6862'); });
+    x.fillStyle=on?OURO:'#f4f1ea'; x.fillRect(cx,cy,cw,ch); x.fillStyle='#171714'; x.fillRect(cx,cy,cw,28);
+    { const {atual,ult,prox}=chAnos(i);
+      mono(14,2); txt(`${atual?'AGORA':'ÚLT.'} ${ult}`,cx+12,cy+20,on?OURO:'#bdbab2'); txt(`PRÓX. ${prox}`,cx+cw-12,cy+20,on?OURO:'#bdbab2','right'); }
+    x.font='700 64px "Noto Serif CJK SC","Noto Sans CJK SC","Microsoft YaHei","PingFang SC",serif'; try{ x.fontStretch='normal'; x.letterSpacing='0px'; }catch(e){} x.fillStyle=on?'rgba(23,23,20,.22)':'rgba(23,23,20,.12)'; x.textAlign='right'; x.fillText(CH_HANZI[i],cx+cw-12,cy+ch-14);
+    x.font='58px "Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif'; x.textAlign='left'; x.fillStyle='#171714'; x.fillText(CH_EMOJI[i],cx+16,cy+(on?92:100));
+    if(on){ font(900,112,'condensed'); txt(Math.round(z.ap)+'%',cx+16,cy+ch-14,'#171714'); } else { font(900,64,'condensed'); txt(Math.round(z.ap)+'%',cx+cw-16,cy+100,'#171714','right'); }
+    font(800,36,'condensed'); if(on) txt(z.a.toUpperCase(),cx+90,cy+84,'#171714'); else txt(z.a.toUpperCase(),cx+16,cy+ch-22,'#6b6862'); });
   rodape('Aproveitamento do Galo em cada animal do ano chinês.','Busque “horóscopo chinês”'); return cv; }
 function respostaDireta(q){
   const n=nrm(q).replace(/[?!.]+$/,'').trim(); let m;
@@ -7873,8 +7875,8 @@ function respostaDireta(q){
   // horóscopo chinês
   { const am=n.match(/\b(?:no|em|nos|de|do|da) anos? d[oa] (rato|boi|bufalo|tigre|coelho|dragao|serpente|cobra|cavalo|cabra|carneiro|ovelha|macaco|galo|cao|cachorro|porco|javali)\b/); const geral=/horoscopo chines|zodiaco chines|ano chines|animais? (do )?(ano|horoscopo) chines|signo chines/.test(n);
     if((am&&(am[1]!=='galo'||/chines|^(jogos|jogadores)/.test(n)))||geral){ const alvo=am?CH_ALIAS[am[1]]||am[1]:null; const idx=alvo?CH_ANIMAIS.findIndex(a=>nrm(a)===alvo):-1;
-      const nasc=jogNasc(); const linhas=CH_ANIMAIS.map((a,i)=>{ const l=R.filter(j=>chAnimal(j.data)===i); const pj=nasc.filter(x=>chAnimal(x.d)===i); return `<tr${i===idx?' style="font-weight:700"':''}><td>${a}</td><td class="n">${N(l.length)}</td><td class="n">${l.length?aprov(rec(l)):'–'}</td><td class="n">${N(pj.length)}</td></tr>`; }).join('');
-      const tab=`<table><thead><tr><th>Animal</th><th class="n">Jogos</th><th class="n">Aprov.</th><th class="n">Jogadores nascidos</th></tr></thead><tbody>${linhas}</tbody></table>`;
+      const nasc=jogNasc(); const linhas=CH_ANIMAIS.map((a,i)=>{ const l=R.filter(j=>chAnimal(j.data)===i); const pj=nasc.filter(x=>chAnimal(x.d)===i); return `<tr${i===idx?' style="font-weight:700"':''}><td>${a}</td><td class="n">${N(l.length)}</td><td class="n">${l.length?aprov(rec(l)):'–'}</td><td class="n">${N(pj.length)}</td><td class="mono hide-s">${(y=>`${y.atual?'agora '+y.ult:y.ult} · ${y.prox}`)(chAnos(i))}</td></tr>`; }).join('');
+      const tab=`<table><thead><tr><th>Animal</th><th class="n">Jogos</th><th class="n">Aprov.</th><th class="n">Jogadores nascidos</th><th class="hide-s">Último · próximo</th></tr></thead><tbody>${linhas}</tbody></table>`;
       const nota='<p class="count">O ano chinês começa no Ano Novo Lunar, entre 21 de janeiro e 20 de fevereiro, então jogos de janeiro e começo de fevereiro contam no animal do ano anterior. Nascimentos só dos jogadores com ficha.</p>';
       if(idx<0) return {k:'chines', html:h('O Galo no horóscopo chinês',`Jogos e jogadores por animal do ano chinês. ${artBtn({t:'chines'}).replace('Baixar arte','Arte do Ano do Galo')}`,chCuriosidade()+tab+nota)};
       const L=R.filter(j=>chAnimal(j.data)===idx).sort((a,b)=>a.data<b.data?1:-1); const pj=nasc.filter(x=>chAnimal(x.d)===idx).sort((a,b)=>b.p.jogos-a.p.jogos);
