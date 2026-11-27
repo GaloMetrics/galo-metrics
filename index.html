@@ -2366,7 +2366,7 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
   <span class="topbtns"><form id="hq" class="hq" role="search"><input type="search" id="hqi" placeholder="Jogador, clube ou nascidos em + sua cidade" aria-label="Buscar no Galo Metrics"></form><a id="gmchip" href="#perfil" class="gmchip">★ Perfil</a><span id="gmconta" class="gmconta" hidden><button id="gmlogin" type="button" aria-haspopup="true"></button><span id="gmmenu" class="gmmenu" hidden></span></span><button id="navbtn" type="button" aria-label="Abrir menu" aria-expanded="false" onclick="var o=document.body.classList.toggle('navopen');this.setAttribute('aria-expanded',o)"><span class="hb"></span>Menu</button></span></div>
   <nav id="nav" aria-label="Principal">
     <a href="#inicio">Início</a><a href="#jogos">Jogos</a><a href="#jogadores">Jogadores</a><a href="#adversarios">Adversários</a><a href="#competicoes">Competições</a><a href="#mapa">Mapa</a><a href="#pergunte">Busca</a><a href="#embreve" class="nav-breve">Em breve</a>
-    <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#duplas">Duplas e trios <b class="novo">novo</b></a><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#presidentes">Presidentes <b class="novo">novo</b></a><a href="#estadios">Estádios <b class="novo">novo</b></a><a href="#arena-mrv-100">100 jogos na Arena MRV <b class="novo">novo</b></a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
+    <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#duplas">Duplas e trios <b class="novo">novo</b></a><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#presidentes">Presidentes <b class="novo">novo</b></a><a href="#estadios">Estádios <b class="novo">novo</b></a><a href="#arena-mrv-100">100 jogos na Arena MRV</a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
     <span class="nav-sep" aria-hidden="true"></span>
     <details class="menu jogar"><summary>★ Jogar</summary><div class="menu-p"><a href="#desafios">Desafios do dia</a><a href="#palpites">Palpites</a><a href="#album">Álbum de figurinhas</a><a href="#ranking">Ranking da semana</a></div></details>
     <details class="menu area"><summary>Meu perfil</summary><div class="menu-p"><a href="#perfil">Perfil e conquistas</a><a href="#torcedores">Amigos</a><a href="#diario">Meu diário</a><a href="#sugestoes">Sugestões e correções</a><a href="#colaboradores">Colaboradores</a><a href="#apoie">♥ Apoie</a><a href="#dono" id="navdono" hidden>Página do dono</a></div></details>
@@ -2374,9 +2374,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261127121051';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261127121051"></script>
-<script src="backend-firebase.js?v=20261127121051"></script>
+<script>window.GM_BUILD='20261127121353';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261127121353"></script>
+<script src="backend-firebase.js?v=20261127121353"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4589,7 +4589,7 @@ async function desenhaArte(s){
   if(s.t==='uf') return desenhaArteUF(s);
   if(s.t==='nasc') return desenhaArteNasc(s);
   if(s.t==='aniv') return desenhaArteAniv(s);
-  if(s.t==='9x2') return desenhaArte9x2();
+  if(s.t==='9x2') return s.p?desenhaCarrossel9x2(s.p):desenhaArte9x2();
   if(s.t==='datas') return desenhaArteDatas(s);
   if(s.t==='lista') return desenhaArteLista(s);
   if(s.t==='titulo') return desenhaArteTitulo(s);
@@ -6696,8 +6696,7 @@ async function desenhaArteDupla(s){ const nomes=s.n.split('|'); const pr=(s.de||
   const semF=_semF;
   if(semF) T(`* Faltam as escalações de ${semF} jogos dessa época: os números podem ser ainda maiores.`,P,Math.min(y+20,A.BOT-30),'cas',24,INK,'left',W-2*P);
   return cv; }
-const NX_ATE='2026-12-04';
-function capa9x2(){ if(hojeStr()>NX_ATE) return ''; const h=hojeStr(); let n=+h.slice(0,4)-1927; if(h.slice(5)<'11-27') n--;
+function capa9x2(){ const md=hojeStr().slice(5); if(md<'11-25'||md>'12-04') return ''; const h=hojeStr(); let n=+h.slice(0,4)-1927; if(h.slice(5)<'11-27') n--;
   return `<a class="gm-duplas-teaser" href="#9x2" aria-label="Abrir o dossiê dos ${n} anos do 9 x 2"><img class="gm-nx-img" src="assets/9x2/trio-maldito.jpg" alt="Said, Jairo e Mário de Castro, o trio maldito"><span class="gm-duplas-copy"><small>★ NOVIDADE <i>03 · ESPECIAL</i></small><strong>${n} anos do 9x2</strong><span>27/11/1927: Galo 9 x 2 Palestra, a maior goleada do clássico. Jornais da época, gol a gol e o caso Ninão.</span><b>VER O DOSSIÊ ↗︎</b></span></a>`; }
 function capaDuplas(){ const nx=capa9x2(); if(nx) return nx; if(typeof mrv100Ativo==='function'&&mrv100Ativo()){ const L=J.filter(j=>j.estadio==='Arena MRV').sort((a,b)=>a.data<b.data?-1:1), j100=L[99];
     const sub=j100&&j100.resultado?`Jogo 100: Galo ${j100.gp} x ${j100.gc} ${esc(j100.adversario)}. O dossiê completo da casa do Galo.`:`Jogo 100: Galo x ${j100?esc(j100.adversario):''}. O dossiê completo da casa do Galo.`;
@@ -7232,7 +7231,7 @@ function v9x2(){
   </div>
   <div class="mrv-faixa" aria-hidden="true"></div>
   <div class="mrv-fachada">${[['9','Gols do Galo'],['7','Gols de diferença'],['11','Gols no jogo'],['2','Hat-tricks'],['4.000','Pessoas no campo'],[String(anos),'Anos'],['0','Goleada maior desde então'],['1927','Bicampeão da cidade']].map(([v,t])=>`<div><b>${v}</b><span>${t}</span></div>`).join('')}</div>
-  <p style="margin:14px 0">${artBtn({t:'9x2'}).replace('Baixar arte','Arte do 9 x 2')} <a class="ghost" href="#jogo-319">Ficha na base</a> <a class="ghost" href="#adversario-${slug(j.adversario_id)}">Clássico completo</a></p>
+  <p style="margin:14px 0">${artBtn({t:'9x2'}).replace('Baixar arte','Arte do 9 x 2')} ${Array.from({length:CAR9X2_N},(_,i)=>artBtn({t:'9x2',p:i+1}).replace('Baixar arte','Carrossel '+(i+1))).join(' ')} <a class="ghost" href="#jogo-319">Ficha na base</a> <a class="ghost" href="#adversario-${slug(j.adversario_id)}">Clássico completo</a></p>
   <div class="mrv-indice" role="navigation" aria-label="Índice do dossiê"><div class="mrv-indice-t">Índice</div><ol>${SUM.map(([id,t],i)=>`<li><a href="javascript:void 0" onclick="document.getElementById('${id}')?.scrollIntoView({behavior:'smooth'})"><span>${t}</span><i>${String(i+1).padStart(2,'0')}</i></a></li>`).join('')}</ol></div>
 
   ${sec('nx-ficha',`<dl class="mrv-marcos">
@@ -7321,6 +7320,46 @@ function v9x2(){
   <div class="mrv-fim"><a href="#jogo-319">Ficha do jogo</a><a href="#adversario-${slug(j.adversario_id)}">Galo x Cruzeiro completo</a><a href="#temporada-1927">Temporada 1927</a></div>
   </div>`;
 }
+const CAR9X2_N=8;
+async function desenhaCarrossel9x2(p){ const A=await arteDossie(); const {cv,x,W,H,P,INK,PAP,CZ,CZ2,OURO,LIN,font,mono,txt,fit,kicker,fachada,rodape,cas,wrap}=A;
+  const h=hojeStr(); let anos=+h.slice(0,4)-1927; if(h.slice(5)<'11-27') anos--;
+  const img=src=>new Promise(r=>{ const i=new Image(); i.onload=()=>r(i); i.onerror=()=>r(null); i.src=src; });
+  const foto=async(src,px,py,w,hh,modo,posY)=>{ const i=await img(src); if(!i) return py; let dw=w, dh=i.height*w/i.width, sx=0,sy=0,sw=i.width,sh=i.height;
+    if(modo==='cover'&&hh){ const r=Math.max(w/i.width,hh/i.height); sw=w/r; sh=hh/r; sx=(i.width-sw)/2; sy=(i.height-sh)*(posY??.5); dh=hh; }
+    x.save(); if(modo!=='cover'){ x.fillStyle='#e9e2cc'; } x.drawImage(i,sx,sy,sw,sh,px,py,dw,dh); x.restore(); x.strokeStyle=PAP; x.lineWidth=3; x.strokeRect(px,py,dw,dh); return py+dh; };
+  mono(17,3); txt(`${p}/${CAR9X2_N}`,W-P,78,CZ,'right');
+  const rod=(f)=>rodape(f||'Jornais da época, gol a gol e o caso Ninão no dossiê.',p===CAR9X2_N?'Leia o dossiê completo':'Arraste para o lado');
+  if(p===1){ kicker('Galo Metrics · Especial · 27/11/1927',78); font(900,92); txt(`HÁ ${anos} ANOS`,P,190,OURO); font(900,380); txt('9 X 2',P,500,PAP); font(900,64); txt('NO PALESTRA',P,580,CZ2);
+    cas(30); wrap('A maior goleada da história do clássico, contada pelos jornais da época.',P,640,W-2*P,40,CZ2);
+    await foto('assets/9x2/trio-maldito.jpg',P,720,W-2*P,480,'cover',.1); rod('Said, Jairo e Mário de Castro, o trio maldito.'); }
+  if(p===2){ kicker('Galo Metrics · 27/11/1927 · Campo do América',78); font(900,120); txt('GOL A GOL',P,210,PAP);
+    const j=byId[319], G=j.gols.slice().sort((a,b)=>(a.minuto??99)-(b.minuto??99)); let a=0,b=0,y=270; const rh=Math.min(80,Math.floor((H-180-y)/G.length));
+    G.forEach(g=>{ const adv=g.lado==='adv'; if(adv) b++; else a++; mono(24,1); txt(g.minuto!=null?g.minuto+"'":'',P,y+44,OURO); font(900,46,'condensed'); txt(`${a} X ${b}`,P+120,y+46,adv?CZ:PAP);
+      font(800,38,'condensed'); txt((adv?g.jogador+' (Palestra)':nomeV(g.jogador)).toUpperCase(),P+330,y+44,adv?CZ:PAP); x.fillStyle=LIN; x.fillRect(P,y+rh-2,W-2*P,1); y+=rh; });
+    rod('Said 3, Jairo 3, Mário de Castro 2 e Getúlio. Ninão fez os dois do Palestra.'); }
+  if(p===3){ kicker('Correio Mineiro · terça, 29/11/1927',78); font(900,110); txt('A MANCHETE',P,200,PAP);
+    let y=await foto('assets/9x2/correio-mineiro-29-11-1927.jpg',P,240,W-2*P); cas(36); y=wrap('“O Athletico, vencendo o Palestra por 9 a 2, conquista o titulo de campeão de 1927.”',P,y+70,W-2*P,48,PAP);
+    mono(16,3); txt('GRAFIA ORIGINAL DE 1927',P,y+50,OURO); rod('Os jornais de BH não circulavam às segundas. O resultado saiu na terça.'); }
+  if(p===4){ kicker('Minas Geraes · jornal oficial do Estado · 29/11/1927',78); font(900,100); txt('O JORNAL OFICIAL',P,200,PAP);
+    let y=await foto('assets/9x2/minas-geraes-29-11-1927.jpg',P,240,W-2*P); cas(36); y=wrap('“O Athletico Mineiro levanta, pela segunda vez, o campeonato da cidade.”',P,y+70,W-2*P,48,PAP);
+    mono(16,3); txt('PLACAR NA PÁGINA: ATHLETICO, 9. PALESTRA, 2.',P,y+50,OURO); rod('O jornal registrou ainda o árbitro, José Avelino, e o fim do jogo, às 16h50.'); }
+  if(p===5){ kicker('Galo Metrics · O caso Ninão',78); font(900,92); txt('ATÉ AS ESTATÍSTICAS',P,190,PAP); txt('DO CRUZEIRO',P,280,PAP); font(900,92); txt('COMPROVAM',P,370,OURO);
+    let y=await foto('assets/9x2/cruzeiro-ninao-2026.jpg',P,410,W-2*P,330,'cover',0); y+=30;
+    font(900,150); txt('167',P,y+130,OURO); mono(18,2); txt('GOLS DE NINÃO PELO PALESTRA,',P+300,y+70,PAP); txt('SEGUNDO O CRUZEIRO',P+300,y+98,PAP);
+    font(900,150); txt('2',P,y+290,OURO); mono(18,2); txt('DELES NO GALO 9 X 2 PALESTRA',P+300,y+230,PAP); txt('DE 27/11/1927',P+300,y+258,PAP);
+    rod('A conta dos 167 só fecha com os 2 gols do 9 x 2.'); }
+  if(p===6){ kicker('Minas Geraes · 29/11/1927 · Telegrammas cordiaes',78); font(900,100); txt('ATÉ O PALESTRA',P,200,PAP); txt('RECONHECEU',P,295,OURO);
+    x.fillStyle='#efe6cf'; x.fillRect(P,350,W-2*P,540); x.strokeStyle=PAP; x.lineWidth=3; x.strokeRect(P,350,W-2*P,540);
+    mono(17,3); txt('TELEGRAMMA DO PALESTRA ITALIA',P+40,415,'#5a5240'); cas(54); let y=wrap('“Em nome da directoria do Palestra Italia, felicito ao Athletico Mineiro pela brilhante victoria de hoje. Saudações. Arcelus, secretario.”',P+40,500,W-2*P-80,72,'#2b2618');
+    cas(32); wrap('Resposta do presidente do Galo, Dr. Moura Costa: apertou, “affectuosamente, a mão do digno e leal adversário”.',P,960,W-2*P,44,CZ2); rod('Texto transcrito do jornal Minas Geraes, com a grafia da época.'); }
+  if(p===7){ kicker('Galo Metrics · O trio maldito',78); font(900,110); txt('8 DOS 9 GOLS',P,200,PAP);
+    const y=await foto('assets/9x2/trio-maldito.jpg',P,240,W-2*P,560,'cover',.15);
+    fachada([['3','Said'],['3','Jairo'],['2','Mário de Castro']],y+40,150); cas(28); wrap('“Said, Jairo e Mario assombraram.” (Correio Mineiro, 29/11/1927)',P,y+250,W-2*P,40,CZ2); rod('Dois médicos e um advogado: o ataque do bicampeonato de 1927.'); }
+  if(p===8){ kicker('Galo Metrics · Dossiê completo',78); font(900,150); txt('9 X 2',P,230,PAP); font(900,64); txt('O DOSSIÊ COMPLETO',P,310,OURO);
+    const L=['A ficha e as escalações','Gol a gol','O que estava em jogo','Cinco páginas de jornais de 1927','O telegrama do Palestra','O trio maldito','O caso Ninão e os 167 gols','No tamanho do clássico'];
+    let y=380; L.forEach((t,i)=>{ mono(20,2); txt(String(i+1).padStart(2,'0'),P,y+40,OURO); font(800,46,'condensed'); txt(t.toUpperCase(),P+80,y+42,PAP); x.fillStyle=LIN; x.fillRect(P,y+62,W-2*P,1); y+=76; });
+    font(900,58,'condensed'); txt('GALOMETRICS.COM.BR/#9X2',P,y+70,OURO); rod('Busque “9x2” no site.'); }
+  return cv; }
 async function desenhaArte9x2(){ const A=await arteDossie(); const {cv,x,W,H,P,PAP,CZ2,OURO,font,mono,txt,fit,kicker,fachada,rodape,cas,wrap}=A;
   const h=hojeStr(); let n=+h.slice(0,4)-1927; if(h.slice(5)<'11-27') n--;
   kicker(`Galo Metrics · ${h.slice(5)==='11-27'?'Neste dia':'Dossiê'} · 27/11/1927`,78);
