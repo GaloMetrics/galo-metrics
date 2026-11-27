@@ -2365,9 +2365,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261127104115';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261127104115"></script>
-<script src="backend-firebase.js?v=20261127104115"></script>
+<script>window.GM_BUILD='20261127104249';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261127104249"></script>
+<script src="backend-firebase.js?v=20261127104249"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -5863,26 +5863,27 @@ async function trkEnvia(forca){ try{ if(DONO||!window.GM_EV_GRAVA) return; if(!T
 setInterval(()=>trkEnvia(false),30000);
 document.addEventListener('visibilitychange',()=>{ if(document.hidden) trkEnvia(true); });
 window.addEventListener('pagehide',()=>trkEnvia(true));
+document.addEventListener('click',ev=>{ const t=ev.target.closest&&ev.target.closest('.gm-dica-atalho,.gm-dica-cid .chip,.cat-novas button.chip'); if(t){ trk(t.classList.contains('gm-dica-atalho')?'guia_atalho':t.tagName==='BUTTON'?'guia_escrever':'guia_exemplo'); } },true);
 document.addEventListener('click',ev=>{ const a=ev.target.closest&&ev.target.closest('a.tw'); if(a) trk('tweet'); const c=ev.target.closest&&ev.target.closest('[data-copia-res],.copia-res'); if(c) trk('copiou_resultado'); },true);
 
 /* ---------- Painel de uso (só o dono) ---------- */
 let STATS_CACHE=null;
 async function carregaStats(dias){ const d=new Date(Date.now()-3*36e5); d.setDate(d.getDate()-dias+1); const desde=d.toISOString().slice(0,10); STATS_CACHE={dias, desde, em:Date.now(), L:await window.GM_EV_LE(desde)}; return STATS_CACHE; }
 const NOME_PG={inicio:'Início', jogos:'Jogos', jogo:'Página de jogo', jogadores:'Jogadores', jogador:'Página de jogador', adversarios:'Adversários', adversario:'Página de adversário', competicoes:'Competições', competicao:'Página de competição', mapa:'Mapa', pergunte:'Busca', recordes:'Recordes', album:'Álbum', desafios:'Desafios do dia', desafio:'Um desafio', ranking:'Ranking', perfil:'Meu perfil', diario:'Meu diário', torcedores:'Amigos', torcedor:'Perfil de amigo', embreve:'Em breve', sugestoes:'Sugestões', colaboradores:'Colaboradores', apoie:'Apoie', palpites:'Palpites', tecnicos:'Técnicos', temporada:'Temporada', cidade:'Cidade', comparar:'Comparar'};
-const NOME_EV={pacote:'Pacotinhos abertos', figurinha:'Figurinhas tiradas', figurinha_nova:'Figurinhas novas', secreta:'Figurinhas secretas tiradas', amigo:'Amigos adicionados', avaliacao:'Avaliações dadas', palpite:'Palpites salvos', busca:'Buscas feitas', lista:'Listas prontas abertas', tweet:'Cliques em tweetar', baixou_arte:'Artes baixadas', sugestao:'Sugestões enviadas', login:'Entradas com login'};
+const NOME_EV={pacote:'Pacotinhos abertos', figurinha:'Figurinhas tiradas', figurinha_nova:'Figurinhas novas', secreta:'Figurinhas secretas tiradas', amigo:'Amigos adicionados', avaliacao:'Avaliações dadas', palpite:'Palpites salvos', busca:'Buscas feitas', lista:'Listas prontas abertas', tweet:'Cliques em tweetar', baixou_arte:'Artes baixadas', guia_visto:'Viram o guia da cidade', guia_atalho:'Clicaram no atalho da cidade', guia_escrever:'Clicaram em Escrever a minha', guia_exemplo:'Clicaram num exemplo de cidade', sugestao:'Sugestões enviadas', login:'Entradas com login'};
 function vDonoStats(params){
   if(!DONO) return vDono();
   const dias=+(new URLSearchParams(params||'').get('dias')||7);
   if(!STATS_CACHE||STATS_CACHE.dias!==dias){ carregaStats(dias).then(()=>{ if(location.hash.startsWith('#dono-uso')){ route.keep=true; route(); } }).catch(e=>{ STATS_CACHE={dias, erro:String(e.message||e), L:[]}; route.keep=true; route(); }); return `<a class="back" href="#dono">← Página do dono</a><h1>Uso do site</h1><p class="count">Carregando…</p>`; }
   if(STATS_CACHE.erro) return `<a class="back" href="#dono">← Página do dono</a><h1>Uso do site</h1><p class="empty">Não consegui ler os registros: ${esc(STATS_CACHE.erro)}. Confira se a regra "ev" está publicada no Firestore.</p>`;
-  const L=STATS_CACHE.L, vis={}, ses={}, porDia={}, pg={}, ev={}, refs={}, des={}, lsT={}, bqT={}, bqL=[], enT={}, avL=[];
+  const L=STATS_CACHE.L, evP={}, vis={}, ses={}, porDia={}, pg={}, ev={}, refs={}, des={}, lsT={}, bqT={}, bqL=[], enT={}, avL=[];
   L.forEach(o=>{ (o.av||[]).forEach(a=>avL.push({...a, d:o.d})); Object.entries(o.en||{}).forEach(([k,n])=>{ enT[k]=(enT[k]||0)+n; }); Object.entries(o.ls||{}).forEach(([k,n])=>{ lsT[k]=(lsT[k]||0)+n; }); (o.bq||[]).forEach(b=>{ const k=nrm(b.q||'').trim(); if(!k) return; const x=(bqT[k] ||= {q:b.q, n:0, r:b.r, pes:new Set()}); x.n++; x.pes.add(o.v); bqL.push({...b, d:o.d}); }); });
   try{ garantePaisesMM(); }catch(e){}
   const nomeLista=id=>{ const l=LISTAS.find(x=>x[1]===id); return l?l[2]:id; }, resB=r=>r==='@'?'<span class="count">nomes (jogador, clube, cidade…)</span>':String(r||'').startsWith('rd:')?`<span class="count">resposta direta (${esc(String(r).slice(3))})</span>`:r?`<a href="#pergunte?lista=${esc(r)}">${esc(nomeLista(r))}</a>`:'<b style="color:#b3261e">nada encontrado</b>';
   L.forEach(o=>{ const sk=o.v+'|'+o.s; (vis[o.v] ||= {u:0,m:o.m,dias:new Set()}); if(o.u) vis[o.v].u=1; vis[o.v].dias.add(o.d);
     (ses[sk] ||= {t:0,u:0,d:o.d,v:o.v}); ses[sk].t=Math.max(ses[sk].t,o.t||0); if(o.u) ses[sk].u=1;
     const pd=(porDia[o.d] ||= {v:new Set(), vl:new Set(), pv:0}); pd.v.add(o.v); if(o.u) pd.vl.add(o.v);
-    Object.entries(o.pg||{}).forEach(([k,n])=>{ pg[k]=(pg[k]||0)+n; pd.pv+=n; }); Object.entries(o.ev||{}).forEach(([k,n])=>{ ev[k]=(ev[k]||0)+n; });
+    Object.entries(o.pg||{}).forEach(([k,n])=>{ pg[k]=(pg[k]||0)+n; pd.pv+=n; }); Object.entries(o.ev||{}).forEach(([k,n])=>{ ev[k]=(ev[k]||0)+n; (evP[k] ||= new Set()).add(o.v); });
     if(o.r&&!/galometrics/.test(o.r)) refs[o.r]=(refs[o.r]||0)+1;
     Object.entries(o.ds||{}).forEach(([k,st])=>{ const x=(des[k] ||= {ini:new Set(), fim:new Set()}); x.ini.add(o.v+o.d); if(st===2) x.fim.add(o.v+o.d); }); });
   const V=Object.values(vis), nv=V.length, nlog=V.filter(x=>x.u).length, nmob=V.filter(x=>x.m).length, volt=V.filter(x=>x.dias.size>1).length;
@@ -5898,6 +5899,17 @@ function vDonoStats(params){
   ${dk.length>1?`<h2>Visitantes por dia</h2><div class="uso-barras">${dk.map(d=>`<div title="${fmtD(d)}: ${porDia[d].v.size} visitantes, ${porDia[d].vl.size} com login"><i style="height:${Math.round(120*porDia[d].v.size/mx)}px"></i><i class="l" style="height:${Math.round(120*porDia[d].vl.size/mx)}px"></i><small>${d.slice(8)}/${d.slice(5,7)}</small><b>${porDia[d].v.size}</b></div>`).join('')}</div><p class="count">Barra clara: todos os visitantes. Barra escura: com login.</p>`:''}
   <div class="grid2"><div><h2>Páginas mais abertas</h2><table><tbody>${top(pg,NOME_PG)}</tbody></table></div>
   <div><h2>O que fizeram</h2><table><tbody>${top(ev,NOME_EV,20)}</tbody></table></div></div>
+  ${(()=>{ const P=k=>(evP[k]||new Set()).size, viu=P('guia_visto'); const nb=bqL.filter(b=>/nascid|naturai/i.test(nrm(b.q||''))); const pesN=new Set(), pesOk=new Set(); L.forEach(o=>(o.bq||[]).forEach(b=>{ if(/nascid|naturai/.test(nrm(b.q||''))){ pesN.add(o.v); if(String(b.r||'').startsWith('nat:')&&!/sem resultado|onde nasceram/.test(b.r)) pesOk.add(o.v); } }));
+    const ok=nb.filter(b=>String(b.r||'').startsWith('nat:')&&!/sem resultado|onde nasceram/.test(b.r)).length, sem=nb.filter(b=>/sem resultado/.test(b.r||'')).length;
+    const pc=(a,b)=>b?` <small class="count">(${Math.round(100*a/b)}% de quem viu)</small>`:'';
+    return `<h2>Guia "nascidos em + sua cidade"</h2><p class="count">Fixo em toda busca até ${fmtD(DICA_CID_ATE)}. Pessoas são visitantes diferentes no período.</p><table><thead><tr><th></th><th class="n">Pessoas</th><th class="n">Vezes</th></tr></thead><tbody>
+    <tr><td>Viram o guia</td><td class="n">${N(viu)}</td><td class="n">–</td></tr>
+    <tr><td>Clicaram no atalho da cidade (faixa preta)</td><td class="n">${N(P('guia_atalho'))}${pc(P('guia_atalho'),viu)}</td><td class="n">${N(ev.guia_atalho||0)}</td></tr>
+    <tr><td>Clicaram em "Escrever a minha"</td><td class="n">${N(P('guia_escrever'))}${pc(P('guia_escrever'),viu)}</td><td class="n">${N(ev.guia_escrever||0)}</td></tr>
+    <tr><td>Clicaram num exemplo (Divinópolis, Uberlândia…)</td><td class="n">${N(P('guia_exemplo'))}${pc(P('guia_exemplo'),viu)}</td><td class="n">${N(ev.guia_exemplo||0)}</td></tr>
+    <tr><td>Buscaram "nascidos em…"</td><td class="n">${N(pesN.size)}</td><td class="n">${N(nb.length)}</td></tr>
+    <tr><td>Acharam a lista de uma cidade ou estado</td><td class="n">${N(pesOk.size)}</td><td class="n">${N(ok)}</td></tr>
+    <tr><td>Buscaram cidade sem jogadores com ficha</td><td class="n">–</td><td class="n">${N(sem)}</td></tr></tbody></table>`; })()}
   <div class="grid2"><div><h2>Desafios do dia</h2><table><thead><tr><th>Desafio</th><th class="n">Começaram</th><th class="n">Terminaram</th></tr></thead><tbody>${Object.entries(des).sort((a,b)=>b[1].ini.size-a[1].ini.size).map(([k,x])=>`<tr><td>${esc((DESAF.find(d=>d[0]===k)||[k,k])[1])}</td><td class="n">${N(x.ini.size)}</td><td class="n">${N(x.fim.size)}</td></tr>`).join('')||'<tr><td colspan="3" class="count">Nada ainda.</td></tr>'}</tbody></table><p class="count">Pessoas por dia (cada torcedor conta uma vez por dia em cada desafio).</p></div>
   <div><h2>De onde vieram</h2><table><tbody>${top(refs,null,12)}</tbody></table><p class="count">Visitas que chegaram por link de outro site. Quem digitou o endereço ou abriu pelo app não aparece aqui.</p></div></div>
   ${(()=>{ const tipo=t=>Object.entries(enT).filter(([k])=>new RegExp('^('+t+')-').test(k)).sort((a,b)=>b[1]-a[1]).slice(0,15);
@@ -6854,7 +6866,7 @@ function dicaCidadeAtalho(q){ const c0=nrm(q||'').replace(/[^a-z ]/g,' ').replac
   if(!ks.length&&!ufN) return ''; const R=nascRows('jogadores'); const S=new Set(ks); const n=ks.length?R.filter(r=>S.has(r.g.nat)).length:R.filter(r=>r.g.uf===ufN[0]).length; if(!n) return '';
   const g=ks.length?G[ks[0]]:null, lug=g?g.cid:ufN[1][0];
   return `<a class="gm-dica-atalho" href="#pergunte?${new URLSearchParams({q:'jogadores nascidos '+(g?'em '+g.cid+(ks.every(k=>G[k].uf===g.uf)&&g.uf?' '+g.uf:''):'no estado de '+lug)})}">Procurando quem nasceu ${g?'em':(/^(BA|PB)$/.test(ufN[0])?'na':/^(RJ|RS|RN|PR|MA|PA|PI|CE|ES|AC|AP|AM|TO|DF)$/.test(ufN[0])?'no':'em')} ${esc(lug)}? Veja os ${N(n)} ${n===1?'jogador':'jogadores'} →</a>`; }
-function dicaCidade(q){ return `<div class="gm-dica-cid">${dicaCidadeAtalho(q)}<div class="gm-dica-t">Jogadores da sua cidade</div><div class="gm-dica-f">jogadores nascidos em <span>+ sua cidade</span></div>
+function dicaCidade(q){ try{ if(!window._guiaVisto){ window._guiaVisto=1; trk('guia_visto'); } }catch(e){} return `<div class="gm-dica-cid">${dicaCidadeAtalho(q)}<div class="gm-dica-t">Jogadores da sua cidade</div><div class="gm-dica-f">jogadores nascidos em <span>+ sua cidade</span></div>
   <p>Escreva assim, com o nome da cidade no fim. Se tiver cidade com o mesmo nome em outro estado, ponha a sigla: <i>jogadores nascidos em Cláudio MG</i>. Também vale o estado: <i>jogadores nascidos na Bahia</i>.</p>
   <div class="pq-ex"><button type="button" class="chip chip-novo" onclick="escreveCidade()"><b>Escrever a minha</b><span>completa a busca para você</span></button>${['Divinópolis','Uberlândia','Sete Lagoas','Montes Claros'].map(c=>`<a class="chip" href="#pergunte?${new URLSearchParams({q:'jogadores nascidos em '+c})}">${c}</a>`).join('')}</div></div>`; }
 function escreveCidade(){ let i=document.getElementById('pq'); if(!i){ location.hash='pergunte'; setTimeout(escreveCidade,300); return; } i.value='jogadores nascidos em '; i.focus(); try{ i.setSelectionRange(i.value.length,i.value.length); }catch(e){} i.scrollIntoView({block:'center',behavior:'smooth'}); }
