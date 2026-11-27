@@ -2341,6 +2341,14 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 .sug-aviso-f input{flex:1 1 240px;font:14px 'Courier Prime',monospace;padding:8px;border:1px solid #171714;background:#fff}
 </style>
 <style id="aniv-css">.gm-aniv{margin-top:18px;border-top:3px solid var(--ink);padding-top:12px}.gm-aniv-h{font-family:Oswald,sans-serif;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#8C6610;font-size:15px;margin-bottom:10px}.gm-aniv-l{display:flex;flex-wrap:wrap;gap:10px}.gm-aniv-c{display:flex;flex-direction:column;gap:3px;border:2px solid var(--ink);background:#fff8e6;padding:8px 12px;text-decoration:none;color:var(--ink);box-shadow:3px 3px 0 var(--ink)}.gm-aniv-c b{font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:1px;font-size:16px}.gm-aniv-c span{font-size:12px;color:#8C6610}.gm-aniv-c.memo{background:transparent}.gm-aniv-c.memo span{color:#6b6862}.gm-aniv-c:hover{background:var(--ink);color:#fff}.gm-aniv-c:hover span{color:#ddd}</style>
+<style id="baloes-css">.gm-aniv-faixa{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:14px 0 18px;padding:12px 16px;background:#171714;color:#f4f1ea;border-left:6px solid #c9a54a;animation:gmAnivIn .5s ease-out}.gm-aniv-faixa b{color:#e0c070;font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:1px}.gm-aniv-faixa span{flex:1 1 260px}.gm-aniv-faixa .gm-aniv-bolo{flex:0 0 auto;font-size:26px}.gm-aniv-faixa button{background:#f4f1ea;color:#171714;border-color:#f4f1ea}.gm-aniv-faixa.memo{background:transparent;color:inherit;border:2px solid #171714;border-left-width:6px}.gm-aniv-faixa.memo button{background:transparent;color:inherit;border-color:currentColor}
+@keyframes gmAnivIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.gm-baloes{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9999}.gm-baloes i{position:absolute;bottom:-160px;border-radius:50% 50% 48% 48%/44% 44% 56% 56%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.55) 0 9%,transparent 10%),var(--c);box-shadow:inset -6px -10px 0 rgba(0,0,0,.14);animation:gmBalao var(--d) cubic-bezier(.35,.1,.5,1) var(--a) forwards;opacity:.95}
+.gm-baloes i::before{content:'';position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);border:6px solid transparent;border-bottom:8px solid var(--c);border-top:0}
+.gm-baloes i::after{content:'';position:absolute;left:50%;top:100%;margin-top:6px;width:1.5px;height:90px;background:rgba(80,78,72,.7);transform-origin:top;animation:gmFio 1.2s ease-in-out infinite alternate}
+@keyframes gmBalao{0%{transform:translate(0,0) rotate(0)}30%{transform:translate(calc(var(--x)*.6),-40vh) rotate(var(--r))}65%{transform:translate(calc(var(--x)*-.4),-80vh) rotate(calc(var(--r)*-1))}100%{transform:translate(var(--x),calc(-100vh - 260px)) rotate(var(--r))}}
+@keyframes gmFio{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
+@media (prefers-reduced-motion:reduce){.gm-baloes{display:none}}</style>
 </head>
 <body>
 <header><div class="top">
@@ -2356,9 +2364,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261126223111';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261126223111"></script>
-<script src="backend-firebase.js?v=20261126223111"></script>
+<script>window.GM_BUILD='20261126223429';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261126223429"></script>
+<script src="backend-firebase.js?v=20261126223429"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4733,6 +4741,7 @@ function route(){
   if(/^(jogo|jogador|adversario|cidade)-/.test(h)) html+=`<p class="count sug-link"><a href="#sugestoes?${new URLSearchParams({sobre:h})}">Viu um erro nesta página, ou tem um escudo ou foto para mandar? Fale com a gente →</a></p>`;
   if(DIA_JOGO&&(h==='desafios'||h.startsWith('desafio-'))) html=html.replace(/href="#desafio(s|-[a-z]+)"/g,(m,x)=>`href="#desafio${x}?dia=${DIA_JOGO}"`);
   $('#app').innerHTML=notaPagina(h)+html;
+  try{ const bl=document.querySelector('.gm-baloes'); if(bl) bl.remove(); if(h.startsWith('jogador-')&&typeof anivPerfil==='function') anivPerfil(h.slice(8)); }catch(e){}
   const paginaInicio = h==='inicio';
   const secaoGM = ({jogos:'JOGOS E RESULTADOS',jogo:'FICHA DA PARTIDA',jogadores:'PERSONAGENS',jogador:'PERFIL DE JOGADOR',adversarios:'ADVERSÁRIOS',adversario:'HISTÓRICO DO CONFRONTO',temporadas:'LINHA DO TEMPO',temporada:'TEMPORADA',recordes:'OS GRANDES FEITOS',tecnicos:'COMANDO ALVINEGRO',competicoes:'COMPETIÇÕES',competicao:'CADERNO DE COMPETIÇÕES',mapa:'O GALO PELO MUNDO',cidades:'CIDADES E ESTÁDIOS',cidade:'ARQUIVO DE CIDADES',comparar:'DUELO DE PERSONAGENS',duplas:'PARCERIAS',busca:'PESQUISA NO ARQUIVO',perfil:'MEU CADERNO',album:'ÁLBUM ALVINEGRO',desafios:'DESAFIOS',ranking:'RANKING',diario:'DIÁRIO ALVINEGRO',pergunte:'PESQUISA NO ARQUIVO'})[h.split('?')[0].replace(/-.*$/,'')] || 'ARQUIVO HISTÓRICO';
   if(!paginaInicio){
@@ -7428,6 +7437,19 @@ async function desenhaArteAniv(s){
     font(900,34); txt(N(a.p.gols),W-P,yy+38,PAP,'right'); mono(12,2); txt('GOLS',W-P,yy+54,'#9a978f','right'); x.fillStyle=LIN; x.fillRect(P,yy+61,W-2*P,1); });
   if(L.length>mx){ cas(22); txt(`E mais ${L.length-mx} na lista completa.`,P,y+mx*62+32,CZ2); }
   rodape('Parabéns a quem fez história com a camisa do Galo.','Veja todos no site'); return cv; }
+
+/* ---------- Balões no perfil do aniversariante (estilo X/Twitter) ---------- */
+function anivPerfil(s){ const p=D.jogadores.find(x=>slug(x.nome)===s); if(!p) return; const md=hojeStr().slice(5); const a=anivDia(md).find(x=>x.nome===p.nome); if(!a) return;
+  const app=document.getElementById('app'); const alvo=app.querySelector('h1')||app.firstElementChild; const box=document.createElement('div'); box.className='gm-aniv-faixa'+(a.memo?' memo':'');
+  box.innerHTML=a.memo?`<span>Nasceu neste dia, em ${fmtD(a.b.nascimento)}${a.b.falecimento?' · em memória':''}.</span>${artBtn({t:'aniv',md,nome:a.nome}).replace('Baixar arte','Arte')}`
+    :`<span class="gm-aniv-bolo" aria-hidden="true">🎈</span><span><b>Hoje é aniversário de ${esc(nomeV(a.nome))}!</b> ${a.idade} anos. Parabéns de toda a Massa.</span>${artBtn({t:'aniv',md,nome:a.nome}).replace('Baixar arte','Arte de parabéns')}<button type="button" class="ghost" onclick="baloes()">Mais balões</button>`;
+  if(alvo&&alvo.parentNode) alvo.parentNode.insertBefore(box,alvo.nextSibling); else app.prepend(box);
+  if(!a.memo) baloes(); }
+function baloes(){ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return; const old=document.querySelector('.gm-baloes'); if(old) old.remove();
+  const C=['#c9a54a','#e0c070','#d94a3a','#e8877c','#3f9a63','#7cc495','#171714','#f4f1ea','#8e8c86','#b8860b']; const w=document.createElement('div'); w.className='gm-baloes'; w.setAttribute('aria-hidden','true');
+  const n=window.innerWidth<600?12:20; for(let i=0;i<n;i++){ const b=document.createElement('i'); const c=C[i%C.length], sz=44+Math.random()*34;
+    b.style.cssText=`left:${(i+Math.random()*.8)*100/n}%;width:${sz}px;height:${sz*1.22}px;--c:${c};--d:${3.6+Math.random()*2.4}s;--a:${Math.random()*1.4}s;--x:${(Math.random()*2-1)*60}px;--r:${(Math.random()*2-1)*14}deg`; w.appendChild(b); }
+  document.body.appendChild(w); setTimeout(()=>w.remove(),9000); }
 
 /* ---------- Respostas diretas da busca (perguntas que não são uma lista pronta) ---------- */
 function rdJogador(t){ const k=nrm(t).trim(); if(k.length<3) return null; const c=D.jogadores.filter(p=>{ const a=nrm(p.nome), b=nrm(nomeV(p.nome)), s=a.replace(/\s*\(.*\)/,'').trim(); return a===k||b===k||s===k; }); return c.sort((a,b)=>b.jogos-a.jogos)[0]||null; }
