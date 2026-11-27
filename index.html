@@ -2374,9 +2374,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261127122151';try{if(/[?&]v=/.test(location.search))history.replaceState(null,'',location.pathname+location.hash);}catch(e){}(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261127122151"></script>
-<script src="backend-firebase.js?v=20261127122151"></script>
+<script>window.GM_BUILD='20261127124040';try{if(/[?&]v=/.test(location.search))history.replaceState(null,'',location.pathname+location.hash);}catch(e){}(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261127124040"></script>
+<script src="backend-firebase.js?v=20261127124040"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4574,7 +4574,6 @@ async function arteBase(caminho, aba, tema){
     if(VI){ const gl=x.createLinearGradient(0,0,W,0); gl.addColorStop(0,'#c2417f'); gl.addColorStop(.6,'#f08a5d'); gl.addColorStop(1,'#f7b267'); x.fillStyle=gl; } else x.fillStyle=GOLD; x.fillRect(0,150,W,5);
   }
   else {
-    for(let i=0;i<16;i++){ x.fillStyle=i%2?'#8e8c86':'#f7f5ef'; x.fillRect(i*W/16,0,W/16+1,20); }
     x.font='700 19px "Courier Prime", monospace'; try{ x.letterSpacing='4px'; }catch(e){} x.fillStyle=GOLD; x.textAlign='left'; x.textBaseline='alphabetic'; x.fillText(('GALO METRICS · '+(aba||'Edição digital')).toUpperCase().slice(0,60),P,86);
     x.font='700 17px "Courier Prime", monospace'; try{ x.letterSpacing='2px'; }catch(e){} x.fillStyle='#8e8c86'; x.fillText(('galometrics.com.br'+(caminho||'')).slice(0,70),P,120); try{ x.letterSpacing='0px'; }catch(e){}
     x.fillStyle='#5b5953'; x.fillRect(P,150,W-2*P,2);
@@ -6734,7 +6733,7 @@ async function desenhaArteListaReels(s,rows,tit,unid,tipo,res,id){
     while(sz>16&&med(sz)>max) sz-=2; let cx=px; x.textAlign='left'; x.textBaseline='alphabetic'; partes.forEach(pt=>{ const g=/^\(\d+\)$/.test(pt); x.font=F(g&&f==='casb'?'cas':f,sz); x.fillStyle=g?cg:c; x.fillText(pt,cx,py); cx+=x.measureText(pt).width; }); return sz; };
   const fitRich=(t,f,sz,max)=>{ const partes=String(t).split(/(\(\d+\))/).filter(Boolean); const med=z=>partes.reduce((w,pt)=>{ x.font=F(/^\(\d+\)$/.test(pt)&&f==='casb'?'cas':f,z); return w+x.measureText(pt).width; },0); while(sz>16&&med(sz)>max) sz-=2; return sz; };
   const wrapW=(t,f,sz,max)=>{ x.font=F(f,sz); const ws=String(t).split(/\s+/); const ls=[]; let ln=''; for(const w of ws){ const tt=ln?ln+' '+w:w; if(x.measureText(tt).width>max&&ln){ ls.push(ln); ln=w; } else ln=tt; } if(ln) ls.push(ln); return ls; };
-  x.fillStyle=PAP; x.fillRect(0,0,W,H); for(let i=0;i<16;i++){ x.fillStyle=i%2?'#8e8c86':'#f7f5ef'; x.fillRect(i*W/16,0,W/16+1,20); }
+  x.fillStyle=PAP; x.fillRect(0,0,W,H);
   const galoIm=await loadImg(galoEsc(hojeStr()));
   // topo
   let y=110; x.font='700 22px "Courier Prime", monospace'; x.letterSpacing='5px'; x.fillStyle=GOLD; x.textAlign='left'; x.fillText('GALO METRICS · RANKING',P,y); x.letterSpacing='0px';
@@ -7599,7 +7598,6 @@ async function arteDossie(){
   const wrap=(t,px,py,max,lh,c)=>{ x.fillStyle=c; x.textAlign='left'; const ws=String(t).split(/\s+/); let ln='',y=py; for(const w of ws){ const tt=ln?ln+' '+w:w; if(x.measureText(tt).width>max&&ln){ x.fillText(ln,px,y); ln=w; y+=lh; } else ln=tt; } if(ln) x.fillText(ln,px,y); return y; };
   x.fillStyle=INK; x.fillRect(0,0,W,H);
   const faixa=(y,h)=>{ for(let i=0;i<16;i++){ x.fillStyle=i%2?CZ:BR; x.fillRect(i*W/16,y,W/16+1,h); } };
-  faixa(0,20);
   const kicker=(t,y)=>{ mono(19,4); txt(t.toUpperCase(),P,y,OURO); };
   const fachada=(itens,y,h)=>{ const n=itens.length, w=(W-2*P)/n; x.strokeStyle=PAP; x.lineWidth=3; x.strokeRect(P,y,W-2*P,h);
     itens.forEach(([v,l],i)=>{ const px=P+i*w; x.fillStyle=i%2?CZ:BR; x.fillRect(px+(i?1:1.5),y+1.5,w-(i?1:1.5)-(i===n-1?1.5:0),h-3); if(i){ x.fillStyle=INK; x.fillRect(px-1,y,2,h); }
