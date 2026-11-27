@@ -2375,9 +2375,9 @@ html,body,h1,h2,h3,h4,strong,b,.gm-duplas-copy strong{font-variant-numeric:linin
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261127130752';try{if(/[?&]v=/.test(location.search))history.replaceState(null,'',location.pathname+location.hash);}catch(e){}(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261127130752"></script>
-<script src="backend-firebase.js?v=20261127130752"></script>
+<script>window.GM_BUILD='20261127134420';try{if(/[?&]v=/.test(location.search))history.replaceState(null,'',location.pathname+location.hash);}catch(e){}(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261127134420"></script>
+<script src="backend-firebase.js?v=20261127134420"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -4589,6 +4589,7 @@ async function desenhaArte(s){
   if(s.t==='uf') return desenhaArteUF(s);
   if(s.t==='nasc') return desenhaArteNasc(s);
   if(s.t==='aniv') return desenhaArteAniv(s);
+  if(s.t==='chines') return desenhaArteChines(s);
   if(s.t==='9x2') return s.p?desenhaCarrossel9x2(s.p):desenhaArte9x2();
   if(s.t==='datas') return desenhaArteDatas(s);
   if(s.t==='lista') return desenhaArteLista(s);
@@ -7770,6 +7771,24 @@ const SIGNOS=[['Capricórnio','01-01','01-19','22/12 a 19/1'],['Aquário','01-20
 function signo(iso){ const md=iso.slice(5,10); if(md>='12-22') return 0; return SIGNOS.findIndex(s=>md>=s[1]&&md<=s[2]); }
 let _NASC=null; function jogNasc(){ if(_NASC) return _NASC; const B=(D.bios&&D.bios.jogadores)||{}; const P={}; D.jogadores.forEach(p=>P[p.nome]=p); return _NASC=Object.entries(B).filter(([k,v])=>v.nascimento&&/^\d{4}-\d\d-\d\d$/.test(v.nascimento)&&P[k]).map(([k,v])=>({p:P[k],d:v.nascimento})); }
 function rdTabPl(L){ return `<table><thead><tr><th>Jogador</th><th>Nascimento</th><th class="n">Jogos</th><th class="n">Gols</th></tr></thead><tbody>${L.slice(0,40).map(x=>`<tr><td><a href="#jogador-${slug(x.p.nome)}">${esc(nomeV(x.p.nome))}</a></td><td>${fmtD(x.d)}</td><td class="n">${N(x.p.jogos)}</td><td class="n">${N(x.p.gols)}</td></tr>`).join('')}</tbody></table>${L.length>40?`<p class="count">Mostrando 40 de ${N(L.length)}.</p>`:''}`; }
+function chDados(){ const R=J.filter(j=>j.resultado); const ap=r=>{ const n=r.V+r.E+r.D; return n?100*(3*r.V+r.E)/(3*n):0; };
+  const L=CH_ANIMAIS.map((a,i)=>{ const l=R.filter(j=>chAnimal(j.data)===i), r=rec(l); return {a,i,n:l.length,r,ap:ap(r)}; }); const tot=ap(rec(R));
+  const ord=L.slice().sort((x,y)=>x.ap-y.ap); return {L,tot,pior:ord[0],melhor:ord[ord.length-1]}; }
+const daAnimal=a=>/^(Cabra|Serpente)$/.test(a)?'da':'do';
+function chCuriosidade(){ const d=chDados(), p=d.pior, m=d.melhor, empM=d.L.filter(x=>Math.round(x.ap)===Math.round(m.ap)).map(x=>x.a);
+  const ehGalo=p.a==='Galo';
+  return `<div class="note" style="margin:14px 0"><b>Curiosidade:</b> ${ehGalo?`o pior aproveitamento do Galo na história é justamente no <b>Ano do Galo</b>: ${Math.round(p.ap)}%, ${Math.round(d.tot-p.ap)} pontos abaixo da média histórica (${Math.round(d.tot)}%).`:`o pior aproveitamento é no Ano ${daAnimal(p.a)} ${p.a} (${Math.round(p.ap)}%).`} O melhor é no Ano ${empM.length>1?'do '+empM.slice(0,-1).join(', ')+' e '+daAnimal(empM[empM.length-1])+' '+empM[empM.length-1]:daAnimal(m.a)+' '+m.a} (${Math.round(m.ap)}%).</div>`; }
+async function desenhaArteChines(s){ const A=await arteDossie(); const {cv,x,W,H,P,PAP,CZ,CZ2,OURO,LIN,font,mono,txt,fit,kicker,rodape,cas,wrap}=A; const d=chDados();
+  const alvo=s.a!=null?d.L[s.a]:d.L[9]; const ehG=alvo.a==='Galo';
+  kicker('Galo Metrics · Horóscopo chinês',78);
+  if(s.a==null){ font(900,96); txt('O GALO NO',P,180,PAP); txt('ANO DO GALO',P,270,OURO); }
+  else { font(900,96); txt('O GALO NO',P,180,PAP); const t=`ANO ${daAnimal(alvo.a).toUpperCase()} ${alvo.a.toUpperCase()}`; fit(t,900,96,W-2*P); txt(t,P,270,OURO); }
+  cas(30); let y=wrap(ehG&&alvo===d.pior?`O pior aproveitamento da história do Galo é justamente no Ano do Galo: ${Math.round(alvo.ap)}%, contra ${Math.round(d.tot)}% na média.`:`${alvo.n} jogos no Ano ${daAnimal(alvo.a)} ${alvo.a}, com ${Math.round(alvo.ap)}% de aproveitamento. Média histórica: ${Math.round(d.tot)}%.`,P,330,W-2*P,42,CZ2)+50;
+  const mx=Math.max(...d.L.map(z=>z.ap)), mn=40, bw=W-2*P-200-250, rh=Math.floor((H-150-y)/12);
+  d.L.forEach(z=>{ const on=z===alvo; font(800,34,'condensed'); txt(z.a.toUpperCase(),P,y+rh*.68,on?OURO:PAP);
+    const w=Math.max(6,bw*(z.ap-mn)/(mx-mn)); x.fillStyle=on?OURO:(Math.round(z.ap)===Math.round(d.melhor.ap)?'#7cc495':'#5b5953'); x.fillRect(P+200,y+rh*.2,w,rh*.55);
+    font(900,32,'condensed'); txt(Math.round(z.ap)+'%',P+200+w+12,y+rh*.66,on?OURO:CZ2); mono(13,1); txt(z.n+' JOGOS',W-P,y+rh*.66,CZ,'right'); y+=rh; });
+  rodape('Ano chinês a partir do Ano Novo Lunar de cada ano. Aproveitamento: 3 pontos por vitória.','Busque “horóscopo chinês”'); return cv; }
 function respostaDireta(q){
   const n=nrm(q).replace(/[?!.]+$/,'').trim(); let m;
   const R=J.filter(j=>j.resultado);
@@ -7851,9 +7870,9 @@ function respostaDireta(q){
       const nasc=jogNasc(); const linhas=CH_ANIMAIS.map((a,i)=>{ const l=R.filter(j=>chAnimal(j.data)===i); const pj=nasc.filter(x=>chAnimal(x.d)===i); return `<tr${i===idx?' style="font-weight:700"':''}><td>${a}</td><td class="n">${N(l.length)}</td><td class="n">${l.length?aprov(rec(l)):'–'}</td><td class="n">${N(pj.length)}</td></tr>`; }).join('');
       const tab=`<table><thead><tr><th>Animal</th><th class="n">Jogos</th><th class="n">Aprov.</th><th class="n">Jogadores nascidos</th></tr></thead><tbody>${linhas}</tbody></table>`;
       const nota='<p class="count">O ano chinês começa no Ano Novo Lunar, entre 21 de janeiro e 20 de fevereiro, então jogos de janeiro e começo de fevereiro contam no animal do ano anterior. Nascimentos só dos jogadores com ficha.</p>';
-      if(idx<0) return {k:'chines', html:h('O Galo no horóscopo chinês','Jogos e jogadores por animal do ano chinês.',tab+nota)};
+      if(idx<0) return {k:'chines', html:h('O Galo no horóscopo chinês',`Jogos e jogadores por animal do ano chinês. ${artBtn({t:'chines'}).replace('Baixar arte','Arte do Ano do Galo')}`,chCuriosidade()+tab+nota)};
       const L=R.filter(j=>chAnimal(j.data)===idx).sort((a,b)=>a.data<b.data?1:-1); const pj=nasc.filter(x=>chAnimal(x.d)===idx).sort((a,b)=>b.p.jogos-a.p.jogos);
-      return {k:'chines', html:h(`O Galo no ano d${/^(cabra|serpente)/i.test(CH_ANIMAIS[idx])?'a':'o'} ${CH_ANIMAIS[idx]}`, `${rdRes(rec(L))}.`, tab+(pj.length?`<h3>Jogadores nascidos no ano d${/^(Cabra|Serpente)/.test(CH_ANIMAIS[idx])?'a':'o'} ${CH_ANIMAIS[idx]}</h3>`+rdTabPl(pj):'')+`<h3>Jogos</h3>`+rdTabJogos(L.slice(0,40))+nota)}; } }
+      return {k:'chines', html:h(`O Galo no ano d${/^(cabra|serpente)/i.test(CH_ANIMAIS[idx])?'a':'o'} ${CH_ANIMAIS[idx]}`, `${rdRes(rec(L))}. ${artBtn({t:'chines',a:idx}).replace('Baixar arte','Arte deste ano')}`, chCuriosidade()+tab+(pj.length?`<h3>Jogadores nascidos no ano d${/^(Cabra|Serpente)/.test(CH_ANIMAIS[idx])?'a':'o'} ${CH_ANIMAIS[idx]}</h3>`+rdTabPl(pj):'')+`<h3>Jogos</h3>`+rdTabJogos(L.slice(0,40))+nota)}; } }
   // signos do zodíaco
   { const sm=n.match(new RegExp('\\b(?:signo d[eo]|em|no|de|nascidos em|jogadores d[eo]) ('+SIGNOS.map(s=>nrm(s[0])).join('|')+')\\b')); const geral=/\b(signos?|zodiaco|horoscopo)\b/.test(n)&&!/chines/.test(n);
     if((sm&&(geral||/^(jogos|jogadores|galo|desempenho|retrospecto)/.test(n)))||(geral&&!sm)){ const idx=sm?SIGNOS.findIndex(s=>nrm(s[0])===sm[1]):-1; const nasc=jogNasc();
