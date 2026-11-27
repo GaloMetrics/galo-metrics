@@ -2350,6 +2350,15 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 @keyframes gmBalao{0%{transform:translate(0,0) rotate(0)}30%{transform:translate(calc(var(--x)*.6),-40vh) rotate(var(--r))}65%{transform:translate(calc(var(--x)*-.4),-80vh) rotate(calc(var(--r)*-1))}100%{transform:translate(var(--x),calc(-100vh - 260px)) rotate(var(--r))}}
 @keyframes gmFio{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
 @media (prefers-reduced-motion:reduce){.gm-baloes{display:none}}</style>
+<style id="nx-css">.nx .nx-capa{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}.nx-capa-placar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 18px;padding:30px 20px;background:repeating-linear-gradient(90deg,#1e1e1b 0 18px,#171714 18px 36px);border-left:2px solid #2c2b28}.nx-capa-placar div{text-align:center}.nx-capa-placar small{display:block;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#c9a54a}.nx-capa-placar b{display:block;font-family:Archivo,Oswald,sans-serif;font-weight:900;font-stretch:extra-condensed;font-size:clamp(110px,16vw,200px);line-height:.9;color:#f4f1ea}.nx-capa-placar i{font-family:Archivo,Oswald,sans-serif;font-style:normal;font-weight:800;font-size:44px;color:#8e8c86}.nx-capa-placar p{flex-basis:100%;text-align:center;margin:6px 0 0;font-family:'Courier Prime',monospace;letter-spacing:6px;color:#bdbab2}
+.nx-esc ol{margin:0;padding-left:22px;columns:1}.nx-esc li{padding:3px 0;border-bottom:1px solid #d9d4c7}
+.nx-gols{list-style:none;margin:0 0 18px;padding:0;border-top:2px solid #171714}.nx-gols li{display:grid;grid-template-columns:56px 76px 1fr;align-items:center;gap:10px;padding:9px 6px;border-bottom:1px solid #d9d4c7}.nx-gols li.adv{background:#ece8de;color:#6b6862}.nx-min{font-family:'Courier Prime',monospace;color:#8C6610}.nx-pl{font-family:Archivo,Oswald,sans-serif;font-weight:900;font-stretch:condensed;font-size:24px}
+.nx-recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin:16px 0}.nx-rec{margin:0;background:#efe6cf;border:1px solid #b9ad8c;box-shadow:3px 4px 0 #171714;padding:16px 18px;font-family:'Libre Caslon Text',Georgia,serif;color:#2b2618}.nx-rec:nth-child(odd){transform:rotate(-.6deg)}.nx-rec:nth-child(even){transform:rotate(.5deg)}.nx-rec-cab{display:flex;justify-content:space-between;gap:8px;border-bottom:3px double #2b2618;padding-bottom:6px;margin-bottom:10px}.nx-rec-cab b{font-family:'Libre Caslon Text',Georgia,serif;font-size:19px;letter-spacing:.5px}.nx-rec-cab span{font-family:'Courier Prime',monospace;font-size:12px;align-self:end}.nx-rec blockquote{margin:0 0 10px;font-size:20px;line-height:1.3;font-style:italic}.nx-rec figcaption{font-family:system-ui,sans-serif;font-size:12px;color:#5a5240}
+.nx-imgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.nx-trio{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.nx-trio>div{border:2px solid #171714;padding:14px 16px;background:#f7f5ef}.nx-trio b{font-family:Archivo,Oswald,sans-serif;font-weight:900;font-stretch:condensed;text-transform:uppercase;font-size:26px;display:block}.nx-trio-g{font-family:'Courier Prime',monospace;color:#8C6610;font-size:13px;letter-spacing:1px}.nx-trio p{margin:8px 0 0;font-size:15px}
+.nx .mrv-sec>p{margin:0 0 12px;max-width:78ch}.nx-lista{padding-left:20px}.nx-lista li{margin:6px 0}
+.nx-ninao{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:center;background:#171714;color:#f4f1ea;padding:18px 22px;margin:14px 0}.nx-ninao b{font-family:Archivo,Oswald,sans-serif;font-weight:900;font-stretch:extra-condensed;font-size:64px;line-height:1;color:#c9a54a}.nx-ninao span{font-family:'Courier Prime',monospace;text-transform:uppercase;letter-spacing:2px;font-size:13px}
+@media (max-width:760px){.nx .nx-capa{grid-template-columns:1fr}.nx-capa-placar{border-left:0;border-top:2px solid #2c2b28}.nx-rec{transform:none!important}}.gm-nx-banner{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin:0 0 14px;padding:12px 16px;background:#171714;color:#f4f1ea!important;text-decoration:none;border-left:6px solid #c9a54a}.gm-nx-banner b{font-family:Archivo,Oswald,sans-serif;font-weight:900;font-stretch:condensed;font-size:30px;color:#c9a54a}.gm-nx-banner span{font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.5px}.gm-nx-banner:hover{background:#2a2925}</style>
 </head>
 <body>
 <header><div class="top">
@@ -2357,7 +2366,7 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
   <span class="topbtns"><form id="hq" class="hq" role="search"><input type="search" id="hqi" placeholder="Jogador, clube ou nascidos em + sua cidade" aria-label="Buscar no Galo Metrics"></form><a id="gmchip" href="#perfil" class="gmchip">★ Perfil</a><span id="gmconta" class="gmconta" hidden><button id="gmlogin" type="button" aria-haspopup="true"></button><span id="gmmenu" class="gmmenu" hidden></span></span><button id="navbtn" type="button" aria-label="Abrir menu" aria-expanded="false" onclick="var o=document.body.classList.toggle('navopen');this.setAttribute('aria-expanded',o)"><span class="hb"></span>Menu</button></span></div>
   <nav id="nav" aria-label="Principal">
     <a href="#inicio">Início</a><a href="#jogos">Jogos</a><a href="#jogadores">Jogadores</a><a href="#adversarios">Adversários</a><a href="#competicoes">Competições</a><a href="#mapa">Mapa</a><a href="#pergunte">Busca</a><a href="#embreve" class="nav-breve">Em breve</a>
-    <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#duplas">Duplas e trios <b class="novo">novo</b></a><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#presidentes">Presidentes <b class="novo">novo</b></a><a href="#estadios">Estádios <b class="novo">novo</b></a><a href="#arena-mrv-100">100 jogos na Arena MRV <b class="novo">novo</b></a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
+    <details class="menu"><summary>Mais história</summary><div class="menu-p"><a href="#duplas">Duplas e trios <b class="novo">novo</b></a><a href="#temporadas">Temporadas</a><a href="#tecnicos">Técnicos</a><a href="#presidentes">Presidentes <b class="novo">novo</b></a><a href="#9x2">Dossiê 9 x 2 (1927) <b class="novo">novo</b></a><a href="#estadios">Estádios <b class="novo">novo</b></a><a href="#arena-mrv-100">100 jogos na Arena MRV <b class="novo">novo</b></a><a href="#recordes">Recordes</a><a href="#cidades">Cidades</a><a href="#viradas">Viradas</a><a href="#comparar">Comparar jogadores</a></div></details>
     <span class="nav-sep" aria-hidden="true"></span>
     <details class="menu jogar"><summary>★ Jogar</summary><div class="menu-p"><a href="#desafios">Desafios do dia</a><a href="#palpites">Palpites</a><a href="#album">Álbum de figurinhas</a><a href="#ranking">Ranking da semana</a></div></details>
     <details class="menu area"><summary>Meu perfil</summary><div class="menu-p"><a href="#perfil">Perfil e conquistas</a><a href="#torcedores">Amigos</a><a href="#diario">Meu diário</a><a href="#sugestoes">Sugestões e correções</a><a href="#colaboradores">Colaboradores</a><a href="#apoie">♥ Apoie</a><a href="#dono" id="navdono" hidden>Página do dono</a></div></details>
@@ -2365,9 +2374,9 @@ header .lclaro{display:none!important}header .lescuro{display:inline-block!impor
 </div></header>
 <main id="app"><p class="empty">Carregando base de dados…</p></main>
 <footer id="foot"></footer>
-<script>window.GM_BUILD='20261127105539';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
-<script src="firebase-config.js?v=20261127105539"></script>
-<script src="backend-firebase.js?v=20261127105539"></script>
+<script>window.GM_BUILD='20261127115000';(function(){var primeira=true;function checa(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(o){if(!(o&&o.v&&o.v>window.GM_BUILD))return;var url=location.pathname+'?v='+o.v+location.hash;if(primeira){var k='gm-rl-'+o.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(url);return;}if(document.getElementById('gm-novo'))return;var d=document.createElement('button');d.id='gm-novo';d.textContent='Tem versão nova do site. Toque para atualizar';d.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#111;color:#F4F1E8;border:2px solid #C9962B;padding:12px 18px;font:600 15px Oswald,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:4px 4px 0 #C9962B';d.onclick=function(){location.replace(url)};document.body.appendChild(d);}).catch(function(){}).then(function(){primeira=false;});}catch(e){}}checa();setInterval(checa,120000);document.addEventListener('visibilitychange',function(){if(!document.hidden)checa();});})();</script>
+<script src="firebase-config.js?v=20261127115000"></script>
+<script src="backend-firebase.js?v=20261127115000"></script>
 <script type="application/json" id="db"></script>
 <script>
 let D, J, byId = {};
@@ -2547,7 +2556,7 @@ function vInicio(){
   </section>
   ${blocoBreve()}
   ${(()=>{const t=new Date(), md=String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); const l=played.filter(j=>!j.data_aprox&&j.data.slice(5)===md); const an=(typeof blocoAniv==='function')?blocoAniv(md,6):'';
-    return (l.length||an)?`<section class="gm-hoje"><div class="gm-section-head"><span>05 / NESTE DIA</span><h2>${t.getDate()}/${t.getMonth()+1} NA HISTÓRIA</h2><a href="#pergunte?lista=dia">VER TODOS ↗︎</a></div>${l.length?matchTable([...l].reverse(),6):''}${an}</section>`:'';})()}
+    return (l.length||an)?`<section class="gm-hoje"><div class="gm-section-head"><span>05 / NESTE DIA</span><h2>${t.getDate()}/${t.getMonth()+1} NA HISTÓRIA</h2><a href="#pergunte?lista=dia">VER TODOS ↗︎</a></div>${md==='11-27'?'<a class="gm-nx-banner" href="#9x2"><b>9 x 2</b><span>Neste dia, em 1927, a maior goleada do clássico. Leia o dossiê →</span></a>':''}${l.length?matchTable([...l].reverse(),6):''}${an}</section>`:'';})()}
   <section class="gm-ultimos"><div class="gm-section-head"><span>06 / RESULTADOS</span><h2>ÚLTIMOS JOGOS</h2><a href="#jogos">VER TODOS ↗︎</a></div>${matchTable([...played].reverse().slice(0,10),10)}</section>
   ${(()=>{const H=ACC.h2h['cruzeiro mg']; const cz=rec(J.filter(j=>j.adversario_id==='cruzeiro mg')); const ac=H?(()=>{const pos=rec(J.filter(j=>j.adversario_id==='cruzeiro mg'&&j.data>H.ate)); return {n:H.jogos+pos.n,V:H.V+pos.V,E:H.E+pos.E,D:H.D+pos.D};})():cz;
     return `<section class="gm-classico"><div class="gm-section-head"><span>07 / CLÁSSICO</span><h2>GALO ${cr('cruzeiro mg','cr2')} CRUZEIRO</h2><a href="#adversario-${slug('cruzeiro mg')}">RETROSPECTO ↗︎</a></div><p class="classico-num"><b>${N(ac.n)}</b> jogos contra o Cruzeiro · ${aprov(ac)} de aproveitamento</p>${resultBar(ac)}</section>`;})()}
@@ -4580,6 +4589,7 @@ async function desenhaArte(s){
   if(s.t==='uf') return desenhaArteUF(s);
   if(s.t==='nasc') return desenhaArteNasc(s);
   if(s.t==='aniv') return desenhaArteAniv(s);
+  if(s.t==='9x2') return desenhaArte9x2();
   if(s.t==='datas') return desenhaArteDatas(s);
   if(s.t==='lista') return desenhaArteLista(s);
   if(s.t==='titulo') return desenhaArteTitulo(s);
@@ -4692,6 +4702,7 @@ function route(){
   else if(h.startsWith('temporada-')) {html=vTemporada(h.slice(10)); sec='temporadas';}
   else if(h==='tecnicos') html=vTecnicos();
   else if(h==='arena-mrv-100') {html=vArena100(); sec='mrv100';}
+  else if(h==='9x2') {html=v9x2(); sec='jogos';}
   else if(h==='presidentes') {html=vPresidentes(); sec='presidentes';}
   else if(h.startsWith('presidente-')) {html=vPresidente(h.slice(11)); sec='presidentes';}
   else if(h==='estadios') {html=vEstadios(); sec='estadios';}
@@ -4742,7 +4753,7 @@ function route(){
   if(/^(jogo|jogador|adversario|cidade)-/.test(h)) html+=`<p class="count sug-link"><a href="#sugestoes?${new URLSearchParams({sobre:h})}">Viu um erro nesta página, ou tem um escudo ou foto para mandar? Fale com a gente →</a></p>`;
   if(DIA_JOGO&&(h==='desafios'||h.startsWith('desafio-'))) html=html.replace(/href="#desafio(s|-[a-z]+)"/g,(m,x)=>`href="#desafio${x}?dia=${DIA_JOGO}"`);
   $('#app').innerHTML=notaPagina(h)+html;
-  try{ const bl=document.querySelector('.gm-baloes'); if(bl) bl.remove(); if(h.startsWith('jogador-')&&typeof anivPerfil==='function') anivPerfil(h.slice(8)); else if(h.startsWith('tecnico-')&&typeof anivPerfilOutro==='function') anivPerfilOutro('tec',h.slice(8)); else if(h.startsWith('presidente-')&&typeof anivPerfilOutro==='function') anivPerfilOutro('pres',h.slice(11)); }catch(e){}
+  try{ const bl=document.querySelector('.gm-baloes'); if(bl) bl.remove(); if(h.startsWith('jogador-')&&typeof anivPerfil==='function') anivPerfil(h.slice(8)); else if(h.startsWith('tecnico-')&&typeof anivPerfilOutro==='function') anivPerfilOutro('tec',h.slice(8)); else if(h.startsWith('presidente-')&&typeof anivPerfilOutro==='function') anivPerfilOutro('pres',h.slice(11)); if(h==='jogo-319'){ const a=document.getElementById('app'), t=a.querySelector('h1'); const d=document.createElement('a'); d.className='gm-nx-banner'; d.href='#9x2'; d.innerHTML='<b>9 x 2</b><span>Dossiê completo deste jogo: jornais da época, gol a gol e o caso Ninão →</span>'; if(t&&t.parentNode) t.parentNode.insertBefore(d,t.nextSibling); } }catch(e){}
   const paginaInicio = h==='inicio';
   const secaoGM = ({jogos:'JOGOS E RESULTADOS',jogo:'FICHA DA PARTIDA',jogadores:'PERSONAGENS',jogador:'PERFIL DE JOGADOR',adversarios:'ADVERSÁRIOS',adversario:'HISTÓRICO DO CONFRONTO',temporadas:'LINHA DO TEMPO',temporada:'TEMPORADA',recordes:'OS GRANDES FEITOS',tecnicos:'COMANDO ALVINEGRO',competicoes:'COMPETIÇÕES',competicao:'CADERNO DE COMPETIÇÕES',mapa:'O GALO PELO MUNDO',cidades:'CIDADES E ESTÁDIOS',cidade:'ARQUIVO DE CIDADES',comparar:'DUELO DE PERSONAGENS',duplas:'PARCERIAS',busca:'PESQUISA NO ARQUIVO',perfil:'MEU CADERNO',album:'ÁLBUM ALVINEGRO',desafios:'DESAFIOS',ranking:'RANKING',diario:'DIÁRIO ALVINEGRO',pergunte:'PESQUISA NO ARQUIVO'})[h.split('?')[0].replace(/-.*$/,'')] || 'ARQUIVO HISTÓRICO';
   if(!paginaInicio){
@@ -6829,12 +6840,12 @@ const NOVAS_GRUPOS=[
   ['Comparações',['comparar anos','comparar edições','clube por ano','estádio por ano','jogador por ano','jogador x jogador','jogador x clube','técnico x clube']],
   ['Confrontos e adversários',['confronto','placar','última vez','mais vitórias','mais derrotas','contra um clube','adversários','mata-matas','finais','continente','país','estado']],
   ['Datas e calendário',['feriados','fim de ano','datas religiosas','datas comemorativas','aniversário do Galo','aniversariantes','aniversariantes de uma data','sexta-feira 13','fases da lua','lua de um jogo','horóscopo chinês','signos','signo dos jogadores','neste dia','descanso','ano','temporada','temporadas','período','década','era','mês','trimestre','dia da semana']],
-  ['Estádios e lugares',['estádios','perfil de estádio','dossiê','estádio','pontos por estádio','público','públicos','rendas','altitude','local','cidade','casa ou fora','vitórias e derrotas']],
+  ['Estádios e lugares',['estádios','perfil de estádio','dossiê','dossiê do 9 x 2','estádio','pontos por estádio','público','públicos','rendas','altitude','local','cidade','casa ou fora','vitórias e derrotas']],
   ['Jogadores e gols',['jogador','artilheiros','tipo de gol','gols no começo do jogo','dupla','trio','duplas','base','idade','lei do ex','sua cidade','seu estado']],
   ['Técnicos, árbitros e clube',['técnicos','técnicos de fora','nacionalidade','árbitros','presidentes','títulos','sequências','competição','curiosidades','listas especiais']]];
 /* Catálogo da busca: novidades + poucos exemplos por grupo, o resto recolhido */
 function catalogoListas(grupos){
-  const NOVAS=[['Brasileirão 2013 x 2025','comparar anos'],['Libertadores 2013 x 2021','comparar edições'],['Cruzeiro 2013 x 2025','clube por ano'],['Mineirão 2013 x 2025','estádio por ano'],['Hulk 2021 x 2024','jogador por ano'],['Reinaldo x Dario','jogador x jogador'],['Hulk contra o Cruzeiro','jogador x clube'],['Cuca contra o Flamengo','técnico x clube'],['retrospecto contra o Palmeiras','confronto'],['placar mais comum contra o Cruzeiro','placar'],['última vez que o Galo perdeu para o América','última vez'],['contra quem o Galo mais venceu','mais vitórias'],['quem mais venceu o Galo','mais derrotas'],['jogos com menos de 5 mil pessoas no Mineirão','público'],['jogos na altitude acima de 3000 metros','altitude'],['jogos do Galo no Carnaval','feriados'],['jogos no Natal','fim de ano'],['jogos na Sexta-feira Santa','datas religiosas'],['jogos no Dia das Mães','datas comemorativas'],['jogos no aniversário do Galo','aniversário do Galo'],['aniversariantes de hoje','aniversariantes'],['aniversariantes 3/3','aniversariantes de uma data'],['jogos numa sexta-feira 13','sexta-feira 13'],['jogos na lua cheia','fases da lua'],['que lua era no último jogo contra o Corinthians','lua de um jogo'],['jogos no ano do Dragão','horóscopo chinês'],['jogos em Escorpião','signos'],['jogadores de Leão','signo dos jogadores'],['jogos com menos dias de descanso','descanso'],['gols relâmpago','gols no começo do jogo'],['maiores rendas','rendas'],['árbitros que mais apitaram jogos do Galo','árbitros'],['jogadores da base','base'],['técnicos estrangeiros','técnicos de fora'],['técnicos argentinos','nacionalidade'],['pontos na Arena MRV','pontos por estádio'],['lei do ex','lei do ex'],['idade média do time','idade'],['estádios do Galo','estádios'],['Independência','perfil de estádio'],['100 jogos na Arena MRV','dossiê'],['jogadores nascidos em + sua cidade','sua cidade'],['jogadores nascidos na Bahia','seu estado'],['mais jogos em uma temporada','temporada'],['presidentes do Galo','presidentes'],['Reinaldo','jogador'],['1971','ano'],['artilheiros na Libertadores','artilheiros'],['quem fez mais gols de falta','tipo de gol'],['quem mais marcou contra o Cruzeiro','contra um clube'],['artilheiros no Mineirão','estádio'],['jogos neste dia na história','neste dia'],['artilheiros desde 2001','período'],['maiores goleadas nos anos 80','década'],['artilheiros na era SAF','era'],['maiores goleadas na Copa do Brasil','competição'],['gols jogando na Bahia','local'],['jogos em Brasília','cidade'],['artilheiros fora de casa','casa ou fora'],['vitórias na Argentina','vitórias e derrotas'],['jogos contra europeus','continente'],['artilheiros contra argentinos','país'],['artilheiros contra paulistas','estado'],['Hulk + Paulinho','dupla'],['Trio Maldito','trio'],['duplas com mais gols no Brasileirão','duplas'],['maiores sequências invictas','sequências'],['mata-matas contra argentinos','mata-matas'],['finais contra clubes estrangeiros','finais'],['títulos do Galo','títulos'],['temporadas com mais gols','temporadas'],['desempenho por mês na era SAF','mês'],['desempenho por trimestre desde 2020','trimestre'],['desempenho por dia da semana','dia da semana'],['maiores públicos','públicos'],['adversários que mais venceram o Galo','adversários'],['técnicos com mais vitórias','técnicos'],['gols olímpicos','curiosidades'],['jogos do Galo depois de cada lançamento de GTA','listas especiais']];
+  const NOVAS=[['Brasileirão 2013 x 2025','comparar anos'],['Libertadores 2013 x 2021','comparar edições'],['Cruzeiro 2013 x 2025','clube por ano'],['Mineirão 2013 x 2025','estádio por ano'],['Hulk 2021 x 2024','jogador por ano'],['Reinaldo x Dario','jogador x jogador'],['Hulk contra o Cruzeiro','jogador x clube'],['Cuca contra o Flamengo','técnico x clube'],['retrospecto contra o Palmeiras','confronto'],['placar mais comum contra o Cruzeiro','placar'],['última vez que o Galo perdeu para o América','última vez'],['contra quem o Galo mais venceu','mais vitórias'],['quem mais venceu o Galo','mais derrotas'],['jogos com menos de 5 mil pessoas no Mineirão','público'],['jogos na altitude acima de 3000 metros','altitude'],['jogos do Galo no Carnaval','feriados'],['jogos no Natal','fim de ano'],['jogos na Sexta-feira Santa','datas religiosas'],['jogos no Dia das Mães','datas comemorativas'],['jogos no aniversário do Galo','aniversário do Galo'],['9x2','dossiê do 9 x 2'],['aniversariantes de hoje','aniversariantes'],['aniversariantes 3/3','aniversariantes de uma data'],['jogos numa sexta-feira 13','sexta-feira 13'],['jogos na lua cheia','fases da lua'],['que lua era no último jogo contra o Corinthians','lua de um jogo'],['jogos no ano do Dragão','horóscopo chinês'],['jogos em Escorpião','signos'],['jogadores de Leão','signo dos jogadores'],['jogos com menos dias de descanso','descanso'],['gols relâmpago','gols no começo do jogo'],['maiores rendas','rendas'],['árbitros que mais apitaram jogos do Galo','árbitros'],['jogadores da base','base'],['técnicos estrangeiros','técnicos de fora'],['técnicos argentinos','nacionalidade'],['pontos na Arena MRV','pontos por estádio'],['lei do ex','lei do ex'],['idade média do time','idade'],['estádios do Galo','estádios'],['Independência','perfil de estádio'],['100 jogos na Arena MRV','dossiê'],['jogadores nascidos em + sua cidade','sua cidade'],['jogadores nascidos na Bahia','seu estado'],['mais jogos em uma temporada','temporada'],['presidentes do Galo','presidentes'],['Reinaldo','jogador'],['1971','ano'],['artilheiros na Libertadores','artilheiros'],['quem fez mais gols de falta','tipo de gol'],['quem mais marcou contra o Cruzeiro','contra um clube'],['artilheiros no Mineirão','estádio'],['jogos neste dia na história','neste dia'],['artilheiros desde 2001','período'],['maiores goleadas nos anos 80','década'],['artilheiros na era SAF','era'],['maiores goleadas na Copa do Brasil','competição'],['gols jogando na Bahia','local'],['jogos em Brasília','cidade'],['artilheiros fora de casa','casa ou fora'],['vitórias na Argentina','vitórias e derrotas'],['jogos contra europeus','continente'],['artilheiros contra argentinos','país'],['artilheiros contra paulistas','estado'],['Hulk + Paulinho','dupla'],['Trio Maldito','trio'],['duplas com mais gols no Brasileirão','duplas'],['maiores sequências invictas','sequências'],['mata-matas contra argentinos','mata-matas'],['finais contra clubes estrangeiros','finais'],['títulos do Galo','títulos'],['temporadas com mais gols','temporadas'],['desempenho por mês na era SAF','mês'],['desempenho por trimestre desde 2020','trimestre'],['desempenho por dia da semana','dia da semana'],['maiores públicos','públicos'],['adversários que mais venceram o Galo','adversários'],['técnicos com mais vitórias','técnicos'],['gols olímpicos','curiosidades'],['jogos do Galo depois de cada lançamento de GTA','listas especiais']];
   const ESCONDE=['adv-art','est-art','dia-art','jogos-loc','res-v','res-e','res-d'];
   const especifica=id=>/^(art|jog|ret|mm|mf)-(uf-[a-z]{2}|[a-z]{3})$/.test(id)&&!/-(est|eur|sul|cen|afr|asi)$/.test(id);
   const chip=x=>`<a class="chip" href="#pergunte?lista=${x[1]}">${esc(x[2])}</a>`;
@@ -7185,6 +7196,139 @@ function vEstadio(s){
   ${outros.length?`<h3>Outros estádios em ${esc(cid.replace(/, [A-Z]{2}$/,''))}</h3><div class="pq-ex">${outros.map(k=>`<a class="chip" href="#estadio-${slug(k)}">${esc(k)} (${I[k].length})</a>`).join('')}</div>`:''}
   <p class="count" style="margin-top:16px"><a class="more" href="${linkJogos({est:e})}">Ver todos os ${N(L.length)} jogos →</a></p>`;
 }
+
+/* ---------- Dossiê 9 x 2 (27/11/1927) ---------- */
+const NX_IMG=[]; // recortes reais: [{src:'assets/9x2/arquivo.jpg', leg:'Jornal, data. Fonte: ...'}]
+function v9x2(){
+  const j=byId[319]; if(!j) return '<p class="empty">Jogo não encontrado.</p>';
+  const lk=n=>D.jogadores.some(x=>x.nome===n)?`<a href="#jogador-${slug(n)}">${esc(nomeV(n))}</a>`:esc(nomeV(n));
+  const gols=j.gols.slice().sort((a,b)=>(a.minuto??99)-(b.minuto??99)); let a=0,b=0; const seq=gols.map(g=>{ if(g.lado==='adv') b++; else a++; return {g,a,b}; });
+  const C=J.filter(x=>x.adversario_id===j.adversario_id&&x.resultado).sort((x,y)=>x.data<y.data?-1:1), rc=rec(C);
+  const ant=C.filter(x=>x.data<j.data), ra=rec(ant);
+  const mg=C.slice().sort((x,y)=>(y.gp-y.gc)-(x.gp-x.gc)||y.gp-x.gp), mgC=C.slice().sort((x,y)=>(y.gc-y.gp)-(x.gc-x.gp)||y.gc-x.gc);
+  const jl=x=>`<a href="#jogo-${x.id}">${fmtD(x.data)} · ${x.galo_mandante===false?`Cruzeiro ${x.gc} x ${x.gp} Galo`:`Galo ${x.gp} x ${x.gc} ${esc(x.adversario)}`}</a>`;
+  const camp=J.filter(x=>x.temporada===1927&&x.resultado&&x.grupo==='Campeonato Mineiro'&&!/Desconsid|Início/i.test(x.competicao||'')).sort((x,y)=>x.data<y.data?-1:1), rcp=rec(camp);
+  const trio=['Said','Mário de Castro','Jairo'].map(n=>{ const p=D.jogadores.find(x=>x.nome===n)||{}; const B=(D.bios&&D.bios.jogadores||{})[n]||{}; return {n,p,B,g:typeof golsBest==='function'?golsBest(p):p.gols}; });
+  const SUM=[['nx-ficha','A ficha'],['nx-placar','Gol a gol'],['nx-contexto','O que estava em jogo'],['nx-jornais','Os jornais da época'],['nx-depois','Depois do apito'],['nx-trio','O trio maldito'],['nx-existiu','“Esse jogo existiu?”'],['nx-ninao','O caso Ninão'],['nx-classico','No tamanho do clássico'],['nx-1927','O mundo em 1927'],['nx-fontes','Fontes']];
+  const nn=id=>String(SUM.findIndex(x=>x[0]===id)+1).padStart(2,'0');
+  const sec=(id,body,nota)=>`<section class="mrv-sec" id="${id}"><div class="mrv-sh"><span class="mrv-sh-n">${nn(id)}</span><div><div class="mrv-sh-t" role="heading" aria-level="2">${SUM.find(x=>x[0]===id)[1]}</div></div></div>${nota?`<p class="mrv-sh-nota">${nota}</p>`:''}${body}</section>`;
+  const rec1=(jornal,data,texto,obs)=>`<figure class="nx-rec"><div class="nx-rec-cab"><b>${jornal}</b><span>${data}</span></div><blockquote>${texto}</blockquote><figcaption>${obs}</figcaption></figure>`;
+  const anos=(()=>{ const h=hojeStr(); let n=+h.slice(0,4)-1927; if(h.slice(5)<'11-27') n--; return n; })();
+  const dia=hojeStr().slice(5)==='11-27';
+  const esc2=(t,l)=>`<div class="nx-esc"><h3>${t}</h3><ol>${l.map(n=>`<li>${n}</li>`).join('')}</ol></div>`;
+  return `<div class="mrv nx">
+  <div class="mrv-capa nx-capa">
+    <div class="mrv-capa-txt">
+      <div class="mrv-k">Galo Metrics · Dossiê · ${dia?`Hoje faz ${anos} anos`:`Há ${anos} anos`}</div>
+      <h1 class="mrv-t1"><span>9 x 2</span><span>no Palestra</span></h1>
+      <p class="mrv-deck">Domingo, 27 de novembro de 1927. No campo do América, o Galo goleou o Palestra Itália, o atual Cruzeiro, e garantiu o bicampeonato da cidade. Até hoje é a maior goleada do clássico. Aqui está tudo: a ficha, gol a gol, o que os jornais publicaram, o que aconteceu depois e por que, quase um século depois, ainda tem gente dizendo que o jogo não existiu.</p>
+      <div class="mrv-capa-pe"><span>Campo do América · Belo Horizonte</span><span>Campeonato da Cidade 1927</span></div>
+    </div>
+    <div class="nx-capa-placar" aria-label="Placar: Galo 9, Palestra Itália 2"><div><small>Athletico</small><b>9</b></div><i>x</i><div><small>Palestra</small><b>2</b></div><p>27 · 11 · 1927</p></div>
+  </div>
+  <div class="mrv-faixa" aria-hidden="true"></div>
+  <div class="mrv-fachada">${[['9','Gols do Galo'],['7','Gols de diferença'],['11','Gols no jogo'],['2','Hat-tricks'],['4.000','Pessoas no campo'],[String(anos),'Anos'],['0','Goleada maior desde então'],['1927','Bicampeão da cidade']].map(([v,t])=>`<div><b>${v}</b><span>${t}</span></div>`).join('')}</div>
+  <p style="margin:14px 0">${artBtn({t:'9x2'}).replace('Baixar arte','Arte do 9 x 2')} <a class="ghost" href="#jogo-319">Ficha na base</a> <a class="ghost" href="#adversario-${slug(j.adversario_id)}">Clássico completo</a></p>
+  <div class="mrv-indice" role="navigation" aria-label="Índice do dossiê"><div class="mrv-indice-t">Índice</div><ol>${SUM.map(([id,t],i)=>`<li><a href="javascript:void 0" onclick="document.getElementById('${id}')?.scrollIntoView({behavior:'smooth'})"><span>${t}</span><i>${String(i+1).padStart(2,'0')}</i></a></li>`).join('')}</ol></div>
+
+  ${sec('nx-ficha',`<dl class="mrv-marcos">
+    <dt>Data</dt><dd>Domingo, 27/11/1927, às 15h. Fim do jogo às 16h50, segundo os jornais.</dd>
+    <dt>Local</dt><dd>Campo do América, na Avenida Paraopeba (hoje Augusto de Lima), onde depois surgiu o Mercado Central. Era o maior campo de Belo Horizonte, e o jogo foi levado para lá pela procura de ingressos.</dd>
+    <dt>Competição</dt><dd>Campeonato da Cidade de 1927 (o Mineiro da época), fase final. Penúltimo jogo do campeonato.</dd>
+    <dt>Placar</dt><dd><b>Athletico 9 x 2 Palestra Itália</b>.</dd>
+    <dt>Árbitro</dt><dd>${esc((j.arbitro||'').replace(/,\s*MG$/,''))}</dd>
+    <dt>Público</dt><dd>Cerca de ${N(j.publico)} pessoas. Mulheres não pagavam ingresso, como anunciou o <i>Correio Mineiro</i> na véspera.</dd>
+    <dt>Tempo de jogo</dt><dd>Dois tempos de 40 minutos, como era comum na época.</dd>
+  </dl>
+  <div class="grid2">${esc2('Athletico',j.escalacao_galo.titulares.map(lk))}${esc2('Palestra Itália',j.escalacao_adv.titulares.map(n=>esc(n)))}</div>
+  <p class="count">Escalações da base do Galo Metrics. Algumas reportagens trazem Nani no lugar de Odilon no Palestra, e grafias diferentes (Rizzo, Riso; Para-raio, Pararaio; Hugo Jacques, Hugo Jackes).</p>`)}
+
+  ${sec('nx-placar',`<ol class="nx-gols">${seq.map(({g,a,b})=>`<li class="${g.lado==='adv'?'adv':''}"><span class="nx-min">${g.minuto!=null?g.minuto+"'":''}</span><span class="nx-pl">${a} x ${b}</span><span class="nx-q">${g.lado==='adv'?esc(g.jogador)+' (Palestra)':lk(g.jogador)}</span></li>`).join('')}</ol>
+  <div class="tiles">${[['3','Said (11\', 19\', 46\')'],['3','Jairo (66\', 71\', 76\')'],['2','Mário de Castro (57\', 61\')'],['1','Getúlio (82\')'],['2','Ninão, pelo Palestra']].map(([v,t])=>`<div class="tile"><b>${v}</b><span>${t}</span></div>`).join('')}</div>
+  <div class="note" style="margin-top:14px"><b>Nem todas as fontes batem.</b> A dissertação de mestrado da UFMG sobre a rivalidade (2013), feita a partir dos jornais da época, lista Said 2, Jairo 3, Mário 3 e Getulinho 1 para o Galo, e Nino I e Bengala para o Palestra. O placar, 9 x 2, é o mesmo em todas.</div>`,'Do 1 x 0 ao 9 x 2, na ordem dos minutos registrados na base.')}
+
+  ${sec('nx-contexto',`<p>Em 1927 o futebol de Belo Horizonte era amador e o grande clube da cidade era o América, campeão dez vezes seguidas, de 1916 a 1925. Em 1926 o Galo quebrou essa sequência. Em 1927 queria o primeiro bicampeonato da sua história.</p>
+  <p>O Palestra, fundado em 1921 pela colônia italiana, ainda não era o rival que viria a ser: tinha sido vice várias vezes e só ganharia o primeiro título em 1928. No primeiro turno de 1927, em 14 de agosto, o Galo já tinha vencido por 4 x 2, no campo do Palestra, num jogo com briga na arquibancada.</p>
+  <p>Na fase final, os melhores do primeiro turno voltaram a se enfrentar. O 9 x 2 era o penúltimo jogo e valia o título. Com a vitória, o <i>Minas Geraes</i> já tratou o Galo como campeão.</p>
+  <h3>A campanha do Galo no Campeonato da Cidade de 1927</h3>
+  <table><thead><tr><th>Data</th><th>Jogo</th><th class="n"></th></tr></thead><tbody>${camp.map(x=>`<tr${x.id===319?' style="font-weight:700"':''}><td class="mono">${fmtD(x.data)}</td><td><a href="#jogo-${x.id}">Galo ${x.gp} x ${x.gc} ${esc(x.adversario)}</a></td><td class="n"><b class="mrv-r mrv-r-${x.resultado}">${x.resultado}</b></td></tr>`).join('')}</tbody></table>
+  <p class="count">${rcp.n} jogos, ${rcp.V} vitórias, ${rcp.E} ${rcp.E===1?'empate':'empates'} e ${rcp.D} ${rcp.D===1?'derrota':'derrotas'}, ${rcp.gp} gols marcados e ${rcp.gc} sofridos. A única derrota, para o América, veio depois do título garantido.</p>
+  <p class="count">No mesmo domingo, os segundos quadros (os reservas) também jogaram: Galo 3 x 2 Palestra. O Galo foi campeão invicto dos aspirantes de 1927.</p>`)}
+
+  ${sec('nx-jornais',`<p>Os jornais de Belo Horizonte não circulavam às segundas-feiras. Por isso o 9 x 2 aparece nas edições de terça, 29 de novembro de 1927, em pelo menos quatro jornais diferentes. Os trechos abaixo foram transcritos com a grafia da época.</p>
+  ${NX_IMG.length?`<div class="nx-imgs">${NX_IMG.map(x=>`<figure class="mrv-foto"><img src="${x.src}" alt="${esc(x.leg)}" loading="lazy"><figcaption>${esc(x.leg)}</figcaption></figure>`).join('')}</div>`:''}
+  <div class="nx-recs">
+    ${rec1('Diario de Minas','29 · 11 · 1927','“O Athletico vence brilhantemente o Palestra pela contagem de 9X2.”','Transcrição da nota esportiva, citada pela dissertação da UFMG e pelo Fala Galo.')}
+    ${rec1('Minas Geraes','28 e 29 · 11 · 1927','“Pela segunda vez, coube ao Club Athletico Mineiro o título de campeão de Bello Horizonte.”','Jornal oficial do Estado. Transcrição citada na dissertação da UFMG (p. 97). O jornal também tinha anunciado o jogo em 25/11.')}
+    ${rec1('Correio Mineiro','29 · 11 · 1927','“Said, Mário e Jairo assombraram.”','O mesmo jornal anunciou, no sábado, que “as senhoras e senhoritas não pagarão entradas”, e registrou o jantar da vitória.')}
+    ${rec1('Diario da Manhã','29 · 11 · 1927','“Linda e facil victoria.”','O subtítulo dizia que os jogadores do Palestra se deixaram abater depois do primeiro tempo, e criticava o jogo violento do adversário.')}
+    ${rec1('Gazeta Esportiva','10 · 12 · 1927','Relato mais enfeitado do jogo, com destaque para as mulheres na arquibancada.','Citada na dissertação da UFMG (p. 97).')}
+  </div>
+  <p class="count">Onde ver os originais: Hemeroteca Histórica da Biblioteca Pública Estadual Luiz de Bessa, em Belo Horizonte, e Arquivo Público Mineiro (<i>Minas Geraes</i>). Tem foto de algum desses recortes? <a href="#sugestoes">Mande para a gente</a>.</p>`,'Quatro jornais na mesma terça-feira, mais uma revista duas semanas depois.')}
+
+  ${sec('nx-depois',`<dl class="mrv-marcos">
+    <dt>O telegrama</dt><dd>A diretoria do Palestra, pelo secretário Arcelus, mandou um telegrama cumprimentando o Galo pela vitória.</dd>
+    <dt>A resposta</dt><dd>O presidente do Galo, Dr. Leandro de Moura Costa, agradeceu e chamou o Palestra de “digno e leal adversário”.</dd>
+    <dt>O jantar</dt><dd>Às 19h, no Restaurante Guarany, para os 22 jogadores, o presidente e veteranos do clube. Teve brinde ao Galo, a Moura Costa e ao <i>Correio Mineiro</i>.</dd>
+    <dt>A foto</dt><dd>Por superstição, o presidente não deixava fotografar o time antes do jogo. A única foto foi feita depois do apito final, com os jogadores em campo.</dd>
+    <dt>A arquibancada</dt><dd>Os jornais destacaram duas torcedoras: Nenem Alluoto, a “rainha”, e Horizontina Federiel, a “grã-duquesa” do esporte da cidade.</dd>
+  </dl>`)}
+
+  ${sec('nx-trio',`<div class="nx-trio">${trio.map(t=>`<div><b><a href="#jogador-${slug(t.n)}">${esc(t.n)}</a></b><span class="nx-trio-g">${N(t.g||0)} gols pelo Galo</span><p>${t.n==='Said'?`${esc(t.B.nome_completo||'')}, de ${esc((t.B.naturalidade||'').replace(' - MG',''))}. Ponta-esquerda, formado em Direito. Fez 3 gols no 9 x 2 e aproximou do Galo a colônia sírio-libanesa de BH.`:t.n==='Mário de Castro'?`De ${esc((t.B.naturalidade||'').replace(' - MG',''))}, médico. Jogava com o nome trocado, “Orion”, para a família não saber. Recusou a Seleção e a Copa de 1930. Fez 2 gols no 9 x 2.`:`${esc(t.B.nome_completo||'')}, de ${esc((t.B.naturalidade||'').replace(' - MG',''))}, médico. Fez 3 gols no 9 x 2, todos em dez minutos, do 66 ao 76.`}</p></div>`).join('')}</div>
+  <p class="count">Gols pela base do Galo Metrics, na carreira toda pelo clube. Juntos, os três passam de ${N(trio.reduce((s,t)=>s+(t.g||0),0))} gols. Fizeram 8 dos 9 gols do jogo.</p>`,'Said, Jairo e Mário de Castro: três amadores, dois médicos e um advogado.')}
+
+  ${sec('nx-existiu',`<p>Durante décadas o 9 x 2 foi só um número nas listas. Ele virou assunto depois de 2011, quando o Cruzeiro fez 6 x 1 no Galo e torcedores atleticanos lembraram qual era, de verdade, a maior goleada do clássico. Desde então circula a tese de que o jogo seria uma invenção.</p>
+  <div class="grid2"><div><h3>O que dizem</h3><ul class="nx-lista">
+    <li>Blogs de torcedores publicaram textos chamando o jogo de “fato nunca ocorrido”.</li>
+    <li>A Cruzeiropédia, enciclopédia de torcedores do Cruzeiro, tem uma página com o título “O jogo é uma farsa?”.</li>
+    <li>Na direção contrária, chegou a circular nas redes uma suposta capa de jornal com um “14 x 3” para o Palestra, que pesquisadores apontaram como montagem.</li>
+  </ul></div><div><h3>O que mostram os registros</h3><ul class="nx-lista">
+    <li>Pelo menos quatro jornais de Belo Horizonte publicaram o resultado em 29/11/1927, e uma revista voltou ao jogo em dezembro.</li>
+    <li>Uma dissertação de mestrado da UFMG (2013), feita nos arquivos de jornais, registra o jogo com escalações e gols.</li>
+    <li>A RSSSF Brasil, a partir da Hemeroteca de BH, traz até o jogo dos reservas no mesmo dia.</li>
+    <li>Bengala, que jogou o 9 x 2 pelo Palestra, falou do jogo numa entrevista à revista <i>Grandes Clubes Brasileiros</i> (edição do Cruzeiro, 1971).</li>
+    <li>O próprio Cruzeiro conta os gols do jogo nas estatísticas dos seus jogadores (veja o caso Ninão).</li>
+  </ul></div></div>
+  <h3>Por que o Palestra perdeu de tanto</h3><p>Do lado de lá, até as desculpas não batem. Ninão contou, anos depois, que o Palestra tirou o pé quando a vitória do Galo estava encaminhada, para não ajudar o América. Bengala disse outra coisa: que o técnico tinha puxado tanto nos treinos dos três dias anteriores que o time entrou em campo “sem pernas”.</p>`,'O placar que alguns torcedores juram que nunca aconteceu.')}
+
+  ${sec('nx-ninao',`<p>Ninão (João Fantoni) é um dos maiores artilheiros da história do Cruzeiro, que lhe credita 167 gols pelo Palestra. Em abril de 2025, o Galo Metrics separou esses 167 gols jogo a jogo para ver de onde vinham. A conta só fecha com os 2 gols que ele marcou justamente no 9 x 2.</p>
+  <div class="nx-ninao"><b>167</b><span>gols creditados a Ninão pelo Cruzeiro</span><b>2</b><span>deles no Galo 9 x 2 Palestra</span></div>
+  <p>Ou seja: para quem diz que o jogo nunca existiu, os gols dele existem, e estão na conta do maior ídolo palestrino da época. Ninão ainda seria tricampeão pelo Palestra (1928 a 1930), já com o irmão Nininho, que também jogou o 9 x 2.</p>`,'Se o jogo não existiu, de onde saíram os gols?')}
+
+  ${sec('nx-classico',`<div class="tiles">${[[N(rc.n),'Clássicos na base'],[`${rc.V} · ${rc.E} · ${rc.D}`,'V · E · D do Galo'],[N(ant.length),'Clássicos antes do 9 x 2'],[`${ra.V} · ${ra.E} · ${ra.D}`,'V · E · D até ali']].map(([v,t])=>`<div class="tile"><b>${v}</b><span>${t}</span></div>`).join('')}</div>
+  <div class="grid2"><div><h3>Maiores vitórias do Galo no clássico</h3><ol class="rank">${mg.slice(0,6).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${jl(x)}<b>+${x.gp-x.gc}</b></li>`).join('')}</ol></div>
+  <div><h3>Maiores vitórias do Cruzeiro no clássico</h3><ol class="rank">${mgC.slice(0,6).map((x,i)=>`<li><span class="rank-n">${i+1}</span>${jl(x)}<b>+${x.gc-x.gp}</b></li>`).join('')}</ol></div></div>
+  <p class="count">Em ${N(rc.n)} clássicos, ninguém chegou perto dos 7 gols de diferença: a segunda maior goleada do confronto, dos dois lados, foi por 5. E os 9 gols do Galo seguem sendo o máximo que um time marcou num clássico.</p>`)}
+
+  ${sec('nx-1927',`<dl class="mrv-marcos">
+    <dt>Belo Horizonte</dt><dd>Uma capital com 30 anos. A Universidade de Minas Gerais, hoje UFMG, tinha sido fundada em 7 de setembro, dois meses antes do jogo.</dd>
+    <dt>Brasil</dt><dd>Dois dias antes do jogo, em 25 de novembro, a professora Celina Guimarães Viana, de Mossoró (RN), entrou para a história como a primeira eleitora do país. O voto feminino só viria para todos em 1932.</dd>
+    <dt>O futebol</dt><dd>Amador. Os jogadores do Galo eram estudantes e profissionais liberais, e os jornais escreviam “match”, “foot-ball” e “Athletico”.</dd>
+    <dt>O Palestra</dt><dd>Só viraria Cruzeiro em 1942, durante a Segunda Guerra, quando nomes ligados à Itália foram proibidos.</dd>
+  </dl>`)}
+
+  ${sec('nx-fontes',`<ul class="nx-lista">
+    <li><b>Jornais de 1927:</b> <i>Diario de Minas</i>, <i>Minas Geraes</i>, <i>Correio Mineiro</i> e <i>Diario da Manhã</i> (29/11/1927); <i>Gazeta Esportiva</i> (10/12/1927). Acervo da Hemeroteca Histórica da Biblioteca Pública Estadual Luiz de Bessa e do Arquivo Público Mineiro.</li>
+    <li><b>Rogério Othon Teixeira Alves</b>, <i>A lucta dos titans: a invenção da rivalidade entre Clube Atlético Mineiro e a Sociedade Sportiva Palestra Itália (1921–1942)</i>. Dissertação de mestrado, UFMG, 2013. <a href="https://repositorio.ufmg.br/bitstream/1843/43043/1/A%20Lucta%20dos%20Titans.pdf" target="_blank" rel="noopener">Abrir o PDF</a></li>
+    <li><b>RSSSF Brasil</b>, Campeonato Mineiro de Aspirantes 1927 (fonte: Hemeroteca de BH, <i>Correio Mineiro</i> e <i>Diario de Minas</i>). <a href="https://www.rsssfbrasil.com/tablesfq/mg1927res.htm" target="_blank" rel="noopener">Abrir</a></li>
+    <li><b>Fala Galo</b>, “92 anos do 9x2: uma história imortal”, 2019, com pesquisa de Fael Lima e Guilherme Frossard nos jornais da época. <a href="https://antigo20220614.falagalo.com.br/galo-som-sol-e-sal/92-anos-do-9x2-uma-historia-imortal-e-uma-aula-de-atletico/" target="_blank" rel="noopener">Abrir</a></li>
+    <li><b>Superesportes / Tudo em Dia</b>, “90 anos, nove fatos sobre o 9 a 2”, 2017. <a href="https://tudoemdia.com/90-anos-nove-fatos-sobre-o-9-a-2-a-maior-goleada-do-classico-mineiro" target="_blank" rel="noopener">Abrir</a></li>
+    <li><b>Blog do Chico Maia</b>, relato de Bengala à revista <i>Grandes Clubes Brasileiros</i> (1971). <a href="https://blog.chicomaia.com.br/2015/02/03/o-relato-de-um-astro-do-cruzeiro-que-jogou-nos-9-a-2-pro-galo-em-1927/" target="_blank" rel="noopener">Abrir</a></li>
+    <li><b>Base do Galo Metrics</b>: escalações, minutos dos gols, árbitro e público. <a href="#jogo-319">Ficha do jogo</a></li>
+  </ul>`)}
+  <div class="mrv-fim"><a href="#jogo-319">Ficha do jogo</a><a href="#adversario-${slug(j.adversario_id)}">Galo x Cruzeiro completo</a><a href="#temporada-1927">Temporada 1927</a></div>
+  </div>`;
+}
+async function desenhaArte9x2(){ const A=await arteDossie(); const {cv,x,W,H,P,PAP,CZ2,OURO,font,mono,txt,fit,kicker,fachada,rodape,cas,wrap}=A;
+  const h=hojeStr(); let n=+h.slice(0,4)-1927; if(h.slice(5)<'11-27') n--;
+  kicker(`Galo Metrics · ${h.slice(5)==='11-27'?'Neste dia':'Dossiê'} · 27/11/1927`,78);
+  font(900,96); txt(`HÁ ${n} ANOS`,P,190,OURO);
+  font(900,400); txt('9 X 2',P,520,PAP);
+  font(900,64); txt('NO PALESTRA',P,610,CZ2);
+  let y=660; fachada([['9','Gols do Galo'],['7','De diferença'],['4.000','No campo do América']],y,150); y+=150+60;
+  cas(28); y=wrap('A maior goleada da história do clássico. Said 3, Jairo 3, Mário de Castro 2 e Getúlio. Ninão fez os dois do Palestra.',P,y,W-2*P,40,CZ2)+30;
+  y=wrap('Com a vitória, o Galo garantiu o bicampeonato da cidade.',P,y,W-2*P,40,CZ2);
+  rodape('Jornais da época, gol a gol e o caso Ninão no dossiê.','Leia o dossiê completo'); return cv; }
 
 /* ---------- Especial: 100 jogos na Arena MRV (no menu até o jogo 101) ---------- */
 const MRV100_ATE='2026-11-29';
@@ -7590,6 +7734,8 @@ function respostaDireta(q){
   const n=nrm(q).replace(/[?!.]+$/,'').trim(); let m;
   const R=J.filter(j=>j.resultado);
   const h=(tit,lede,body)=>`<h2>${esc(tit)}</h2>${lede?`<p class="lede">${lede}</p>`:''}${body||''}`;
+  // dossiê 9 x 2
+  if(/^(o )?9 ?x ?2$|9 ?x ?2 (de 1927|no palestra|no cruzeiro|galo|atletico)|galo 9 ?x ?2|maior goleada do classico/.test(n)) return {k:'9x2', html:h('9 x 2 no Palestra (27/11/1927)','A maior goleada da história do clássico, com jornais da época, gol a gol e o caso Ninão.','<p><a class="btn" href="#9x2">Abrir o dossiê do 9 x 2</a> <a class="ghost" href="#jogo-319">Ficha do jogo</a></p>')};
   // dossiê Arena MRV
   if(/arena mrv|\bmrv\b/.test(n)&&/\b(100|cem|dossie|especial|primeiros)\b/.test(n)){ const L=R.filter(j=>/arena mrv/i.test(j.estadio||'')).sort((a,b)=>a.data<b.data?-1:1).slice(0,100);
     return {k:'mrv100', html:h('100 jogos na Arena MRV', L.length?rdRes(rec(L))+'.':'', `<p><a class="btn" href="#arena-mrv-100">Abrir o dossiê completo dos 100 jogos</a></p>`)}; }
